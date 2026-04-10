@@ -1,0 +1,406 @@
+CASE TITLE: State vs Sheshappa Dudhappa Tambade on 15 October, 1963
+DATE: Unknown Date
+PRIMARY ARTICLE: Article 21
+SOURCE: https://indiankanoon.org/doc/1728264/
+YEAR: 1963
+ARTICLES CITED: Article 19, Article 37, Article 14, Article 31, Article 20, Article 47, Article 21
+BENCH TYPE: Division Bench (2)
+HAS DISSENT: No
+CASE NUMBER: None
+======================================================================
+
+[Cites
+, Cited by
+Bombay High Court
+State vs Sheshappa Dudhappa Tambade on 15 October, 1963
+Equivalent citations: AIR1964BOM253, (1964)66BOMLR230, 1964CRILJ523, AIR 1964 BOMBAY 253, 1964 MAH LJ 360, ILR (1964) BOM 404, 66 BOM LR 230
+JUDGMENT
+
+ 
+
+Gokhale, J.
+1. A rather interesting question relating to the validity of
+Section 129A
+of the Bombay Prohibition Act, 1949
+(Bombay Act
+XXV of 1949), arises in this reference made to this Court by the joint Civil Judge and Judicial Magistrate First Class, Islampur, under
+Section 432
+of the Criminal Procedure Code. One Sheshappa Dudhappa Tambad of Chikorde in the Sangli District is charged with having committed offences under
+Section 85(1)
+, (2) and (3) of the Bom-bay Prohibition Act and
+Section 186
+of the Indian Penal Code. The allegation against the accused was that he was found drunk in a public place, incapable of taking care of himself and behaved in a disorderly manner under the influence of drink and had, as such committed offences under
+Section 85(1) (2)
+and (3) of the Act. The other charge against the accused was that he voluntarily obstructed a public servant in the discharge of his public functions, inasmuch as, he offered resistance to the medical officer before whom he was produced and refused to allow the medical officer to collect his blood.
+Section 129-A
+empowers any Prohibition Officer duly empowered in this behalf by the State Government or any police officer to produce a person before a registered medical practitioner (authorised by general or special order by the State Government in this behalf), for the purpose of medical examination or collection of blood, if in the investigation of any offence under the Act, he has reasonable ground for believing that the person has consumed an intoxicant or for the procuring of evidence thereof it is necessary that his body be medically examined, or that his blood be collected for being tested for determining the percentage of alcohol therein. The section enables the Prohibition Officer or the police officer to request the medical practitioner to furnish a certificate on his finding whether such person has consumed any intoxicant and to forward the blood collected by him for test to the Chemical Examiner or Assistant Chemical Examiner to Government, or to such other officer as the State Government may appoint in this behalf. On such request being made by the Prohibition Officer or the police officer, the medical practitioner, before whom a person has been produced, is required to examine the person and collect and forward the blood of such person to the Chemical Examiner or Assistant Chemical Examiner to Government and to furnish to the officer, by whom such person has been produced, a certificate containing the result of his examination. The Chemical Examiner or Assistant Chemical Examiner to
+
+Government is required to certify the result of the test of the blood forwarded to him, stating therein, in the prescribed form, the percentage of alcohol, and such other particulars as may be necessary or relevant. If any person offers resistance to his production before a registered medical practitioner or on his production before such practitioner, offers resistance to the examination of his body or to the collection of his blood, the section also empowers the use of all means reasonably necessary to secure the production of such person or the examination of his body or the collection, of blood necessary for the test. Resistance to production before a registered medical practitioner or to the examination of the body or to the collection of blood is deemed to be an offence under
+Section 186
+of the Indian Penal Code. The accused in this case was produced before the medical officer and it appears that he allowed himself to be examined by the medical officer. The allegation, however, is that he resisted when the medical officer proceeded to collect his blood. That is how he was charged with having committed an offence under Section 186, I. P. C. Before the learned Magistrate,
+Section 129-A
+was challenged on two grounds. One ground was that the section was ultra vires
+Article 31(2)
+of the Constitution inasmuch as
+Section 129-A
+or any other provision of the Act, did not provide payment of compensation for the blood collected for the test. In this connection, it seems to have been contended before him that blood was property and the collection of blood for the test under
+Section 129-A
+was acquisition of property without payment of compensation. The second ground was that the section was also ultra vires
+Article 21
+of the Constitution inasmuch as it made a serious encroachment on the right to personal liberty. The learned Magistrate was of the opinion that the section was invalid or inoperative on the ground of its invalidity under the Constitution and since it involved a question as to the validity of a section in the Act, the determination of which was necessary for the disposal of the case, he has referred that question for the decision of this Court.
+The Bombay Prohibition Act, 1949
+, came on the Statute Book on the 2oth of May 1949. Since its enactment, it has undergone a number of amendments which were necessitated either with a view to making the policy underlying it effective or with a view to bringing it in line with the decisions of Courts on the question of the validity of some of its sections in the light of the provisions of the Constitution.
+Section 129-A
+, was introduced in the Act, by Bom. Act 12 of 1959 and was a sequel to the decision of this Court in
+Deoman Shamji v. State
+. In that case the accused had resisted by force the attempt of certain police officers to take him forcibly to a doctor for medical examination and he was charged for having committed an offence under Section 353, I. P. C. At that time there was no legal provision justifying the use of force by police officers to take the accused against his will to a doctor for medical examination. It also seems to have been argued
+in that case
+that the act of the police officer in forcibly taking the accused to the doctor for medical examination amounted to the exercise of testimonial compulsion in violation of Clause (3) of
+Article 20
+of the Constitution. Section 353,
+
+I. P. C. provides punishment for the offence of assaulting or using criminal force to any person being a public servant in the execution of his duty as such public servant, or with intent to prevent or deter that person from discharging his duty as such public servant, or in consequence of anything done or attempted to be done by such person in the lawful discharge of his duty as such public servant. Tarkunde, J. who delivered the judgment of the Division Bench observed that there was no statutory provision which rendered lawful the coercion exercised or threatened by the public servant in order that the accused may be medically examined and inasmuch as the public servant in order that the accused may be medically examined and inasmuch as the public servant was not doing his duty in taking the accused against his will to the doctor,
+the accused could not be convicted under Section 353, I. P. C. In order, presumably, to introduce such a statutory provision empowering a public servant to take a person for medical examination or collection of blood that
+Section 129-A
+was introduced in the Statute. On the other ground which was urged before the Division Bench that the act of the public
+servant amounted to the exercise of testimonial compulsion in violation of Clause (3) of
+Article 20
+of the Constitution, it was observed that it was not necessary to decide upon the soundness of that contention and that the question may fall for determination if the Legislature made a provision for compulsory medical examination.
+The latter question, however, did arise in
+State v. Balwant Ganpati
+, 63 Bom LR 87, and it was held that
+Section 129-A
+of the Act, did not violate the protection against compulsory self-incrimination guaranteed by
+Article 20(3)
+of the Constitution and was, therefore, valid. Arguments with regard to the propriety or otherwise of 'the very considerable limitations on personal liberty, which have been imposed by the section, appear to have been advanced, but those considerations were "rigidly excluded from consideration" by the Court. Thus, the contention that the section is ultra vires
+Article 31(2)
+Article 21
+of the Constitution was riot dealt with and decided in these previous cases and have now arisen for our consideration.
+3. It would be convenient to deal first with the contention relating to the vires of
+Section 129-A
+on the ground of its violation of
+Article 31(2)
+of the Constitution.
+Article 31
+of the Constitution, after omitting such parts as are not relevant, is as follows:
+"31. (i) No person shall be deprived of his property save by authority of law.
+(2) No property shall Be compulsorily acquired or requisitioned save for a public purpose and save by authority of a law which provides for compensation for the property so acquired or requisitioned and either fixes the amount of the compensation or specifies the principles on which, and the manner in which, the compensation is to be determined and given; and no such law shall be called in question in any Court on the ground that the compensation provided by that law is not adequate.
+(2A) Where a law does not provide for the transfer of the ownership of right to possession of any property to the State or to a corporation owned or controlled by the State, it shall not be deemed to provide for the compulsory acquisition or requisitioning of property, notwithstanding that it deprives any person of his property.
+xxx xx x
+ 
+
+ (5) Nothing in clause (2) shall affect-
+(a) the provisions of any existing law other than a law to which the provisions of clause (6) apply, or
+(b) the provisions of any law which the State may hereafter make-
+(i) for the purpose of imposing or levying any tax or penalty, or
+(ii) for the promotion of public health or the prevention of danger to life or property, or
+(iii) in pursuance of any agreement entered into between the Government of the Dominion of India or the Government of India and the Government of any other country, or otherwise, with respect to property declared by law to be evacuee property."
+Clause (1) of
+Article 31
+imposes a ban on the deprivation of property save by authority of law. Clause (2) of
+Article 31
+provides a guarantee that no property shall be compulsorily acquired or requisitioned save for a public purpose and save by authority of law, which provides for compensation for the property so acquired or requisitioned and either fixes the amount of compensation or specifies the principles in which, and the manner in which, the compensation is to be determined and given. Clause (2), how-over, is subject to Clause (5). A question, therefore, arises as to whether
+Section 129-A
+is part of law providing for compulsory acquisition or requisitioning. If it does, then the next question which arises is whether the law is saved by any one or more of the Sub-clauses of Clause (5) of
+Article 31.
+The learned Advocate General contended that the
+Bombay Prohibition Act
+is not law relating to compulsory acquisition or requisitioning of property and, therefore,
+Article 31
+Clause (2), is not attracted at all. In the alternative, however, he contended that if the Act was law relating to compulsory acquisition or requisitioning of property, it was saved by Sub-clause (b) (ii) of Clause (5) of
+Article 31.
+It was his contention; that in any case it was a law for the promotion of public health or the prevention of danger to life or property and that he would urge that it was valid on that ground, if necessary. It was urged that Entry 8 in List II (State List) of the Seventh Schedule of the Constitution gives legislative competence to make laws for such State or part thereof with respect to "intoxicating liquors, that is to say, the production, manufacture, possession, transport, purchase and sale of intoxicating liquors" and it was by virtue of this legislative power that the State Legislature has enacted the
+Bombay Prohibition Act
+. On the other hand, Entry 42 in List III (Concurrent List) gives legislative competence to enact laws in respect of "acquisition and requisitioning of property" concurrently to the Parliament as well as the State Legislature, and that is how the entry is in List III. There could be no doubt that if the
+Bombay Prohibition Act
+was law relating to acquisition or requisitioning of property, it would have to be in conformity with
+Article 31
+, even though it may not be outside the legislative powers of the State Legislature, whereas, on the other hand, if in substance the
+Bombay Prohibition Act
+, is not law relating to acquisition or requisitioning of property but is law, which can legitimately fall under the legislative competence of the State Legislature to make laws with respect to "intoxicating liquors, that is to say, the production, manufacture, possession, transport, purchase and sale of intoxicating liquors", the question of any violation of
+Article 31
+of the Constitution will not arise. It is therefore necessary to examine the nature of the enactment in which
+Section 129-A
+, finds a place. The true character of the legislation has to be ascertained when a provision of law is impugned on the ground that it is ultra vires the powers of the legislature which enacted it or that it is violative of the rights guaranteed by the Constitution having regard to the nature of the enactment as a whole, to its objects and to the scope and effect of its provisions.
+The Bombay Prohibition Act
+is "an Act to amend and consolidate the law relating to the promotion and enforcement of and carrying into effect the policy of Prohibition and also the Abkari law in the State of Bombay". Part IV of the Constitution enumerates the Directive Principles of State Policy. Although the provisions contained in this part shall not be enforceable by any Court, the principles laid down therein are nevertheless fundamental in the governance of the country.
+Article 37
+provides that it shall be the duty of the State to apply these principles in making laws. Under
+Article 47
+, it is one of the duties of the State to endeavour to bring about prohibition of the consumption, except for medicinal purposes of intoxicating drinks and of drugs which are injurious to health. It is obvious that the
+Bombay Prohibition Act
+is brought on the Statute Book in furtherance of the policy of prohibition and it is in conformity with the duty of the State to bring about prohibition of the consumption except for medicinal purposes, of intoxicating drinks and of drugs which are injurious to health. It is to amend and consolidate the law relating to the promotion and enforcement of and carrying into effect the policy of prohibition that the Act is enacted. The preamble of the Act is as follows:
+"Whereas it is expedient to amend and consolidate the law relating to the promotion and enforcement of and carrying into effect the policy of prohibition and whereas it is also necessary to amend and consolidate the Abkari law in the State of Bombay for the said purpose and to provide for certain other purposes hereinafter appearing. It is hereby enacted as follows".
+Clause (22) of
+Section 2
+of the Act defines "intoxicant" as meaning "any liquor, intoxicating drug, opium or any other substance, which the State Government may, by notification in the official Gazette declare to be an intoxicant." It is not necessary to reproduce the definition of "intoxicating drugs" given in C!. (23) of
+Section 2
+Chapter II of the Act
+has enacted provisions to set up the establishment for the enforcement of the Act. Chapter III contains prohibitions under the Act. The various provisions of Chapter III contain inter alia the prohibitions relating to the consumption, use, possession or transport of any intoxicant or hemp.
+Section 24-A
+in Chapter III was added by Bom. Act 26 of 1952 and excluded certain preparations in the nature of toilet preparations, medicinal preparations etc., from the operation of the prohibitions contained in Chapter III. Chapter IV provides for the control, regulation and exemptions. This chapter contains provisions for licences to be granted by the State Government for such purposes as
+
+fide medicinal, scientific, other purposes. It also provides for granting of permits, subject to certain conditions for the use or consumption of foreign liquor. The granting of health permits and emergency permits is also provided for in this Chapter. Similar provisions which relate to the control, regulation and exemptions for the enforcement of the Act are contained in this Chapter. Chapter IV-A, provides for the control and regulation of articles mentioned in
+Section 24-A
+, to prevent their use as intoxicating liquor. Chapter IV-B provides for the control and regulation of denatured spirituous preparations to prevent their use as intoxicating liquor. Chapters V and VI respectively deal with prohibition of export or import of mhowra flowers and the control of export, etc., of molasses. Chapter VII provides for the offences and penalties.
+Section 65
+in this Chapter lays down the penalty for illegal import, manufacture, etc., of intoxicant of hemp. Suction 66 lays down the penalty for illegal cultivation and collection of hemp and inter alia for consumption, use, possession or transportation of any intoxicant.
+Section 68
+provides for penalty for opening, keeping or using any place as a common drinking house, etc. We have not referred to all the sections in this Chapter, but suffice it to say that this Chapter contains provisions for laying, down penalties for contraventions of prohibitions contained in the previous Chapters of the Act. Chapter V1II provides for excise duties. The provisions of Chapter IX are more material for the purpose of the present question. They deal with the powers and duties of officers and the procedure. They provide for the enforcement of the Act by laying down the power and duties of officers and by prescribing the procedure for such enforcement. It is in this Chapter that
+Section 129A
+was introduced.
+Section 129-A
+is as follows:
+"129-A. (i) Where in the investigation of any offence under this Act, any prohibition Officer duly empowered in this behalf by the State Government or any Police Officer, has reasonable ground for believing that a person has consumed an intoxicant and that for the purpose of establishing that he has consumed an intoxicant or for the procuring of evidence thereof it is necessary that his body be medically examined, or that his blood be collected for being tested for determining the percentage of alcohol therein, such Prohibition Officer or Police Officer may produce such person before a registered medical practitioner (authorised by general or special order by the State Government in this behalf) for the purpose of such medical examination or collection of blood, and request such registered medical practitioner to furnish a certificate on his finding whether such person has consumed any intoxicant and to forward the blood collected by him for test to the Chemical Examiner or Assistant Chemical Examiner to Government or to such other officer as the State Government may appoint) in this behalf.
+(2) The registered medical practitioner before whom such person has been produced shall examine such person and collect and forward in the manner prescribed the blood of such person, and furnish to the Officer by whom such person has been produced, a certificate in the prescribed form containing the result of his examination. The Chemical
+
+Examiner or Assistant Chemical Examiner to Government, or other officer appointed under Sub-section (1) shall certify the result of the test of the blood forwarded to him, stating therein, in the prescribed form, the percentage of alcohol, and such other particulars as may be necessary or relevant.
+(3) If any person offers resistance to his production before a registered medical practitioner under Sub-section (1) or on his production before such practitioner to the examination of his body or to the collection of his blood, it shall be lawful to use all means reasonably necessary to secure the production of such person or the examination of his body or the collection of blood necessary for the test.
+(4) If the person produced is a female, such examination shall be carried out by, and the blood shall be collected by or under the supervision of a female registered medical practitioner authorised by general or special order by the State Government in this behalf, and any examination of the body, or collection of blood, of such female shall be carried out or made with strict regard to decency.
+(5) Resistance to production before a registered medical practitioner as aforesaid, or to the examination of the body under this section, or to the collection of blood as aforesaid, shall be deemed to be an offence under
+Section 186
+of the Indian Penal Code.
+(6) Any expenditure incurred for the purpose of enforcing the provisions of this section including any fees payable to a registered medical practitioner or to the Officer appointed under Sub-section (1) shall be defrayed out of moneys provided by the State Legislature.
+(7) If any Prohibition Officer or Police Officer vexatiously and unreasonably proceeds under Subsection (1), he shall on conviction, be punished with fine which may extend to five hundred rupees.
+(8) Nothing in this section shall preclude the fact that the person accused of an offence has consumed an intoxicant from being proved otherwise than in accordance with the provisions of this section."
+Chapters X and XI deal with provisions for appeals and revision and other miscellaneous matters. It is, therefore, the scheme of the Act to prohibit, amongst other things, the consumption, use, possession, or transport of intoxicants, and this is done with a view to the promotion and enforcement of and carrying into effect the policy of Prohibition. It cannot be said that this enactment, if viewed as an organic whole, is law relating to acquisition or requisitioning of property. The pith and Substance of the legislation is to legislate in respect of intoxicating liquor, that is to say, the production manufacture, possession, transport, purchase and sale of intoxicating liquors. It may, however, be argued that even though the
+Bombay Prohibition Act
+, as a whole, may have been enacted in furtherance of the policy of Prohibition and may, therefore, be in respect of intoxicating liquors, some of the provisions of the Act, and in particular
+Section 129A
+, empower, during the investigation of any offence under the Act, any Prohibition Officer empowered in this behalf by the State Government or any Police Officer to produce any person
+
+before a registered medical practitioner for the purpose of medical examination or collection of blood, if there is reasonable ground for believing, that the person has consumed an intoxicant, and that for the purpose of establishing that he has consumed an intoxicant or for the procuring of evidence thereof it is necessary that his body be medically examined or that his blood be collected for being tested for determining the percentage of. alcohol therein. The purpose of the production of the person concerned before the medical practitioner may be to establish that he has consumed an intoxicant or it may be that it is necessary that his body should be medically examined or his blood should be collected for being tested for determining the percentage of alcohol therein, for the procuring of evidence. Sub-section (3) of the section empowers the use of all means reasonably necessary to secure the production of such person or the examination of his body or the collection of blood necessary for the test, if such person offers resistance to his production before the medical practitioner. Since now it is the duty of a Prohibition Officer empowered in this behalf by the State Government or of a Police Officer to produce such a person before the medical practitioner, despite his resistance, by employing all lawful means for that purpose, the resistance to such production may constitute an offence under the
+Indian Penal Code
+. The accused in this case has been charged with having committed an offence under
+Section 186
+of the Indian Penal Code; and if it is established that the accused resisted his being produced before % medical practitioner for the collection of blood, under
+Section 129A
+of the Act, it may amount to voluntary obstruction of a public servant in the discharge of his public functions and it may invite punishment with imprisonment of either description for a term which may extend to three months or with fine which may extend to five hundred rupees or with both. The result is that there is an obligation on every such person not to resist his production for collection of blood. If he does so, he may invite the wrath of the criminal law. The medical practitioner is empowered to collect blood necessary for the test, and it seems to have been argued before the learned Magistrate that it is inevitable under such circumstances that a person is bound to submit himself before the medical practitioner for the collection of his blood. It is said that blood is property and since such property was being extracted from his body and since there was no provision in law for the payment of compensation for such blood which is extracted,
+Section 129A
+violates
+Article 31(2)
+of the Constitution. It was not contended before us by the learned Advocate General that blood so extracted was not property. What was argued was that this provision is not for the purpose of acquisition of property. It was contended that
+Section 129A
+in terms provides for the collection of such blood for the purpose of establishing that an intoxicant has been consumed or for the procuring of evidence thereof. As we have already pointed out,
+Section 66
+makes it an offence to consume, use possess or transport any intoxicant. Before an offence can be made out, it has to be established that the accused has consumed intoxicant. Sub-section (2) was added to
+Section 66
+by. Bom. Act 12 of 1959. This Sub-section is as follows:
+"(2) Subject to the provisions of Sub-section (3) where in any trial of an offence under clause
+(b) of Sub-section (1) for the consumption of an intoxicant, it is alleged that the accused person consumed liquor, and it is proved that the concentration of alcohol in the blood of the accused person is not less than 0.05 per cent, weight in volume, then the burden of proving that the liquor
+consumed was a medicinal or toilet preparation, or an antiseptic preparation or solution, or a flavouring extract essence or syrup, containing alcohol, the consumption of which is not in contravention of the Act or any rules, regulations or order made thereunder, shall be upon the accused person, and the Court shall in the absence of such proof presume the contrary."
+This Sub-section (2) of
+Section 66
+lays down a rule of
+evidence. If it is established that the concentration of alcohol in the blood of the accused person is not less than 0.05 per cent weight in volume, then there is a presumption that the accused consumed liquor and the burden is then shifted on to the accused to prove that the liquor consumed was medicinal or toilet preparation or such other preparation, the consumption of which is not in contravention of the Act or any rules, regulations or orders made thereunder. This Sub-section seems to have been added as a result of the opinion expressed by Tendolkar J. In
+C.R.H. Readymoney Ltd. v. State of Bombay
+. Tendolkar, J., on the strength of evidence of experts, observed that a man may be said to show signs of intoxication when the concentration of alcohol in his blood is as low as 0.05 per cent. The object of introducing
+Section 129A
+, obviously therefore seems to be to enable the prosecution to have and produce evidence which would raise the rebut table presumption as provided for by Sub-section (2) of
+Section 66
+. It appears to us to be clear that the object of introducing the section was to provide for the procedure with a view to effectuate the policy of Prohibition, for which the
+Bombay Prohibition Act
+is enacted. While Sub-section (2) of
+Section 66
+laid down a rule of evidence,
+Section 129A
+laid down a rule of procedure by following which, such evidence could be procured and it could be established that a person has consumed an intoxicant. It is not possible to accept the contention that although blood, which is property, is extracted and although no compensation is provided for in the Act for blood so collected, this section provides for acquisition of property. We may point out that the learned Magistrate has ignored Clause (5-A) which was added by a subsequent amendment to
+Article 31
+of the Constitution. This clause in terms provides that "where a law does not provide for the transfer of the ownership or right to possession of any property to the State or to a corporation owned or controlled by the State, it shall not be deemed to provide for the compulsory acquisition or requisitioning of property, notwithstanding that it deprives any person of his property." Now, even though blood is collected, neither this section nor any other provision of the
+Bombay Prohibition Act
+provides for the transfer of ownership or right to possession of that blood to the State or to a corporation owned or controlled by the State. Even on this ground it cannot be deemed
+to provide for the compulsory acquisition or requisitioning of the property, despite the fact than it might deprive the accused of his property in the blood which is extracted. It is not necessary to review the history leading to the introduction of Clause (2-A) in
+Article 31.
+Suffice it to say that the amendment in effect superseded the view taken by the majority decision of the Supreme Court in
+State of West Bengal v. Subodh Gopal
+. By the introduction of this clause the minority view of Pas J. in that decision is adopted and the result is that cases where compensation must be provided for under
+Article 31
+are those where any property is transferred to the State or to a corporation owned or controlled by the State. Acquisition connotes that the ownership or the title of the owner is transferred to the State or a corporation owned or controlled by the State. Requisition takes place when the right! to possession is transferred similarly without transferring the title. It is now not enough to enquire whether the individual is substantially dispossessed or whether his right to use and enjoy the property is seriously impaired or the value of the property is materially reduced by the impugned State action. What is necessary to be ascertained is whether there is transference of ownership or right to possession to the State or to a corporation owned or controlled by the State. Looking to the- provisions of the
+Bombay Prohibition Act
+in general and
+Section 129A
+in particular, it cannot be said that the ownership of the blood is transferred to the State or that the right to possession of that blood is similarly transferred. Even on this view, it is possible to negative the argument that
+Section 129A
+provides for acquisition of property. We would rather prefer to base our conclusion on the wider ground, namely, that the
+Bombay Prohibition Act
+is not law relating to acquisition and even if it is assumed that the taking of blood under
+Section 129A
+is acquisition, it would not be hit by
+Article 31
+of the Constitution. We have already examined the scope and effect of the provisions of the
+Bombay Prohibition Act
+. On this examination the conclusion is inescapable that this legislation is, in substance, on the subject stated in Entry 8 in List II (State List) of the Seventh Schedule of the Constitution. Some of its provisions are wholly ancillary to the exercise of the legislative power under Entry 8 of the State List. It may be necessary, to give effect to the policy of the legislation in question, to make ancillary provisions which, by themselves, may trench on other subjects such as, in this case, the subject of acquisition and requisitioning of property stated in Entry 42 of List III (Concurrent List) in the Seventh Schedule. For that reason it cannot be said that such ancillary provisions should be considered separately and that they fall under another head of legislation.
+A.S. Krishna v. State of Madras
+the constitutional validity of some provisions of the Madras Prohibition Act, 1937 (Mad X of 1937) came in for consideration.
+Section 4(2)
+Sections 28
+of that Act were challenged on the ground that they were repugnant to the provisions of the
+Indian Evidence Act, 1872
+and the
+Code of Criminal Procedure
+, 1898 and also on the ground that they were repugnant to
+Article 14
+of the Constitution of India. Reliance was placed on
+Section 107(r)
+of the Government of
+
+India Act, 1935, The Madras Prohibition Act was passed at a time when the
+Constitution Act
+in force was the
+Government of India Act, 1935
+. It was contended that the aforesaid sections were repugnant to the provisions of the existing Indian laws with reference to the same matter, namely, the
+Indian Evidence Act
+and the
+Code of Criminal Procedure
+. It was held that the Madras Prohibition Act, 1937, was both in form and in substance at law relating to intoxicating liquors and that the presumptions in
+Section 4(2)
+and the provisions in that Act relating to search, seizure and arrest in
+Sections 28
+had no operation apart from offences created by that Act and were wholly ancillary to the exercise of the legislative power under Entry 31 in List II, Schedule 7 of the
+Government of India Act, 1935
+. Entry 31 in List II Schedule 7 of the
+Government of India Act
+was "intoxicating liquors and narcotic drugs, that is to say, the production, manufacture, possession, transport, purchase and sale of intoxicating liquors, opium and other narcotic drugs, but subject, as respects opium, to the provisions of List I and, as respects poisons and dangerous drugs, to the provisions of List III." The contention that the impugned provisions of the Madras Prohibition Act enacted rules of evidence was accepted, but it was held that it did not follow from this that it was a law on evidence, such as contemplated by Entry 5 in the Concurrent List. Similarly the contention that
+Sections 28
+entirely dealt with matters of procedure in relation to crimes was accepted, but it was held that for that reason they could not be regarded as law on Criminal procedure within Entry 2 of List III. It was observed
+in that case
+that the basic assumption on which the argument rested was that the heads of legislation set out in the several Lists were so precisely drawn as to be mutually exclusive. The Supreme Court observed that this assumption was not correct and that some overlapping of the fields of legislation was inevitable. The doctrine evolved by the Privy Council, that, for deciding whether, an impugned legislation was intra vires regard must be had to its pith and substance, was quoted with approval. If a statute was found in substance to relate to a topic within the competence of the legislature, it should be held to be intra vires, even though it might incidentally trench on topics not within legislative competence. It appears that in such cases it has to be considered whether the legislation is colourable, and in considering this the extent of the encroachment on matters beyond its competence may be a material element. If in the guise of making a law on a matter within its competence, the legislature, is in truth, making a law on a subject beyond its competence, then it will be a colourable use of legislative power. On the other hand, if the law is in substance on a matter within the competence of the legislature but only incidentally trenches on other matters with a view to making that law effective and for that purpose enacts ancillary provisions, it cannot be said that such provisions, are beyond the competence of the legislature. The Supreme Court summed up the position as follows:
+"When a law is impugned on the ground that it is ultra vires the powers of the legislature which enacted it, what has to be ascertained is the true
+
+character of the legislation. To do that, one must have regard to the enactment as a whole, to its objects and to the scope and effect of its provisions. If on such examination it is found that the legislation is in substance one on a matter assigned to the legislature, then it must be held to be valid in its entirety, even though it might incidentally trench on matters which are beyond its competence. It would be quite an erroneous approach to the question to view such a statute not as an organic whole, but as a mere collection of sections, then disintegrate it into parts, examine under what heads of legislation those parts would severally fall, and by that process determine what portions thereof are intra vires, and what are not."
+On this basis, the Court held that the presumptions which were raised by Section 4(2) of the Madras Prohibition Act were not such as could be raised in the trial of all criminal cases, as are those enacted in the
+Evidence Act
+. They were to be raised only in the trial of offences under
+Section 4(1)
+of the Act. Those presumptions were, therefore, purely ancillary to the exercise of the legislative power in respect of Entry 31 in List II. Similarly it was held that the provisions relating to search, seizure and arrest in
+Sections 28
+were only with reference to offences committed or suspected to have been committed under the Act. They have no operation generally or to offences which fall outside the Act. None of the presumptions in
+Section 4(2)
+or the provisions of Sections. 28 to 32 had any operation apart from offences created by the Act and must, therefore, be held to be totally ancillary to the legislation under Entry 32 in List II. It is true that
+in that case
+the question was of legislative competence of the State Legislature to enact those provisions. The question of legislative competence does not arise in the present case. But still the principle underlying these observations will apply to this case in which the provisions of the
+Bombay Prohibition Act
+are challenged on the ground that they violate
+Article 31
+of the Constitution. It is, therefore, necessary to determine on a consideration of the statute as a whole as to whether the
+Bombay Prohibition Act
+is law relating to acquisition at all or whether it is law relating to intoxicating liquor. If the answer is that it is the latter, there could be no difficulty in coming to the conclusion that
+Article 31
+is not attracted. The power given by
+Section 129A
+of the Bombay Prohibition Act is only in respect of offences under the Act. It is limited to those cases in which certain persons are taken to the registered medical practitioner by the Prohibition Officer or the Police Officer during the course of investigation. The presumptions which may arise as a result of the blood test will also arise under
+Section 66(2)
+only in respect of the provisions of this Act. They have no operation generally or to offences which fall outside the Act. These provisions must, therefore, be held to be ancillary to the legislative power of the State Legislature to make a law relating to the matters in Entry 8 in List II (State List) of the Seventh Schedule of the Constitution.
+6. A similar question came up for consideration in Russell v. The Queen, (1882) 7 AC 829 before the Privy Council. In that case the Canada Temperance Act, 1878, passed by one of the Provincial Legislatures in Canada was challenged on
+
+the ground that it was beyond the legislative competence of the Provincial Legislature. It was contended that looking to the Scheme of that Act) it fell under a subject which was within the legislative competence of the Dominion Parliament. It was contended that the scheme under which it fell was "property and civil rights", which was under the legislative competence of the Dominion Parliament. This contention was negatived by the Privy Council as follows : --
+"Next their Lordships cannot think that the Temperence Act in question properly belongs to the class of subjects, "Property and Civil Rights". It has in its legal aspect an obvious and close similarity to laws which place restrictions on the sale or custody of poisonous drugs, or of dangerously explosive substances. These things, as well as intoxicating liquors, can, of course, be held as property, but a law placing restrictions on their sale, custody, or removal, on the ground that the free sale or use of them is dangerous to public safety, and making it a criminal offence punishable by fine or imprisonment to violate these restrictions, cannot properly be deemed a law in relation to property in the sense in which those words are used in the 92nd section. What Parliament is dealing with in legislation of this kind is not a matter in relation to property and its rights, but one relating to public order and safety. That is the primary matter dealt with, and though incidentally the free use of things in which men may have property is interfered with, that incidental interference does not alter the character of the law. Upon the same considerations, the Act in question cannot be regarded as legislation in relation to civil rights. In however large a sense these words are used, it could not have been intended to prevent the Parliament of Canada from declaring and enacting certain uses of property, and certain acts in relation to property, to be criminal and wrongful. Laws which make it a criminal offence for a man wilfully to set fire to his own House on the ground that such an act endangers the public safety, or to overwork his horse on the ground of. cruelty to animal, though affecting in some sense property and the right of a man to do as he pleases with his own, cannot properly be regarded as legislation in relation to property or to civil rights. Nor could a law which prohibited or restricted the sale or exposure of cattle having a contagious disease be so regarded. Laws of this nature designed for the promotion of public order, safety, or morals, and which subject those who contravene them to criminal procedure and punishment, belong to the subject of public wrongs rather than to that of civil rights. They are of a nature which fall within the general authority of parliament to make laws for the order and good government of Canada, and have direct relation to criminal law, which is one of the enumerated classes of subjects assigned exclusively to the Parliament of Canada. It was said in the course of the judgment of this Board in the case of the Citizens Insurance Co. of Canada v. Persons, (1881) 7 AC 06, that the two sections (91 and 92) must be read together, and the language of one interpreted, and, where necessary, modified by that of the other. Few, if any, laws could be made by Parliament for the peace, order and good government
+
+of Canada which did not in some incidental way affect property and civil rights; and it could not have been intended, when assuring to the provinces exclusive legislative authority on the subjects of property and civil tights, to exclude the Parliament from the exercise of this general power whenever any such incidental interference, would result from it. The true nature and character of the legislation in the particular instance under discussion must always be determined in order to ascertain the class of subjects to which it really belongs. In the present case it appears to their Lordships, for the reasons already given, that the matter of the Act in question does not properly belong to the class of subjects "Property and Civil Rights" within the meaning of Sub-section (13)"
+It was thus laid down that the true nature and character of the legislation in the particular instance under discussion must always be determined, in order to ascertain the class of subjects to which it really belongs. The challenge to
+Section 129A
+of the Bombay Prohibition Act on the ground that it violates
+Article 31
+of the Constitution must, therefore, fail.
+7. As we have pointed out earlier, the learned Advocate General had also contended that even if it was held that this section was violative of
+Article 31
+of the Constitution on the ground that it provided for acquisition of property, he would support that section on the ground that it fell in Sub-clause (b) (ii) of Clause (5) of
+Article 31.
+There would be considerable substance in this contention also, but on the view which we have taken it is not necessary to decide it.
+8. The second ground on which the section was challenged before the learned Magistrate was that it violated
+Article 21
+of the Constitution.
+Article 21
+provides that 
+ "No person shall be deprived of his life or personal liberty except according to procedure established by law".
+The argument seems to have weighed with the learned Magistrate on the ground that there was no Article in the Constitution to authorise the State to deprive a man of his blood. The learned Magistrate observed that blood was part of life and the section does not prescribe the quantity of blood of which a man could be deprived. He has observed as follows:
+"Thus, under the section a person could be deprived of limitless blood with fatal consequences. It is, therefore, submitted that the procedure prescribed under
+Section 129A
+to deprive a person of his blood is vague and is not saved by
+Article 21
+of the Constitution".
+It must be noted that the rules relating to the taking of blood were not challenged before the learned Magistrate. It would be erroneous to say that the provision in
+Section 129A
+is vague since limitless blood can be taken from a man's body which may lead to fatal consequences. Sub-section (2) of
+Section 129A
+itself provides that the registered medical practitioner before whom a person has been produced shall examine such person and collect and forward in the manner prescribed the blood of such person. Sub-section (3) provides that it shall be lawful to use all means reasonably necessary to secure
+
+the production of such person or the examination of his body or the collection of blood necessary for the test. From this it would appear that there are limitations in the section itself relating to the collection of blood. The collection, in the first instance, has to be in the manner prescribed, and the power to produce a person before the medical practitioner is for the collection of blood necessary for the test. Implied in this is the limitation that such blood as is necessary for the test is to be collected. By virtue of the powers conferred on the Government by Clause (w) of Sub-section (2) of
+Section 143
+of the Bombay Prohibition Act, rules are framed and those rules are called the Bombay Prohibition, (Medical Examination and Blood Test) Rules 1959 Rule 4 of these rules which provides for the manner and collection and forwarding of blood, is as follows:
+"4. Manner of Collection and forwarding of blood, (1) The registered medical practitioner shall use a syringe for the collection of the blood of the person produced before him under rule 3. The syringe shall be sterilised by putting It in boiling water before it is used for the aforesaid purpose. He shall clean with sterilized water and swab the skin surface of that part of such person's body from which he intends to withdraw blood. No alcohol shall be touched at any stage while withdrawing blood from the body of the person. He shall withdraw not less than 5 c.c. of venous blood in the syringe from the body of the person. The blood collected in the syringe shall then be transferred into a phial containing anti-coagulant and preservative and the phial shall then be shaken vigorously to dissolve the anti-coagulant and preservative in the blood. The phial shall be labelled and its cap sealed by means of sealing wax with the official seal or the monogram of the registered medical practitioner.
+(2) The sample blood collected in the phial in the manner stated in Sub-rule (1) shall be forwarded for. test to the Testing Officer either by post or with a special messenger so as to reach him within seven days from the date of its collection. It shall be accompanied by a forwarding letter in Form "B" which shall bear a facsimile of the seal or monogram used for sealing the phial of the sample blood."
+It is true that in this rule the registered medical practitioner is required to withdraw from the body of the person not less than 5 c.c. of venous blood in the syringe. It is contended that although the minimum quantity of blood to be withdrawn from the body of the person is prescribed in this rule, there is no limitation if the registered medical practitioner extracts more blood so as to make it detrimental to human health. We have already pointed out that the validity of this rule is not challenged before us and we are not called upon to consider that aspect of the matter. What is important is that the section itself imposes the limitation for extracting blood only in the manner prescribed. Moreover, blood cannot be extracted by any person otherwise than by a registered medical practitioner authorised by general or special order by the State Government in this behalf. There is no reason to suppose that this power of authorising certain medical practitioners shall be exercised unreasonably. It cannot, therefore, be said that the
+
+power to extract blood is without any limitations. The section itself requires that the blood is to be extracted as is necessary for the test. It is therefore not possible to accept the learned Magistrate's view that limitless blood can be extracted for purposes of the test under
+Section 129A
+of the Act. The amendment was introduced in the Act as a sequel to the decision in by which the police officers or the prohibition Officers are empowered by law to take a person against his will to a doctor for medical examination. If the person offers resistance to his production before a medical practitioner or to the examination of his body or to the collection of his blood, it has now been made lawful to use all means reasonably necessary to secure the production of such person or the examination of his body or the collection of blood as may be necessary for the test. It is, therefore, now a procedure established by law for the examination of the body of a person or the collection of his blood. As we have pointed out earlier, in 63 Bom L R. 87 it was urged before the Court that
+Section 129-A
+allows a person to be dragged for medical examination and to be manhandled for the forcible extraction of blood from his veins and that too by a medical practitioner who might only be a veterinary doctor, and all this for the purpose of deciding whether circumstances existed under which a rebuttable presumption of having taken prohibited alcohol might not be raised against him. But the Court observed that all considerations relating to the propriety or otherwise of the very considerable limitations on personal liberty which have been imposed by the section were rigidly excluded from consideration. Although the question was not decided, it was observed as follows:
+"It is, however, not within our competence to decide whether, under the circumstances, the extent of interference with personal liberty is reasonably justified by the object to be achieved. While the judiciary can be approached for an enquiry into the reasonableness of restrictions placed on the right "to acquire, hold and dispose of property", guaranteed by
+Article 19(i)(f)
+of the Constitution, no equally comprehensive right to the judicial examination of the reasonableness of restrictions imposed on personal liberty has been granted by the Constitution. Certain specific aspects of personal liberty have been included in
+Article 19
+, such as the right to freedom of speech and expression, the right to assemble peaceably and without arms, the right to form associations or unions, etc., and the reasonableness of any restrictions placed on these specific rights has been made justiciable. The general right to personal liberty, apart from specific aspect thereof, is covered by
+Article 21
+, which says that "no person shall be deprived of his life or personal liberty except according to procedure established by law." Where personal liberty is restricted by a particular law, and the law does not relate to topics mentioned in
+Article 19
+, the examination of its reasonableness is an exclusively legislative function."
+The provisions of law with which we are concerned cannot be said to fall within the specific aspects of personal liberty protected under
+Article 19(1)(f)
+of the Constitution. With respect, we agree with the observations made by this Court in 63 Bom LR 87. Whatever limitation on personal liberty as may be involved because of the provisions of
+Section 129A
+, of
+
+the Act will therefore, have to be examined in the light of the general right to personal liberty as is covered by Art, 21 of the Constitution.
+Article 21
+itself does not give an absolute right to personal liberty. It does not say that no person shall be deprived of his life or personal liberty under any circumstances. On the contrary, the Article presupposes that such deprivation of life or personal liberty as is in accordance with procedure established by law is not protected by
+Article 21.
+The function of deciding as to whether certain procedure established by law which results in the deprivation of life or personal liberty is reasonable or not is not of the Court, since it is an exclusively legislative function.
+The result, therefore, is that even on the assumption that the provision of
+Section 129A
+of the Act is unreasonable, it is not for the Court to decide that question since the reasonableness of a provision of law relating to curtailment of life or personal liberty by procedure established by law is not justiciable. The Legislature in its wisdom decides whether certain restrictions on personal liberty or life are reasonable or not and establishes a procedure in the law. So long as that procedure is established by law, it is not open to challenge it on the ground that it violates
+Article 21
+of the Constitution. This was the view taken by the Supreme Court in
+A.K. Gopalan v. State of Madras
+. Kania C. J. observed as follows:
+"The only right given by
+Article 21
+is that no person shall be deprived of his life or liberty except according to procedure established by law.....
+By adopting that phrase, the Constitution gave the Legislature the final word to determine law.... It
+is only in express constitutional provisions limiting legislative power and controlling the temporary will of a majority by a permanent and paramount law settled by the deliberate wisdom of the nation that one can find a safe and solid ground for the authority of Courts of justice to declare void any legislative enactment. Any assumption of authority beyond this would be to place in the hands of the judiciary powers too great and too indefinite either for its own security or the protection of private rights."
+It must be remembered that our Constitution does not contain a provision corresponding to the Due Process Clause of the 5th and 14th Amendment of the American Constitution. It is therefore, clear that the validity of
+Section 129A
+of the Act, will have to be decided only with reference to the constitutional provision contained in
+Article 20(3).
+Since It cannot now be said that there is no law empowering the extraction of blood and since the procedure for such extraction of blood is established by law, any deprivation of liberty on account of a person being compelled to go before a medical officer for that purpose cannot be said to be ultra vires
+Article 21
+of the Constitution.
+9. We have pointed out before that the section itself contains limitations with regard to the procedure for extracting blood. The question as to whether the conviction of a person based on the result of the involuntary blood-test taken after extracting blood deprived a person of his liberty without due process of law guaranteed by the Fourteenth Amendment of the American Constitution arose for consideration in Breithaupt v. Abram, (1957) 352 Us. 432: I Law Ed 2nd 448. The petitioner in that case while driving a pickup truck was involved in a collision with a passenger car. Some of the passengers of the car were killed and the petitioner was seriously Injured. A pint whisky bottle, almost empty, was found in the glove compartment of the truck. The petitioner was, therefore, taken to a hospital and while he was lying unconscious, the smell of liquor was detected on his breath. On a request by the patrolman, and attending physician, while the petitioner was unconscious, withdrew a sample of about 20 cubic centimeters of blood by use of a hypodermic needle. Subsequent laboratory analysis showed that the blood contained about 17% alcohol. The petitioner was thereafter charged with in voluntary manslaughter and in the trial, testimony regarding the blood test and its result, was admitted into evidence, despite the petitioner's objection. This testimony included the evidence of an expert that a person with 17% alcohol in his blood was under the influence of intoxicating liquor. Although he was convicted, the petitioner did not appeal, but later he sought release from his imprisonment by a petition for a writ of habeas corpus. It was contended that the conduct of the state officers offended the "sense of decency" and that it was "brutal" and "offensive" and was therefore "shocking" to the "conscience". It was also said that the conduct did not comport with traditional ideas of fair play and decency. This argument was not accepted by a majority of the Supreme Court of the U. S. Mr. Justice Clark who delivered the opinion of the majority observed as follows:
+"....there is nothing "brutal" or "offensive"
+in the taking of a sample of blood when done, as in this case, under the protective eye of a physician. To be sure, the driver here was unconscious when the blood was taken, but the absence of conscious consent, without more does not necessarily render the taking a violation of a constitutional right; and certainly the test administered here would not be considered offensive by even the most delicate. Furthermore, due process is not measured by the yardstick of personal reaction or the sphygmogram of the most sensitive person, but by that whole community sense of "decency and fairness". That has been woven by common experience into the fabric of acceptable conduct..... The blood test
+procedure has become routine in our every day life. It is a ritual for those going into the military service as well as those applying for marriage licenses. Many colleges require such tests before permitting entrance and literally millions of us have, voluntarily gone through the same, though a longer, routine in becoming blood donors."
+The majority opinion, therefore was that a blood test taken by a skilled technician is not such "conduct that shocks the conscience". The Court also observed that this may not apply to cases where there is indiscriminate taking of blood under different conditions or by those not competent to do so. It was also observed:
+"Modern community living requires modern scientific methods of crime detection lest the public go unprotected."
+Mr. Justice Clark in conclusion made the following very pertinent observations:
+"As against the right of an individual that Ms person be held invoilable, even against so slight an intrusion as is involved in applying a blood test of the kind to which millions of Americans submit as a matter of course every day, must be set the interests of society in the scientific determination of intoxication, one of the great causes of the mortal hazards of the road. And the more so, since, the test likewise may established innocence, thus affording protection against the treachery of judgment based on one or more of the senses."
+This was the view taken by the Supreme Court of U.S. even when the challenge was under the Due Process Clause. So far as our Constitution is concerned, the Courts, are not required to go so far and determine whether a certain procedure established, by law was brutal or offensive or shocking to the conscience and was, therefore, unreasonable. Infringement of personal liberty or life, if in accordance with the procedure established by law, is not justiciable.
+In the Prohibition Act
+, which, as we have pointed out earlier, is brought on the statute book to effectuate the policy of Prohibition, the taking of blond is empowered to be done only by a registered medical practitioner. It is thus under the protective eye of the law. It is intended to help the scientific determination of intoxication and the results of the test may as well prove innocence as the guilt of the person. We are, therefore, unable to accept the view taken by the learned Magistrate that
+Section 129-A
+of the Act is ultra vires
+Article 21
+of the Constitution.
+10. In the view which we have taken we can
+not accept the contention made on behalf of the
+accused that
+Section 129A
+of the Bombay Prohibition/
+Act is ultra vires either
+Article 21
+Article 31
+of the Constitution. The Reference is, therefore, rejected.
+The papers of this case shall be sent back to the
+learned Magistrate for the further disposal of the
+case according to law.
+11. Reference rejected.

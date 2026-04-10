@@ -1,0 +1,99 @@
+CASE TITLE: Shanmughasundaram Pillai vs The State on 16 July, 1982
+DATE: Unknown Date
+PRIMARY ARTICLE: Article 14
+SOURCE: https://indiankanoon.org/doc/409071/
+YEAR: 1982
+ARTICLES CITED: Article 14
+BENCH TYPE: Division Bench (2)
+HAS DISSENT: No
+CASE NUMBER: None
+======================================================================
+
+[Cites
+, Cited by
+Madras High Court
+Shanmughasundaram Pillai vs The State on 16 July, 1982
+ORDER
+1. The criminal revision petitioner seeks to set aside the proceedings in C.C. 1210 of 1978 on the file of the Judicial Second Class Magistrate, Chidambaram.
+2. The facts are these. The petitioner a resident of K. Addor, Chidambaram taluk, was charged by the Sub-Inspector of Police, Chidambaram taluk, Police Station with having committed an offence on 14-1-1978, under
+Section 7(1)(b)
+of the Protection of Civil Rights Act (Central Act 22 of 1955). The case was taken on file as C.C. 1210 of 1978 by the Judicial Second Class Magistrate, Chidambaram. Then trial of the case is almost at the concluding stage.
+3. The petitioner appears to have resisted this proceedings urging various contentions including a move for transfer of the case, before the Court of Session, South Arcot, and this court did not pursue any of these. He has now come up on revision urging firstly that the learned Judicial Second Class Magistrate Chidambaram had no jurisdiction to take cognisance of a case under the
+Protection of Civil Rights Act, 1955
+, in view of the express provisions in the Act that an offence under the Act should be tried only summarily by a Judicial First Class Magistrate and secondly that
+S. 12
+of the Act, which provides for a presumption, is violative of
+Art. 14
+of the Constitution.
+4. The respondent who is the State, has filed a counter sworn to by the Sub-Inspector of Police, Chidambaram taluk Police Station, wherein reference is made to the various proceedings before the court of session, South Arcot, and this court, which were initiated by the respondent during the trial of the case but in all of which he did not press. It is also contended that a revision under
+S. 397
+Cr.P.C. at an interlocutory stage has been specifically forbidden under sub-section (2) of the Section 397 of the present Code and as such this revision petition must fail. As for the contention that the lower court had no jurisdiction to take cognisance of the case, an unreported decision of Paul, J., in Cr.M.P. 6925 of 1979 is relied on, wherein the learned Judge has held that there is no bar to a second class Magistrate trying an offence under the
+Protection of Civil Rights Act, 1955
+. As for the objection regarding Section 12 of the Act, it is urged that such an objection cannot be taken in an application under Section 422 Cr.P.C. It may be mentioned here that the present petition is only one under Section 401, Cr.P.C. and not under Section 482 Cr.P.C.
+5. The contention in regard to
+Art. 14
+of the Constitution may be disposed of.
+Section 12
+of the runs thus. -
+"Where any act constituting an offence under this Act is committed in relation to a member of a scheduled caste the Court shall presume, unless the contrary is proved, that such act was committed on the ground of 'untouchability'." This special rule of evidence is challenged by the petitioner on the ground that it is violative of
+Article 14
+of the Constitution. The question of law in regard to such special rules of evidence in statutes is well settled after the decision of the Supreme Court in
+A. B. Krishna v. State of Madras
+, 1957 SCR 399 : (1957 Cri LJ 409). That was a case where the validity of a similar provision in Section 4(2) of the Madras Prohibition Act, 1937, was questioned on the ground that it offended
+Article 14
+of the Constitution. The Supreme Court has held that the presumptions in
+S. 4(2)
+of the Prohibition Act do not offend the requirements as to equality before law or equal protection of laws under
+Article 14
+, as they have to be raised against all persons against whom the facts mentioned therein are established. The presumptions are not to be raised in the trial of all criminal cases, but are to be raised only in the trial of offences under
+Section 4(8)
+of the Prohibition Act. Such presumptions therefore are purely ancillary to the exercise of legislative power. They have no operation generally as to the offences which fall outside the Act. The presumption contained in
+Section 12
+of the Protection of Civil Rights Act is identical with that provided for under the
+Prohibition Act
+. In view of this categorical statement of law by the Supreme Court the contention of the petitioner on the validity of
+Section 12
+of the Act is unsustainable and has to be rejected."
+6. Taking the contention regarding the want of jurisdiction in a Second Class Magistrate to take cognisance of an offence under the
+Protection of Civil Rights Act
+, and the trial of an offender, I am inclined to feel that there is a good deal of force in it. My attention has been drawn to the unreported judgment of Paul, J., in Crl.M.P. 6925 of 1979, (Chinnaswami Padayachi v. State). The accused in that case was charged for an offence under
+Section 7(1)(d)
+of the Protection of Civil Rights Act before the Judicial Second Class Magistrate, Chidambaram. The accused moved this court for quashing the proceedings on the ground that such an offence was triable only by a Magistrate of the first class. Paul J., repelled this contention and held that the proper interpretation of
+Section 15(1)
+of the Act is where it is purported to try a person for an offence under the Act, summarily, then that may be only by a Judicial Magistrate of the First Class. The section does not deprive a Second Class Magistrate of his jurisdiction to try an offence under the Act. The learned Judge taking note of the punishment prescribed for an offence under
+Section 7(1)(d)
+held that a second class Magistrate could impose such a punishment himself and as such he could try an offence under the Act. Unless, according to the Judge there is a specific bar of a Magistrate below the rank of a Magistrate of the First Class trying an offence under the Act.
+S. 15(1)
+cannot be construed as imposing any such bar. In this view, the petition was dismissed.
+7. With great respect tot he learned Judge, I am unable to agree,
+Section 15(1)
+of the Protection of Civil Rights Act runs thus :-
+"Notwithstanding anything contained in the
+Code of Criminal Procedure
+, 1973, every offence punishable under this Act shall be cognisable and every such offence, except where it is punishable with imprisonment for a minimum term exceeding three months, may be tried summarily by a Judicial Magistrate of the first class or in a metropolitan area by Metropolitan Magistrate in accordance with the procedure specified in the said Code.
+8. This section, which is part of a special law which creates offences for the first time and provides for punishments, a punishment with a minimum term of imprisonment even for a first offence, has also made a departure in regard to the powers of the police. The
+Code of Criminal Procedure
+has specified in schedule clause II under classification of offences against other laws, that offences punishable with imprisonment for less than three years or with fine only, are non-cognisable and are triable by any magistrate.
+Section 15(1)
+of the Act has made what under the Code are non-cognisable offences and cognisable offences. While under this Code, an offence of this type may be tried by any Magistrate,
+Section 15(1)
+steps in and provides that notwithstanding anything contained in the
+Code of Criminal Procedure
+1973, every offence under this Act except where it is punishable with imprisonment for a minimum term exceeding three months, may be tried summarily by a Judicial Magistrate of the First Class or in a Metropolitan area by a Metropolitan Magistrate in accordance with the procedure specified in the said Code. Thus this Statute renders the provisions of the general law contained in the Code inapplicable to offences created by it as far cognisance of the police is concerned and although any magistrate can try an offence under other laws punishable with imprisonment up to three years, this Act makes a special provision that some of the offences created by it may be tried summarily by a Magistrate of the First Class or a Metropolitan Magistrate. The Statue has conferred a discretion on the Magistrate to try a case under the Act summarily. The question whether a particular offender is to be tried in a regular trial or summarily, must necessarily be decided by the court only after it takes cognisance of the offence. The Magistrate, therefore, has to be seized of the case before he applies his mind to the question, whether or not an offender is to be tried summarily. If it is so the magistrate, who takes cognisance of the case and the Magistrate, who takes a decision as to the mode of trial are to be one and the same. The Legislature would never have intended that a Second class Magistrate has to take cognisance of the case and if it is to be tried summarily, a First Class Magistrate has to take his place. Further, the discretion to try summarily has to be only that of First Class Magistrate as the Section reads. The idea of providing for a summary trial is to assure that the trial of offenders under the Act has to be expeditious with not even a right of appeal to the convicted person. While so, it is inconceivable that the Legislature would have intended that a Second Class Magistrate should try offences under the Act and a First Class Magistrate can try the case only summarily. There is one other aspect which must be noticed. A discretion to try an offender summarily is one to be exercised by the Magistrate. If a police officer is to be allowed to file a charge-sheet before a Second Class Magistrate, in such cases, it would in effect mean that this discretion had been exercised by him that the offender need not be tried summarily a power which the Legislature would never have intended to confer on a Police Officer. This would also indicate that the object of the provision is that only a First Class Magistrate has to take cognisance of the case and try it, either summarily or in a regular manner.
+9. The
+Code of Criminal Procedure
+under sub-section (b) of Section 26 has made its provision relating to the jurisdiction of courts inapplicable to any offence under a law other than the Penal Code where any court is specified in this behalf in such law. In cases of such laws, offences have to be tried only by such courts. It is only when no court is so mentioned, the offences may be tried by the High Court or any other court by which such offence is show in the first schedule to be triable. In view of this express provision in the Code, it is futile to contend that any court other than the court mentioned in
+Section 15(1)
+of the Protection of Civil Rights Act, 1955, can try offenders under the Act. It is a well settled rule of interpretation that the provisions in a statute should be interpreted and read in a manner which is conducive to the harmonious working of the enactment. The intent of this statute is to put down the evil of untouchability and the offender brought to justice expeditiously.
+The Act
+also provides for a summary trial which ensures a speedy trial. A special rule of evidence by way of presumption is also provided. While so, it is, in my view, not permissible to hold that a court other than a First Class Magistrate can take cognisance of a case and try it. The reference in
+Section 15(1)
+of the Act to a First Class Magistrate is not to be restricted only to cases triable summarily. It applies to all cases. The right to try summarily is only a power. Such a power can be exercised only if the Magistrate has jurisdiction to try a case. The stage for taking a decision whether to try a case summarily can and must follow only after cognisance is taken by the Magistrate of the case. It is not permissible therefore to hold that the jurisdiction of a First Class Magistrate under
+S. 15(1)
+of the Act is restrictive and not general.
+10. In this view. I must hold that the learned Judicial Second Class Magistrate, Chidambaram, had no jurisdiction to take cognisance of the case and try it. Consequently the entire proceedings before him are vitiated and void.
+11. The next question for consideration is whether this court can interfere in revision. Learned Public Prosecutor has contended that S. 397(2) of the Code prohibits coming up as revision at an interlocutory stage and as such in this case, where the trial is almost at the end, this revision is not maintainable, I do not agree. The question of an interlocutory stage can arise only when there is a valid proceeding pending before a subordinate court. In this case, in view of my finding, that the learned Second Class Magistrate had no jurisdiction to try the case, there can be no question of an interlocutory stage. In fact, the petitioner ought to have come up much earlier and had he done so, much of the trial of the lower court could have been saved. In a case of this nature, it is not only permissible to interfere but is also the duty of this court to do so. The bar under S. 397(2) of the Code can apply Only to proceedings which are validly pending and not to those that are void. There is, therefore, no force in the contention of the learned Public Prosecutor in this regard.
+12. The result is, the revision petition is allowed and the proceedings in C.C. No. 1210 of 1978 on the file of the Judicial Second Class Magistrate, Chidambaram, are set aside.
+13. The further question is, whether the matter should be pursued by the First Class Magistrate having jurisdiction. The alleged occurrence is said to have taken place somewhere in January, 1978 and the petitioner-accused has undergone the ordeal of trial for more than four and a half years. Having regard to the offence complained of and also the long lapse of time and the hardship that has already been caused to the accused on account of the trial in the wrong forum, I think it is not in the interests of justice to order retrial of the case before the First Class Magistrate.
+14. Consequently, the proceedings in C.C. in 1210 of 1978 are quashed and the matter is closed. The revision is allowed.
+15. Revision allowed.

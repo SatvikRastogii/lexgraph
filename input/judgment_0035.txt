@@ -1,0 +1,466 @@
+CASE TITLE: In Re: C.G. Menon And Anr. vs Unknown on 20 February, 1953
+DATE: Unknown Date
+PRIMARY ARTICLE: Article 14
+SOURCE: https://indiankanoon.org/doc/1450770/
+YEAR: 1953
+ARTICLES CITED: Article 1881, Article 395, Article 13, Article 372, Article 14
+BENCH TYPE: Division Bench (2)
+HAS DISSENT: No
+CASE NUMBER: None
+======================================================================
+
+[Cites
+, Cited by
+Madras High Court
+In Re: C.G. Menon And Anr. vs Unknown on 20 February, 1953
+Equivalent citations: AIR1953MAD729, (1953)IIMLJ61
+JUDGMENT
+ 
+
+ Rajagopalan, J.
+1. Under Section 432 Criminal P. C. as amended by the Codes of Civil and Criminal Procedure Amendment Act (Act 24 of 1051), the Chief Presidency Magistrate, Madras, referred two questions of law to this Court :
+(i) Whether the Fugitive Offenders Act, 1881, applies to India after 26-1-1950, when India became a Sovereign Democratic Republic; and
+(ii) Whether, even if it applied, it or any of its provisions, particularly Part II thereof, is repugnant to the Constitution of India and is therefore void and/or inoperative.
+The events that led up to this reference were set out in full in the order of the learned Chief Presidency Magistrate, which was appended to his reference. Mr. C.G. Menon and his wife, Mrs. Villasini Menon, are Indian nationals. Mr. Menon is a Barrister-at-law. He was practising as an 'advocate and solicitor in the colony of Singapore. Mrs. Menon, who was enrolled as an advocate of the Madras High Court lived with her husband at Singapore, and until recently she wag a member of the Legislative Council of Singapore. The Colonial Secretary of Singapore requested the assistance of the Government of India for the arrest and return to Singapore of Mr. and Mrs. Menon under warrants issued by the Third Police Magistrate of Singapore. On 27-8-1952, the Chief Presidency Magistrate, Madras, issued provisional warrants under Section 16, Fugitive Offenders Act, 1881, for the arrest of Mr. and Mrs. Menon. Subsequently, on 12-9-1952, two warrants issued by the Third Police Magistrate of Singapore were produced before the Chief Presidency Magistrate by Mr. E.J. Linsell, Assistant Superintendent of Police, Singapore. On 16-10-1952 Mr. Linsell produced before the Chief Presidency Magistrate three more warrants for the arrest of Mr. Menon and thirteen more for the arrest of Mrs. Menon, all of them issued by the Third Police Magistrate, Singapore. The offences alleged to have been committed by Mr. and Mrs. Menon were criminal breach of trust in respect of various sums of money, abetment thereof and cheating.
+2. Meanwhile, on 4-9-1952, Mr. and Mrs.
+Menon presented a petition to the Chief Presidency Magistrate, contending that the charges
+against them had not been preferred in good
+faith, and that they were victims of political
+animosity. They pleaded that under the conditions that prevailed then in Singapore and
+the political background of the charges, their
+return to Singapore was likely to result in a
+denial of justice. Mr. Linsell gave evidence
+before the Chief Presidency Magistrate on
+15-9-1952 and again on 13-10-1952 to prove the
+identity of Mr. and Mrs. Menon with the per
+sons for whom warrants of arrest had been
+issued by the Third Police Magistrate of Singapore, and to prove the authenticity of the
+warrants. Mr. Linsell was cross-examined by
+the counsel for Mr. and Mrs. Menon. This was
+followed up by another petition presented by
+Mr. and Mrs. Menon to the Chief Presidency
+Magistrate on 15-10-1952. It is not necessary
+to set out the several allegations of fact in
+that petition. Mr. and Mrs. Menon contended
+that the Fugitive Offenders Act, 1881, was not
+applicable to India after 26-1-1950, and that,
+even if it applied, it was repugnant to the
+Constitution of India. It was after that, that
+the Chief Presidency Magistrate referred to
+this Court the two questions mentioned above.
+It should be more convenient to refer to Mr.
+and Mrs. Menon as the petitioners in the rest of
+this judgment.
+3. In para 31 of his order appended to the reference, the Chief Presidency Magistrate observed :
+"No attempt has been made to place any material by way of deposition of witnesses etc. to establish a 'prima facie' case with respect to the offences with which the Menons have been charged, so that if the rendition of the Menons depended on the establishment of a 'prima facie' case, I will not have the slightest hesitation in discharging them."
+4. The question of the liability of the petitioners to be returned to Singapore under the warrants issued by the Magistrate of Singapore has to be determined with reference to the provisions of Part II of the Fugitive Offenders Article 1881. The petitioners were arrested in the first instance under the Provisional warrants issued by the Chief Presidency Magistrate, Madras, under Section 16, Fugitive Offenders Act, 1881. Eighteen warrants issued by the Magistrate of Singapore had to be "backed" by the Chief Presidency Magistrate under Section 13 of the Act. It was Section 14 of the Act that empowered the Chief Presidency Magistrate to order the return of the petitioners to Singapore.
+Section 14
+, Fugitive Offenders Act has to be read with
+Section 19
+thereof see --
+'Mahomed Naina Marikayar v. Ahmed Marakair
+', AIR 1934 Mad 55 (A). It is not, however, necessary to refer any further to
+Section 19
+to dispose of the questions that have been referred to this Court for answers.
+5. The validity of the Fugitive Offenders Act, 1881 (hereinafter referred to as the impugned Act) forms the subject-matter of the first question referred to this Court. The second question raises the issue of the validity of
+Part II of the Act
+. It should be sufficient for the purpose of this case to restrict the scope of the second question to the validity of
+Section 14
+, which is in Part II of the impugned Act. The real question in these proceedings is not whether the petitioners as fugitive offenders are liable to be returned to Singapore under any provision of law, but whether they are liable to be returned under
+Section 14
+of the impugned Act. If, for any reason,
+Section 14
+is held to be invalid and inoperative as part of the law of India, the proceedings initiated before the Chief Presidency Magistrate for the return of the petitioners to Singapore must terminate. And, we are not called upon in the proceedings before us to provide for any other contingency.
+6. The main objection to the validity of
+Section 14
+of the impugned Act is that it offends
+Article 14
+of the Constitution of India and is therefore void under
+Article 13
+of the Constitution. If that objection prevails, it should be wholly needless to answer the first question, or even the second question as it has been framed. I shall deal later with the question, whether the declared invalidity of
+Section 14
+of the impugned Act would involve the determination of the question, whether Part II of the impugned Act must be declared void, and inoperative.
+7. It is well settled that, with the initial presumption being in favour of the validity of a statute, investigations of the validity of a given statute or any part thereof should be limited to the extent absolutely necessary for the disposal of the issue before the Court. The issue can be narrowed down in the case before us to the question : "Are the petitioners liable to be returned to Singapore under
+Section 14
+, Fugitive Offenders Act?" That, in my opinion, can be answered effectively with reference to
+Articles 13
+of the Constitution of India.
+8. On the scope of
+Article 13
+of the Constitution, the learned Advocate General repeated before us the arguments that were accepted by Subba Rao J. in his decision on --'W. P. No. 568 of 1952 (Mad) (B) (unreported) :
+".... the learned Advocate General drew a distinction between legislative power and infringement of a fundamental right. His argument may be put thus : So far as the question of the infringement of the fundamental right was concerned, having regard to the nature of the writ law, it was not the position that any law to the extent it was inconsistent with fundamental rights would become void as if it had been struck off from the statute book. It was only the person, whose right had been infringed, that could raise the question of the unconstitutionality of the enactment and not others, and the unconstitutionally of the enactment had to be decided only so far as it related to the person raising the question. To put it differently, the impugned section is not struck off from the statute book, but its validity will have to be considered only in relation to the petitioner, who complains that his fundamental rights have been infringed." The learned Judge set out the three classes of cases formulated by Prof. Willis in his Constitutional Law of the United States, at page 91 :
+"(i) There are situations where the Courts are in substantial agreement that an unconstitutional statute is void 'ab initio; (ii) There is a second class of situations in which the courts ore in conflict as to whether the rule should be the rule of void 'ab initio' or the rule of void from the date of the declaration of unconstitutionality; and
+(ii) There is a third class of situations where the Courts generally refuse to apply the void 'ab initio' rule but instead apply the rule of void from the time of declaration."
+After quoting further passages from Prof. Willis's Constitutional Law, Cooley's Constitutional Limitations and James Parker Hall's Constitutional Law, Subba Rao J. referred to the observations of Das and Mahajan JJ. in --
+'Kesavan Madhavan Menon v State of Bombay', (C
+). Dealing with the scope of
+Article 13(1)
+, Das J. observed at page 130 :
+"It will be noticed that all that this clause declares is that all existing laws, in so far as they are inconsistent with the provisions of Part III shall to the extent of such inconsistency be void ... It must follow, therefore, that
+Article 13(1)
+can have no retrospective effect but is wholly prospective in its operation. After this first point is noted, it should further be seen that
+Article 13(1)
+does not in terms make the existing laws which are inconsistent with fundamental rights, void 'ab initio' for all purposes. On the contrary, it provides that all existing laws, in so far as they are inconsistent with the fundamental rights, shall be void to the extent of their inconsistency. They are not void for all purposes, but they are void only to the extent they come into conflict with the fundamental rights. In other words, on and after the commencement of the Constitution no existing law will be permitted to stand in the way of the exercise of any of the fundamental rights. Therefore the voidness of the existing law is limited to the future exercise of the fundamental rights.
+Article 13(1)
+cannot be read as obliterating the entire operation of the inconsistent laws or to wipe them out altogether from the statute book, for to do so will be to give them retrospective effect, which they do not possess. Mahajan J. observed at page 136: "It seems clear that an existing statute in spite of declaration by Court, that it is void, remains in force till 25-1-1950 and continues to remain on the statute book even after 26-1-1950, except that no effect can be given to any of its provisions, which are repugnant to the fundamental rights guaranteed by the Constitution. The effect of
+Article 13(1)
+is only prospective and it operates in respect to the freedoms, which are infringed by the State subsequent to the coming into force of the Constitution."
+The effect of these observations was summed up by Subba Rao J. as follows:
+"They accepted the principle noticed in the
+various text books on American Constitutional
+law and held that by reason of
+Article 13
+section offending the said article is not struck
+out from the statute book but no effect will
+be given to any of its provisions in regard
+to a person claiming that his fundamental
+rights are affected thereby."
+I respectfully agree with the exposition of ubba Rao J. of the principles
+laid down by
+Supreme Court of India.
+9. When such is the comparatively limited scope of determination by a judicial Court even in cases where
+Article 13(1)
+of the Constitution of India is invoked, it should be needless to point out that a Court will not undertake the investigation of the alleged invalidity of a statute except to the extent absolutely necessary.
+10. It was common ground during the arguments before us that, though the impugned Act was enacted by the Parliament of Great Britain, upto 26-1-1950 the impugned Act was part of the Municipal law of what was at one time known as British India. The legislative competence of the Parliament to legislate for India in 1881 would never be in issue. Section 18(3) of the Indian Independence Act (X and XI George VI Ch. 13) ran:
+"Save as otherwise expressly provided in this
+Act the law of British India and the several
+parts thereof existing immediately before
+the appointed day (that is, 15-8-1947), shall,
+so far as applicable and with the necessary
+adaptations, continue as the law of each of
+the new dominions and the several parts
+thereof until other provision is made by laws
+of the legislature of the dominion in question
+or by any other legislature or other authority
+having power in that behalf."
+That continued the operation of the Fugitive
+Offenders Act, 1881, though it was not adapted
+up to 26-1-1950, when the Constitution of India
+took effect.
+Article 372(1)
+of the Constitution of India runs:
+"Notwithstanding the repeal, by this Constitution of the enactments referred to in
+Article 395
+, but subject to the other provisions of this Constitution, all the law in force in the territory of India immediately before the commencement of this Constitution shall continue in force therein until altered or repealed or amended by a competent Legislature or other competent authority."
+Article 372(2)
+empowered the President to adapt any of the laws in force to accord with the provisions of the Constitution. The Fugitive Offenders Act, 1881, was not adapted by any specific order of the President; nor does any other Act of the Parliament appear to have been adapted. As the learned Advocate General pointed out, the omission to adapt the impugned Act in no way affects the question, whether it continued in force as the law in the territory of India even after the commencement of the Constitution. Adaptation could not ensure the validity of an Act if it was invalid, that is, if it offended any of the Articles of the Constitution. It is not necessary to consider at this stage each of the several circumstances provided for by the Constitution in which an Act can be void and cease to be operative, as I have limited myself in this case only to
+Articles 13
+of the Constitution. If the impugned Act or any portion thereof, namely,
+Section 14
+, offends
+Article 14
+, an earlier adaptation of the impugned Act under
+Article 372(2)
+of the Constitution could not confer validity on the Act, nor ensure its continuance after the commencement of the Constitution.
+12. No more than
+Article 13(1)
+does
+Article 372(1)
+of the constitution operates as an automatic repeal of a statute at the commencement of the Constitution on 26-1-1950, even if the statute fails to satisfy the test imposed by
+Article 372
+in the phrase "subject to the other provisions of the Constitution." It may not be necessary to decide in these proceedings whether the phrase "subject to the other provisions of the Constitution" in
+Article 372
+is of wider significance than the phrase "in so far as they are inconsistent with the provisions of this Part" in
+Article 13(1).
+Articles 13
+& 14
+of the Constitution are certainly "provisions of the Constitution" within the meaning of
+Article 372(1).
+The continuance in force of
+Section 14
+of the impugned Act after the commencement of the Constitution, provided for by
+Article 372(1)
+of the Constitution, is therefore subject to the provisions of
+Articles 13
+& 14.
+Section 14
+of the impugned Act contravenes
+Article 14
+, that is, is inconsistent with
+Article 14
+Article 13
+should make
+Section 14
+of the impugned Act void, to the extent of such inconsistency in the sense that
+Section 14
+of the impugned Act is unenforceable by a Court of law against the petitioners in these proceedings.
+13. I shall first deal with the question, does
+Section 14
+of the impugned Act offend
+Article 14
+of the Constitution?
+Article 14
+is not limited to the citizens of India. Though that will have no real bearing on any of the questions at issue before me in these proceedings, the petitioners are citizens of India.
+15. Before I consider the question, whether
+Section 14
+of the impugned Act constitutes a denial of the equal protection of the laws within the territory of India, within the meaning of
+Article 14
+, it may be desirable to refer to the scheme of the Statutory law of extradition in India, which was in force prior to the commencement of the Constitution and which could, under
+Article 372(1)
+of the Constitution continue in force after the commencement of the Constitution, subject, of course to the limitation prescribed by
+Article 372.
+The Extradition Act, 1870 (33 and 34 Vict. Ch. LII) as amended from time to time and the Fugitive Offenders Act, 1881 (44 & 45 Vict. Ch. 59) wore enacted by the Parliament of the United Kingdom. The Acts also applied to that part of India which was included in Her Majesty's Dominions. The Indian Extradition Act (15 of 1905) was enacted by the Indian Legislature. The preamble ran: "Whereas it is expedient to provide for the more convenient administration in British India of the Extradition Acts, 1870 and 1873, and of the Fugitive Offenders Act, 1881:
+And whereas it is also expedient to amend the law relating to the extradition of criminals in cases to which the Extradition Acts, 1870 and 1873 do not apply;"
+16. These statutes provided for the extradition of fugitive offenders found on the soil of what was then British India to four well-defined classes of countries or territories.
+Section 2
+, Extradition Act 1870 provided for the surrender of fugitives to a foreign State with which "an arrangement had been made by Her Majesty", that is, with which Her Majesty of the United Kingdom had entered into treaties. Section 3, Indian Extradition Act also applied to these States. I shall call this group of foreign States as "treaty States", for my present purposes it should, however, be noted that
+Section 23
+, Extradition Act of 1870 specifically saved the treaties for the extradition of criminals, which the Governor-General of India entered into with the Indian Native States or with other Asiatic States coterminous with British India. These, for the purposes of this classification, I exclude from the group of Treaty States.
+18. The second class consisted of the British Dominions (which included the United Kingdom) and the British possessions, which by statutory definition excluded the United Kingdom. The surrender of a fugitive offender between any of two of the territories of this class was regulated by the Fugitive Offenders Act, 1881. This class itself consisted of two sub-clauses.
+Section 2
+in Par I of the Fugitive Offenders Act was general in its scope, in that it applied to all parts of Her Majesty's Dominions.
+Section 12
+in Part II applied only to those groups of British possessions, to which "by reason of their contiguity or otherwise It was found expedient by Her Majesty to apply the same by an Order in Council." An Order in Council dated 2-1-1918 grouped together for the application of
+Part II of the Act
+, British India, Hong Kong, Straits Settlements, the Federated Malaya States as also some other territories.
+19. As already noticed, Section 3, Indian Extradition Act of 1903 dealt with the Treaty States.
+Section 7
+of that Act dealt with the third and fourth classes of States, comprehensively grouped as "territories of any State not being a foreign State." That included what were known as the Indian Native States, and States to which Chapter 2, Indian Extradition Act including
+Section 3
+thereof did not apply.
+20. For our present purposes it is sufficient to note two of the principal changes on and after 26-1-1950, when India proclaimed herself a Sovereign Democratic Republic. India ceased to be a British possession within the statutory meaning given to that expression in the Extradition laws; but India continued to be a member of the Commonwealth. The need for extradition arrangements with what were at one time known as the Indian Native States disappeared. They became an integral part of the Sovereign Democratic Republic of India and were described as Part B States in the Constitution.
+The Criminal Procedure Code Amending Act
+(1 of 1951) now regulates the apprehension of an offender who escapes front a Part B State to any other part of India.
+21. Therefore of the four classes of countries listed above, we need consider only three for defining the scope of the extradition laws of India. We need not concern ourselves with the fourth class at this stage, nor with the first, the "Treaty States." Neither the Extradition Act of 1870 nor the Indian Extradition Act of 1903 provided for the surrender of a fugitive offender by one part of the British Empire (I am using this expression for convenience and without any significance) to another.
+The Fugitive Offenders Act
+alone provided for that. Even after 26-1-1950, it is the Fugitive Offenders Act, 1881 alone that provides for the demand and surrender of fugitive offenders between India and the rest of the Commonwealth, of which India continues to be a member.
+22. The position of India as the extraditing country, that is, the country called upon to surrender a fugitive offender under the provisions of the
+Fugitive Offenders Act
+of 1881 may now be examined.
+Part I of the Act
+applies to a demand from every one of the territories other than those which have been grouped together by an Order in Council for the application of
+Part II of the Act
+. The main difference between the two groups in the procedure prescribed antecedent to the surrender or the return of the fugitive offender to the demanding country is that, while the demand is from a territory to which Part I applies, an Indian Court has to be satisfied by evidence tendered that the fugitive offender is 'prima facie' guilty of the offences with which he has been charged, the need for such evidence is dispensed with, if the demand is from a territory with which India was grouped by the Order in Council dated 2-1-1918, for example Singapore. Proof of authenticity of the warrant and the identity of the offender are then sufficient to justify an order to return the fugitive offender under
+Section 14
+, Fugitive Offenders Act. It is this difference that has been assailed as a discrimination amounting to denial of equality within the meaning of
+Article 14
+of the Constitution.
+24. In the oft quoted words of Prof. Willis (Constitutional Law) page 579: "The guaranty of the equal protection of the laws means the protection of equal laws. It forbids class legislation, but does not forbid classification which rests upon reasonable grounds of distinction. It does not prohibit legislation, which is limited either in the objects to which it is directed or by the territory within which it is to operate."
+These principles were accepted by the Supreme Court of India.
+In -- 'the
+State of Bombay v. F.N. Balsara
+', AIR 1951 S C 318 (D) Fazl Ali J. laid down:
+"The meaning and scope of this Article (
+Article 14
+) has been fully discussed in the case of --'Charanjitlal v. Union of India', (E), and the principles laid down in that case may be summarised as follows:
+1. The presumption is always in favour of the constitutionality of an enactment, since it must be assumed that the legislature understands and correctly appreciates the needs of its own people, that its laws are directed to problems made manifest by experience and its discriminations are based on adequate grounds.
+2. The presumption may be rebutted in certain cases by showing that on the face of the statute, there is no classification at all and no preference peculiar to any individual or class and not applicable to any other individual or class, and, yet the law hits only a particular individual or class.
+3. The principle of equality does not mean that every law must have universal application for all persons who are not by nature, attainment or circumstances in the same position, and the varying needs of different classes of persons often require separate treatment.
+4. The principle does not take away from the State the power of classifying persons for legitimate purposes.
+5. Every classification is in some degree likely to produce some inequality, and mere production of inequality is not enough.
+6. If a law deals equally with members of a well-defined class, it is not obnoxious and it is not open to the charge of denial of equal protection on the ground that it has no application to other persons.
+7. While reasonable classification is permissible such classification must be based upon some real and substantial distinction bearing a reasonable and just relation to the object sought to be attained, and the classification cannot be made arbitrarily and without any substantial basis."
+25. Does the classification underlying Parts I and II and particularly
+Section 14
+of the impugned Act satisfy the seventh of the tests formulated Fazl Ali J. is the real question. Is that classification based on some real and substantial distinction bearing a reasonable and just relation to the object sought to be attained by the Fugitive Offenders Act, 1881?
+26. The basis for the classification, that is, the differentiation between the territories to which Parts I and II of the impugned Act respectively apply, has been furnished by the Act itself, as also by the Order in Council issued under
+Section 12
+of the Act on 2-1-1918.
+Section 12
+of the Act ran:
+"This part of this Act shall apply only to those groups of British possessions to which, by reason of their contiguity or otherwise, it may seem expedient to Her Majesty to apply the same."
+In the preamble to the Order in Council dated 2-1-1918, it was stated:
+"And whereas by reason of their contiguity or the frequent intercommunication between them, it seems expedient to His Majesty and conducive to the better administration of justice therein to apply
+Part II of the Fugitive Offenders Act
+to the abovenamed British possessions and protected States....."
+Geographical contiguity and frequences of intercommunication, between for instance India and Singapore, furnish a real and substantial basis for distinction between the territories to which Part I and to which Part II applied, that is, in relation to India.
+27. That basis for classification is still there, though India has ceased to be a British possession. Sri Nambiar who appeared for the petitioners, urged that the real basis for the classification disappeared when India ceased to be a British possession. I am unable to accept that argument. I have already pointed out that even after India became a Sovereign Democratic Republic the impugned Act continued to be part of the statutory law of those territories of India which were at one time designated British India, but that its continued validity after the commencement of the Constitution was a totally different question. Geographical contiguity and the frequence of intercommunication furnish now the only basis for the classification. Do they bear a just and reasonable relation to the object sought to be attained by the impugned Act is therefore the next question.
+27a.The declared object of the impugned Act) was to provide for the demand and return of fugitive offenders between the defined groups of territories. It was the Parliament of the United Kingdom that provided the machinery for this, as it was competent to legislate for the entire group of these territories.
+The Extradition Act
+of 1870 and the Indian Extradition Act of 1903 provided for extradition between the other groups of countries.
+28. In Oppenheim's "International Law" Edn. 7, Vol. I, at page 633, the learned author said: "Extradition is the delivery of an accused or convicted individual to the State on whose territory he is alleged to have committed, or to have been convicted of, crime, by the State on whose territory the alleged criminal happens for the time to be." In Clarke upon Extradition, Edn. 4 the learned author, after observing at page 11, "that the granting of extradition is, if not scientifically speaking a matter of perfect obligation, at least a duty of public morality" summed up his conclusions at page 14:
+"The surrender of fugitive criminals is an international duty. It may not be so plainly a matter of right that the refusal to grant it should subject a nation to the penalty of war, but such refusal is so clearly injurious to the country which refuses, and to the whole world, that it is a serious violation of the moral obligations which exist between civilised communities.
+.....the recent course of European legislation has been.....to cast upon the legislature of a country the task of providing for the performance of this duty.
+This provision should be guarded by the exclusion of political offenders, and the requirement of some evidence of guilt before the accused person is delivered up. It would be wise also to restrict the crimes for which surrender should be granted, according to the facility with which criminals could escape from one country to another; but to refuse to make provision at all, would be to inflict an injury upon the whole world, and especially upon the country so refusing.
+The surrender, when so restricted, involves no interference with national independence, as the duty of punishing the crime could not be effectively and justly performed by any nation but that whose laws have been broken."
+29. This last aspect was also stressed by Corbett in his "Law and Society in the Relations of States" at page 173: "One important expression of sense of world society would be the universal recognition of a duty on the part of States to surrender fugitive criminals for trial in the place where the crime was committed."
+30. Sri Nambiar contended that it should be the object of the extraditing country to ensure safeguards for the surrendered fugitive for a fair trial in the receiving country. One of these safeguards, the learned counsel urged, was prima facie evidence of the guilt of the fugitive offered to a Court in the extraditing country. To quote again the passage from Clarke: "This provision (for extradition) should be guarded by.....the requirement of some evidence of guilt before the accused person is delivered up."
+The terms on which extradition is granted are normally regulated by the local laws of the extraditing country. That is the position in India. As between two Sovereign States, the terms are normally settled by treaties between them.
+Section 2
+of the Extradition Act of 1870 provided for the terms of the treaty being given statutory force by an Order in Council. Reciprocity is the normal rule. Exclusion of political offenders from the scope of the extradition laws appears almost universal. Refusal to surrender a national of the extraditing country appears to rest on no other intelligible basis than the unwillingness of that country to expose its nationals to a trial in a foreign Court. As the text-book writers have pointed out, England and America did not ever display such reluctance except, of course, where reciprocity demanded it. Demand of prima facie evidence of guilt is only another such restriction, based in the first instance on reciprocity, and eventually on the Municipal law of the extraditing country. The validity of an Extradition law that dispenses with such prima facie evidence of guilt cannot be assailed on that basis alone. The validity of
+Section 14
+of the impugned Act can be attacked in these proceedings not on the ground that it does not provide for such prima facie evidence of the guilt of the fugitive offender, but only on the ground that, while the extradition law applicable to a fugitive from other countries demands such evidence,
+Section 14
+of the impugned Act does not. If, for instance, the extradition laws of India were uniform in dispensing with such evidence before the surrender of the fugitive offender, whichever be the country that asked for the surrender, it would be the competence of the legislature that would settle the question of the validity of those laws, and not the policy that underlay the legislation.
+31. Whether reciprocity can satisfy the test of the reasonableness of the Classification that underlay Parts I and II Of the impugned Act, does not arise for consideration in this case. As I see it, reciprocity was the result of the classification, not the basis for it. Reciprocity in the surrender of fugitive offender between India and the other countries including Singapore grouped together by the Order in Council issued under
+Section 12
+of the impugned Act was imposed by legislation by a legislature competent then to legislate for the whole group of the territory included in the Order in Council.
+32. I agree with the learned Advocate General that, in testing the reasonableness of the classification that underlay Parts I and II of the impugned Act, the fact, that both were parts of the same statute, makes no difference. The position would have been just the same if Parts I & II had each constituted a separate enactment, and if the validity of the provisions of Part II had to be tested by the fundamental right guaranteed by
+Article 14
+of the Constitution,
+33. The learned Advocate General pointed out that the basic assumption of the impugned Act was that in each of the countries of the Commonwealth there was a trustworthy administration of justice, which would ensure as fair a trial for the fugitive offender in the receiving territory as in the extraditing country. He urged that
+Section 14
+of the impugned Act prescribed a quicker procedure for contiguous territories by dispensing with prima facie evidence of the guilt of the fugitive offender, and that the resulting convenience of administration could be accepted as a reasonable basis for the classification. However attractive the argument may appear at first sight, it has to be rejected.
+In --
+'State of West Bengal v. Anwar Ali Sarkar', (F) Mahajan J.
+observed at page 86: "Speedier trial of offences may be the reason and motive for the legislation but it does not amount either to a classification of offences or of cases. As pointed out by Chakravarthi J. the necessity of a speedy trial is too vague and uncertain a criterion to form the basis of a valid and reasonable classification."
+These principles were not really departed from in --
+'Kathi Raning Rawat v. State of Saurashtra', (G) 
+ 
+
+ "The
+mere mention of 'speedier trial' standing by itself provided no rational basis of classification. It was merely a description of the result sought to be achieved by the application of the special procedure
+laid down in
+the Act and afforded no help in determining what cases required speedier trial." At page 128, after pointing out the rationale of the impugned Ordinance, Fazl Ali J. observed :
+"I am satisfied that this case is distinguishable from the case relating to the West Bengal Act, but I also feel that the legislatures should have recourse to legislation such as the present only in very special circumstances."
+34. As I have already stated, there is no difficulty in finding the basis for the classification of the two groups of territories in the impugned Act, because
+Section 12
+of the Act itself arid the Order in Council dated 2-1-1918 set it out in specific terms, namely, contiguity and frequent intercommunication.
+35. "Frequency of intercommunication" appears to me to be as vague and uncertain a criterion to furnish a basis for a valid and reasonable classification as "speedier trial". If it refers to the normal means of communication between India and Singapore, it means so little in these days of quick travel. There can be no-absolute standard against which the reasonableness of the time factor can be tested. If it means that more people travel from India to Singapore and vice versa, that can have little to do with the object of the
+Fugitive Offenders Act
+, namely, the surrender of a fugitive. It has not been established that more fugitives escape from Singapore to India than, say, from England to India to justify the adoption of one procedure for the surrender of a fugitive from England and another for the surrender of a fugitive from Singapore. Frequent intercommunication is a nebulous basis for reasonable classification.
+36. We are left with geographical contiguity as virtually the sole factor in defence of the reasonableness of the classification. After observing "another classification for the police power may be geographical", Prof. Willis (Constitutional Law, pages 584 and 585) listed the cases where such classification was held to be reasonable. But the question still remains; Does the classification on the basis of geographical contiguity bear a reasonable, and just relation to the object sought to be attained by the extradition laws of India.
+37. Earlier in this judgment I referred to the four classes of territories provided for by the extradition laws of India: (1) The Treaty States; (2) British Dominions and British possessions (now the Commonwealth which includes India); (3) What were known as the Indian Native States; and (4) other States. To the last two of these Section 7, Indian Extradition Act of 1903 applied. Of these four classes, the second class itself consisted of two sub-classes: (a) the territories grouped by an Order in Council issued under
+Section 12
+, Fugitive Offenders Act; and (b) Other British Dominions and British possessions. The extradition or surrender of a fugitive offender from India to every one of these territories except those grouped by an Order in Council issued under
+Section 12
+, Fugitive Offenders Act necessitated prima facie evidence of the guilt of the offender to the satisfaction of an Indian Court, or in the case of territories in classes 3 and 4, to the satisfaction of the Political Agent. The geographical contiguity of Madras and Mysore, for instance, did not dispense with the need for such evidence, while the geographical contiguity of Madras and Singapore was enough to apply
+Sections 12
+of the impugned Act and dispense with such evidence. Of course, that consideration cannot prevail in that form now, as Mysore is part of India, and after 1-4-1951, there can be no question of Mysore invoking Section 7, Indian Extradition Act of 1903. All the same, it furnishes a fair indication of how frail geographical contiguity can be for the purpose of classification of the States to which the Indian laws extended the right of extradition. The duty that India owed to the Comity of Nations to provide for extradition was discharged by the Municipal legislation on the subject. Whether from) the point of view of the duty in International Law so discharged, or the right in International law of the countries that ask for extradition, there seems to be no necessity to provide for a classification based on geographical contiguity alone, especially, if such classification is to be the basis for so vital a difference, vital both from the point of view of India, the extraditing country, and the Fugitive offender himself. The need for offering evidence to show that prima facie the 'offender is guilty of the crimes with which he has been charged by the country asking for his extradition has been well recognised. Though it may not be an integral part of the law of extradition of every State in relation to every other State, it is certainly a normal feature, and one can even say, almost a universal feature of extradition laws. To dispense with such a need, there must, in my opinion; be some basis better than geographical contiguity alone, if the test of "equal protection of the laws within the territory of India" specifically provided for by
+Article 14
+of the Constitution is to apply. I am unable to hold that the discharge of the duty India owes to herself and the other States in the Comity of Nations to provide for the extradition or the surrender of a fugitive offender can be any the less effective if prima facie proof of the guilt of the offender is asked for in all cases of demands for the surrender of a fugitive offender, whichever be the country that prefers that demand.
+38. Judged by that test, of reasonable and just relation between the basis of the classification in the impugned Act and the object of that Act, the classification fails. I hold that the discrimination based on the differentiation between the territories to which Parts I and II of the impugned Act respectively apply has no just and reasonable basis, no just and reasonable relation to the object of the impugned Act.
+39. In my opinion
+Section 14
+of the impugned Act offends
+Article 14
+of the Constitution in that it denies "the equal protection of the laws within the territory of India", that is, the laws relating to extradition and surrender of fugitive offenders and that, to that extent,
+Section 14
+is void under
+Article 13(1)
+of the Constitution.
+40. It should be sufficient to record that answer for the disposal of the proceedings now pending in the Court of the Chief Presidency Magistrate against the petitioners. As I have already pointed out, if the Chief Presidency Magistrate cannot order the return of the petitioners to Singapore under
+Section 14
+Fugitive Offenders Act, the proceedings as instituted against the petitioners must terminate in their discharge. It is not, therefore, necessary to answer even the second of the questions as framed by the learned Chief Presidency Magistrate.
+41. It is really unnecessary for the disposal of the proceedings against the petitioners now pending in the Court of the Chief Presidency Magistrate to investigate the validity of Part II of the impugned Act as a whole, or to go into the question, whether
+Section 14
+cannot be severed from the rest of Part II. Should it be necessary, I have to hold that
+Section 14
+is severeble from the rest of Part II. The grouping of territories by itself under
+Section 12
+of the Act may not affect the fugitive offender, if it does not lead to an order under
+Section 14
+. Nor can
+Section 13
+, which provides for the backing of the warrant issued by a Magistrate of the demanding country by the Magistrate of the extraditing country, really affect the real question, is the fugitive offender liable to be returned? That can be answered only with reference to
+Section 14
+Sections 15
+do not call for any special notice in determining the ultimate liability of the fugitive offender to be returned.
+Section 19
+of the Act is really analogous to
+Section 10
+in Part I and affords no basis for any charge of discrimination.
+42. Though such of the arguments advanced before us centred round the first of the questions formulated by the learned Chief Presidency Magistrate, it is not necessary to answer that question for the disposal of the claim preferred to the Chief Presidency Magistrate, that the petitioners arc liable to be returned to Singapore under
+Section 14
+, Fugitive Offenders Act. I, therefore, refrain from answering that question.
+43. My answer to the second question is that
+Section 14
+, Fugitive Offenders Act is inconsistent with the fundamental right of equal protection of the laws guaranteed by
+Article 14
+of the Constitution and is to that extent void and unenforceable against the petitioners.
+Chandra Reddy, J.
+44. I agree. The two questions that have been referred to us by the Chief Presidency Magistrate are :
+1. Whether the Fugitive Offenders Act, 1881 applies to India after 26-1-1950, when India became a Sovereign Democratic Republic; and
+2. Whether, even if it applied, it or any part of its provision is repugnant to the Constitution of India and is therefore void and inoperative?
+In the order of my learned brother the circumstances necessitating the reference under Section 432, Criminal P. C. have been set out fully, and I do not propose to traverse same ground. (45) The first question which was elaborately argued by the counsel on both sides covers a wide ground. But we do not propose to go into that larger question in the view we take of the second point. The question whether extradition is an international duty or an international necessity was debated at great length. An elaborate discussion on this topic is not called for. As pointed out by Openheim in his International Law "there is no universal rule of customary international law in existence which commands extradition". No doubt it is the duty of every civilised State to which an individual has escaped after committing an extraditable crime abroad either to punish him or to surrender him to the prosecuting State. It is also a well recognised principle that an offender is best punished by the laws of the country which have been broken by him. Apart from this the surrender of a fugitive offender or a fugitive criminal to the State that demands extradition will facilitate the trial of the offender and also save unnecessary expenditure to the State from which extradition is sought. Almost all the countries have coma to recognise the need for extradition and treaties have arisen between the countries in this direction. The need has become all the greater under modern conditions of developed intercommunications with the appearance of Trans-Atlantic Steamships and aeroplanes when individuals can easily escape into a foreign country having committed an offence. Consequent on this, States have realised that it is in the common interests to surrender such criminals to each other. It is needless to pursue this matter further here.
+46. So far as India was concerned prior to 26-1-1950, there were two enactments governing the extradition, the
+Fugitive Offenders Act
+regulating the procedure for the surrender of the criminals as between British India and other countries forming the British possessions, and the Indian Extradition Act passed by the Indian Legislature under the authority conferred by the
+Fugitive Offenders Act
+(hereinafter referred to as the Act) regulating extradition between British India and foreign States including native States. By order in Council dated 7-3-1904, Chap 4 of the Indian Extradition Act, 1903 passed by the Governor General of India in Council was declared to have effect as if it was part of the Fugitive Offenders Act, 1881.
+The Fugitive Offenders Act
+was passed by the British Parliament in the year 1881 the object of which was to amend the Act with regard to fugitive offenders in Her Majesty's dominions, and other purposes connected with the trial of the offenders.
+This Act
+contains two parts and we are more particularly concerned with Part II in this enquiry, as extradition sought in the case before us is under
+Part II of the Act
+48. Part II relates to the Inter-Colonial backing of warrants and it can be only applied to British possessions to which by reason of their contiguity or otherwise it may seem expedient to Her Majesty to apply the same. The second paragraph of
+Section 12
+, Part II runs thus :
+"It shall be lawful for Her Majesty from time to time by order in Council to direct that this part of this Act shall apply to the group of British possessions mentioned in the Order, and by the same or any subsequent order to except certain offences from the application of this part of this Act and to limit the application of this part of this Act by such conditions, exceptions and qualifications as may be deemed expedient." By virtue of this power by an order in Council dated 2-1-1918, for purposes of
+Part II of the Fugitive Offenders Act
+, certain territories forming British possessions and protected States with British India were grouped together : Ceylon, Hong-Kong, the Straits Settlement, the Federated Malay States, Johore, Kedah etc. The result was that so far as British India was concerned, extradition between her and other countries mentioned in the Order in Council was regulated by the provisions of
+Part II of the Act
+, while the other part of the country which consisted of native States was governed by the Indian Extradition Act.
+49. It is now necessary to notice the difference between Part I and Part II of the Act. The main distinction in as far as it has a bearing on the questions before us is that under Part I,
+Section 5
+a fugitive could be surrendered only when the evidence produced was such as would raise a strong or probable presumption that the fugitive committed the offence mentioned in the warrant, whereas under
+Section 14
+of Part II the necessity for the production of evidence to make out a prima facie case is dispensed with. In this connection it is also useful to refer to
+Section 13
+also : "Where in a British possession of a group to which this part of this Act applies, a warrant has been issued for the apprehension of a person accused of an offence punishable by law in that possession, and such person is or is suspected of being in or on the way to another British possession of the same group, a Magistrate in the last mentioned possession, if satisfied that the warrant was issued by a person having lawful authority to issue the same, may endorse such warrant in manner provided by this Act, and the warrant so endorsed shall be a sufficient authority to apprehend within the jurisdiction of the endorsing Magistrate the person named in the warrant, and bring him before the endorsing Magistrate or some other Magistrate in the same British possession."
+Under
+Section 14
+all that has to be proved is that the warrant was duly authenticated and was issued by a person having lawful authority to issue the same and that the prisoner is the person named or described in the warrant.
+50. In passing, I may mention that even under the Indian Extradition Act, before the surrender of a fugitive criminal could be demanded, it was essential that a 'prima facie' case should be made out in support of the requisition.
+51. It is this distinction between
+Section 5
+of the Part I and
+Section 14
+of Part II that is impugned as repugnant to the Constitution of India. The relevant provision of the Constitution which it is said to violate is
+Article 14
+which is included in Chap. 3 of the Constitution which guarantees certain fundamental rights to the people of India. The scope of this enquiry is restricted to an examination of the relevant provisions of the Act in the light of
+Article 14
+of the Constitution.
+Article 14
+runs thus : "The State shall not deny to any person equality before the law or the equal protection of the laws within the territory of
+India."
+Here we are only concerned with the second clause namely "equal protection of the laws". It may be mentioned that this is based on the fourteenth Amendment to the American Constitution. As observed in 'Yick Wo v. Hopkins', (1886) 118 U.S. 356 (H), equal protection of laws is a pledge of the protection of equal laws." It gives the required minimum of protection for every one's right of liberty and property. It was pointed out by Taft C. J. in --'Truax v. Corrigan', (1921) 257 U.S. 312 (I). when dealing with the fourteenth Amendment which contains a provision for due process of law and equal protection. "The guarantee was aimed at undue favour and individual or class privilege on the one hand and at hostile discrimination or oppression of inequality on the other. It sought equality of treatment of all persons" etc. . . . "This guarantee was intended to secure equality of protection not only for all but against all similarly situated."
+52. It is this principle that underlies the second clause of
+Article 14.
+It is thus seen that
+Article 14
+contains an inhibition against discrimination either in favour of a person or a class or against any individual or particular group of individuals.
+Article 14
+does not prohibit the Legislature from enacting special laws as applicable to a particular group in a State, nor does it forbid classification resting upon reasonable grounds of distinction. The principle is stated by Willis on Constitutional Law at page 579 thus :
+"The guaranty of the equal protection of the laws means the protection of equal laws. It forbids class legislation but does not forbid classification which rests upon reasonable grounds of distinction. It does not prohibit legislation, which is limited either in the objects to which it is directed or by the territory within which it is to operate. It merely requires that all persons subjected to such legislation shall be treated alike under like circumstances and conditions both in the privileges conferred and in the liabilities imposed. The inhibition of the amendment was designed to prevent any person or class of persons from being singled out as a special subject for discriminating and hostile legislation." The author further points out that while the equality principle does not preclude the States from classifying in the adoption of certain laws and on the other hand gives them wide discretion in the matter, It will nullify classification when it Ss done without any reasonable basis.
+53. This passage has been cited with approval in -- (E). Fazl Ali J. in the same, case accepted this statement of Willis as correct exposition of the principle. At page 45 the learned Judge observes thus : "I wish to lay particular emphasis on the principle enunciated by him that any classification which is arbitrary and which is made without any basis is no classification and a proper classification must always rest upon some difference and must bear a reasonable and just relation to the things in respect of which it is proposed."
+54. While dealing with
+Article 14
+of the Constitution Mukherjea J. remarked at page 57 that there should be no discrimination between one person and another if as regards the subject matter of the legislation their position is the same.
+55. This doctrine is reiterated by the Supreme Court in -- (F). It is pointed out by Patanjali Sastri C. J. in that case that
+Article 14
+of the Constitution is a safeguard given to the citizens of India throughout the territory against arbitrary laws and arbitrary applications of laws, and that it is intended to prevent discrimination both in the legislative and administrative spheres in India. Fazl Ali J. in the same case sums up the position thus :
+Article 14
+is designed to protect all persons placed in similar circumstances against legislative discrimination, and if the Legislature takes care to reasonably classify persons for legislative purposes and if it deals equally with all persons belonging to a well-defined class, it is not open to the charge of denial of equal protection on the ground that the law does not apply to other persons."
+This principle is re-affirmed in some other decisions of the Supreme Court also. See -- (G). ,
+56. Bearing the principle in mind I have to see whether Section 14 of Part II of the Act, in any way, offends against the fundamental right guaranteed under
+Article 14
+of the Constitution. While examining this question, the well settled rule of construction that constitutionality of a statute should be presumed cannot be overlooked. But at the same time, it should also be remembered that if any enactment is inconsistent with any of the provisions of the Constitution, it is the duty of this Court to strike off such a legislation. If any law in force, or to be passed after the Constitution comes into force, abridges any of the rights granted under the Constitution such a law should be declared to be void to the extent which transgresses that fundamental right. The fundamental right guaranteed in Chapter III of the Constitution can be taken away only in the manner indicated in that chapter. Unlike the Parliament of England whose powers are absolute and transcendent, the Legislatures in India cannot enact any laws which are repugnant to the Constitution which is supreme and which fixes limits to the exercise of legislative authority & prescribes an orbit within which the latter body should move. Any law to be passed by the Legislatures should be conformable to the Constitution or else it would be void. That being so, I have to consider whether Section 14, Part II of the Fugitive Offenders Act which was a law in force on the date the Constitution came into effect, offends against the provisions of
+Article 14
+of the Constitution.
+57. Geographical contiguity and frequency of intercommunications formed the basis for grouping India and other countries mentioned in the Order in Council dated 2-1-1918 for the purpose of the applicability of Fart II of the Act. It should be recalled in this connection that this test has only limited application, because it applied only as amongst the countries forming British possessions and did not govern the relation between a part of the British India and the adjoining native State in the matter of extradition. Native States as they were described before 26-1-1950 did not form part of the British possessions and as such were not governed by the
+Fugitive Offenders Act
+. Extradition between British India and Native States was governed by the provisions of the Indian Extradition Act.
+58. The learned Advocate General sought to justify the above mentioned grouping on the additional grounds namely that there was a trustworthy administration of criminal justice in those countries and that it was designed to have speedy trial. I do not think that I can accede to this argument based on speedy disposal. That cannot form the basis of reasonable classification and as pointed out by Mahajan J. in -- (F), speedier trial of offences may be the reason and motive for the legislation but it does not amount either to classification of offences or of cases. The necessity for a speedy trial cannot furnish basis for valid and reasonable classification.
+59. Coming now to the argument based on the existence of trustworthy administration of criminal justice in the British possessions which were grouped together, apart from the question as to how far that can be a reasonable and substantial ground of distinction, that consideration no longer applies to the present day so far as at least India is concerned. Now the same system of criminal jurisprudence prevails in all the parts of India. Parliament of India has amended the
+Criminal Procedure Code
+by the
+Criminal Procedure Code Amending Act
+I of 1951 by which all the provisions of the
+Criminal Procedure Code
+are made applicable to all the States of India.
+60. The learned Advocate General in support of his contention that a geographical contiguity could furnish a reasonable basis for classification relied on a passage in the Constitutional Law by Willis that a geographical classification for police power is a proper one. No doubt in some cases classification based on geographical contiguity may be a sound one and may not be hit at by the doctrine of equal protection of laws. The result of the American decisions and of Supreme Court is that any classification for purposes of legislation must have a real and substantial distinction bearing a just and reasonable relation to the objects to be attained. It should not be arbitrary one without reference to the purpose for which the legislation is made. Further, this geographical contiguity and the frequency of communication which are mentioned as the reasons for grouping these countries together had only limited application even at the inception since it was only applicable to certain of the British possessions. This principle could not be extended to the whole of India. This basis of distinction for applying Part II to any of the countries specified in the order including British India which forms now Part A States does not bear a reasonable and just relation to the object of those laws. The purpose of the extradition is to secure the surrender of an individual guilty of extraditable crime and it could be achieved without depriving him of his right to require the prosecuting State to lead evidence as would raise a strong presumption of his guilt as required both in Part I of the Act and the Indian Extradition Act. If that were so, the grounds of distinction are unsubstantial and unrelated to the object of extradition laws. To surrender a fugitive offender without a 'prima facie' case being made out is opposed to principles of natural justice.
+61. At the risk of repetition, it may be recalled that
+Part II of the Act
+is applicable only to the part of India which was known prior to the attainment of Independence as British India & which now constitutes Part A states & that the native States which now constitute Part B States under the Constitution, did not come within the purview of the Act. The consequence is that two producers, one prescribed under Part I,
+Section 5
+para 2 requiring production of evidence raising a strong and probable presumption that the fugitive committed the offence mentioned in the warrant as the 'sine quo non' of surrender and another laid down in
+Section 14
+of Part II dispensing with such a necessity, exist side by side in the area to which the Act applied. If the extradition of a fugitive offender is sought from any of the part of an A State what was designed comprehensively as British India prior to the establishment of India as a Sovereign Republic, the procedure applicable is that prescribed in
+Part II of the Act
+, while if a demand for surrender of an offender is made to any Native State now included in the list of Part B States a different procedure namely the. requirement of a 'prima facie' case has to be followed. Can this classification be justified on any rational basis? In another way also it is discriminatory. If an Indian national escapes into any of the Part A States from any country which formed part of British possessions, one procedure has to be followed while another fleeing to the same place from a State which was not a part of British possessions a different procedure has to be followed. Here again there does not seem to be a reasonable basis for the distinction. At any rate after India has become Sovereign Republic and when citizens of India similarly situated are entitled to similar treatment, there does not seem to be any justifiable basis for this distinction. No doubt it is not the identity of treatment that is required under
+Article 14
+but it is similarity of treatment that is guaranteed under the relevant Articles of the Constitution. After the declaration of Independence of India the principle of geographical contiguity cannot have any basis at all. I may point out that viewed in the light of the doctrine of equal protection of laws the test of geographical classification is bound to fail even with reference to the time of the grouping together of some of the British possession for the application of
+Part II of the Act
+for the reason that it had only a limited application in that a part of India was excluded from the ambit of the Act. Any Indian citizen whose extradition is sought under
+Part II of the Act
+may legitimately put the question as to why a less advantageous procedure should be adopted against him, while another individual similarly situated should have a more favourable procedure,
+62. For these reasons, I have reached the decision that Section 14 of Part II of the Act offends against the provisions of the Constitution being discriminatory in its effect. Consequently, it has to be declared inoperative against the petitioners who have invoked the fundamental rights guaranteed under
+Article 14
+of the Constitution. In this enquiry it is not necessary for us to decide whether the petitioners can be extradited under the other provisions of the Act or other extradition laws.
+Rajagopalan, J.
+63. We do not consider it necessary to answer the first of the two questions formulated by the Chief Presidency Magistrate. Our answer to the second question in the form to which we have restricted it is,
+Section 14
+of the Fugitive Offenders Act is inconsistent with the fundamental rights of equal protection of laws guaranteed by
+Article 14
+of the Constitution and is to that extent void and unenforceable against the petitioners. Reference answered.

@@ -1,0 +1,34 @@
+# 1. Virtual Environments
+graphrag-env/
+venv/
+env/
+.venv/
+
+# 2. GraphRAG Heavy Outputs & Caching
+# These parquet files and JSON caches become massive (Gigabytes) and will break GitHub if pushed.
+output/
+cache/
+logs/
+*.parquet
+*.log
+
+# 3. Vector Databases
+# Your Naive RAG embeddings should not be uploaded. They are huge and device-specific.
+chroma_db/
+
+# 4. Secrets
+# Even though your key is just "ollama" right now, never push .env files to GitHub.
+.env
+
+# 5. Raw Data (Optional)
+# If you don't want to push your 230 scraped cases to save space, keep this. 
+# You can comment these out if you *do* want to publish your 40-case dataset for others.
+legal_corpus/
+# input/   <-- I left this commented out so your 40 landmark cases DO upload to GitHub to show recruiters your dataset.
+
+# 6. Python standard junk
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+.DS_Store

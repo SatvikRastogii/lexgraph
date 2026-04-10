@@ -1,0 +1,111 @@
+CASE TITLE: Bhagat Singh vs Chief Information Commissioner And ... on 3 December, 2007
+DATE: Unknown Date
+PRIMARY ARTICLE: Article 19
+SOURCE: https://indiankanoon.org/doc/1964560/
+YEAR: 2007
+ARTICLES CITED: Article 19
+BENCH TYPE: Division Bench (2)
+HAS DISSENT: No
+CASE NUMBER: None
+======================================================================
+
+[Cites
+, Cited by
+Delhi High Court
+Bhagat Singh vs Chief Information Commissioner And ... on 3 December, 2007
+Equivalent citations: 146(2008)DLT385
+Author:
+S. Ravindra Bhat
+Bench:
+S. Ravindra Bhat
+JUDGMENT
+ 
+
+S. Ravindra Bhat, J.
+1. The Petitioner in the present writ proceeding approaches this Court seeking partial quashing of an order of the Central Information Commission and also for a direction from this Court that the information sought by him under the
+Right to Information Act, 2005
+(hereinafter referred to as 'the Act') should be supplied with immediate effect.
+2. The facts relevant to decide the case are as follows. The petitioner was married in 2000 to Smt. Saroj Nirmal. In November 2000 she filed a criminal complaint alleging that she had spent/paid as dowry an amount of Rs. Ten Lakhs. Alleging that these claims were false, the Petitioner, with a view to defend the criminal prosecution launched against him, approached the Income Tax Department with a tax evasion petition (TEP) dated 24.09.2003. Thereafter, in 2004 the Income Tax Department summoned the Petitioner's wife to present her case before them. Meanwhile, the Petitioner made repeated requests to the Director of Income Tax (Investigation) to know the status of the hearing and TEP proceedings. On failing to get a response from the second and third Respondents, he moved an application under the Act in November, 2005. He requested for the following information:
+(i) Fate of Petitioner's complaint (tax evasion petition) dated 24.09.2003
+(ii) What is the other source of income of petitioner's wife Smt. Saroj Nimal than from teaching as a primary teacher in a private school '
+iii)What action the Department had taken against Smt. Saroj Nimal after issuing a notice u/s 131 of the Income 'tax Act, 1961, pursuant to the said Tax Evasion Petition.
+3. The application was rejected by the second Respondent (the Public Information Officer, designated under the Act by the Income Tax department) on 10th January 2006 under
+Section 8(1)
+of the Act, by reasoning that the information sought was personal in nature, relating to dowry and did not further public interest. The relevant portion of this provision is extracted below:
+Exemption from Disclosure of Information: (1) Notwithstanding anything contained in this Act, there shall be no obligation to give any citizen.
+XXXXXXXXXXXXX
+(j) information which relates to personal information, the disclosure of which has no relationship to any public activity or interest or which would cause un- warranted invasion of the privacy of the individual unless the Central Public Information Officer or the State Public Information Officer or the Appellate Authority, as the case may be, is satisfied that the larger public interest justices the disclosure of such information.
+4. The petitioner, thereafter, appealed to third Respondent- the Appellate Authority which too rejected his request to access the information. While doing so, not only did he reiterate
+section 8(1)(j)
+as a ground for rejection but also observed that the information sought could also be denied under
+Section 8(1)(h)
+, which is reproduced below:
+(h) information which would impede the process of investigation or apprehension or prosecution of offenders
+5. Against the order of the Appellate Authority, the petitioner filed a second Appeal on 1st March, 2006, before the Respondent No. 1, the Central Information Commission (hereafter 'the CIC') praying for setting aside the Orders of Respondent No. 2 and 3. The petitioner sought the following reliefs:
+a) issue directions to Respondent No. 2 and 3 to furnish information,
+b) to order an inquiry against Respondent's No. 2 and 3 for not implementing the
+Right to Information Act
+properly
+c) to impose penalties and disciplinary action against Respondent No. 2 and 3 under Section 20 of the RTI Act and
+d) to award cost of proceedings to be recovered from Respondent No. 2and3.
+6. The CIC, on 8th May 2006 allowed the second appeal and set aside the rejection of information, and the exemption Clause 8(1) (j) cited by Respondents No. 2and3. The CIC further held that-
+as the investigation on TEP has been conducted by DIT (Inv), the relevant report is the outcome of public action which needs to be disclosed. This, therefore, cannot be exempted
+u/s 8(1) (j)
+as interpreted by the appellate authority. Accordingly, DIT (Inv) is directed to disclose the report as per the provision
+u/s 10(1)
+and (2), after the entire process of investigation and tax recovery, if any, is complete in every respect.
+7. The Petitioner contends that the first Respondent was correct in allowing disclosure of information, by holding that
+Sections 8(1)(j)
+did not justify withholding of the said information, but incorrectly applied Sec 8(1)
+(h) of the Act. He submits that the disclosure of the said information could not in any way impede the investigation process and that the Respondents have not given any reasons as to how such disclosure would hamper investigation. On the other hand, he contends, the information would only help in absolving himself from the false prosecution and criminal harassment. Moreover, he contends that under
+Section 10
+of the Act non-exempt information could have been provided to him after severing it from the exempt information. He in fact applied to the second and third respondent under the aforesaid provision but was informed that the matter was still under investigation.
+8. In August 2006 the petitioner filed a contempt petition before the CIC for non compliance of order dated 8th May 2006. Pursuant to this, the CIC asked the second and third respondent to take necessary action. The Petitioner also wrote a letter to the Chief Information Commissioner, seeking his indulgence for compliance of impugned order dated 8th May 2006. Pursuant to this, the first Respondent issued a notice to the other Respondents asking for comments with respect to non-compliance of the order and to show cause as to why a penalty should not be imposed as per
+Section 20
+of the Act. On 15th February, 2007, the Petitioner again appealed to the first Respondent requesting him to impose penalties on the concerned officer of Income Tax Department (Investigation) for non compliance of the order of the Central Information Commission.
+9. The petitioner in this writ petition requests this Court to partially quash the order of the first Respondent dated 8th May 2006 in so far as it directs disclosure after the entire process of investigation and tax recovery is completed; to direct the other respondents to forthwith supply the information sought; to direct the CIC to impose penalties under
+Section 20
+and to compensate him for damages suffered due to non supply of information. It was urged that the CIC, after appreciating that there was no merit in the plea regarding applicability of
+Section 8(1)(h)
+, and being satisfied, should have not imposed the condition regarding completion of proceedings, which could take years. Such power to restrict the access to information did not exist under the Act.
+10. The second and third respondents, pursuant to an order of this Court aver that the Petitioner misconstrued letters sent by the Income Tax officer and the Director General of Income Tax in relation to the fact that the investigations are complete. They submit that although there was a preliminary investigation undertaken by the Income Tax officer, Delhi and a report was submitted pursuant to that, the Assessing officer has issued notices under
+section 148
+of the Income Tax Act, 1961 and the investigation and procedures under the assessing Officer are yet to be completed. Learned Counsel Sonia Mathur, appearing on behalf of the Respondents submitted that, as per the directions of the CIC, the information sought would be supplied after 31st March 2008, after completion of investigation and recovery.
+11. The Universal Declaration of Human Rights, adopted by the United Nations in 1948, assures, by
+Article 19
+, everyone the right, 'to seek, receive and impart information and ideas through any media, regardless of frontiers'. In Secretary Ministry of Information and Broadcasting, Govt. of India and Orsv. Cricket Association of Bengal and Ors. 1995 (2) SCC 161] the Supreme Court remarked about this right in the following terms:
+The right to freedom of speech and expression includes the right to receive and impart information. For ensuring the free speech right of the citizens of this country, it is necessary that the citizens have the benefit of plurality of views and a range of opinions on all public issues. A successful democracy posits an 'aware' citizenry. Diversity of opinions, views, ideas and ideologies is essential to enable the citizens to arrive at informed judgment on all issues touching them.
+This right, to information, was explicitly held to be a fundamental right under
+Article 19(1)(a)
+of the Constitution of India for the first time by Justice KK Mathew in
+State of UP v. Raj Narain
+, . This view was followed by the Supreme Court on a number of decisions and after public demand, the
+Right to Information Act, 2005
+was enacted and brought into force.
+The Act
+is an effectuation of the right to freedom of speech and expression. In an increasingly knowledge based society, information and access to information holds the key to resources, benefits, and distribution of power. Information, more than any other element, is of critical importance in a participatory democracy. By one fell stroke, under the Act, the maze of procedures and official barriers that had previously impeded information, has been swept aside. The citizen and information seekers have, subject to a few exceptions, an overriding right to be given information on matters in the possession of the state and public agencies that are covered by the Act. As is reflected in its preambular paragraphs, the enactment seeks to promote transparency, arrest corruption and to hold the Government and its instrumentalities accountable to the governed. This spirit of the Act must be borne in mind while construing the provisions contained therein.
+13. Access to information, under
+Section 3
+of the Act, is the rule and exemptions under
+Section 8
+, the exception.
+Section 8
+being a restriction on this fundamental right, must therefore is to be strictly construed. It should not be interpreted in manner as to shadow the very right itself. Under
+Section 8
+, exemption from releasing information is granted if it would impede the process of investigation or the prosecution of the offenders. It is apparent that the mere existence of an investigation process cannot be a ground for refusal of the information; the authority withholding information must show satisfactory reasons as to why the release of such information would hamper the investigation process. Such reasons should be germane, and the opinion of the process being hampered should be reasonable and based on some material. Sans this consideration,
+Section 8(1)(h)
+and other such provisions would become the haven for dodging demands for information.
+14. A rights based enactment is akin to a welfare measure, like the Act, should receive a liberal interpretation. The contextual background and history of the Act is such that the exemptions, outlined in
+Section 8
+, relieving the authorities from the obligation to provide information, constitute restrictions on the exercise of the rights provided by it. Therefore, such exemption provisions have to be construed in their terms; there is some authority supporting this view ( See
+Nathi Devi v. Radha Devi Gupta
+2005 (2) SCC 201; B. R. Kapoor v. State of Tamil Nadu V. Tulasamma v. Sesha Reddy . Adopting a different approach would result in narrowing the rights and approving a judicially mandated class of restriction on the rights under the Act, which is unwarranted.
+14. In the present case, the orders of the three respondents do not reflect any reasons, why the investigation process would be hampered. The direction of the CIC shows is that the information needs to be released only after the investigation and recovery in complete. Facially, the order supports the petitioner's contention that the claim for exemption made by respondent Nos. 2 and 3 are untenable.
+Section 8(1)(j)
+relates only to investigation and prosecution and not to recovery. Recovery in tax matters, in the usual circumstances is a time consuming affair, and to withhold information till that eventuality, after the entire proceedings, despite the ruling that investigations are not hampered by information disclosure, is illogical. The petitioner's grouse against the condition imposed by the CIC is all the more valid since he claims it to be of immense relevance, to defend himself in criminal proceedings. The second and third respondents have not purported to be aggrieved by the order of CIC as far as it directs disclosure of materials; nor have they sought for its review on the ground that the CIC was misled and its reasoning flawed. Therefore, it is too late for them to contend that the impugned order contains an erroneous appreciation of facts. The materials available with them and forming the basis of notice under the Income Tax act is what has to be disclosed to the petitioner, i.e the information seeker.
+15. As to the issue of whether the investigation has been complete or not, I think that the authorities have not applied their mind about the nature of information sought. As is submitted by the Petitioner, he merely seeks access to the preliminary reports investigation pursuant to which notices under Sections 131, 143(2), 148 of the Income Tax have been issued and not as to the outcome of the investigation and reassessment carried on by the Assessing Officer. As held in the preceding part of the judgment, without a disclosure as to how the investigation process would be hampered by sharing the materials collected till the notices were issued to the assesse, the respondents could not have rejected the request for granting information. The CIC, even after overruling the objection, should not have imposed the condition that information could be disclosed only after recovery was made.
+16. In view of the foregoing discussion the order of the CIC dated 8th May 2006 in so far as it withholds information until tax recovery orders are made, is set aside. The second and third respondents are directed to release the information sought, on the basis of the materials available and collected with them, within two weeks.
+17. This Court takes a serious note of the two year delay in releasing information, the lack of adequate reasoning in the orders of the Public Information Officer and the Appellate Authority and the lack of application of mind in relation to the nature of information sought. The materials on record clearly show the lackadaisical approach of the second and third respondent in releasing the information sought. However, the Petitioner has not been able to demonstrate that they malafidely denied the information sought. Therefore, a direction to the Central Information Commission to initiate action under
+Section 20
+of the Act, cannot be issued.
+18. The writ petition is allowed in the above terms. In the peculiar circumstances of the cases, there shall be no order on costs.

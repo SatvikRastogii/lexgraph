@@ -1,0 +1,33 @@
+{
+  "single_hop_factual": [
+    "What does Article 21 of the Indian Constitution guarantee?",
+    "What is the right to equality under Article 14?",
+    "What freedoms are protected under Article 19?",
+    "What remedies does Article 32 provide?"
+  ],
+  "multi_hop_relational": [
+    "How are Articles 14, 19, and 21 interconnected in Supreme Court judgments?",
+    "Which legal principles from early Article 21 cases were expanded in privacy judgments?",
+    "How has the golden triangle of Articles 14, 19, and 21 evolved across constitutional bench decisions?",
+    "Which judges have consistently interpreted fundamental rights expansively across multiple articles?",
+    "In which fundamental rights cases did dissenting opinions later become majority views?"
+  ],
+  "global_thematic": [
+    "What are the dominant themes across Supreme Court fundamental rights jurisprudence?",
+    "How has the Supreme Court balanced individual rights against state power?",
+    "What constitutional principles appear most frequently across these judgments?",
+    "What patterns exist in how the court interprets reasonable restrictions?"
+  ],
+  "cross_document_reasoning": [
+    "How has the interpretation of Article 21 evolved from the 1950s to 2020s?",
+    "Which landmark cases form the foundational lineage of privacy rights in India?",
+    "How do dissenting opinions reflect evolving constitutional philosophy?",
+    "What is the relationship between Article 32 petitions and expansion of fundamental rights?"
+  ],
+  "entity_relationship": [
+    "Which Supreme Court judges authored the most significant fundamental rights judgments?",
+    "How are the Puttaswamy, Maneka Gandhi, and Kesavananda Bharati cases connected?",
+    "Which petitioners had the most landmark victories in fundamental rights cases?",
+    "What is the relationship between bench size and landmark judgment significance?"
+  ]
+}
