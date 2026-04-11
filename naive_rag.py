@@ -2,6 +2,11 @@
 Naive RAG Pipeline - Built from Scratch
 No LangChain. Pure Python.
 For benchmarking against GraphRAG on Indian Supreme Court judgments.
+
+Features:
+  - Confidence Scoring & Hallucination Detection
+  - Per-stage Latency Profiling
+  - Citation Provenance Trail (links back to Indian Kanoon)
 """
 
 import os
@@ -20,7 +25,13 @@ COLLECTION_NAME = "legal_judgments"
 EMBEDDING_MODEL = "nomic-embed-text"  # same model as GraphRAG
 LLM_MODEL = "llama3.1"
 CHUNK_SIZE = 500                      # tokens approx, same as GraphRAG
-CHUNK_OVERLAP = 50                  # overlap between chunks
+CHUNK_OVERLAP = 50                    # overlap between chunks
+METADATA_FILE = "corpus_metadata.json" # maps filenames to Indian Kanoon URLs
+
+# Confidence thresholds for hallucination detection
+CONFIDENCE_HIGH = 0.7    # Green — high confidence
+CONFIDENCE_MEDIUM = 0.4  # Yellow — medium confidence
+# Below CONFIDENCE_MEDIUM = Red — possible hallucination
 
 # ─── STEP 1: CHUNKER ──────────────────────────────────────────────────────────
 
@@ -220,6 +231,89 @@ def retrieve(collection, query, top_k=5):
 
     return retrieved
 
+# ─── STEP 3B: CONFIDENCE SCORING ──────────────────────────────────────────────
+
+def compute_confidence(retrieved_chunks):
+    """
+    Compute a confidence score (0.0 to 1.0) based on retrieval quality.
+    Uses the average cosine similarity of the top retrieved chunks.
+    
+    Returns:
+      - score: float (0.0 to 1.0)
+      - level: "HIGH", "MEDIUM", or "LOW"
+      - warning: hallucination warning message (empty if confident)
+    """
+    if not retrieved_chunks:
+        return {"score": 0.0, "level": "LOW", "warning": "⚠ No relevant documents found. The model is likely hallucinating."}
+
+    similarities = [chunk["similarity"] for chunk in retrieved_chunks]
+    avg_score = sum(similarities) / len(similarities)
+    max_score = max(similarities)
+
+    # Use weighted combination: 60% average + 40% max (rewards having at least one strong match)
+    confidence = round(0.6 * avg_score + 0.4 * max_score, 4)
+
+    if confidence >= CONFIDENCE_HIGH:
+        return {"score": confidence, "level": "HIGH", "warning": ""}
+    elif confidence >= CONFIDENCE_MEDIUM:
+        return {"score": confidence, "level": "MEDIUM", "warning": "⚡ Medium confidence — answer may contain inaccuracies."}
+    else:
+        return {"score": confidence, "level": "LOW", "warning": "⚠ LOW CONFIDENCE — the model is likely hallucinating. Retrieved context is weak."}
+
+# ─── STEP 3C: CITATION PROVENANCE ─────────────────────────────────────────────
+
+def load_citation_metadata(metadata_file=METADATA_FILE):
+    """
+    Load corpus metadata to map filenames to Indian Kanoon URLs and case titles.
+    Returns a dict: {filename: {title, url, year, article_focus}}
+    """
+    if not os.path.exists(metadata_file):
+        print(f"Warning: {metadata_file} not found. Citations will be limited.")
+        return {}
+
+    with open(metadata_file, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    citation_map = {}
+    for doc in data.get("documents", []):
+        filename = doc.get("filename")
+        if filename:
+            citation_map[filename] = {
+                "title": doc.get("title", "Unknown Case"),
+                "url": doc.get("url", ""),
+                "year": doc.get("year", "Unknown"),
+                "article_focus": doc.get("article_focus", "Unknown"),
+            }
+
+    return citation_map
+
+
+def build_citations(retrieved_chunks, citation_map):
+    """
+    Build citation footnotes by mapping source filenames to Indian Kanoon metadata.
+    Returns a list of citation dicts with title, url, year, and similarity.
+    """
+    citations = []
+    seen_sources = set()
+
+    for chunk in retrieved_chunks:
+        source = chunk["source"]
+        if source in seen_sources:
+            continue
+        seen_sources.add(source)
+
+        meta = citation_map.get(source, {})
+        citations.append({
+            "source_file": source,
+            "title": meta.get("title", source),
+            "url": meta.get("url", ""),
+            "year": meta.get("year", "Unknown"),
+            "article_focus": meta.get("article_focus", ""),
+            "similarity": chunk["similarity"],
+        })
+
+    return citations
+
 # ─── STEP 4: GENERATOR ────────────────────────────────────────────────────────
 
 def generate_answer(query, retrieved_chunks):
@@ -260,23 +354,56 @@ ANSWER:"""
     except Exception as e:
         return f"Error generating answer: {e}"
 
-# ─── STEP 5: FULL RAG PIPELINE ────────────────────────────────────────────────
+# ─── STEP 5: FULL RAG PIPELINE (with Latency Dashboard) ──────────────────────
+
+# Global citation map — loaded once, reused across queries
+_citation_map = None
+
+def get_citation_map():
+    """Lazy-load citation metadata once."""
+    global _citation_map
+    if _citation_map is None:
+        _citation_map = load_citation_metadata()
+    return _citation_map
+
 
 def naive_rag_query(collection, query, top_k=5):
     """
-    Complete naive RAG pipeline:
-    Query -> Retrieve relevant chunks -> Generate answer
-    Returns answer + retrieved context for RAGAS evaluation
+    Complete naive RAG pipeline with:
+      - Per-stage latency profiling
+      - Confidence scoring & hallucination detection
+      - Citation provenance trail
+    
+    Query -> Retrieve relevant chunks -> Score confidence -> Generate answer -> Map citations
+    Returns answer + retrieved context + metrics for RAGAS evaluation and Streamlit dashboard
     """
-    start_time = time.time()
+    total_start = time.perf_counter()
+    latency = {}
 
-    # Retrieve
+    # Stage 1: Retrieval (includes embedding the query + vector search)
+    t0 = time.perf_counter()
     retrieved = retrieve(collection, query, top_k)
+    latency["retrieval_ms"] = round((time.perf_counter() - t0) * 1000, 1)
 
-    # Generate
+    # Stage 2: Confidence Scoring
+    t0 = time.perf_counter()
+    confidence = compute_confidence(retrieved)
+    latency["confidence_ms"] = round((time.perf_counter() - t0) * 1000, 1)
+
+    # Stage 3: LLM Generation
+    t0 = time.perf_counter()
     answer = generate_answer(query, retrieved)
+    latency["generation_ms"] = round((time.perf_counter() - t0) * 1000, 1)
 
-    elapsed = round(time.time() - start_time, 2)
+    # Stage 4: Citation Mapping
+    t0 = time.perf_counter()
+    citation_map = get_citation_map()
+    citations = build_citations(retrieved, citation_map)
+    latency["citation_ms"] = round((time.perf_counter() - t0) * 1000, 1)
+
+    # Total
+    latency["total_ms"] = round((time.perf_counter() - total_start) * 1000, 1)
+    latency["total_seconds"] = round(latency["total_ms"] / 1000, 2)
 
     return {
         "query": query,
@@ -284,7 +411,11 @@ def naive_rag_query(collection, query, top_k=5):
         "retrieved_chunks": retrieved,
         "contexts": [r["text"] for r in retrieved],
         "sources": [r["source"] for r in retrieved],
-        "latency_seconds": elapsed
+        "confidence": confidence,
+        "citations": citations,
+        "latency": latency,
+        # Legacy field for backward compatibility
+        "latency_seconds": latency["total_seconds"],
     }
 
 # ─── STEP 6: BATCH EVALUATION ─────────────────────────────────────────────────
@@ -336,6 +467,7 @@ def main():
     print("=" * 60)
     print("Naive RAG Pipeline")
     print("Indian Supreme Court Judgments")
+    print("Features: Confidence Scoring | Latency Profiling | Citation Trail")
     print("=" * 60)
 
     # Build or load vector store
@@ -358,13 +490,39 @@ def main():
 
         result = naive_rag_query(collection, query)
 
+        # ── Confidence Score ──
+        conf = result["confidence"]
+        if conf["level"] == "HIGH":
+            conf_color = "🟢"
+        elif conf["level"] == "MEDIUM":
+            conf_color = "🟡"
+        else:
+            conf_color = "🔴"
+
+        print(f"\n{conf_color} Confidence: {conf['score']:.2f} ({conf['level']})")
+        if conf["warning"]:
+            print(f"   {conf['warning']}")
+
+        # ── Answer ──
         print(f"\nANSWER:\n{result['answer']}")
-        print(f"\nSOURCES:")
-        for chunk in result["retrieved_chunks"]:
-            print(f"  - {chunk['source']} "
-                  f"(similarity: {chunk['similarity']}, "
-                  f"year: {chunk['year']})")
-        print(f"\nLatency: {result['latency_seconds']}s")
+
+        # ── Citation Provenance Trail ──
+        print(f"\n📚 CITATIONS:")
+        for i, cite in enumerate(result["citations"], 1):
+            url_display = f" — {cite['url']}" if cite["url"] else ""
+            print(f"  [{i}] {cite['title']} ({cite['year']})"
+                  f" | similarity: {cite['similarity']}"
+                  f"{url_display}")
+
+        # ── Latency Dashboard ──
+        lat = result["latency"]
+        print(f"\n⏱ LATENCY BREAKDOWN:")
+        print(f"  Retrieval:    {lat['retrieval_ms']:>8.1f} ms")
+        print(f"  Confidence:   {lat['confidence_ms']:>8.1f} ms")
+        print(f"  Generation:   {lat['generation_ms']:>8.1f} ms")
+        print(f"  Citations:    {lat['citation_ms']:>8.1f} ms")
+        print(f"  ─────────────────────────")
+        print(f"  TOTAL:        {lat['total_ms']:>8.1f} ms ({lat['total_seconds']}s)")
         print("-" * 60)
 
 if __name__ == "__main__":
