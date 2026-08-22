@@ -1,0 +1,44 @@
+{
+  "probes": {
+    "judge": "gemini:gemini-3-flash-preview -> gemini:gemini-3.5-flash -> gemini:gemini-flash-latest -> gemini:gemini-3.7-flash -> gemini:gemini-3.1-flash-lite -> gemini:gemini-3.1-flash-lite-preview",
+    "passed": 5,
+    "total": 5,
+    "rows": [
+      {
+        "metric": "faithfulness",
+        "probe": "grounded restatement vs contradiction",
+        "better": 5,
+        "worse": 1,
+        "verdict": "pass"
+      },
+      {
+        "metric": "hallucination",
+        "probe": "cited from context vs fabricated authority",
+        "better": 5,
+        "worse": 1,
+        "verdict": "pass"
+      },
+      {
+        "metric": "answer_relevancy",
+        "probe": "answers the question vs answers a different one",
+        "better": 5,
+        "worse": 1,
+        "verdict": "pass"
+      },
+      {
+        "metric": "completeness",
+        "probe": "full answer vs bare assertion",
+        "better": 5,
+        "worse": 2,
+        "verdict": "pass"
+      },
+      {
+        "metric": "coherence",
+        "probe": "ordered argument vs shuffled fragments",
+        "better": 5,
+        "worse": 1,
+        "verdict": "pass"
+      }
+    ]
+  }
+}
