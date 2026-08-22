@@ -561,66 +561,80 @@ def run_graphrag_query(query, method="local"):
 
 # ─── NAIVE RAG QUERY (inline) ────────────────────────────────────────────────
 
+# Retrieval configuration and generator are env-overridable so the dashboard
+# can be pointed at whichever the ablation currently favours without an edit.
+RETRIEVAL_CONFIG = os.getenv("LEXGRAPH_RETRIEVER", "hybrid-rerank")
+GENERATOR_SPEC = os.getenv("LEXGRAPH_GENERATOR", "ollama:llama3.1")
+
+# Calibrated on the gold set's out-of-corpus questions; see
+# reports/abstention_calibration.json and scripts/calibrate_abstention.py.
+# Only meaningful for the configuration it was calibrated against, so it is
+# disabled if the retriever is switched away from hybrid-rerank.
+ABSTENTION_THRESHOLD = 0.423 if RETRIEVAL_CONFIG == "hybrid-rerank" else None
+
+
+@st.cache_resource
+def get_retriever():
+    """Build the retrieval pipeline once per server process."""
+    from lexgraph.retrieval.pipeline import build_retriever
+
+    return build_retriever(RETRIEVAL_CONFIG)
+
+
+@st.cache_resource
+def get_generator():
+    from lexgraph.llm import get_client
+
+    return get_client(GENERATOR_SPEC)
+
+
 def run_naive_rag_query(query):
-    """Run a lightweight Naive RAG query using ChromaDB + Ollama."""
-    latency = {}
+    """Run the vector-retrieval pipeline.
+
+    Delegates to lexgraph rather than reimplementing retrieval and prompting
+    inline. The inline copy read the `legal_judgments` collection, which was
+    built from a keyword-filtered slice of legal_corpus/ and shared no
+    documents at all with the set GraphRAG indexes -- so this panel and the
+    GraphRAG panel beside it were answering from different corpora.
+    """
+    from lexgraph.generation import answer_question
+
     try:
-        import chromadb
-        from chromadb.utils import embedding_functions
-
-        t0 = time.perf_counter()
-        client = chromadb.PersistentClient(path="chroma_db")
-        embed_fn = embedding_functions.OllamaEmbeddingFunction(
-            model_name=EMBEDDING_MODEL, url=OLLAMA_HOST
+        generated = answer_question(
+            query,
+            get_retriever(),
+            get_generator(),
+            top_k=5,
+            abstention_threshold=ABSTENTION_THRESHOLD,
         )
-        collection = client.get_collection(name="legal_judgments", embedding_function=embed_fn)
-
-        results = collection.query(query_texts=[query], n_results=5, include=["documents", "metadatas", "distances"])
-        latency["retrieval_ms"] = round((time.perf_counter() - t0) * 1000, 1)
-
-        chunks = results["documents"][0]
-        distances = results["distances"][0]
-        metadatas = results["metadatas"][0]
-
-        similarities = [round(1 - d, 4) for d in distances]
-        avg_conf = sum(similarities) / len(similarities) if similarities else 0
-
-        context = "\n\n---\n\n".join([
-            f"[Source: {m.get('source', '?')} | Year: {m.get('year', '?')}]\n{c}"
-            for c, m in zip(chunks, metadatas)
-        ])
-
-        prompt = f"""You are a legal research assistant specializing in Indian constitutional law.
-Answer the question based ONLY on the provided court judgment excerpts.
-Be specific, cite the sources, and acknowledge if the context is insufficient.
-
-QUESTION: {query}
-
-RELEVANT JUDGMENT EXCERPTS:
-{context}
-
-ANSWER:"""
-
-        t0 = time.perf_counter()
-        answer = ollama_chat(prompt, max_tokens=800)
-        latency["generation_ms"] = round((time.perf_counter() - t0) * 1000, 1)
-
-        sources = []
-        for m, sim in zip(metadatas, similarities):
-            sources.append({
-                "source": m.get("source", "unknown"),
-                "year": m.get("year", "?"),
-                "similarity": sim,
-            })
-
+        latency = {k: round(v, 1) for k, v in generated.latency.items()}
         return {
-            "answer": answer,
-            "confidence": avg_conf,
-            "sources": sources,
+            "answer": generated.answer,
+            "confidence": generated.abstention.confidence if generated.abstention else 0.0,
+            "sources": [
+                {
+                    "source": hit.doc_id,
+                    "year": hit.year,
+                    "similarity": round(hit.score, 4),
+                    "citation": hit.citation,
+                }
+                for hit in generated.hits
+            ],
             "latency": latency,
+            "abstained": generated.abstained,
+            "unsupported_citations": (
+                generated.citations.unsupported if generated.citations else []
+            ),
         }
     except Exception as e:
-        return {"answer": f"⚠ Naive RAG error: {str(e)}", "confidence": 0.0, "sources": [], "latency": latency}
+        return {
+            "answer": f"⚠ Retrieval pipeline error: {e}",
+            "confidence": 0.0,
+            "sources": [],
+            "latency": {},
+            "abstained": False,
+            "unsupported_citations": [],
+        }
 
 
 # ─── KNOWLEDGE GRAPH VISUALIZATION ──────────────────────────────────────────
@@ -890,13 +904,22 @@ with tab_query:
                     naive_result = run_naive_rag_query(query)
                     naive_ms = round((time.perf_counter() - t0) * 1000, 1)
 
-                st.markdown(naive_result["answer"])
+                if naive_result.get("abstained"):
+                    st.warning(naive_result["answer"])
+                else:
+                    st.markdown(naive_result["answer"])
                 st.caption(f"⏱ {naive_ms}ms")
+
+                if naive_result.get("unsupported_citations"):
+                    st.error(
+                        f"{len(naive_result['unsupported_citations'])} unverified citation(s): "
+                        + ", ".join(naive_result["unsupported_citations"][:3])
+                    )
 
                 if naive_result["sources"]:
                     with st.expander("📚 Citations"):
                         for s in naive_result["sources"]:
-                            st.markdown(f'<div class="citation-box">{s["source"]} ({s["year"]}) — sim: {s["similarity"]}</div>', unsafe_allow_html=True)
+                            st.markdown(f'<div class="citation-box">{s.get("citation") or s["source"]} — score: {s["similarity"]}</div>', unsafe_allow_html=True)
 
             with col_graph:
                 st.markdown("#### GraphRAG")
@@ -951,12 +974,22 @@ with tab_query:
                 result = run_naive_rag_query(query)
                 elapsed = round((time.perf_counter() - t0) * 1000, 1)
 
-            st.markdown(f'<div class="glass-card">{result["answer"]}</div>', unsafe_allow_html=True)
+            if result.get("abstained"):
+                st.warning(result["answer"])
+            else:
+                st.markdown(f'<div class="glass-card">{result["answer"]}</div>', unsafe_allow_html=True)
+
+            if result.get("unsupported_citations"):
+                st.error(
+                    f"{len(result['unsupported_citations'])} citation(s) in this answer "
+                    f"do not appear in the retrieved judgments and may be fabricated: "
+                    + ", ".join(result["unsupported_citations"][:5])
+                )
 
             if result["sources"]:
                 with st.expander("📚 Citations & Sources"):
                     for s in result["sources"]:
-                        st.markdown(f'<div class="citation-box">{s["source"]} ({s["year"]}) — Similarity: {s["similarity"]}</div>', unsafe_allow_html=True)
+                        st.markdown(f'<div class="citation-box">{s.get("citation") or s["source"]} — score: {s["similarity"]}</div>', unsafe_allow_html=True)
 
             st.caption(f"⏱ Total latency: {elapsed}ms")
             st.session_state.naive_count += 1
