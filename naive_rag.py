@@ -24,6 +24,7 @@ CHROMA_DIR = "chroma_db"              # where vectors are stored
 COLLECTION_NAME = "legal_judgments"
 EMBEDDING_MODEL = "nomic-embed-text"  # same model as GraphRAG
 LLM_MODEL = "llama3.1"
+OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
 CHUNK_SIZE = 500                      # tokens approx, same as GraphRAG
 CHUNK_OVERLAP = 50                    # overlap between chunks
 METADATA_FILE = "corpus_metadata.json" # maps filenames to Indian Kanoon URLs
@@ -124,7 +125,7 @@ def build_vector_store(corpus_dir, chroma_dir, collection_name):
             name=collection_name,
             embedding_function=embedding_functions.OllamaEmbeddingFunction(
                 model_name=EMBEDDING_MODEL,
-                url="http://localhost:11434"
+                url=OLLAMA_HOST
             )
         )
         print(f"Loaded {collection.count()} chunks")
@@ -136,7 +137,7 @@ def build_vector_store(corpus_dir, chroma_dir, collection_name):
     # Create embedding function using same model as GraphRAG
     embed_fn = embedding_functions.OllamaEmbeddingFunction(
         model_name=EMBEDDING_MODEL,
-        url="http://localhost:11434"
+        url=OLLAMA_HOST
     )
 
     # Create collection

@@ -16,7 +16,8 @@ import requests
 # ─── CONFIGURATION ────────────────────────────────────────────────────────────
 
 LLM_MODEL = "llama3.1"
-OLLAMA_URL = "http://localhost:11434/api/chat"
+OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
+OLLAMA_URL = f"{OLLAMA_HOST}/api/chat"
 RELATIONSHIPS_FILE = "output/relationships.parquet"
 ENTITIES_FILE = "output/entities.parquet"
 

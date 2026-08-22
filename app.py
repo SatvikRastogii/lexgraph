@@ -16,6 +16,9 @@ import re
 import requests
 from datetime import datetime
 
+import telemetry
+telemetry.init_db()
+
 # ─── PAGE CONFIG ──────────────────────────────────────────────────────────────
 
 st.set_page_config(
@@ -29,334 +32,314 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    :root{
+        --bg:#13110d;
+        --bg-soft:#181510;
+        --surface:#1b1813;
+        --surface-2:#221e17;
+        --line:#332e24;
+        --line-soft:#272219;
+        --ink:#ece6d8;
+        --ink-muted:#a89e8b;
+        --ink-dim:#766d5d;
+        --brass:#c2a45a;
+        --brass-bright:#ddbe77;
+        --brass-dim:#7e6a34;
+        --sage:#6fae8e;
+        --slate:#7188a8;
+        --brick:#c2574d;
+        --amber:#cc9a44;
+    }
 
     /* ── Global ── */
-    .stApp {
-        background: linear-gradient(135deg, #0a0a1a 0%, #0d1117 40%, #0a0f1e 100%);
-        font-family: 'Inter', sans-serif;
+    .stApp{
+        background:
+            radial-gradient(900px 520px at 88% -8%, rgba(194,164,90,0.07), transparent 62%),
+            var(--bg);
+        color:var(--ink);
+        font-family:'Inter', system-ui, -apple-system, sans-serif;
     }
-    
-    [data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #0d1117 0%, #161b22 100%);
-        border-right: 1px solid rgba(99, 102, 241, 0.15);
+    .block-container{ padding-top:2.4rem; max-width:1280px; }
+    p, span, li, label, .stMarkdown{ color:var(--ink); }
+    a{ color:var(--brass-bright); text-decoration:none; }
+    a:hover{ color:var(--brass); text-decoration:underline; }
+
+    [data-testid="stSidebar"]{
+        background:var(--bg-soft);
+        border-right:1px solid var(--line);
+    }
+    [data-testid="stSidebar"] *{ color:var(--ink-muted); }
+
+    /* ── Typography ── */
+    h1, h2, h3, h4{
+        font-family:'Fraunces', Georgia, 'Times New Roman', serif !important;
+        font-weight:600 !important;
+        color:var(--ink) !important;
+        letter-spacing:-0.01em;
+    }
+    h3{ font-size:1.45rem !important; margin-bottom:0.1rem !important; }
+    h4{ font-size:1.12rem !important; color:var(--ink) !important; }
+    /* italic intro lines under section headers read as editorial standfirst */
+    .stMarkdown em{ color:var(--ink-dim); font-style:italic; }
+
+    /* ── Cards (class name kept: .glass-card) ── */
+    .glass-card{
+        background:var(--surface);
+        border:1px solid var(--line);
+        border-left:3px solid var(--brass);
+        border-radius:4px;
+        padding:22px 26px;
+        margin:14px 0;
+        line-height:1.7;
+        color:var(--ink);
+        box-shadow:0 1px 0 rgba(0,0,0,0.3);
     }
 
-    /* ── Headers ── */
-    h1, h2, h3 {
-        font-family: 'Inter', sans-serif !important;
-        font-weight: 800 !important;
+    /* ── Masthead ── */
+    .hero-title{
+        font-family:'Fraunces', Georgia, serif;
+        font-size:3.1rem;
+        font-weight:600;
+        color:var(--ink);
+        text-align:left;
+        letter-spacing:-0.02em;
+        margin:0 0 2px 0;
+        line-height:1.05;
+    }
+    .hero-title .mark{ color:var(--brass); }
+    .hero-subtitle{
+        text-align:left;
+        color:var(--ink-dim);
+        font-family:'Inter', sans-serif;
+        font-size:0.78rem;
+        font-weight:500;
+        text-transform:uppercase;
+        letter-spacing:0.32em;
+        margin:0;
+    }
+    .masthead-rule{
+        height:1px;
+        background:linear-gradient(90deg, var(--brass) 0%, var(--line) 38%, transparent 100%);
+        margin:16px 0 4px 0;
     }
 
-    /* ── Glassmorphism Cards ── */
-    .glass-card {
-        background: rgba(13, 17, 23, 0.7);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border: 1px solid rgba(99, 102, 241, 0.2);
-        border-radius: 16px;
-        padding: 24px;
-        margin: 12px 0;
-        transition: all 0.3s ease;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    /* ── Stat tiles ── */
+    .stat-card{
+        background:var(--surface);
+        border:1px solid var(--line);
+        border-top:2px solid var(--brass-dim);
+        border-radius:4px;
+        padding:18px 16px;
+        text-align:center;
+        transition:border-color 0.2s ease;
     }
-    .glass-card:hover {
-        border-color: rgba(99, 102, 241, 0.5);
-        box-shadow: 0 8px 32px rgba(99, 102, 241, 0.15);
-        transform: translateY(-2px);
+    .stat-card:hover{ border-top-color:var(--brass); }
+    .stat-number{
+        font-family:'Fraunces', Georgia, serif;
+        font-size:2.2rem;
+        font-weight:600;
+        color:var(--brass);
+        line-height:1.1;
     }
-
-    /* ── Hero Section ── */
-    .hero-title {
-        font-size: 3.2rem;
-        font-weight: 900;
-        background: linear-gradient(135deg, #818cf8, #6366f1, #a78bfa, #c084fc);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        text-align: center;
-        margin-bottom: 0;
-        letter-spacing: -1px;
-        animation: glow 3s ease-in-out infinite alternate;
-    }
-    @keyframes glow {
-        from { filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.3)); }
-        to { filter: drop-shadow(0 0 20px rgba(99, 102, 241, 0.6)); }
-    }
-    .hero-subtitle {
-        text-align: center;
-        color: #8b949e;
-        font-size: 1.15rem;
-        font-weight: 400;
-        margin-top: 4px;
-        letter-spacing: 2px;
+    .stat-label{
+        color:var(--ink-dim);
+        font-size:0.7rem;
+        font-weight:500;
+        text-transform:uppercase;
+        letter-spacing:0.18em;
+        margin-top:6px;
     }
 
-    /* ── Stat Cards ── */
-    .stat-card {
-        background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.05));
-        border: 1px solid rgba(99, 102, 241, 0.25);
-        border-radius: 14px;
-        padding: 20px 16px;
-        text-align: center;
-        transition: all 0.3s ease;
+    /* ── Pipeline tags ── */
+    .tag-naive, .tag-graph{
+        padding:3px 11px;
+        border-radius:3px;
+        font-size:0.68rem;
+        font-weight:600;
+        letter-spacing:0.12em;
+        text-transform:uppercase;
+        display:inline-block;
+        border:1px solid;
     }
-    .stat-card:hover {
-        transform: scale(1.03);
-        border-color: rgba(99, 102, 241, 0.6);
-    }
-    .stat-number {
-        font-size: 2.4rem;
-        font-weight: 800;
-        background: linear-gradient(135deg, #818cf8, #a78bfa);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-    .stat-label {
-        color: #8b949e;
-        font-size: 0.85rem;
-        font-weight: 500;
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-        margin-top: 4px;
-    }
+    .tag-naive{ background:rgba(111,174,142,0.12); color:var(--sage); border-color:rgba(111,174,142,0.4); }
+    .tag-graph{ background:rgba(194,164,90,0.12); color:var(--brass-bright); border-color:rgba(194,164,90,0.45); }
 
-    /* ── Pipeline Tags ── */
-    .tag-naive {
-        background: linear-gradient(135deg, #065f46, #047857);
-        color: #6ee7b7;
-        padding: 4px 14px;
-        border-radius: 20px;
-        font-size: 0.75rem;
-        font-weight: 700;
-        letter-spacing: 1px;
-        display: inline-block;
+    /* ── Confidence badges ── */
+    .conf-high, .conf-medium, .conf-low{
+        padding:5px 14px; border-radius:3px; font-weight:600;
+        font-size:0.85rem; display:inline-block; border:1px solid;
     }
-    .tag-graph {
-        background: linear-gradient(135deg, #312e81, #4338ca);
-        color: #a5b4fc;
-        padding: 4px 14px;
-        border-radius: 20px;
-        font-size: 0.75rem;
-        font-weight: 700;
-        letter-spacing: 1px;
-        display: inline-block;
-    }
+    .conf-high{ background:rgba(111,174,142,0.12); border-color:var(--sage); color:var(--sage); }
+    .conf-medium{ background:rgba(204,154,68,0.12); border-color:var(--amber); color:var(--amber); }
+    .conf-low{ background:rgba(194,87,77,0.12); border-color:var(--brick); color:#e0978f; }
 
-    /* ── Confidence Badges ── */
-    .conf-high { 
-        background: rgba(16, 185, 129, 0.15); 
-        border: 1px solid #10b981; 
-        color: #6ee7b7; 
-        padding: 6px 16px; 
-        border-radius: 12px; 
-        font-weight: 600; 
-    }
-    .conf-medium { 
-        background: rgba(245, 158, 11, 0.15); 
-        border: 1px solid #f59e0b; 
-        color: #fcd34d; 
-        padding: 6px 16px; 
-        border-radius: 12px; 
-        font-weight: 600; 
-    }
-    .conf-low { 
-        background: rgba(239, 68, 68, 0.15); 
-        border: 1px solid #ef4444; 
-        color: #fca5a5; 
-        padding: 6px 16px; 
-        border-radius: 12px; 
-        font-weight: 600; 
-    }
-
-    /* ── Dispute Card ── */
-    .dispute-card {
-        background: linear-gradient(135deg, rgba(239, 68, 68, 0.08), rgba(185, 28, 28, 0.04));
-        border: 1px solid rgba(239, 68, 68, 0.3);
-        border-radius: 14px;
-        padding: 20px;
-        margin: 12px 0;
-        border-left: 4px solid #ef4444;
+    /* ── Dispute card ── */
+    .dispute-card{
+        background:var(--surface);
+        border:1px solid var(--line);
+        border-left:3px solid var(--brick);
+        border-radius:4px;
+        padding:18px 22px;
+        margin:12px 0;
+        color:var(--ink);
     }
 
     /* ── Citation ── */
-    .citation-box {
-        background: rgba(30, 41, 59, 0.5);
-        border: 1px solid rgba(99, 102, 241, 0.15);
-        border-radius: 10px;
-        padding: 12px 16px;
-        margin: 6px 0;
-        font-size: 0.88rem;
-        color: #c9d1d9;
+    .citation-box{
+        background:var(--bg-soft);
+        border:1px solid var(--line);
+        border-radius:3px;
+        padding:11px 15px;
+        margin:6px 0;
+        font-size:0.88rem;
+        color:var(--ink-muted);
     }
-    .citation-box a {
-        color: #818cf8;
-        text-decoration: none;
+    .citation-box a{ color:var(--brass-bright); }
+
+    /* ── Inputs ── */
+    .stTextInput input, .stTextArea textarea, .stSelectbox div[data-baseweb="select"] > div{
+        background:var(--surface) !important;
+        border:1px solid var(--line) !important;
+        border-radius:3px !important;
+        color:var(--ink) !important;
+    }
+    .stTextInput input:focus, .stTextArea textarea:focus{
+        border-color:var(--brass) !important;
+        box-shadow:none !important;
+    }
+    .stTextInput input::placeholder{ color:var(--ink-dim) !important; }
+
+    /* ── Buttons ── */
+    .stButton > button{
+        border-radius:3px !important;
+        font-weight:600 !important;
+        letter-spacing:0.02em !important;
+        border:1px solid var(--line) !important;
+        background:var(--surface) !important;
+        color:var(--ink) !important;
+        transition:all 0.18s ease !important;
+    }
+    .stButton > button:hover{ border-color:var(--brass) !important; color:var(--brass-bright) !important; }
+    .stButton > button[kind="primary"]{
+        background:var(--brass) !important;
+        border-color:var(--brass) !important;
+        color:#1a160d !important;
+    }
+    .stButton > button[kind="primary"]:hover{
+        background:var(--brass-bright) !important;
+        border-color:var(--brass-bright) !important;
+        color:#1a160d !important;
     }
 
-    /* ── Tabs ── */
-    .stTabs [data-baseweb="tab-list"] {
-        gap: 8px;
-        background: rgba(13, 17, 23, 0.5);
-        border-radius: 12px;
-        padding: 4px;
+    /* ── Metrics ── */
+    [data-testid="stMetricValue"]{
+        font-family:'Fraunces', Georgia, serif; color:var(--ink); font-weight:600;
     }
-    .stTabs [data-baseweb="tab"] {
-        border-radius: 10px;
-        color: #8b949e;
-        font-weight: 600;
-        font-size: 0.9rem;
-    }
-    .stTabs [aria-selected="true"] {
-        background: rgba(99, 102, 241, 0.2) !important;
-        color: #a5b4fc !important;
+    [data-testid="stMetricLabel"]{
+        text-transform:uppercase; letter-spacing:0.12em; font-size:0.7rem; color:var(--ink-dim);
     }
 
-    /* ── Hide default elements ── */
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
+    /* ── Tabs (flat, underline on active) ── */
+    .stTabs [data-baseweb="tab-list"]{
+        gap:4px;
+        background:transparent;
+        border-bottom:1px solid var(--line);
+        padding:0;
+    }
+    .stTabs [data-baseweb="tab"]{
+        border-radius:0;
+        color:var(--ink-dim);
+        font-family:'Inter', sans-serif;
+        font-weight:600;
+        font-size:0.86rem;
+        letter-spacing:0.02em;
+        padding:8px 14px;
+        border-bottom:2px solid transparent;
+    }
+    .stTabs [data-baseweb="tab"]:hover{ color:var(--ink-muted); }
+    .stTabs [aria-selected="true"]{
+        background:transparent !important;
+        color:var(--brass-bright) !important;
+        border-bottom:2px solid var(--brass) !important;
+    }
+
+    hr, [data-testid="stMarkdownContainer"] hr{ border-color:var(--line); }
+
+    /* ── Hide chrome ── */
+    #MainMenu {visibility:hidden;}
+    footer {visibility:hidden;}
+    header {visibility:hidden;}
 
     /* ── Scrollbar ── */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: #0d1117; }
-    ::-webkit-scrollbar-thumb { background: #30363d; border-radius: 3px; }
-    ::-webkit-scrollbar-thumb:hover { background: #6366f1; }
+    ::-webkit-scrollbar { width:8px; height:8px; }
+    ::-webkit-scrollbar-track { background:var(--bg); }
+    ::-webkit-scrollbar-thumb { background:var(--line); border-radius:0; }
+    ::-webkit-scrollbar-thumb:hover { background:var(--brass-dim); }
 
-    /* ── Timeline Styles ── */
-    .timeline-container {
-        position: relative;
-        padding: 20px 0 20px 32px;
+    /* ── Timeline ── */
+    .timeline-container{ position:relative; padding:18px 0 18px 30px; }
+    .timeline-container::before{
+        content:''; position:absolute; left:13px; top:0; bottom:0;
+        width:1px; background:var(--line);
     }
-    .timeline-container::before {
-        content: '';
-        position: absolute;
-        left: 14px;
-        top: 0;
-        bottom: 0;
-        width: 3px;
-        background: linear-gradient(180deg, #6366f1 0%, #a78bfa 30%, #c084fc 60%, #818cf8 100%);
-        border-radius: 2px;
-        box-shadow: 0 0 12px rgba(99, 102, 241, 0.4);
+    .timeline-era{
+        font-family:'Fraunces', Georgia, serif;
+        font-size:1.15rem; font-weight:600; letter-spacing:0.06em;
+        margin:26px 0 10px 6px; padding:5px 14px;
+        border-radius:3px; display:inline-block; border:1px solid;
     }
-    .timeline-era {
-        font-size: 1.3rem;
-        font-weight: 800;
-        letter-spacing: 2px;
-        margin: 28px 0 12px 8px;
-        padding: 6px 18px;
-        border-radius: 10px;
-        display: inline-block;
+    .era-foundation{ background:rgba(111,174,142,0.1); color:var(--sage); border-color:rgba(111,174,142,0.32); }
+    .era-expansion{ background:rgba(194,164,90,0.1); color:var(--brass-bright); border-color:rgba(194,164,90,0.34); }
+    .era-golden{ background:rgba(204,138,74,0.1); color:#d49a5c; border-color:rgba(204,138,74,0.34); }
+    .era-modern{ background:rgba(113,136,168,0.1); color:#8fa4c2; border-color:rgba(113,136,168,0.34); }
+    .timeline-card{
+        position:relative; background:var(--surface);
+        border:1px solid var(--line); border-radius:4px;
+        padding:16px 20px; margin:9px 0 9px 6px;
+        transition:border-color 0.2s ease;
     }
-    .era-foundation {
-        background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(6, 95, 70, 0.1));
-        color: #6ee7b7;
-        border: 1px solid rgba(16, 185, 129, 0.3);
+    .timeline-card:hover{ border-color:var(--brass-dim); }
+    .timeline-card::before{
+        content:''; position:absolute; left:-24px; top:22px;
+        width:9px; height:9px; border-radius:50%;
+        border:2px solid var(--brass); background:var(--bg); z-index:2;
     }
-    .era-expansion {
-        background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(67, 56, 202, 0.1));
-        color: #a5b4fc;
-        border: 1px solid rgba(99, 102, 241, 0.3);
+    .timeline-year{
+        font-family:'JetBrains Mono', monospace;
+        font-size:0.76rem; font-weight:500; color:var(--brass);
+        letter-spacing:0.1em;
     }
-    .era-golden {
-        background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(180, 83, 9, 0.1));
-        color: #fcd34d;
-        border: 1px solid rgba(245, 158, 11, 0.3);
+    .timeline-title{
+        font-family:'Fraunces', Georgia, serif;
+        font-size:1.05rem; font-weight:600; color:var(--ink);
+        margin:3px 0; line-height:1.35;
     }
-    .era-modern {
-        background: linear-gradient(135deg, rgba(192, 132, 252, 0.15), rgba(139, 92, 246, 0.1));
-        color: #d8b4fe;
-        border: 1px solid rgba(192, 132, 252, 0.3);
+    .timeline-article-badge{
+        display:inline-block; background:var(--bg-soft);
+        border:1px solid var(--line); color:var(--ink-muted);
+        padding:1px 9px; border-radius:3px; font-size:0.7rem;
+        font-weight:500; margin:2px 3px 2px 0; letter-spacing:0.03em;
     }
-    .timeline-card {
-        position: relative;
-        background: rgba(13, 17, 23, 0.75);
-        backdrop-filter: blur(16px);
-        border: 1px solid rgba(99, 102, 241, 0.2);
-        border-radius: 14px;
-        padding: 18px 22px;
-        margin: 10px 0 10px 8px;
-        transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
-    }
-    .timeline-card:hover {
-        border-color: rgba(99, 102, 241, 0.6);
-        box-shadow: 0 8px 36px rgba(99, 102, 241, 0.2);
-        transform: translateX(6px);
-    }
-    .timeline-card::before {
-        content: '';
-        position: absolute;
-        left: -27px;
-        top: 24px;
-        width: 14px;
-        height: 14px;
-        border-radius: 50%;
-        border: 3px solid #6366f1;
-        background: #0d1117;
-        box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
-        z-index: 2;
-    }
-    .timeline-year {
-        font-size: 0.78rem;
-        font-weight: 700;
-        color: #818cf8;
-        letter-spacing: 1.5px;
-        text-transform: uppercase;
-    }
-    .timeline-title {
-        font-size: 1.05rem;
-        font-weight: 700;
-        color: #e2e8f0;
-        margin: 4px 0;
-        line-height: 1.4;
-    }
-    .timeline-article-badge {
-        display: inline-block;
-        background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(99, 102, 241, 0.1));
-        border: 1px solid rgba(139, 92, 246, 0.35);
-        color: #c4b5fd;
-        padding: 2px 10px;
-        border-radius: 8px;
-        font-size: 0.72rem;
-        font-weight: 600;
-        margin: 2px 3px 2px 0;
-        letter-spacing: 0.5px;
-    }
-    .timeline-judges {
-        font-size: 0.8rem;
-        color: #6b7280;
-        margin-top: 4px;
-        font-style: italic;
-    }
-    .timeline-link {
-        color: #818cf8;
-        text-decoration: none;
-        font-size: 0.82rem;
-        font-weight: 600;
-    }
-    .timeline-link:hover {
-        color: #a5b4fc;
-        text-decoration: underline;
-    }
-    .timeline-narrative {
-        background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(139, 92, 246, 0.04));
-        border: 1px solid rgba(99, 102, 241, 0.2);
-        border-radius: 16px;
-        padding: 24px 28px;
-        margin: 16px 0;
-        line-height: 1.8;
-        color: #c9d1d9;
-        font-size: 0.95rem;
-        border-left: 4px solid #6366f1;
+    .timeline-judges{ font-size:0.8rem; color:var(--ink-dim); margin-top:4px; font-style:italic; }
+    .timeline-link{ color:var(--brass-bright); font-size:0.82rem; font-weight:600; }
+    .timeline-link:hover{ color:var(--brass); text-decoration:underline; }
+    .timeline-narrative{
+        background:var(--surface);
+        border:1px solid var(--line);
+        border-left:3px solid var(--brass);
+        border-radius:4px; padding:22px 26px; margin:16px 0;
+        line-height:1.85; color:var(--ink); font-size:0.96rem;
+        font-family:'Inter', sans-serif;
     }
 </style>
 """, unsafe_allow_html=True)
 
 # ─── CONSTANTS & HELPERS ─────────────────────────────────────────────────────
 
-OLLAMA_URL = "http://localhost:11434/api/chat"
+OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
+OLLAMA_URL = f"{OLLAMA_HOST}/api/chat"
 LLM_MODEL = "llama3.1"
 EMBEDDING_MODEL = "nomic-embed-text"
 OUTPUT_DIR = "output"
@@ -449,7 +432,7 @@ def ollama_embed(text):
     """Get embedding from Ollama."""
     try:
         resp = requests.post(
-            "http://localhost:11434/api/embed",
+            f"{OLLAMA_HOST}/api/embed",
             json={"model": EMBEDDING_MODEL, "input": text},
             timeout=30,
         )
@@ -466,7 +449,12 @@ SIMPLE_PROTOTYPES = [
     "What is the right to equality under Article 14?",
     "What year was the Maneka Gandhi case decided?",
     "Who was the petitioner in the Kesavananda Bharati case?",
+    "What did the Supreme Court hold regarding passport cancellation?",
     "What freedoms are protected under Article 19?",
+    "What remedies does Article 32 provide?",
+    "What is the basic structure doctrine?",
+    "Define reasonable restrictions under Article 19(2).",
+    "What are the grounds for preventive detention under Article 22?",
 ]
 COMPLEX_PROTOTYPES = [
     "How are Articles 14, 19, and 21 interconnected in Supreme Court judgments?",
@@ -474,6 +462,11 @@ COMPLEX_PROTOTYPES = [
     "Which legal principles from early Article 21 cases were expanded in privacy judgments?",
     "What is the relationship between the Maneka Gandhi, Puttaswamy, and Kesavananda Bharati cases?",
     "How has the Supreme Court balanced individual rights against state power across decades?",
+    "Which landmark cases form the foundational lineage of privacy rights in India?",
+    "How did the golden triangle of Articles 14, 19, and 21 evolve across constitutional bench decisions?",
+    "Compare the approaches of different benches to the scope of personal liberty.",
+    "What patterns exist in how the court interprets reasonable restrictions across multiple cases?",
+    "In which fundamental rights cases did dissenting opinions later become majority views?",
 ]
 
 @st.cache_resource
@@ -509,17 +502,38 @@ def route_query(query, simple_embs, complex_embs):
     simple_scores = [cosine_sim(q_emb, e) for e in simple_embs]
     complex_scores = [cosine_sim(q_emb, e) for e in complex_embs]
 
-    avg_simple = np.mean(sorted(simple_scores, reverse=True)[:3])
-    avg_complex = np.mean(sorted(complex_scores, reverse=True)[:3])
+    # Single best match per bank, not top-3 average: averaging let queries that
+    # share keywords with several mediocre complex-bank matches (e.g. "what is
+    # article 21" vs multiple Article-21-flavored complex prototypes) out-vote
+    # one excellent simple-bank match. Verified against benchmark_questions.json:
+    # max-of-bank scores 21/22 vs top-3-average's 19/22, no regressions.
+    avg_simple = max(simple_scores)
+    avg_complex = max(complex_scores)
 
     route = "NAIVE" if avg_simple > avg_complex else "GRAPH"
-    total = avg_simple + avg_complex
-    confidence = round((max(avg_simple, avg_complex) / total) * 2 - 1, 3) if total > 0 else 0
+
+    # Confidence = margin between the winning and losing bank's best match,
+    # scaled against the typical margin range seen on real (non-prototype-
+    # identical) queries in benchmark_questions.json (~0.02-0.3). The old
+    # ratio formula (max/(max+min))*2-1 compressed even healthy margins
+    # toward 0 because both banks' top cosine similarities are usually high
+    # for any in-domain legal query -- it couldn't distinguish a correct-but-
+    # close call from a genuinely wrong one.
+    margin = abs(avg_simple - avg_complex)
+    confidence = round(min(1.0, margin / 0.3), 3)
 
     return route, confidence
 
 
 # ─── GRAPHRAG QUERY (via CLI) ────────────────────────────────────────────────
+
+# GraphRAG global search fans out many sequential LLM calls over the community
+# reports, so a complex query can run for several minutes on local hardware.
+# A simple query already measured ~250s here, so 300s killed harder queries mid-
+# run; 600s gives real headroom. (The durable fix is a model that isn't CPU-
+# offloaded — see the latency notes.) Override via GRAPHRAG_QUERY_TIMEOUT.
+GRAPHRAG_TIMEOUT = int(os.getenv("GRAPHRAG_QUERY_TIMEOUT", "600"))
+
 
 def run_graphrag_query(query, method="local"):
     """Run graphrag query via subprocess."""
@@ -527,7 +541,7 @@ def run_graphrag_query(query, method="local"):
     try:
         result = subprocess.run(
             ["graphrag", "query", "--root", ".", "--method", method, query],
-            capture_output=True, text=True, timeout=300,
+            capture_output=True, text=True, timeout=GRAPHRAG_TIMEOUT,
             cwd=os.path.dirname(os.path.abspath(__file__))
         )
         output = result.stdout
@@ -537,7 +551,10 @@ def run_graphrag_query(query, method="local"):
             return parts[-1].strip() if len(parts) > 1 else output.strip()
         return output.strip() if output.strip() else result.stderr.strip()
     except subprocess.TimeoutExpired:
-        return "⚠ Query timed out (>5 min). Try a simpler question."
+        mins = GRAPHRAG_TIMEOUT // 60
+        return (f"⚠ GraphRAG query exceeded the {mins}-minute limit. Global search "
+                "fans out many LLM calls and is expensive on local hardware — try a "
+                "narrower question, or use a faster model so each call completes sooner.")
     except Exception as e:
         return f"⚠ Error: {str(e)}"
 
@@ -546,17 +563,21 @@ def run_graphrag_query(query, method="local"):
 
 def run_naive_rag_query(query):
     """Run a lightweight Naive RAG query using ChromaDB + Ollama."""
+    latency = {}
     try:
         import chromadb
         from chromadb.utils import embedding_functions
 
+        t0 = time.perf_counter()
         client = chromadb.PersistentClient(path="chroma_db")
         embed_fn = embedding_functions.OllamaEmbeddingFunction(
-            model_name=EMBEDDING_MODEL, url="http://localhost:11434"
+            model_name=EMBEDDING_MODEL, url=OLLAMA_HOST
         )
         collection = client.get_collection(name="legal_judgments", embedding_function=embed_fn)
 
         results = collection.query(query_texts=[query], n_results=5, include=["documents", "metadatas", "distances"])
+        latency["retrieval_ms"] = round((time.perf_counter() - t0) * 1000, 1)
+
         chunks = results["documents"][0]
         distances = results["distances"][0]
         metadatas = results["metadatas"][0]
@@ -580,7 +601,9 @@ RELEVANT JUDGMENT EXCERPTS:
 
 ANSWER:"""
 
+        t0 = time.perf_counter()
         answer = ollama_chat(prompt, max_tokens=800)
+        latency["generation_ms"] = round((time.perf_counter() - t0) * 1000, 1)
 
         sources = []
         for m, sim in zip(metadatas, similarities):
@@ -594,9 +617,10 @@ ANSWER:"""
             "answer": answer,
             "confidence": avg_conf,
             "sources": sources,
+            "latency": latency,
         }
     except Exception as e:
-        return {"answer": f"⚠ Naive RAG error: {str(e)}", "confidence": 0.0, "sources": []}
+        return {"answer": f"⚠ Naive RAG error: {str(e)}", "confidence": 0.0, "sources": [], "latency": latency}
 
 
 # ─── KNOWLEDGE GRAPH VISUALIZATION ──────────────────────────────────────────
@@ -624,20 +648,20 @@ def build_knowledge_graph_figure(entities_df, relationships_df, max_nodes=150):
 
     # Map types to colors
     type_colors = {
-        "CASE": "#6366f1",
-        "PERSON": "#f59e0b",
-        "ORGANIZATION": "#10b981",
-        "LEGAL PRINCIPLE": "#ef4444",
-        "ARTICLE": "#8b5cf6",
-        "COURT": "#06b6d4",
-        "DOCTRINE": "#ec4899",
-        "EVENT": "#f97316",
+        "CASE": "#7188a8",
+        "PERSON": "#cc9a44",
+        "ORGANIZATION": "#6fae8e",
+        "LEGAL PRINCIPLE": "#c2574d",
+        "ARTICLE": "#c2a45a",
+        "COURT": "#5b9aa0",
+        "DOCTRINE": "#a87fb0",
+        "EVENT": "#cf8a4a",
     }
 
     for _, row in ent_filtered.iterrows():
         title = row["title"]
         etype = row.get("type", "UNKNOWN").upper()
-        G.add_node(title, type=etype, color=type_colors.get(etype, "#6b7280"))
+        G.add_node(title, type=etype, color=type_colors.get(etype, "#766d5d"))
 
     for _, row in rel_filtered.iterrows():
         if row["source"] in G.nodes and row["target"] in G.nodes:
@@ -660,7 +684,7 @@ def build_knowledge_graph_figure(entities_df, relationships_df, max_nodes=150):
 
     edge_trace = go.Scatter(
         x=edge_x, y=edge_y,
-        line=dict(width=0.5, color="rgba(99, 102, 241, 0.2)"),
+        line=dict(width=0.5, color="rgba(194, 164, 90, 0.2)"),
         hoverinfo="none", mode="lines"
     )
 
@@ -672,14 +696,14 @@ def build_knowledge_graph_figure(entities_df, relationships_df, max_nodes=150):
         node_y.append(y)
         degree = G.degree(node)
         node_text.append(f"{node}<br>Type: {G.nodes[node].get('type', '?')}<br>Connections: {degree}")
-        node_color.append(G.nodes[node].get("color", "#6b7280"))
+        node_color.append(G.nodes[node].get("color", "#766d5d"))
         node_size.append(max(8, min(35, degree * 3)))
 
     node_trace = go.Scatter(
         x=node_x, y=node_y, mode="markers+text",
         hoverinfo="text", text=[n[:20] for n in G.nodes()],
         textposition="top center",
-        textfont=dict(size=7, color="#8b949e"),
+        textfont=dict(size=7, color="#a89e8b"),
         hovertext=node_text,
         marker=dict(
             size=node_size, color=node_color,
@@ -691,13 +715,13 @@ def build_knowledge_graph_figure(entities_df, relationships_df, max_nodes=150):
     fig = go.Figure(data=[edge_trace, node_trace])
     fig.update_layout(
         showlegend=False,
-        plot_bgcolor="rgba(10, 10, 26, 0)",
-        paper_bgcolor="rgba(10, 10, 26, 0)",
+        plot_bgcolor="rgba(19, 17, 13, 0)",
+        paper_bgcolor="rgba(19, 17, 13, 0)",
         margin=dict(l=0, r=0, t=0, b=0),
         xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
         yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
         height=650,
-        hoverlabel=dict(bgcolor="#1e293b", font_color="#e2e8f0", bordercolor="#6366f1"),
+        hoverlabel=dict(bgcolor="#221e17", font_color="#ece6d8", bordercolor="#c2a45a"),
     )
     return fig
 
@@ -706,14 +730,14 @@ def build_knowledge_graph_figure(entities_df, relationships_df, max_nodes=150):
 # ═══════════════════════════════════════════════════════════════════════════════
 
 with st.sidebar:
-    st.markdown('<p class="hero-title" style="font-size:1.8rem;">⚖️ LexGraph</p>', unsafe_allow_html=True)
-    st.markdown('<p class="hero-subtitle" style="font-size:0.8rem;">LEGAL KNOWLEDGE NAVIGATOR</p>', unsafe_allow_html=True)
+    st.markdown('<p class="hero-title" style="font-size:1.7rem;">Lex<span class="mark">Graph</span></p>', unsafe_allow_html=True)
+    st.markdown('<p class="hero-subtitle" style="font-size:0.62rem;letter-spacing:0.22em;">Legal Knowledge Navigator</p>', unsafe_allow_html=True)
     st.markdown("---")
 
     # System status
-    st.markdown("### 🔌 System Status")
+    st.markdown("### System Status")
     try:
-        r = requests.get("http://localhost:11434/api/tags", timeout=3)
+        r = requests.get(f"{OLLAMA_HOST}/api/tags", timeout=3)
         st.success("Ollama: Online", icon="✅")
     except:
         st.error("Ollama: Offline", icon="❌")
@@ -730,7 +754,7 @@ with st.sidebar:
     st.markdown("---")
 
     # Live stats
-    st.markdown("### 📊 Session Stats")
+    st.markdown("### Session Stats")
     col1, col2 = st.columns(2)
     col1.metric("Queries", st.session_state.total_queries)
     col2.metric("Disputes", len(detect_contradictions()) if not relationships_df.empty else 0)
@@ -740,7 +764,7 @@ with st.sidebar:
     col4.metric("→ Graph", st.session_state.graph_count)
 
     st.markdown("---")
-    st.markdown("### ℹ️ About")
+    st.markdown("### About")
     st.caption(
         "Built with GraphRAG v2.0, ChromaDB, NetworkX, "
         "and Llama 3.1 8B running 100% locally on RTX 4050."
@@ -753,8 +777,9 @@ with st.sidebar:
 # ═══════════════════════════════════════════════════════════════════════════════
 
 # Hero
-st.markdown('<h1 class="hero-title">⚖️ LexGraph</h1>', unsafe_allow_html=True)
-st.markdown('<p class="hero-subtitle">GRAPHRAG-POWERED LEGAL KNOWLEDGE NAVIGATOR</p>', unsafe_allow_html=True)
+st.markdown('<h1 class="hero-title">Lex<span class="mark">Graph</span></h1>', unsafe_allow_html=True)
+st.markdown('<p class="hero-subtitle">Graph-Augmented Retrieval for Indian Constitutional Law</p>', unsafe_allow_html=True)
+st.markdown('<div class="masthead-rule"></div>', unsafe_allow_html=True)
 st.markdown("")
 
 # Stats row
@@ -796,13 +821,13 @@ st.markdown("")
 # ─── TABS ─────────────────────────────────────────────────────────────────────
 
 tab_query, tab_timeline, tab_graph, tab_disputes, tab_explorer, tab_ragas, tab_analytics = st.tabs([
-    "🔍 Query Engine",
-    "⏳ Temporal Timeline",
-    "🕸️ Knowledge Graph",
-    "⚔️ Contradiction Detector",
-    "📚 Data Explorer",
-    "🏆 RAGAS Benchmark",
-    "📊 Analytics",
+    "Query",
+    "Timeline",
+    "Knowledge Graph",
+    "Contradictions",
+    "Data Explorer",
+    "Benchmark",
+    "Analytics",
 ])
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -810,7 +835,7 @@ tab_query, tab_timeline, tab_graph, tab_disputes, tab_explorer, tab_ragas, tab_a
 # ═══════════════════════════════════════════════════════════════════════════════
 
 with tab_query:
-    st.markdown("### 🔍 Intelligent Legal Query Engine")
+    st.markdown("### Intelligent Legal Query Engine")
     st.markdown("*Queries are automatically routed via the Semantic Hybrid Router to the optimal pipeline.*")
 
     query = st.text_input(
@@ -821,11 +846,14 @@ with tab_query:
 
     col_mode1, col_mode2 = st.columns(2)
     with col_mode1:
-        graphrag_method = st.selectbox("GraphRAG Method", ["local", "global"], index=0)
+        # "local" defaults last: it crashes (LanceDB vector-dim mismatch between
+        # the index's stored embeddings and the live nomic-embed-text config) --
+        # same issue ragas_evaluation.py already worked around by forcing "global".
+        graphrag_method = st.selectbox("GraphRAG Method", ["global", "local"], index=0)
     with col_mode2:
         force_pipeline = st.selectbox("Pipeline Override", ["Auto (Hybrid Router)", "Force Naive RAG", "Force GraphRAG", "Run Both (Compare)"], index=0)
 
-    if st.button("⚡ Execute Query", type="primary", use_container_width=True) and query:
+    if st.button("Execute Query", type="primary", use_container_width=True) and query:
         st.session_state.total_queries += 1
 
         # Route
@@ -846,9 +874,9 @@ with tab_query:
 
         # Display routing decision
         if route == "NAIVE":
-            st.markdown(f'<span class="tag-naive">ROUTED → NAIVE RAG</span> &nbsp; Confidence: {route_conf:.2f} &nbsp; Latency: {route_ms}ms', unsafe_allow_html=True)
+            st.markdown(f'<span class="tag-naive">ROUTED → NAIVE RAG</span> &nbsp; Latency: {route_ms}ms', unsafe_allow_html=True)
         else:
-            st.markdown(f'<span class="tag-graph">ROUTED → GRAPHRAG</span> &nbsp; Confidence: {route_conf:.2f} &nbsp; Latency: {route_ms}ms', unsafe_allow_html=True)
+            st.markdown(f'<span class="tag-graph">ROUTED → GRAPHRAG</span> &nbsp; Latency: {route_ms}ms', unsafe_allow_html=True)
 
         st.markdown("")
 
@@ -856,15 +884,12 @@ with tab_query:
             col_naive, col_graph = st.columns(2)
 
             with col_naive:
-                st.markdown("#### 🟢 Naive RAG")
+                st.markdown("#### Naive RAG")
                 with st.spinner("Searching vectors..."):
                     t0 = time.perf_counter()
                     naive_result = run_naive_rag_query(query)
                     naive_ms = round((time.perf_counter() - t0) * 1000, 1)
 
-                conf = naive_result["confidence"]
-                conf_class = "conf-high" if conf >= 0.7 else "conf-medium" if conf >= 0.4 else "conf-low"
-                st.markdown(f'<div class="{conf_class}">Confidence: {conf:.3f}</div>', unsafe_allow_html=True)
                 st.markdown(naive_result["answer"])
                 st.caption(f"⏱ {naive_ms}ms")
 
@@ -874,7 +899,7 @@ with tab_query:
                             st.markdown(f'<div class="citation-box">{s["source"]} ({s["year"]}) — sim: {s["similarity"]}</div>', unsafe_allow_html=True)
 
             with col_graph:
-                st.markdown("#### 🟣 GraphRAG")
+                st.markdown("#### GraphRAG")
                 with st.spinner("Traversing knowledge graph..."):
                     t0 = time.perf_counter()
                     graph_answer = run_graphrag_query(query, graphrag_method)
@@ -885,15 +910,15 @@ with tab_query:
                 st.caption(f"⏱ {graph_ms}ms")
 
             # Latency comparison chart
-            st.markdown("#### ⏱ Latency Comparison")
+            st.markdown("#### Latency Comparison")
             lat_fig = go.Figure(data=[
-                go.Bar(name="Naive RAG", x=["Pipeline"], y=[naive_ms], marker_color="#10b981"),
-                go.Bar(name="GraphRAG", x=["Pipeline"], y=[graph_ms], marker_color="#6366f1"),
+                go.Bar(name="Naive RAG", x=["Pipeline"], y=[naive_ms], marker_color="#6fae8e"),
+                go.Bar(name="GraphRAG", x=["Pipeline"], y=[graph_ms], marker_color="#c2a45a"),
             ])
             lat_fig.update_layout(
                 barmode="group", height=250,
                 plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
-                font=dict(color="#8b949e"),
+                font=dict(color="#a89e8b"),
                 yaxis_title="Milliseconds",
             )
             st.plotly_chart(lat_fig, use_container_width=True)
@@ -901,16 +926,30 @@ with tab_query:
             st.session_state.naive_count += 1
             st.session_state.graph_count += 1
 
+            naive_ok = not str(naive_result["answer"]).strip().startswith("⚠")
+            telemetry.log_query_event(
+                query_text=query, route="NAIVE",
+                route_confidence=route_conf, route_latency_ms=route_ms,
+                pipeline_latency_ms=naive_ms, total_latency_ms=route_ms + naive_ms,
+                success=naive_ok,
+                error_message=None if naive_ok else naive_result["answer"],
+                naive_confidence=naive_result["confidence"],
+                latency_breakdown=naive_result.get("latency"),
+            )
+            graph_ok = not str(graph_answer).strip().startswith("⚠")
+            telemetry.log_query_event(
+                query_text=query, route="GRAPH",
+                route_confidence=route_conf, route_latency_ms=route_ms,
+                pipeline_latency_ms=graph_ms, total_latency_ms=route_ms + graph_ms,
+                success=graph_ok,
+                error_message=None if graph_ok else graph_answer,
+            )
+
         elif route == "NAIVE":
             with st.spinner("🔍 Searching vector store..."):
                 t0 = time.perf_counter()
                 result = run_naive_rag_query(query)
                 elapsed = round((time.perf_counter() - t0) * 1000, 1)
-
-            conf = result["confidence"]
-            conf_class = "conf-high" if conf >= 0.7 else "conf-medium" if conf >= 0.4 else "conf-low"
-            st.markdown(f'<div class="{conf_class}">Confidence: {conf:.3f}</div>', unsafe_allow_html=True)
-            st.markdown("")
 
             st.markdown(f'<div class="glass-card">{result["answer"]}</div>', unsafe_allow_html=True)
 
@@ -922,8 +961,19 @@ with tab_query:
             st.caption(f"⏱ Total latency: {elapsed}ms")
             st.session_state.naive_count += 1
 
+            naive_ok = not str(result["answer"]).strip().startswith("⚠")
+            telemetry.log_query_event(
+                query_text=query, route="NAIVE",
+                route_confidence=route_conf, route_latency_ms=route_ms,
+                pipeline_latency_ms=elapsed, total_latency_ms=route_ms + elapsed,
+                success=naive_ok,
+                error_message=None if naive_ok else result["answer"],
+                naive_confidence=result["confidence"],
+                latency_breakdown=result.get("latency"),
+            )
+
         else:  # GRAPH
-            with st.spinner("🕸️ Querying Knowledge Graph (this may take 2-5 minutes)..."):
+            with st.spinner("Querying Knowledge Graph (global search can take several minutes on local hardware)..."):
                 t0 = time.perf_counter()
                 answer = run_graphrag_query(query, graphrag_method)
                 elapsed = round((time.perf_counter() - t0) * 1000, 1)
@@ -933,6 +983,15 @@ with tab_query:
             st.markdown(f'<div class="glass-card">{answer}</div>', unsafe_allow_html=True)
             st.caption(f"⏱ Total latency: {elapsed}ms")
             st.session_state.graph_count += 1
+
+            graph_ok = not str(answer).strip().startswith("⚠")
+            telemetry.log_query_event(
+                query_text=query, route="GRAPH",
+                route_confidence=route_conf, route_latency_ms=route_ms,
+                pipeline_latency_ms=elapsed, total_latency_ms=route_ms + elapsed,
+                success=graph_ok,
+                error_message=None if graph_ok else answer,
+            )
 
         # Save to history
         st.session_state.query_history.append({
@@ -945,7 +1004,7 @@ with tab_query:
 # ═══════════════════════════════════════════════════════════════════════════════
 
 with tab_timeline:
-    st.markdown("### ⏳ Temporal Evolution of Indian Constitutional Law")
+    st.markdown("### Temporal Evolution of Indian Constitutional Law")
     st.markdown("*Trace how fundamental rights jurisprudence evolved across decades — from independence to the digital age.*")
 
     # Load metadata
@@ -976,7 +1035,7 @@ with tab_timeline:
         st.warning("No metadata found. Ensure `corpus_metadata.json` exists with case data.")
     else:
         # ── Interactive Plotly Scatter Timeline ──
-        st.markdown("#### 📈 Interactive Timeline")
+        st.markdown("#### Interactive Timeline")
 
         # Define eras and assign colors
         def get_era(year):
@@ -990,10 +1049,10 @@ with tab_timeline:
                 return "Digital Rights Era"
 
         era_colors = {
-            "Foundation Era": "#10b981",
-            "Expansion Era": "#6366f1",
-            "Golden Triangle Era": "#f59e0b",
-            "Digital Rights Era": "#c084fc",
+            "Foundation Era": "#6fae8e",
+            "Expansion Era": "#c2a45a",
+            "Golden Triangle Era": "#cf8a4a",
+            "Digital Rights Era": "#7188a8",
         }
 
         # Build scatter data
@@ -1035,7 +1094,7 @@ with tab_timeline:
                 name=era_name,
                 text=[t[:25] + "..." if len(t) > 25 else t for t in era_titles],
                 textposition="top center",
-                textfont=dict(size=8, color="#8b949e"),
+                textfont=dict(size=8, color="#a89e8b"),
                 hovertext=hover_text,
                 hoverinfo="text",
                 marker=dict(
@@ -1051,22 +1110,22 @@ with tab_timeline:
         for decade in range(1950, 2040, 10):
             fig_timeline.add_vline(
                 x=decade, line_dash="dot",
-                line_color="rgba(99, 102, 241, 0.15)", line_width=1,
+                line_color="rgba(194, 164, 90, 0.15)", line_width=1,
             )
             fig_timeline.add_annotation(
                 x=decade, y=0, text=f"{decade}s",
                 showarrow=False,
-                font=dict(size=10, color="rgba(99, 102, 241, 0.4)"),
+                font=dict(size=10, color="rgba(194, 164, 90, 0.4)"),
                 yshift=-20,
             )
 
         fig_timeline.update_layout(
             height=500,
-            plot_bgcolor="rgba(10, 10, 26, 0)",
-            paper_bgcolor="rgba(10, 10, 26, 0)",
-            font=dict(color="#8b949e", family="Inter"),
+            plot_bgcolor="rgba(19, 17, 13, 0)",
+            paper_bgcolor="rgba(19, 17, 13, 0)",
+            font=dict(color="#a89e8b", family="Inter"),
             xaxis=dict(
-                title="Year", gridcolor="rgba(99,102,241,0.08)",
+                title="Year", gridcolor="rgba(194,164,90,0.08)",
                 range=[1948, 2028], dtick=5,
                 tickfont=dict(size=11),
             ),
@@ -1076,14 +1135,14 @@ with tab_timeline:
             legend=dict(
                 orientation="h", yanchor="bottom", y=1.02,
                 xanchor="center", x=0.5,
-                bgcolor="rgba(13,17,23,0.7)",
-                bordercolor="rgba(99,102,241,0.2)",
+                bgcolor="rgba(27,24,19,0.7)",
+                bordercolor="rgba(194,164,90,0.2)",
                 borderwidth=1,
                 font=dict(size=11),
             ),
             hoverlabel=dict(
-                bgcolor="#1e293b", font_color="#e2e8f0",
-                bordercolor="#6366f1", font_size=12,
+                bgcolor="#221e17", font_color="#ece6d8",
+                bordercolor="#c2a45a", font_size=12,
             ),
             margin=dict(l=20, r=20, t=40, b=60),
         )
@@ -1094,7 +1153,7 @@ with tab_timeline:
         st.markdown("---")
         col_filter1, col_filter2 = st.columns([1, 2])
         with col_filter1:
-            selected_era = st.selectbox("🎯 Filter by Era", [
+            selected_era = st.selectbox("Filter by Era", [
                 "All Eras",
                 "Foundation Era (1950–1969)",
                 "Expansion Era (1970–1984)",
@@ -1103,7 +1162,7 @@ with tab_timeline:
             ])
         with col_filter2:
             article_filter = st.text_input(
-                "🔎 Filter by Article",
+                "Filter by Article",
                 placeholder="e.g., 21, 14, 19",
                 key="timeline_article_filter",
             )
@@ -1128,7 +1187,7 @@ with tab_timeline:
             ]
 
         # ── Vertical Timeline Cards ──
-        st.markdown(f"#### 📜 Case Timeline ({len(filtered)} cases)")
+        st.markdown(f"#### Case Timeline ({len(filtered)} cases)")
 
         # Group by era
         current_era = None
@@ -1168,12 +1227,12 @@ with tab_timeline:
                 judges_str = judges if isinstance(judges, str) else ", ".join(judges[:3])
                 if len(judges_str) > 80:
                     judges_str = judges_str[:80] + "..."
-                judges_html = f'<div class="timeline-judges">👤 {judges_str}</div>'
+                judges_html = f'<div class="timeline-judges">{judges_str}</div>'
 
             # Build URL link
             link_html = ""
             if d.get("url"):
-                link_html = f'<a class="timeline-link" href="{d["url"]}" target="_blank">📎 View on Indian Kanoon →</a>'
+                link_html = f'<a class="timeline-link" href="{d["url"]}" target="_blank">View on Indian Kanoon →</a>'
 
             st.markdown(f"""
             <div class="timeline-card">
@@ -1189,7 +1248,7 @@ with tab_timeline:
 
         # ── Year Distribution Chart ──
         st.markdown("---")
-        st.markdown("#### 📊 Judicial Activity by Decade")
+        st.markdown("#### Judicial Activity by Decade")
 
         decade_counts = {}
         for d in timeline_data:
@@ -1206,27 +1265,27 @@ with tab_timeline:
                 x=decade_labels, y=decade_values,
                 marker=dict(
                     color=decade_values,
-                    colorscale=[[0, "#312e81"], [0.5, "#6366f1"], [1, "#c084fc"]],
+                    colorscale=[[0, "#3a3320"], [0.5, "#c2a45a"], [1, "#7188a8"]],
                     line=dict(width=0),
                 ),
                 text=decade_values,
                 textposition="outside",
-                textfont=dict(color="#a5b4fc", size=12, family="Inter"),
+                textfont=dict(color="#d2b66a", size=12, family="Inter"),
             )
         ])
         fig_decades.update_layout(
             height=320,
             plot_bgcolor="rgba(0,0,0,0)",
             paper_bgcolor="rgba(0,0,0,0)",
-            font=dict(color="#8b949e", family="Inter"),
-            xaxis=dict(title="Decade", gridcolor="rgba(99,102,241,0.05)"),
-            yaxis=dict(title="Number of Cases", gridcolor="rgba(99,102,241,0.08)"),
+            font=dict(color="#a89e8b", family="Inter"),
+            xaxis=dict(title="Decade", gridcolor="rgba(194,164,90,0.05)"),
+            yaxis=dict(title="Number of Cases", gridcolor="rgba(194,164,90,0.08)"),
             margin=dict(l=40, r=20, t=20, b=50),
         )
         st.plotly_chart(fig_decades, use_container_width=True)
 
         # ── Article Frequency Radar ──
-        st.markdown("#### 🎯 Most Cited Articles")
+        st.markdown("#### Most Cited Articles")
 
         article_counts = {}
         for d in timeline_data:
@@ -1247,27 +1306,27 @@ with tab_timeline:
                 r=art_values + [art_values[0]],  # close the shape
                 theta=art_labels + [art_labels[0]],
                 fill="toself",
-                fillcolor="rgba(99, 102, 241, 0.15)",
-                line=dict(color="#818cf8", width=2),
-                marker=dict(size=6, color="#a78bfa"),
+                fillcolor="rgba(194, 164, 90, 0.15)",
+                line=dict(color="#d2b66a", width=2),
+                marker=dict(size=6, color="#ddbe77"),
             ))
             fig_radar.update_layout(
                 polar=dict(
                     bgcolor="rgba(0,0,0,0)",
                     angularaxis=dict(
-                        tickfont=dict(size=10, color="#8b949e"),
-                        gridcolor="rgba(99,102,241,0.1)",
-                        linecolor="rgba(99,102,241,0.15)",
+                        tickfont=dict(size=10, color="#a89e8b"),
+                        gridcolor="rgba(194,164,90,0.1)",
+                        linecolor="rgba(194,164,90,0.15)",
                     ),
                     radialaxis=dict(
                         visible=True,
-                        gridcolor="rgba(99,102,241,0.08)",
-                        tickfont=dict(color="#6b7280", size=9),
+                        gridcolor="rgba(194,164,90,0.08)",
+                        tickfont=dict(color="#766d5d", size=9),
                     ),
                 ),
                 plot_bgcolor="rgba(0,0,0,0)",
                 paper_bgcolor="rgba(0,0,0,0)",
-                font=dict(color="#8b949e"),
+                font=dict(color="#a89e8b"),
                 height=450,
                 margin=dict(l=60, r=60, t=40, b=40),
                 showlegend=False,
@@ -1276,7 +1335,7 @@ with tab_timeline:
 
         # ── AI Narrative Button ──
         st.markdown("---")
-        st.markdown("#### 🧠 AI-Generated Legal Evolution Narrative")
+        st.markdown("#### AI-Generated Legal Evolution Narrative")
         st.caption("Ask Llama 3.1 to narrate the evolution of a specific constitutional theme across the timeline.")
 
         narrative_topic = st.text_input(
@@ -1285,7 +1344,7 @@ with tab_timeline:
             key="narrative_input",
         )
 
-        if st.button("🎬 Generate Narrative", type="primary", key="gen_narrative") and narrative_topic:
+        if st.button("Generate Narrative", type="primary", key="gen_narrative") and narrative_topic:
             # Gather case names for context
             case_list = "\n".join([
                 f"- {d['year']}: {d['title'][:70]} (Focus: {d.get('article_focus', '?')})"
@@ -1321,7 +1380,7 @@ Use a scholarly but accessible tone. Reference specific case names and years."""
 # ═══════════════════════════════════════════════════════════════════════════════
 
 with tab_graph:
-    st.markdown("### 🕸️ Interactive Knowledge Graph")
+    st.markdown("### Interactive Knowledge Graph")
     st.markdown("*Visualizing the legal knowledge extracted by GraphRAG from 40 Supreme Court judgments.*")
 
     if entities_df.empty:
@@ -1339,17 +1398,17 @@ with tab_graph:
 
         # Entity type distribution
         if "type" in entities_df.columns:
-            st.markdown("#### 📊 Entity Type Distribution")
+            st.markdown("#### Entity Type Distribution")
             type_counts = entities_df["type"].value_counts().head(15)
             fig_types = px.bar(
                 x=type_counts.index, y=type_counts.values,
                 labels={"x": "Entity Type", "y": "Count"},
                 color=type_counts.values,
-                color_continuous_scale="Viridis",
+                color_continuous_scale=[[0, "#3a3320"], [0.5, "#9a8038"], [1, "#ddbe77"]],
             )
             fig_types.update_layout(
                 plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
-                font=dict(color="#8b949e"), height=350,
+                font=dict(color="#a89e8b"), height=350,
                 showlegend=False, coloraxis_showscale=False,
             )
             st.plotly_chart(fig_types, use_container_width=True)
@@ -1360,7 +1419,7 @@ with tab_graph:
 # ═══════════════════════════════════════════════════════════════════════════════
 
 with tab_disputes:
-    st.markdown("### ⚔️ Contradiction Detector")
+    st.markdown("### Contradiction Detector")
     st.markdown("*Algorithmically detected judicial disputes, overruled precedents, and conflicting legal principles.*")
 
     if contradictions_df.empty:
@@ -1377,17 +1436,17 @@ with tab_disputes:
 
             st.markdown(f"""
             <div class="dispute-card">
-                <strong>⚔️ Dispute #{idx}</strong> &nbsp; <span style="color:#6b7280;">Weight: {weight}</span><br>
+                <strong>Dispute #{idx}</strong> &nbsp; <span style="color:#766d5d;">Weight: {weight}</span><br>
                 <span style="color:#ef4444;font-weight:700;">{source}</span> 
                 &nbsp;↔&nbsp; 
                 <span style="color:#f59e0b;font-weight:700;">{target}</span><br>
-                <span style="color:#9ca3af;font-size:0.9rem;">{desc}</span>
+                <span style="color:#a89e8b;font-size:0.9rem;">{desc}</span>
             </div>
             """, unsafe_allow_html=True)
 
         # AI analysis button
         st.markdown("---")
-        if st.button("🧠 Generate AI Analysis of Top 3 Disputes", type="primary"):
+        if st.button("Generate AI Analysis of Top 3 Disputes", type="primary"):
             for idx, (_, row) in enumerate(contradictions_df.head(3).iterrows(), 1):
                 source = row.get("source", "Unknown")
                 target = row.get("target", "Unknown")
@@ -1414,7 +1473,7 @@ Concisely explain the legal contradiction or overruling. Keep under 150 words.""
 # ═══════════════════════════════════════════════════════════════════════════════
 
 with tab_explorer:
-    st.markdown("### 📚 Data Explorer")
+    st.markdown("### Data Explorer")
     st.markdown("*Inspect the raw GraphRAG data tables.*")
 
     explorer_tab = st.selectbox("Select Dataset", [
@@ -1439,7 +1498,7 @@ with tab_explorer:
 
     # Search entities
     st.markdown("---")
-    st.markdown("#### 🔎 Entity Search")
+    st.markdown("#### Entity Search")
     search_term = st.text_input("Search for an entity:", placeholder="e.g., Maneka Gandhi")
     if search_term and not entities_df.empty and "title" in entities_df.columns:
         results = entities_df[entities_df["title"].str.contains(search_term, case=False, na=False)]
@@ -1455,7 +1514,7 @@ with tab_explorer:
 # ═══════════════════════════════════════════════════════════════════════════════
 
 with tab_analytics:
-    st.markdown("### 📊 Session Analytics")
+    st.markdown("### Session Analytics")
 
     if not st.session_state.query_history:
         st.info("No queries yet. Start asking questions in the Query Engine tab!")
@@ -1464,25 +1523,25 @@ with tab_analytics:
         col1, col2 = st.columns(2)
 
         with col1:
-            st.markdown("#### 🧭 Route Distribution")
+            st.markdown("#### Route Distribution")
             naive_n = st.session_state.naive_count
             graph_n = st.session_state.graph_count
             fig_pie = go.Figure(data=[go.Pie(
                 labels=["Naive RAG", "GraphRAG"],
                 values=[naive_n, graph_n],
-                marker=dict(colors=["#10b981", "#6366f1"]),
+                marker=dict(colors=["#6fae8e", "#c2a45a"]),
                 hole=0.5,
                 textinfo="label+percent",
-                textfont=dict(color="#e2e8f0"),
+                textfont=dict(color="#ece6d8"),
             )])
             fig_pie.update_layout(
                 plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
-                font=dict(color="#8b949e"), height=300, showlegend=False,
+                font=dict(color="#a89e8b"), height=300, showlegend=False,
             )
             st.plotly_chart(fig_pie, use_container_width=True)
 
         with col2:
-            st.markdown("#### 📜 Query History")
+            st.markdown("#### Query History")
             for entry in reversed(st.session_state.query_history[-10:]):
                 tag = "tag-naive" if entry["route"] == "NAIVE" else "tag-graph"
                 st.markdown(
@@ -1492,7 +1551,7 @@ with tab_analytics:
 
     # Graph health metrics
     st.markdown("---")
-    st.markdown("#### 🏥 Knowledge Graph Health")
+    st.markdown("#### Knowledge Graph Health")
     
     if not entities_df.empty and not relationships_df.empty:
         health_col1, health_col2, health_col3, health_col4 = st.columns(4)
@@ -1505,13 +1564,54 @@ with tab_analytics:
         health_col3.metric("Entity Types", entities_df["type"].nunique() if "type" in entities_df.columns else 0)
         health_col4.metric("Dispute Rate", f"{len(contradictions_df)/max(len(relationships_df),1)*100:.1f}%")
 
+    # ─── Persistent Query Telemetry (survives restarts — backed by SQLite) ──
+    st.markdown("---")
+    st.markdown("#### Query Telemetry (Persistent)")
+
+    telemetry_events = telemetry.fetch_recent_events(limit=200)
+
+    if not telemetry_events:
+        st.info("No durable query history yet. Run some queries in the Query Engine tab!")
+    else:
+        tel_df = pd.DataFrame(telemetry_events)
+        tel_df["timestamp"] = pd.to_datetime(tel_df["timestamp"])
+
+        tel_col1, tel_col2, tel_col3 = st.columns(3)
+        failure_rate = telemetry.fetch_failure_rate(window=50)
+        tel_col1.metric("Logged Events", len(tel_df))
+        tel_col2.metric("Failure Rate (last 50)", f"{failure_rate * 100:.1f}%")
+        tel_col3.metric(
+            "Median Latency",
+            f"{tel_df['pipeline_latency_ms'].median():.0f} ms" if tel_df["pipeline_latency_ms"].notna().any() else "N/A",
+        )
+
+        lat_trend_fig = px.scatter(
+            tel_df.sort_values("timestamp"),
+            x="timestamp", y="pipeline_latency_ms", color="route",
+            color_discrete_map={"NAIVE": "#6fae8e", "GRAPH": "#c2a45a"},
+            labels={"pipeline_latency_ms": "Latency (ms)", "timestamp": "Time"},
+        )
+        lat_trend_fig.update_layout(
+            plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
+            font=dict(color="#a89e8b"), height=300,
+        )
+        st.plotly_chart(lat_trend_fig, use_container_width=True)
+
+        with st.expander("📋 Raw Query Log"):
+            route_filter = st.selectbox("Filter by route", ["All", "NAIVE", "GRAPH"], key="telemetry_route_filter")
+            show_df = tel_df if route_filter == "All" else tel_df[tel_df["route"] == route_filter]
+            st.dataframe(
+                show_df[["timestamp", "route", "query_text", "pipeline_latency_ms", "success", "error_message"]],
+                use_container_width=True,
+            )
+
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # ██  TAB 7: RAGAS BENCHMARK
 # ═══════════════════════════════════════════════════════════════════════════════
 
 with tab_ragas:
-    st.markdown("### 🏆 RAGAS Evaluation Benchmark")
+    st.markdown("### RAGAS Evaluation Benchmark")
     st.markdown("*Comprehensive 8-metric comparison of Naive RAG vs GraphRAG using LLM-as-Judge evaluation.*")
 
     RAGAS_FILE = "ragas_results.json"
@@ -1542,55 +1642,55 @@ with tab_ragas:
         with hc2:
             st.markdown(f'<div class="stat-card"><div class="stat-number">{len(METRICS)}</div><div class="stat-label">Metrics</div></div>', unsafe_allow_html=True)
         with hc3:
-            st.markdown(f'<div class="stat-card"><div class="stat-number" style="-webkit-text-fill-color:#a78bfa;">{wins_g}</div><div class="stat-label">GraphRAG Wins</div></div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="stat-card"><div class="stat-number" style="-webkit-text-fill-color:#ddbe77;">{wins_g}</div><div class="stat-label">GraphRAG Wins</div></div>', unsafe_allow_html=True)
         with hc4:
             st.markdown(f'<div class="stat-card"><div class="stat-number" style="-webkit-text-fill-color:#10b981;">{wins_n}</div><div class="stat-label">Naive RAG Wins</div></div>', unsafe_allow_html=True)
 
         st.markdown("")
 
         # ── Radar Chart ──
-        st.markdown("#### 🎯 Metric Radar — Naive RAG vs GraphRAG")
+        st.markdown("#### Metric Radar — Naive RAG vs GraphRAG")
 
         fig_radar = go.Figure()
         fig_radar.add_trace(go.Scatterpolar(
             r=naive_avgs + [naive_avgs[0]], theta=METRIC_LABELS + [METRIC_LABELS[0]],
-            fill="toself", fillcolor="rgba(16, 185, 129, 0.12)",
-            line=dict(color="#10b981", width=2), name="Naive RAG",
+            fill="toself", fillcolor="rgba(111, 174, 142, 0.12)",
+            line=dict(color="#6fae8e", width=2), name="Naive RAG",
             marker=dict(size=6),
         ))
         fig_radar.add_trace(go.Scatterpolar(
             r=graph_avgs + [graph_avgs[0]], theta=METRIC_LABELS + [METRIC_LABELS[0]],
-            fill="toself", fillcolor="rgba(139, 92, 246, 0.12)",
-            line=dict(color="#8b5cf6", width=2), name="GraphRAG",
+            fill="toself", fillcolor="rgba(194, 164, 90, 0.12)",
+            line=dict(color="#c2a45a", width=2), name="GraphRAG",
             marker=dict(size=6),
         ))
         fig_radar.update_layout(
             polar=dict(
                 bgcolor="rgba(0,0,0,0)",
-                radialaxis=dict(visible=True, range=[0, 5], gridcolor="rgba(99,102,241,0.1)", tickfont=dict(color="#6b7280", size=9)),
-                angularaxis=dict(tickfont=dict(size=11, color="#c9d1d9"), gridcolor="rgba(99,102,241,0.12)"),
+                radialaxis=dict(visible=True, range=[0, 5], gridcolor="rgba(194,164,90,0.1)", tickfont=dict(color="#766d5d", size=9)),
+                angularaxis=dict(tickfont=dict(size=11, color="#cfc6b5"), gridcolor="rgba(194,164,90,0.12)"),
             ),
             plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
-            font=dict(color="#8b949e"), height=480, margin=dict(l=60, r=60, t=40, b=40),
+            font=dict(color="#a89e8b"), height=480, margin=dict(l=60, r=60, t=40, b=40),
             legend=dict(orientation="h", yanchor="bottom", y=-0.15, xanchor="center", x=0.5, font=dict(size=12)),
         )
         st.plotly_chart(fig_radar, use_container_width=True)
 
         # ── Grouped Bar Chart ──
-        st.markdown("#### 📊 Head-to-Head Comparison")
+        st.markdown("#### Head-to-Head Comparison")
 
         fig_bars = go.Figure(data=[
-            go.Bar(name="Naive RAG", x=METRIC_LABELS, y=naive_avgs, marker_color="#10b981",
+            go.Bar(name="Naive RAG", x=METRIC_LABELS, y=naive_avgs, marker_color="#6fae8e",
                    text=[f"{v:.1f}" for v in naive_avgs], textposition="outside",
-                   textfont=dict(color="#6ee7b7", size=11)),
-            go.Bar(name="GraphRAG", x=METRIC_LABELS, y=graph_avgs, marker_color="#8b5cf6",
+                   textfont=dict(color="#9bd0b8", size=11)),
+            go.Bar(name="GraphRAG", x=METRIC_LABELS, y=graph_avgs, marker_color="#c2a45a",
                    text=[f"{v:.1f}" for v in graph_avgs], textposition="outside",
-                   textfont=dict(color="#c4b5fd", size=11)),
+                   textfont=dict(color="#ddbe77", size=11)),
         ])
         fig_bars.update_layout(
             barmode="group", height=380,
             plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
-            font=dict(color="#8b949e"), yaxis=dict(range=[0, 5.5], gridcolor="rgba(99,102,241,0.08)", title="Score (1-5)"),
+            font=dict(color="#a89e8b"), yaxis=dict(range=[0, 5.5], gridcolor="rgba(194,164,90,0.08)", title="Score (1-5)"),
             xaxis=dict(tickfont=dict(size=10)),
             legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5),
             margin=dict(l=40, r=20, t=40, b=60),
@@ -1599,7 +1699,7 @@ with tab_ragas:
 
         # ── Category Heatmap ──
         st.markdown("---")
-        st.markdown("#### 🗂️ Performance by Category")
+        st.markdown("#### Performance by Category")
 
         categories = list(dict.fromkeys(d["category"] for d in ragas_data))
         cat_naive, cat_graph = [], []
@@ -1620,15 +1720,15 @@ with tab_ragas:
         deltas = [round(g - n, 2) for n, g in zip(cat_naive, cat_graph)]
 
         fig_cat = go.Figure(data=[
-            go.Bar(name="Naive RAG", y=cat_labels, x=cat_naive, orientation="h", marker_color="#10b981",
+            go.Bar(name="Naive RAG", y=cat_labels, x=cat_naive, orientation="h", marker_color="#6fae8e",
                    text=[f"{v:.2f}" for v in cat_naive], textposition="inside", textfont=dict(color="white", size=11)),
-            go.Bar(name="GraphRAG", y=cat_labels, x=cat_graph, orientation="h", marker_color="#8b5cf6",
+            go.Bar(name="GraphRAG", y=cat_labels, x=cat_graph, orientation="h", marker_color="#c2a45a",
                    text=[f"{v:.2f}" for v in cat_graph], textposition="inside", textfont=dict(color="white", size=11)),
         ])
         fig_cat.update_layout(
             barmode="group", height=320,
             plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
-            font=dict(color="#8b949e"), xaxis=dict(range=[0, 5], title="Avg Score", gridcolor="rgba(99,102,241,0.08)"),
+            font=dict(color="#a89e8b"), xaxis=dict(range=[0, 5], title="Avg Score", gridcolor="rgba(194,164,90,0.08)"),
             legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5),
             margin=dict(l=180, r=20, t=40, b=40),
         )
@@ -1638,18 +1738,18 @@ with tab_ragas:
         st.markdown("**GraphRAG Advantage (Δ) by Category:**")
         delta_cols = st.columns(len(categories))
         for i, (cat, d_val) in enumerate(zip(cat_labels, deltas)):
-            color = "#a78bfa" if d_val > 0 else "#ef4444" if d_val < 0 else "#6b7280"
+            color = "#ddbe77" if d_val > 0 else "#ef4444" if d_val < 0 else "#766d5d"
             sign = "+" if d_val > 0 else ""
             delta_cols[i].markdown(
                 f'<div style="text-align:center;"><span style="font-size:1.5rem;font-weight:800;color:{color};">{sign}{d_val}</span>'
-                f'<br><span style="font-size:0.7rem;color:#6b7280;">{cat}</span></div>', unsafe_allow_html=True)
+                f'<br><span style="font-size:0.7rem;color:#766d5d;">{cat}</span></div>', unsafe_allow_html=True)
 
         # ── Win/Loss Donut ──
         st.markdown("---")
         col_donut, col_table = st.columns([1, 2])
 
         with col_donut:
-            st.markdown("#### 🥇 Win Rate (Per Question)")
+            st.markdown("#### Win Rate (Per Question)")
             q_wins_g, q_wins_n, q_ties = 0, 0, 0
             for d in ragas_data:
                 n_avg = sum(d["naive"][m]["score"] for m in METRICS if m in d["naive"] and d["naive"][m]["score"] > 0)
@@ -1664,21 +1764,21 @@ with tab_ragas:
             fig_donut = go.Figure(data=[go.Pie(
                 labels=["GraphRAG Wins", "Naive RAG Wins", "Ties"],
                 values=[q_wins_g, q_wins_n, q_ties],
-                marker=dict(colors=["#8b5cf6", "#10b981", "#374151"]),
+                marker=dict(colors=["#c2a45a", "#6fae8e", "#332e24"]),
                 hole=0.55, textinfo="label+value",
-                textfont=dict(color="#e2e8f0", size=11),
+                textfont=dict(color="#ece6d8", size=11),
             )])
             fig_donut.update_layout(
                 plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
-                font=dict(color="#8b949e"), height=300, showlegend=False,
+                font=dict(color="#a89e8b"), height=300, showlegend=False,
                 margin=dict(l=10, r=10, t=10, b=10),
-                annotations=[dict(text=f"<b>{q_wins_g}/{len(ragas_data)}</b>", x=0.5, y=0.5, font_size=22, font_color="#a78bfa", showarrow=False)],
+                annotations=[dict(text=f"<b>{q_wins_g}/{len(ragas_data)}</b>", x=0.5, y=0.5, font_size=22, font_color="#ddbe77", showarrow=False)],
             )
             st.plotly_chart(fig_donut, use_container_width=True)
 
         # ── Per-Question Breakdown Table ──
         with col_table:
-            st.markdown("#### 📋 Per-Question Scores")
+            st.markdown("#### Per-Question Scores")
             table_rows = []
             for i, d in enumerate(ragas_data, 1):
                 n_vals = [d["naive"][m]["score"] for m in METRICS if m in d["naive"] and d["naive"][m]["score"] > 0]
@@ -1695,7 +1795,7 @@ with tab_ragas:
 
         # ── Latency Comparison ──
         st.markdown("---")
-        st.markdown("#### ⚡ Latency Comparison")
+        st.markdown("#### Latency Comparison")
 
         naive_lats = [d["naive"].get("latency_ms", 0) for d in ragas_data]
         graph_lats = [d["graphrag"].get("latency_ms", 0) for d in ragas_data]
@@ -1710,13 +1810,13 @@ with tab_ragas:
         q_labels = [f"Q{i+1}" for i in range(len(ragas_data))]
         fig_lat = go.Figure(data=[
             go.Scatter(x=q_labels, y=[l/1000 for l in naive_lats], mode="lines+markers",
-                       name="Naive RAG", line=dict(color="#10b981", width=2), marker=dict(size=6)),
+                       name="Naive RAG", line=dict(color="#6fae8e", width=2), marker=dict(size=6)),
             go.Scatter(x=q_labels, y=[l/1000 for l in graph_lats], mode="lines+markers",
-                       name="GraphRAG", line=dict(color="#8b5cf6", width=2), marker=dict(size=6)),
+                       name="GraphRAG", line=dict(color="#c2a45a", width=2), marker=dict(size=6)),
         ])
         fig_lat.update_layout(
             height=300, plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
-            font=dict(color="#8b949e"), yaxis=dict(title="Seconds", gridcolor="rgba(99,102,241,0.08)"),
+            font=dict(color="#a89e8b"), yaxis=dict(title="Seconds", gridcolor="rgba(194,164,90,0.08)"),
             legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5),
             margin=dict(l=40, r=20, t=40, b=40),
         )
@@ -1724,17 +1824,17 @@ with tab_ragas:
 
         # ── Methodology ──
         st.markdown("---")
-        st.markdown("#### 📐 Methodology")
+        st.markdown("#### Methodology")
         meth_col1, meth_col2 = st.columns(2)
         with meth_col1:
             st.markdown('''
             <div class="glass-card">
                 <strong>Evaluation Framework</strong><br>
-                <span style="color:#c9d1d9;">RAGAS (Retrieval Augmented Generation Assessment)</span><br><br>
+                <span style="color:#cfc6b5;">RAGAS (Retrieval Augmented Generation Assessment)</span><br><br>
                 <strong>Judge Model</strong><br>
-                <span style="color:#c9d1d9;">Llama 3.1 8B — LLM-as-Judge, temperature=0</span><br><br>
+                <span style="color:#cfc6b5;">Llama 3.1 8B — LLM-as-Judge, temperature=0</span><br><br>
                 <strong>Hardware</strong><br>
-                <span style="color:#c9d1d9;">RTX 4050 (6GB VRAM), 100% local inference</span>
+                <span style="color:#cfc6b5;">RTX 4050 (6GB VRAM), 100% local inference</span>
             </div>
             ''', unsafe_allow_html=True)
         with meth_col2:
@@ -1749,6 +1849,6 @@ with tab_ragas:
                 <span style="color:#6ee7b7;">6.</span> Citation Accuracy<br>
                 <span style="color:#6ee7b7;">7.</span> Legal Reasoning · 
                 <span style="color:#6ee7b7;">8.</span> Context Precision<br><br>
-                <strong>Scoring:</strong> <span style="color:#c9d1d9;">1–5 scale (5 = best)</span>
+                <strong>Scoring:</strong> <span style="color:#cfc6b5;">1–5 scale (5 = best)</span>
             </div>
             ''', unsafe_allow_html=True)

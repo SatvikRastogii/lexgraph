@@ -1,0 +1,19 @@
+# graphrag pins pandas~=2.3 and pyarrow~=22.0 (verified against the installed
+# graphrag 3.0.6 wheel's metadata) -- these bounds are set to match so pip's
+# resolver doesn't have to backtrack through chromadb/streamlit's looser
+# pins to find a combination that satisfies graphrag too.
+streamlit>=1.30
+pandas>=2.3,<3
+numpy>=1.24
+plotly>=5.18
+networkx>=3.0
+requests>=2.31
+chromadb>=0.4
+ollama>=0.1
+pyarrow>=22,<23
+lancedb>=0.20,<0.25
+graphrag>=3.0,<4
+tiktoken>=0.12
+beautifulsoup4>=4.12
+tqdm>=4.66
+prometheus-client>=0.19
