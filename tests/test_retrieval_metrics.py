@@ -6,6 +6,8 @@ from lexgraph.eval.retrieval_metrics import (
     aggregate,
     bootstrap_ci,
     ndcg_at_k,
+    paragraph_recall_at_k,
+    parse_para_span,
     precision_at_k,
     recall_at_k,
     reciprocal_rank,
@@ -112,3 +114,46 @@ def test_bootstrap_ci_of_a_constant_has_zero_width():
 def test_bootstrap_ci_handles_empty_and_single_values():
     assert bootstrap_ci([]) == (0.0, 0.0)
     assert bootstrap_ci([0.7]) == (0.7, 0.7)
+
+
+# --- paragraph-level ground truth --------------------------------------------
+
+def test_parse_para_span_reads_both_label_shapes():
+    assert parse_para_span("para 12-15") == (12, 15)
+    assert parse_para_span("para 7") == (7, 7)
+    assert parse_para_span("") is None
+    assert parse_para_span("chunk 4") is None
+
+
+def test_paragraph_recall_needs_the_right_passage_not_just_the_right_case():
+    gold = {"a.txt": [12]}
+    # The correct judgment, at a paragraph that does not carry the answer.
+    assert paragraph_recall_at_k([("a.txt", "para 3")], gold, 5) == 0.0
+    # Document-level recall would have scored this 1.0.
+    assert paragraph_recall_at_k([("a.txt", "para 11-14")], gold, 5) == 1.0
+
+
+def test_paragraph_recall_counts_each_document_once():
+    gold = {"a.txt": [2], "b.txt": [9]}
+    hits = [("a.txt", "para 1-3"), ("a.txt", "para 2"), ("c.txt", "para 9")]
+    assert paragraph_recall_at_k(hits, gold, 5) == 0.5
+
+
+def test_paragraph_recall_respects_the_cutoff():
+    gold = {"a.txt": [8]}
+    hits = [("z.txt", "para 1"), ("y.txt", "para 1"), ("a.txt", "para 8")]
+    assert paragraph_recall_at_k(hits, gold, 2) == 0.0
+    assert paragraph_recall_at_k(hits, gold, 3) == 1.0
+
+
+def test_unlabelled_query_is_skipped_not_scored_zero():
+    # Six judgments carry no usable numbering. Scoring their questions zero
+    # would report a retrieval failure that never happened.
+    assert paragraph_recall_at_k([("a.txt", "para 1")], {}, 5) is None
+
+
+def test_aggregate_skips_missing_metrics_rather_than_failing():
+    rows = [{"recall@5": 1.0, "paragraph_recall@5": 0.5}, {"recall@5": 0.0}]
+    means = aggregate(rows)
+    assert means["recall@5"] == 0.5
+    assert means["paragraph_recall@5"] == 0.5, "averaged over the row that has it"

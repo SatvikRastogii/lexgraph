@@ -21,6 +21,9 @@ from __future__ import annotations
 
 import math
 import random
+import re
+
+PARA_LABEL = re.compile(r"para\s+(\d+)(?:\s*-\s*(\d+))?")
 
 
 def to_document_ranking(retrieved_doc_ids: list[str]) -> list[str]:
@@ -86,12 +89,68 @@ def score_query(
     return scores
 
 
+def parse_para_span(label: str) -> tuple[int, int] | None:
+    """``para 12-15`` -> ``(12, 15)``; ``para 12`` -> ``(12, 12)``; else None.
+
+    Reads the label a chunk already carries rather than threading paragraph
+    numbers through the retrievers, because the label is what an answer cites.
+    A metric computed from the same string the user sees cannot drift from it.
+    """
+    match = PARA_LABEL.search(label or "")
+    if not match:
+        return None
+    start = int(match.group(1))
+    return (start, int(match.group(2)) if match.group(2) else start)
+
+
+def paragraph_recall_at_k(
+    hits: list[tuple[str, str]],
+    gold_paragraphs: dict[str, list[int]],
+    k: int,
+) -> float | None:
+    """Fraction of labelled documents retrieved *at the right paragraph*.
+
+    ``hits`` is ``(doc_id, para_label)`` in rank order -- chunks, not collapsed
+    to documents, because the question here is whether the retriever landed on
+    the passage that carries the answer or merely on the correct case.
+
+    Document-level recall gives full credit for any chunk of the right
+    judgment, including one about who appeared for whom. The gap between the
+    two numbers is how often that happens.
+
+    Returns None when no relevant document carries paragraph labels, so the
+    query is excluded from the mean instead of scored zero.
+    """
+    if not gold_paragraphs:
+        return None
+
+    found = set()
+    for doc_id, label in hits[:k]:
+        gold = gold_paragraphs.get(doc_id)
+        if not gold:
+            continue
+        span = parse_para_span(label)
+        if span and any(span[0] <= number <= span[1] for number in gold):
+            found.add(doc_id)
+    return len(found) / len(gold_paragraphs)
+
+
 def aggregate(per_query: list[dict[str, float]]) -> dict[str, float]:
-    """Mean of each metric across queries."""
+    """Mean of each metric across queries.
+
+    Averages over the queries that actually carry each metric. Paragraph-level
+    metrics are absent for documents without usable numbering, and scoring
+    those as zero would understate the retriever rather than skip the query.
+    """
     if not per_query:
         return {}
-    keys = per_query[0].keys()
-    return {key: sum(q[key] for q in per_query) / len(per_query) for key in keys}
+    keys = {key for query in per_query for key in query}
+    means = {}
+    for key in keys:
+        values = [q[key] for q in per_query if q.get(key) is not None]
+        if values:
+            means[key] = sum(values) / len(values)
+    return means
 
 
 def bootstrap_ci(

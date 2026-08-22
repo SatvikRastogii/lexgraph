@@ -85,6 +85,56 @@ def validate(goldset, documents):
                 )
 
     problems.extend(_validate_dissent(goldset, documents))
+    problems.extend(_validate_paragraphs(goldset, by_name))
+    return problems
+
+
+def _validate_paragraphs(goldset, by_name):
+    """Every labelled paragraph must exist and carry one of the question's terms.
+
+    These labels are derived by scripts/derive_paragraph_labels.py rather than
+    written by hand, which makes them cheap to produce but easy to leave stale.
+    Re-checking them here means a corpus change that moves the paragraphs
+    fails CI instead of quietly scoring a retriever against the wrong spans.
+    """
+    from lexgraph.chunking import split_numbered_paragraphs
+
+    problems = []
+    for question in goldset["questions"]:
+        labels = question.get("relevant_paragraphs")
+        if not labels:
+            continue
+        qid = question["id"]
+        terms = [t.lower() for t in question.get("must_contain", [])]
+
+        for name, numbers in labels.items():
+            document = by_name.get(name)
+            if document is None:
+                problems.append(f"{qid}: paragraph labels for unknown doc {name!r}")
+                continue
+            if name not in question["relevant_docs"]:
+                problems.append(f"{qid}: {name} has paragraph labels but is not relevant")
+                continue
+
+            # A number can appear more than once: several judgments restart
+            # numbering for a second opinion, so paragraph 3 exists twice. All
+            # segments carrying that number are collected, and the label is
+            # sound if any of them holds a term.
+            texts_by_number = {}
+            for number, text in split_numbered_paragraphs(document.body):
+                if number is not None:
+                    texts_by_number.setdefault(number, []).append(text.lower())
+
+            for number in numbers:
+                bodies = texts_by_number.get(number)
+                if not bodies:
+                    problems.append(f"{qid}: {name} has no paragraph {number}")
+                elif terms and not any(
+                    term in body for body in bodies for term in terms
+                ):
+                    problems.append(
+                        f"{qid}: {name} para {number} carries none of {terms}"
+                    )
     return problems
 
 

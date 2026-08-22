@@ -18,7 +18,12 @@ import time
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from lexgraph.eval.retrieval_metrics import aggregate, bootstrap_ci, score_query
+from lexgraph.eval.retrieval_metrics import (
+    aggregate,
+    bootstrap_ci,
+    paragraph_recall_at_k,
+    score_query,
+)
 from lexgraph.retrieval.pipeline import CONFIGURATIONS, build_retriever, timed_search
 
 GOLDSET_PATH = os.path.join("data", "goldset.json")
@@ -35,6 +40,22 @@ def evaluate(retriever, questions, top_k, ks):
         scores = score_query(
             [hit.doc_id for hit in hits], question["relevant_docs"], ks=ks
         )
+
+        # Document-level recall gives full credit for any chunk of the right
+        # judgment, including the one listing who appeared for whom. This asks
+        # the stricter question: did the retriever land on the passage that
+        # actually carries the answer? Queries whose supporting documents have
+        # no usable numbering score None and drop out of the mean.
+        gold_paragraphs = {
+            name: [int(n) for n in paragraphs]
+            for name, paragraphs in question.get("relevant_paragraphs", {}).items()
+        }
+        chunk_ranking = [(hit.doc_id, hit.para_label) for hit in hits]
+        for k in ks:
+            scores[f"paragraph_recall@{k}"] = paragraph_recall_at_k(
+                chunk_ranking, gold_paragraphs, k
+            )
+
         scores["_id"] = question["id"]
         scores["_category"] = question["category"]
         scores["_difficulty"] = question.get("difficulty", "standard")
@@ -136,7 +157,8 @@ def main():
 
 
 def _print_table(results):
-    header = f"{'configuration':<16}{'R@1':>7}{'R@5':>7}{'R@10':>7}{'nDCG@10':>9}{'MRR':>7}{'p50 ms':>9}"
+    header = (f"{'configuration':<16}{'R@1':>7}{'R@5':>7}{'R@10':>7}{'nDCG@10':>9}"
+              f"{'MRR':>7}{'ParaR@5':>9}{'p50 ms':>9}")
     print("\n" + header)
     print("-" * len(header))
     for name, payload in results.items():
@@ -145,8 +167,12 @@ def _print_table(results):
             f"{name:<16}"
             f"{metrics['recall@1']:>7.3f}{metrics['recall@5']:>7.3f}"
             f"{metrics['recall@10']:>7.3f}{metrics['ndcg@10']:>9.3f}"
-            f"{metrics['mrr']:>7.3f}{payload['latency_ms']['p50']:>9.0f}"
+            f"{metrics['mrr']:>7.3f}{metrics.get('paragraph_recall@5', 0):>9.3f}"
+            f"{payload['latency_ms']['p50']:>9.0f}"
         )
+    print("\nParaR@5 is recall@5 restricted to landing on a paragraph that "
+          "carries the answer.\nThe gap against R@5 is how often the right "
+          "case was found at the wrong passage.")
 
     tiers = sorted({t for p in results.values() for t in p["by_difficulty"]})
     if len(tiers) > 1:
