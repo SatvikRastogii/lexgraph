@@ -1,0 +1,163 @@
+{
+  "generator": "ollama:qwen2.5:3b",
+  "judge": "gemini:gemini-3-flash-preview -> gemini:gemini-flash-latest -> gemini:gemini-3.7-flash -> gemini:gemini-3.1-flash-lite",
+  "configs": {
+    "hybrid-rerank": {
+      "metrics": {
+        "answer_relevancy": {
+          "mean": 5,
+          "ci95": [
+            5,
+            5
+          ],
+          "n": 1
+        },
+        "citation_accuracy": {
+          "mean": 5.0,
+          "ci95": [
+            5.0,
+            5.0
+          ],
+          "n": 1
+        },
+        "coherence": {
+          "mean": 5,
+          "ci95": [
+            5,
+            5
+          ],
+          "n": 1
+        },
+        "completeness": {
+          "mean": 4,
+          "ci95": [
+            4,
+            4
+          ],
+          "n": 1
+        },
+        "context_precision": {
+          "mean": 5,
+          "ci95": [
+            5,
+            5
+          ],
+          "n": 1
+        },
+        "faithfulness": {
+          "mean": 3,
+          "ci95": [
+            3,
+            3
+          ],
+          "n": 1
+        },
+        "hallucination": {
+          "mean": 4,
+          "ci95": [
+            4,
+            4
+          ],
+          "n": 1
+        },
+        "legal_reasoning": {
+          "mean": 4,
+          "ci95": [
+            4,
+            4
+          ],
+          "n": 1
+        }
+      },
+      "answer_words": {
+        "mean": 325,
+        "median": 325
+      },
+      "unparsed_judge_responses": 0,
+      "latency_ms_median": 22626.00809999276,
+      "records": [
+        {
+          "id": "q01",
+          "category": "single_hop_factual",
+          "answerable": true,
+          "generation": {
+            "question": "What is a curative petition and in what circumstances can the Supreme Court entertain one?",
+            "answer": "A curative petition is a legal remedy available to the Supreme Court in India, where it may reconsider its final judgment on limited grounds to correct an injustice or rectify a gross miscarriage of justice. The term \"curative petition\" refers to petitions filed by aggrieved parties seeking redressal for errors committed by the court.\n\nIn the case of Rupa Ashok Hurra vs Ashok Hurra & Anr (2002), this Court held that curative petitions can be entertained under its inherent power, provided certain requirements are met. The judgment outlines several conditions under which a curative petition may be entertained:\n\n1. **Violation of Principles of Natural Justice**: If the petitioner was not a party to the original proceedings but their interests were adversely affected by the judgment, or if they were parties and did not receive proper notice, leading to an apprehension of bias.\n2. **Lack of Jurisdiction**: Where there is a clear violation of principles of natural justice in that the learned judge failed to disclose his connection with the subject-matter or parties, giving scope for an apprehension of bias.\n\nThe judgment also specifies that such curative petitions should be first circulated to a Bench of three senior-most Judges and those who passed the order. The Bench must conclude that the matter needs hearing before it is listed before the same Bench (as far as possible) which may pass appropriate orders.\n\nIn Mohd. Arif @ Ashfaq vs The Reg. Supreme Court Of India & Ors (2014), while discussing a curative petition, this Court reiterated its stance on limited oral hearings for cases in this class of situations to ensure justice is served efficiently and fairly.\n\nTherefore, the circumstances under which the Supreme Court can entertain a curative petition are when there has been a violation of principles of natural justice or where there was a lack of jurisdiction. The court may reconsider its judgment if it deems fit after ensuring that all necessary requirements are met.",
+            "abstained": false,
+            "abstention_reason": "",
+            "confidence": 0.9539764523506165,
+            "sources": [
+              "judgment_0125.txt",
+              "judgment_0122.txt",
+              "judgment_0004.txt"
+            ],
+            "citations": {
+              "supported": [
+                "Rupa Ashok Hurra v. Ashok Hurra",
+                "Ashfaq v. The Reg. Supreme Court Of India"
+              ],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 7473.6209999537095,
+              "generation_ms": 15152.38710003905,
+              "total_ms": 22626.00809999276
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "What is a curative petition and in what circumstances can the Supreme Court entertain one?",
+            "answer_chars": 2001,
+            "answer_words": 325,
+            "mean": 4.375,
+            "metrics": {
+              "faithfulness": {
+                "score": 3,
+                "reason": "The answer confuses ground (2) by labeling judge bias as 'Lack of Jurisdiction' and introduces an external case (Mohd. Arif) not present in the context.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The answer directly defines what a curative petition is and details the specific circumstances under which the Supreme Court can entertain one.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 5,
+                "reason": "All retrieved passages from the Rupa Ashok Hurra judgment are directly relevant to defining and specifying the grounds for a curative petition.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 4,
+                "reason": "The response covers the main concept, procedural requirements, and grounds, but slightly muddles the phrasing of the second substantive ground (bias vs. lack of jurisdiction).",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 4,
+                "reason": "The response references 'Mohd. Arif @ Ashfaq vs The Reg. Supreme Court Of India & Ors (2014)', which is not found in the provided context.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The response is structured logically, well-formatted, and easy to read.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 4,
+                "reason": "It accurately captures the legal principles from the landmark case, though it conflates lack of jurisdiction with judicial bias in the enumerated points.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "2/2 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 138.80231619998813
+        }
+      ],
+      "complete": false
+    }
+  }
+}

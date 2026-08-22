@@ -225,6 +225,72 @@ _OPENAI_COMPATIBLE = {
     "openai": ("https://api.openai.com/v1", "OPENAI_API_KEY", None),
 }
 
+class FallbackClient(BaseClient):
+    """Tries several clients in order, moving on when one exhausts its quota.
+
+    Gemini's free tier meters requests per day *per model*, and the cap is low
+    enough that a single evaluation sweep exhausts it. Because the quota is
+    per-model, rotating across several models multiplies the available budget
+    without changing anything about the evaluation -- each call is still one
+    independent judge scoring against the same rubric.
+
+    A model is only retired for the rest of the run on a quota error. Ordinary
+    failures fall through to the next client but leave the first in rotation.
+    """
+
+    name = "fallback"
+
+    def __init__(self, clients: list[BaseClient]):
+        if not clients:
+            raise LLMError("FallbackClient needs at least one client")
+        self.clients = clients
+        self.exhausted: set[str] = set()
+        super().__init__(clients[0].model, max_retries=1)
+
+    @property
+    def label(self) -> str:
+        return " -> ".join(c.label for c in self.clients)
+
+    @property
+    def active(self) -> BaseClient:
+        for client in self.clients:
+            if client.label not in self.exhausted:
+                return client
+        return self.clients[-1]
+
+    def chat(self, prompt: str, max_tokens: int = 512, temperature: float = 0.0) -> str:
+        errors = []
+        for client in self.clients:
+            if client.label in self.exhausted:
+                continue
+            try:
+                return client.chat(prompt, max_tokens, temperature)
+            except Exception as error:  # noqa: BLE001
+                message = str(error)
+                errors.append(f"{client.label}: {message[:120]}")
+                if "429" in message or "quota" in message.lower():
+                    self.exhausted.add(client.label)
+        raise LLMError("every fallback client failed: " + " | ".join(errors))
+
+
+# Gemini free-tier quota is per model per day, so a judge that rotates across
+# several has several times the budget. Ordered strongest-first.
+GEMINI_JUDGE_ROTATION = [
+    "gemini-3-flash-preview",
+    "gemini-flash-latest",
+    "gemini-3.7-flash",
+    "gemini-3.1-flash-lite",
+]
+
+
+def build_judge(spec: str | None = None) -> BaseClient:
+    """Build the judge, rotating across Gemini models when none is named."""
+    load_dotenv()
+    if spec and spec != DEFAULT_JUDGE:
+        return get_client(spec)
+    return FallbackClient([GeminiClient(model) for model in GEMINI_JUDGE_ROTATION])
+
+
 DEFAULT_GENERATOR = "ollama:llama3.1"
 DEFAULT_JUDGE = "gemini:gemini-3-flash-preview"
 

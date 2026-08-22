@@ -28,7 +28,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from lexgraph.eval.judge import require_independent_judge, score_pipeline
 from lexgraph.eval.retrieval_metrics import bootstrap_ci
 from lexgraph.generation import answer_question
-from lexgraph.llm import DEFAULT_GENERATOR, DEFAULT_JUDGE, get_client
+from lexgraph.llm import DEFAULT_GENERATOR, DEFAULT_JUDGE, build_judge, get_client
 from lexgraph.retrieval.pipeline import build_retriever
 
 GOLDSET_PATH = os.path.join("data", "goldset.json")
@@ -58,7 +58,7 @@ def main():
         questions = questions[: args.limit]
 
     generator = get_client(args.generator)
-    judge = get_client(args.judge)
+    judge = build_judge(args.judge)
 
     print(f"Generator: {generator.label}")
     print(f"Judge:     {judge.label}   (independent)")
@@ -77,10 +77,21 @@ def main():
                 question["question"], retriever, generator,
                 top_k=args.top_k, abstention_threshold=args.abstention_threshold,
             )
-            scores = score_pipeline(
-                config, question["question"], generated.answer,
-                generated.contexts, judge,
-            )
+            try:
+                scores = score_pipeline(
+                    config, question["question"], generated.answer,
+                    generated.contexts, judge,
+                )
+            except Exception as error:  # noqa: BLE001
+                # Generation is the expensive half and it already succeeded.
+                # Losing the whole run because the judge ran out of daily quota
+                # at question 30 would throw away an hour of local inference,
+                # so the partial results are written out and the run stops.
+                print(f"\n  judge unavailable at {question['id']}: "
+                      f"{str(error)[:160]}")
+                print(f"  keeping {len(records)} completed question(s)")
+                break
+
             records.append({
                 "id": question["id"],
                 "category": question["category"],
@@ -92,14 +103,32 @@ def main():
             print(f"  [{index}/{len(questions)}] {question['id']} "
                   f"mean {scores.mean():.2f}  {generated.latency['total_ms']:.0f}ms")
 
+            _write(args.results_file, results, config, records)
+
+        if not records:
+            print(f"  no questions completed for {config}")
+            continue
         results["configs"][config] = _summarise(records)
         results["configs"][config]["records"] = records
         _print_summary(config, results["configs"][config])
+        _write(args.results_file, results, config, records)
 
-    os.makedirs(os.path.dirname(args.results_file), exist_ok=True)
-    with open(args.results_file, "w", encoding="utf-8") as handle:
-        json.dump(results, handle, indent=2)
     print(f"\nWrote {args.results_file}")
+
+
+def _write(path, results, config, records):
+    """Persist progress after every question so a mid-run failure keeps its work."""
+    if not records:
+        return
+    snapshot = dict(results)
+    snapshot["configs"] = dict(results["configs"])
+    summary = _summarise(records)
+    summary["records"] = records
+    summary["complete"] = False
+    snapshot["configs"][config] = summary
+    os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
+    with open(path, "w", encoding="utf-8") as handle:
+        json.dump(snapshot, handle, indent=2)
 
 
 def _summarise(records):
