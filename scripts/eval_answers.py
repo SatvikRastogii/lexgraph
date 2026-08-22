@@ -45,6 +45,10 @@ def main():
     parser.add_argument("--limit", type=int, default=None, help="first N questions only")
     parser.add_argument("--abstention-threshold", type=float, default=None)
     parser.add_argument("--results-file", default=RESULTS_PATH)
+    parser.add_argument(
+        "--restart", action="store_true",
+        help="discard existing results and score every question again",
+    )
     args = parser.parse_args()
 
     # Refuse a self-judged run before spending an hour producing numbers that
@@ -65,13 +69,19 @@ def main():
     print(f"Questions: {len(questions)}  |  configs: {', '.join(args.configs)}\n")
 
     results = {"generator": generator.label, "judge": judge.label, "configs": {}}
+    previous = {} if args.restart else _resume(args.results_file, generator.label)
 
     for config in args.configs:
         print(f"=== {config} ===")
         retriever = build_retriever(config)
-        records = []
+        records = list(previous.get(config, []))
 
-        for index, question in enumerate(questions, start=1):
+        done = {r["id"] for r in records}
+        if done:
+            print(f"  resuming: {len(done)} question(s) already scored")
+        pending = [q for q in questions if q["id"] not in done]
+
+        for index, question in enumerate(pending, start=len(done) + 1):
             started = time.perf_counter()
             generated = answer_question(
                 question["question"], retriever, generator,
@@ -110,13 +120,41 @@ def main():
             continue
         results["configs"][config] = _summarise(records)
         results["configs"][config]["records"] = records
+        results["configs"][config]["complete"] = len(records) == len(questions)
         _print_summary(config, results["configs"][config])
-        _write(args.results_file, results, config, records)
+        _write(args.results_file, results, config, records,
+               complete=len(records) == len(questions))
 
     print(f"\nWrote {args.results_file}")
 
 
-def _write(path, results, config, records):
+def _resume(path, generator_label):
+    """Load already-scored records so a killed run continues where it stopped.
+
+    Generation is the expensive half -- llama3.1 takes about a minute per
+    question on this hardware -- and the judge's free tier is metered daily.
+    Re-scoring work that already succeeded wastes both. Records are keyed by
+    question id, so adding questions to the gold set only costs the new ones.
+
+    Results from a different generator are ignored: mixing them would produce
+    a table that silently averages two models.
+    """
+    if not os.path.exists(path):
+        return {}
+    try:
+        with open(path, encoding="utf-8") as handle:
+            payload = json.load(handle)
+    except (OSError, ValueError):
+        return {}
+    if payload.get("generator") != generator_label:
+        return {}
+    return {
+        config: summary.get("records", [])
+        for config, summary in payload.get("configs", {}).items()
+    }
+
+
+def _write(path, results, config, records, complete=False):
     """Persist progress after every question so a mid-run failure keeps its work."""
     if not records:
         return
@@ -124,7 +162,7 @@ def _write(path, results, config, records):
     snapshot["configs"] = dict(results["configs"])
     summary = _summarise(records)
     summary["records"] = records
-    summary["complete"] = False
+    summary["complete"] = complete
     snapshot["configs"][config] = summary
     os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
     with open(path, "w", encoding="utf-8") as handle:
