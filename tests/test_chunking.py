@@ -4,6 +4,7 @@ from lexgraph.chunking import (
     Chunk,
     chunk_document,
     chunk_words,
+    numbering_is_plausible,
     split_numbered_paragraphs,
 )
 from lexgraph.corpus import Document, parse_document
@@ -64,6 +65,32 @@ def test_split_numbered_paragraphs_falls_back_without_numbering():
     segments = split_numbered_paragraphs(text)
     assert [n for n, _ in segments] == [None, None, None]
     assert len(segments) == 3
+
+
+def test_article_references_are_not_mistaken_for_paragraphs():
+    # judgment_0122's real numbers. 32 and 142 are Articles 32 and 142 sitting
+    # at the start of a wrapped line, not paragraphs -- and they were becoming
+    # chunk labels, so answers cited a "para 142" that does not exist.
+    assert not numbering_is_plausible([2, 6, 32, 142, 48])
+
+
+def test_numbering_that_never_reaches_the_start_is_rejected():
+    # judgment_0007 matches 11 through 25 and has no paragraph 1, which means
+    # the numbers belong to something the judgment quotes, not to itself.
+    assert not numbering_is_plausible([24, 25, 13, 11, 12, 13, 14, 15, 20])
+
+
+def test_quoted_paragraph_numbers_do_not_condemn_real_numbering():
+    # judgment_0216 runs 1, 2, 3 ... but quotes Nagaraj's paragraphs 101-124
+    # and 342 along the way. Judging on the maximum would throw the document's
+    # own structure away over a handful of citations.
+    real = list(range(1, 40))
+    assert numbering_is_plausible(real + [101, 102, 122, 123, 124, 342])
+
+
+def test_unnumbered_document_keeps_no_paragraph_label():
+    text = "\n\n".join(f"Article {n} is discussed at length here." for n in range(8))
+    assert all(number is None for number, _ in split_numbered_paragraphs(text))
 
 
 def test_paragraph_chunks_stay_within_budget():

@@ -15,9 +15,10 @@ rather than assume it:
     covers -- so a citation can say "Sunil Batra (1979) para 12-15" instead of
     "judgment_0126 chunk 7".
 
-36 of the 40 corpus documents carry usable paragraph numbering; the rest fall
+34 of the 40 corpus documents carry usable paragraph numbering; the rest fall
 back to blank-line paragraphs, and any single paragraph over the budget is
-split with the fixed windower.
+split with the fixed windower. "Usable" is checked, not assumed -- see
+``numbering_is_plausible``.
 """
 
 from __future__ import annotations
@@ -38,6 +39,13 @@ MIN_CHUNK_WORDS = 25
 
 # "12." or "12)" at the start of a line, followed by real text.
 NUMBERED_PARAGRAPH = re.compile(r"^[ \t]*(\d{1,3})[.)]\s+(?=\S)", re.MULTILINE)
+
+# Real paragraph numbering starts near 1 and runs to roughly the number of
+# paragraphs. These bound how far a document may stray from that before its
+# numbering is treated as noise. The multiple is loose on purpose: judgments
+# quote other judgments' paragraph numbers, and those land mid-sequence.
+FIRST_PARAGRAPH_AT_MOST = 3
+HIGHEST_PARAGRAPH_MULTIPLE = 4
 
 
 @dataclass
@@ -113,14 +121,43 @@ def chunk_words(
     return chunks
 
 
+def numbering_is_plausible(numbers: list[int]) -> bool:
+    """Whether matched numbers read as a judgment's own paragraph sequence.
+
+    Some documents in the corpus have no paragraph numbering of their own, and
+    the pattern instead matches Article references that happen to sit at the
+    start of a wrapped line -- judgment_0122 yields 2, 6, 32, 142, 48, which is
+    Articles 32 and 142, not paragraphs. Those numbers then became chunk labels,
+    so an answer drawn from that judgment cited "para 142" of a judgment whose
+    paragraphs stop well before it.
+
+    Inventing a citation is the one failure this project exists to catch, so a
+    document whose numbering cannot be trusted is treated as unnumbered and
+    loses the label rather than carrying a false one.
+    """
+    if not numbers:
+        return False
+    ordered = sorted(numbers)
+    # The 90th percentile rather than the maximum: a judgment quoting another
+    # judgment's paragraph 342 is normal and should not condemn the sequence.
+    p90 = ordered[int(0.9 * (len(ordered) - 1))]
+    return (
+        min(numbers) <= FIRST_PARAGRAPH_AT_MOST
+        and p90 <= HIGHEST_PARAGRAPH_MULTIPLE * len(numbers)
+    )
+
+
 def split_numbered_paragraphs(text: str) -> list[tuple[int | None, str]]:
     """Split judgment text on its own paragraph numbering.
 
     Returns ``(paragraph_number, text)`` pairs. Any preamble before the first
     numbered paragraph is returned with a number of ``None``. Falls back to
-    blank-line splitting when the document carries no usable numbering.
+    blank-line splitting when the document carries no usable numbering, or
+    when the numbering it appears to carry does not hold up.
     """
     matches = list(NUMBERED_PARAGRAPH.finditer(text))
+    if not numbering_is_plausible([int(m.group(1)) for m in matches]):
+        matches = []
     if len(matches) < 5:
         return [(None, block.strip()) for block in re.split(r"\n\s*\n", text) if block.strip()]
 
