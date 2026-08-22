@@ -243,13 +243,25 @@ ollama pull qwen2.5:3b            # fits 6GB fully; llama3.1 does not
 
 cp .env.example .env              # add a judge key: aistudio.google.com/apikey
 
-python scripts/build_index.py     # ~4 min, both chunking strategies
-python scripts/validate_goldset.py
-python scripts/eval_retrieval.py  # the ablation table
+python scripts/build_index.py       # ~4 min, both chunking strategies
+python scripts/validate_goldset.py  # verify the annotations against the corpus
+python scripts/eval_retrieval.py    # the ablation table; ~1 min, no LLM
+python scripts/calibrate_abstention.py
 python scripts/eval_answers.py --generator ollama:qwen2.5:3b
+python scripts/make_report.py       # renders reports/EVALUATION.md
 
 streamlit run app.py
 ```
+
+`eval_answers.py` is resumable. It writes after every question and, on
+relaunch, scores only the questions missing from the results file — which
+matters because the judge's free tier is metered per day and llama3.1 needs
+about a minute per answer on this hardware. `--restart` forces a clean run.
+
+If the judge returns 404 or runs out of quota, `python
+scripts/list_judge_models.py --probe` reports which models the key can
+currently reach; the judge rotates through several because the quota is
+per-model.
 
 The GraphRAG index (`output/*.parquet`) is a separate, hours-long offline step
 and is not committed:
