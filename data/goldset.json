@@ -1,0 +1,315 @@
+{
+  "version": "1.0",
+  "corpus": "input/ (40 judgment files, 38 unique cases)",
+  "notes": [
+    "relevant_docs is the retrieval ground truth: the documents that actually contain the answer.",
+    "must_contain lets scripts/validate_goldset.py prove each annotation against the corpus text, so the labels are checkable rather than asserted.",
+    "answerable=false entries have no supporting document anywhere in the corpus. Correct behaviour is refusal, not an answer; they measure abstention.",
+    "judgment_0004/0006 and judgment_0122/0125 are duplicate case pairs present in input/. Both copies are listed as relevant where applicable, because both are legitimately correct retrievals."
+  ],
+  "questions": [
+    {
+      "id": "q01",
+      "question": "What is a curative petition and in what circumstances can the Supreme Court entertain one?",
+      "category": "single_hop_factual",
+      "relevant_docs": ["judgment_0122.txt", "judgment_0125.txt"],
+      "must_contain": ["curative"],
+      "answerable": true
+    },
+    {
+      "id": "q02",
+      "question": "Can a prisoner invoke the writ jurisdiction of the court to challenge conditions inside jail?",
+      "category": "single_hop_factual",
+      "relevant_docs": ["judgment_0126.txt"],
+      "must_contain": ["prison"],
+      "answerable": true
+    },
+    {
+      "id": "q03",
+      "question": "Is an accused entitled to default bail when the investigating agency fails to complete investigation within the statutory period under Section 167(2) CrPC?",
+      "category": "single_hop_factual",
+      "relevant_docs": ["judgment_0127.txt"],
+      "must_contain": ["167"],
+      "answerable": true
+    },
+    {
+      "id": "q04",
+      "question": "Must a review petition in a death sentence case be heard in open court rather than by circulation?",
+      "category": "single_hop_factual",
+      "relevant_docs": ["judgment_0004.txt", "judgment_0006.txt"],
+      "must_contain": ["review"],
+      "answerable": true
+    },
+    {
+      "id": "q05",
+      "question": "Does the creamy layer principle apply to Scheduled Castes and Scheduled Tribes in reservation matters?",
+      "category": "single_hop_factual",
+      "relevant_docs": ["judgment_0216.txt"],
+      "must_contain": ["creamy layer"],
+      "answerable": true
+    },
+    {
+      "id": "q06",
+      "question": "Is the Forest Department an industry, and are daily wage workers engaged by it workmen?",
+      "category": "single_hop_factual",
+      "relevant_docs": ["judgment_0029.txt"],
+      "must_contain": ["Forest"],
+      "answerable": true
+    },
+    {
+      "id": "q07",
+      "question": "Can an employee's service be regularised without following the prescribed process of recruitment?",
+      "category": "single_hop_factual",
+      "relevant_docs": ["judgment_0032.txt"],
+      "must_contain": ["regularis"],
+      "answerable": true
+    },
+    {
+      "id": "q08",
+      "question": "What defect in a notice invalidates preventive action taken against a person alleged to be a goonda?",
+      "category": "single_hop_factual",
+      "relevant_docs": ["judgment_0076.txt"],
+      "must_contain": ["goonda"],
+      "answerable": true
+    },
+    {
+      "id": "q09",
+      "question": "Is a public authority obliged to disclose an investigation report under the Right to Information Act?",
+      "category": "single_hop_factual",
+      "relevant_docs": ["judgment_0073.txt"],
+      "must_contain": ["Information"],
+      "answerable": true
+    },
+    {
+      "id": "q10",
+      "question": "Can the State claim sovereign immunity for tortious acts committed by police officers causing death in custody?",
+      "category": "single_hop_factual",
+      "relevant_docs": ["judgment_0005.txt"],
+      "must_contain": ["sovereign"],
+      "answerable": true
+    },
+    {
+      "id": "q11",
+      "question": "What is the legal status of police standing orders that govern the opening and maintenance of history sheets and rowdy sheets?",
+      "category": "single_hop_factual",
+      "relevant_docs": ["judgment_0001.txt"],
+      "must_contain": ["history sheet"],
+      "answerable": true
+    },
+    {
+      "id": "q12",
+      "question": "Can the National Green Tribunal exercise jurisdiction on its own motion without a formal application?",
+      "category": "single_hop_factual",
+      "relevant_docs": ["judgment_0219.txt"],
+      "must_contain": ["Tribunal"],
+      "answerable": true
+    },
+    {
+      "id": "q13",
+      "question": "On what date must an application for a liquor licence be considered: the date of application or the date of consideration?",
+      "category": "single_hop_factual",
+      "relevant_docs": ["judgment_0218.txt"],
+      "must_contain": ["licence"],
+      "answerable": true
+    },
+    {
+      "id": "q14",
+      "question": "Does the power of superintendence of the High Court under Article 227 extend to administrative as well as judicial superintendence?",
+      "category": "single_hop_factual",
+      "relevant_docs": ["judgment_0128.txt"],
+      "must_contain": ["227"],
+      "answerable": true
+    },
+    {
+      "id": "q15",
+      "question": "Is speedy trial a fundamental right, and can prolonged delay justify quashing a prosecution?",
+      "category": "multi_hop_relational",
+      "relevant_docs": ["judgment_0002.txt", "judgment_0008.txt"],
+      "must_contain": ["speedy"],
+      "must_contain_any": true,
+      "answerable": true
+    },
+    {
+      "id": "q16",
+      "question": "Which judgments discuss the fifty per cent ceiling on reservations, and how is that ceiling applied?",
+      "category": "multi_hop_relational",
+      "relevant_docs": ["judgment_0214.txt", "judgment_0220.txt", "judgment_0034.txt"],
+      "must_contain": ["50%"],
+      "must_contain_any": true,
+      "answerable": true
+    },
+    {
+      "id": "q17",
+      "question": "How do these judgments treat sub-classification within the Scheduled Castes for the purpose of reservation?",
+      "category": "multi_hop_relational",
+      "relevant_docs": ["judgment_0216.txt", "judgment_0221.txt"],
+      "must_contain": ["classification"],
+      "must_contain_any": true,
+      "answerable": true
+    },
+    {
+      "id": "q18",
+      "question": "Which cases concern the death sentence and the procedural safeguards surrounding its confirmation?",
+      "category": "multi_hop_relational",
+      "relevant_docs": ["judgment_0004.txt", "judgment_0006.txt", "judgment_0124.txt", "judgment_0215.txt"],
+      "must_contain": ["death"],
+      "must_contain_any": true,
+      "answerable": true
+    },
+    {
+      "id": "q19",
+      "question": "How is the freedom of the press balanced against an individual's claim to privacy and reputation?",
+      "category": "multi_hop_relational",
+      "relevant_docs": ["judgment_0074.txt"],
+      "must_contain": ["press"],
+      "answerable": true
+    },
+    {
+      "id": "q20",
+      "question": "What did the courts hold about the extent of Parliament's power to amend fundamental rights?",
+      "category": "multi_hop_relational",
+      "relevant_docs": ["judgment_0123.txt"],
+      "must_contain": ["amend"],
+      "answerable": true
+    },
+    {
+      "id": "q21",
+      "question": "Which judgments treat Article 32 as their primary constitutional focus?",
+      "category": "article_scoped",
+      "relevant_docs": [
+        "judgment_0122.txt", "judgment_0123.txt", "judgment_0124.txt", "judgment_0125.txt",
+        "judgment_0126.txt", "judgment_0127.txt", "judgment_0128.txt", "judgment_0129.txt"
+      ],
+      "must_contain": ["Article 32"],
+      "must_contain_any": true,
+      "answerable": true
+    },
+    {
+      "id": "q22",
+      "question": "Which judgments centre on the right to equality under Article 14?",
+      "category": "article_scoped",
+      "relevant_docs": [
+        "judgment_0028.txt", "judgment_0029.txt", "judgment_0030.txt", "judgment_0031.txt",
+        "judgment_0032.txt", "judgment_0033.txt", "judgment_0034.txt", "judgment_0035.txt"
+      ],
+      "must_contain": ["Article 14"],
+      "must_contain_any": true,
+      "answerable": true
+    },
+    {
+      "id": "q23",
+      "question": "Which judgments deal principally with the freedoms guaranteed by Article 19?",
+      "category": "article_scoped",
+      "relevant_docs": [
+        "judgment_0071.txt", "judgment_0072.txt", "judgment_0073.txt", "judgment_0074.txt",
+        "judgment_0075.txt", "judgment_0076.txt", "judgment_0077.txt", "judgment_0078.txt"
+      ],
+      "must_contain": ["Article 19"],
+      "must_contain_any": true,
+      "answerable": true
+    },
+    {
+      "id": "q24",
+      "question": "Which judgments in this corpus record a dissenting opinion?",
+      "category": "entity_relationship",
+      "relevant_docs": [
+        "judgment_0004.txt", "judgment_0006.txt", "judgment_0032.txt", "judgment_0074.txt",
+        "judgment_0075.txt", "judgment_0076.txt", "judgment_0122.txt", "judgment_0123.txt",
+        "judgment_0124.txt", "judgment_0125.txt", "judgment_0129.txt", "judgment_0214.txt",
+        "judgment_0215.txt", "judgment_0216.txt", "judgment_0219.txt"
+      ],
+      "must_contain": [],
+      "answerable": true,
+      "notes": "Ground truth taken from the HAS DISSENT header field, which scripts/validate_goldset.py checks directly."
+    },
+    {
+      "id": "q25",
+      "question": "What did the court say about the right to water and the preservation of open spaces and public parks?",
+      "category": "single_hop_factual",
+      "relevant_docs": ["judgment_0007.txt"],
+      "must_contain": ["open space"],
+      "answerable": true
+    },
+    {
+      "id": "q26",
+      "question": "What did the Supreme Court hold in Shreya Singhal v. Union of India about Section 66A of the Information Technology Act?",
+      "category": "out_of_corpus",
+      "relevant_docs": [],
+      "must_not_contain": ["Shreya Singhal", "66A"],
+      "answerable": false,
+      "notes": "A famous Article 19 case the generator almost certainly knows from pre-training, on the same theme as the corpus's Article 19 documents. Answering it confidently is a retrieval failure."
+    },
+    {
+      "id": "q27",
+      "question": "What guidelines did the Supreme Court lay down in Vishaka v. State of Rajasthan on sexual harassment at the workplace?",
+      "category": "out_of_corpus",
+      "relevant_docs": [],
+      "must_not_contain": ["Vishaka"],
+      "answerable": false
+    },
+    {
+      "id": "q28",
+      "question": "What did the Supreme Court decide in Navtej Singh Johar regarding Section 377 of the Indian Penal Code?",
+      "category": "out_of_corpus",
+      "relevant_docs": [],
+      "must_not_contain": ["Navtej"],
+      "answerable": false
+    },
+    {
+      "id": "q29",
+      "question": "What is the right to erasure under the European Union's General Data Protection Regulation?",
+      "category": "out_of_corpus",
+      "relevant_docs": [],
+      "must_not_contain": ["General Data Protection", "GDPR"],
+      "answerable": false
+    },
+    {
+      "id": "q30",
+      "question": "What did the United States Supreme Court hold in Roe v. Wade?",
+      "category": "out_of_corpus",
+      "relevant_docs": [],
+      "must_not_contain": ["Roe v. Wade", "Roe vs Wade"],
+      "answerable": false
+    },
+    {
+      "id": "q31",
+      "question": "What are the corporate social responsibility obligations under Section 135 of the Companies Act, 2013?",
+      "category": "out_of_corpus",
+      "relevant_docs": [],
+      "must_not_contain": ["corporate social responsibility", "Companies Act, 2013"],
+      "answerable": false
+    },
+    {
+      "id": "q32",
+      "question": "How does the Bharatiya Nyaya Sanhita define the offence of theft?",
+      "category": "out_of_corpus",
+      "relevant_docs": [],
+      "must_not_contain": ["Bharatiya Nyaya Sanhita"],
+      "answerable": false
+    },
+    {
+      "id": "q33",
+      "question": "What did the Supreme Court decide in the Sabarimala temple entry case about women's right to worship?",
+      "category": "out_of_corpus",
+      "relevant_docs": [],
+      "must_not_contain": ["Sabarimala"],
+      "answerable": false
+    },
+    {
+      "id": "q34",
+      "question": "What did the Supreme Court hold about the practice of instant triple talaq?",
+      "category": "out_of_corpus",
+      "relevant_docs": [],
+      "must_not_contain": ["triple talaq"],
+      "answerable": false
+    },
+    {
+      "id": "q35",
+      "question": "What are the eligibility criteria and age limits for appointment to the Indian Administrative Service?",
+      "category": "out_of_corpus",
+      "relevant_docs": [],
+      "must_not_contain": ["Indian Administrative Service"],
+      "answerable": false
+    }
+  ]
+}
