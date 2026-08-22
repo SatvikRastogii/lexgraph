@@ -101,7 +101,7 @@ def load_corpus(input_dir: str = "input", min_chars: int = 500) -> list[Document
         if not filename.endswith(".txt"):
             continue
         path = os.path.join(input_dir, filename)
-        with open(path, "r", encoding="utf-8") as handle:
+        with open(path, encoding="utf-8") as handle:
             text = handle.read()
         if len(text) < min_chars:
             continue

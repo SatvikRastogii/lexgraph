@@ -57,6 +57,7 @@ class DenseRetriever:
             results["documents"][0],
             results["metadatas"][0],
             results["distances"][0],
+            strict=True,
         ):
             similarity = 1.0 - distance
             hits.append(

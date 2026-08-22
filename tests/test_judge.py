@@ -8,7 +8,6 @@ from lexgraph.eval.judge import (
 )
 from lexgraph.llm import judge_is_independent
 
-
 ALL_METRICS = [
     "faithfulness", "answer_relevancy", "context_precision",
     "completeness", "hallucination", "coherence", "legal_reasoning",

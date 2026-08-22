@@ -43,7 +43,7 @@ def reciprocal_rank_fusion(
     fused: dict[str, Hit] = {}
     scores: dict[str, float] = {}
 
-    for ranking, weight in zip(rankings, weights):
+    for ranking, weight in zip(rankings, weights, strict=True):
         for rank, hit in enumerate(ranking, start=1):
             contribution = weight / (k + rank)
             scores[hit.chunk_id] = scores.get(hit.chunk_id, 0.0) + contribution

@@ -4,7 +4,6 @@ from lexgraph.retrieval.base import Hit
 from lexgraph.retrieval.bm25 import BM25, tokenize
 from lexgraph.retrieval.fusion import reciprocal_rank_fusion
 
-
 # --- tokenizer ---------------------------------------------------------------
 
 def test_tokenizer_folds_article_references():

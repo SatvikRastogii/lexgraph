@@ -51,7 +51,7 @@ def main():
     # would have to be thrown away.
     require_independent_judge(args.generator, args.judge)
 
-    with open(args.goldset, "r", encoding="utf-8") as handle:
+    with open(args.goldset, encoding="utf-8") as handle:
         goldset = json.load(handle)
     questions = goldset["questions"]
     if args.limit:

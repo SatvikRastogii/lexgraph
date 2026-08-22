@@ -12,7 +12,6 @@ from lexgraph.guardrails.citations import (
 )
 from lexgraph.retrieval.base import Hit
 
-
 # --- citation extraction -----------------------------------------------------
 
 def test_extracts_case_names_articles_and_sections():

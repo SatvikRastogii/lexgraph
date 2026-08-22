@@ -36,7 +36,7 @@ def main():
     parser.add_argument("--output", default=OUTPUT_PATH)
     args = parser.parse_args()
 
-    with open(args.goldset, "r", encoding="utf-8") as handle:
+    with open(args.goldset, encoding="utf-8") as handle:
         questions = json.load(handle)["questions"]
 
     answerable = [q for q in questions if q["answerable"]]
