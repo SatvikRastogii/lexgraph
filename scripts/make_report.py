@@ -28,6 +28,9 @@ def _load(path):
 
 
 def retrieval_section(ablation):
+    # Keys beginning with an underscore hold cross-configuration analysis
+    # (the paired comparisons), not a configuration's own scores.
+    ablation = {k: v for k, v in ablation.items() if not k.startswith("_")}
     if not ablation:
         return ["_No retrieval ablation yet. Run `python scripts/eval_retrieval.py`._"]
 

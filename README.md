@@ -44,8 +44,9 @@ makes the retrievers' characters visible:
 | `bm25` | 0.756 | 0.857 | **−0.102** | 0.707 |
 | `dense-fixed` | 0.844 | 0.889 | −0.045 | 0.728 |
 | `dense` | 0.872 | **0.902** | −0.030 | 0.775 |
-| `hybrid` | 0.872 | 0.887 | **−0.015** | **0.803** |
+| `hybrid` | 0.872 | 0.885 | **−0.013** | **0.803** |
 | `hybrid-rerank` | 0.872 | **0.902** | −0.030 | 0.801 |
+| `graph-units` | **0.889** | 0.890 | **−0.001** | 0.796 |
 
 Lexical matching loses ten points the moment the question stops sharing words
 with the document. Dense retrieval loses three, and fusing the two loses one
@@ -87,26 +88,132 @@ passage quality rather than a full account of it.
 
 ### The aggregate picture
 
-| configuration | R@1 | R@5 | R@5 95% CI | nDCG@10 | MRR | ParaR@5 | p50 |
+| configuration | R@1 | R@5 | R@10 | nDCG@10 | MRR | ParaR@5 | p50 |
 |---|---|---|---|---|---|---|---|
-| `dense-fixed` | 0.570 | 0.865 | [0.78, 0.94] | 0.809 | 0.830 | n/a | 2195ms |
-| `dense` | 0.582 | 0.886 | [0.81, 0.95] | 0.831 | 0.839 | 0.792 | 2223ms |
-| `bm25` | 0.586 | 0.802 | [0.70, 0.89] | 0.775 | 0.810 | 0.700 | **4ms** |
-| `hybrid` | 0.632 | 0.879 | [0.80, 0.95] | 0.847 | 0.873 | 0.799 | 2203ms |
-| **`hybrid-rerank`** | **0.659** | **0.886** | [0.81, 0.95] | **0.860** | **0.879** | **0.805** | 4456ms |
-
-The cross-encoder helps where a cross-encoder should — at the top of the
-ranking. R@1 rises from 0.582 to 0.659 and nDCG@10 from 0.831 to 0.860, for
-roughly double the latency.
-
-Every Recall@5 interval still overlaps every other one. At 55 answerable
-questions this gold set **cannot** establish those differences, and the honest
-reading is that it does not. The intervals are printed for that reason rather
-than hidden.
+| `dense-fixed` | 0.570 | 0.865 | 0.867 | 0.809 | 0.830 | n/a | 2195ms |
+| `dense` | 0.582 | 0.886 | 0.889 | 0.831 | 0.839 | 0.792 | 2223ms |
+| `bm25` | 0.586 | 0.802 | 0.822 | 0.775 | 0.810 | 0.700 | **2ms** |
+| `hybrid` | 0.632 | 0.878 | 0.884 | 0.847 | 0.873 | 0.799 | 2192ms |
+| **`hybrid-rerank`** | **0.659** | 0.886 | 0.889 | **0.860** | **0.879** | **0.805** | 4161ms |
+| `graph-units` | 0.607 | **0.889** | **0.942** | 0.854 | 0.861 | n/a | 2193ms |
+| `graph-community` | 0.233 | 0.474 | 0.597 | 0.438 | 0.408 | n/a | 2188ms |
 
 These numbers are lower than the ones this table carried at 35 questions. The
 retrievers did not get worse; 20 harder questions were added, and an easier
-question set was flattering all five configurations equally.
+question set was flattering every configuration equally.
+
+### What the gold set can and cannot establish
+
+Reading the table above as a ranking is the mistake this section exists to
+prevent. Each configuration answers the *same* questions, so the right test is
+to resample the per-question **difference**, not to check whether two
+independently computed error bars happen not to touch. Shared question
+difficulty cancels in the difference and inflates both intervals separately,
+which makes the overlap test badly conservative.
+
+Paired against `dense` on nDCG@10, n=55:
+
+| configuration | Δ mean | 95% CI | W/L/T | verdict |
+|---|---|---|---|---|
+| `hybrid-rerank` | +0.031 | [−0.017, +0.080] | 11/5/39 | not distinguishable |
+| `graph-units` | +0.026 | [−0.025, +0.076] | 13/9/33 | not distinguishable |
+| `hybrid` | +0.018 | [−0.024, +0.061] | 10/7/38 | not distinguishable |
+| `dense-fixed` | −0.020 | [−0.065, +0.024] | 7/10/38 | not distinguishable |
+| `bm25` | −0.054 | [−0.133, +0.019] | 10/13/32 | not distinguishable |
+| **`graph-community`** | **−0.391** | **[−0.498, −0.284]** | **4/37/14** | **distinguishable** |
+
+**One difference in this entire table is statistically established, and it is
+the graph making retrieval worse.** Everything else is a direction, not a
+result. Reranking wins 11 questions and loses 5, which is suggestive and is not
+evidence at this sample size — an earlier version of this README said the
+cross-encoder "helps where a cross-encoder should", and the paired test does
+not support that. The tier split and the R@1 movement are still worth reading;
+they are simply not the same claim as *distinguishable*.
+
+### The graph is the thing that hurts
+
+This is the question the project is named after, and until now it had only been
+asked on the answer side. GraphRAG's retrieval is now scored on the same gold
+set, with the same metrics and deliberately the **same embedder** as `dense`,
+so the only thing that varies is what a retrieval unit is:
+
+- **`graph-units`** — GraphRAG's own 1,556 text units. No graph is involved;
+  this is the control. It is competitive with everything else and has the best
+  R@10 in the table.
+- **`graph-community`** — the 184 community reports, LLM-written summaries of
+  clustered entities and relationships. This is where the graph actually lives,
+  and it is what `global` search fans out across.
+
+The graph roughly halves retrieval quality, and it is the only arm the gold set
+can distinguish at all.
+
+The direction survives an advantage handed to it. A community report stands for
+every judgment it was built from, so retrieving one fills several document
+slots — 3.84 on average, 28 out of 40 at worst. That **inflates** its recall
+rather than depressing it, and it still scores half. `documents_per_hit` is
+recorded beside the metrics so the inflation stays visible.
+
+The explanation is not that GraphRAG is broken. Community reports abstract away
+case-specific detail, which is the correct thing for a corpus-level summary to
+do and the wrong shape for finding a particular judgment. Graph structure buys
+corpus-wide synthesis; it is not a retrieval index, and this corpus's questions
+want retrieval.
+
+None of this needed a re-index. The expensive phase — 3,750 entities, 1,505
+relationships, 184 reports — was already on disk; only the embeddings were
+missing, which is also why `local` search fails.
+
+### What was supposed to help and didn't
+
+Two changes were made because there was a clear argument for them. Both were
+measured and neither survived. They are reported because a repository that only
+shows what worked is not showing you its method.
+
+**HyDE.** The hard tier exists precisely because a lay-phrased question shares
+no vocabulary with the judgment. HyDE is the standard answer: have the model
+write a passage in the judgment's register and search with that instead. It
+should have been the biggest win available.
+
+| configuration | hard R@5 | nDCG@10 | Δ vs base (paired) | p50 |
+|---|---|---|---|---|
+| `hybrid` | 0.872 | 0.847 | — | 2199ms |
+| `hyde-hybrid` | **0.794** | 0.818 | −0.028 [−0.078, +0.019] | 6033ms |
+| `hybrid-rerank` | 0.872 | 0.860 | — | 4167ms |
+| `hyde-rerank` | 0.844 | 0.858 | +0.011 [−0.030, +0.049] | 4532ms |
+
+It made the hard tier **worse** — the one place it was supposed to help —
+while roughly tripling latency. Here is the actual hypothetical generated for
+*"Can the police keep a permanent watch file on a man who finished serving his
+sentence years ago?"*:
+
+> In accordance with Article 21 of the Constitution, the right to privacy is
+> fundamental […] pursuant to Section 509(1) of the Indian Penal Code […]
+
+Section 509 is about insulting a woman's modesty. More importantly, the passage
+never says **"history sheet"** — the term the answering judgment actually uses.
+HyDE supplied *generic* constitutional register and a fabricated section number,
+which pulled the query toward all eight Article 21 documents instead of the one.
+The failure mode is specific: HyDE bridges register when the target vocabulary
+is predictable from the question, and this corpus's hard questions are hard
+exactly because it is not.
+
+`hyde-rerank` does move R@1 from 0.659 to 0.688 and MRR from 0.879 to 0.897
+while losing R@5 — it trades recall for precision at the top. That is a real
+trade and still not a distinguishable difference at n=55.
+
+**Chunk size.** 500 words was inherited from `settings.yaml` and never checked.
+Sweeping 150 to 1000 words moves nDCG@10 between 0.743 and 0.783, with every
+interval overlapping; the best point beats the default by +0.008. Chunk size is
+not where the wins are in this corpus, and the inherited default costs nothing
+measurable.
+
+Two further ideas were dropped without being built, on the same reasoning that
+justified building the rest. **Metadata pre-filtering** on `article_focus` would
+only help questions that name their Article — the standard tier, which is
+already saturated at 0.90 R@5 — and would risk the hard tier, which deliberately
+avoids legal vocabulary. **Structured JSON generation** would add enforcement
+the citation policy below already provides, at the cost of format adherence from
+a 3B model.
 
 ### Cosine similarity is a poor signal for refusing to answer
 
@@ -159,6 +266,34 @@ removed rather than kept because it read well.
 The dashboard reads the threshold from the calibration file rather than
 hardcoding it, which is why expanding the gold set moved it instead of
 silently leaving a stale constant in the source.
+
+### The second guardrail: citations that were checked but never acted on
+
+`verify_citations` extracts every case name, Article, Section and reported
+citation from an answer and looks for it in the context the generator was
+actually given. It has run on every answer since it was written, and for most
+of that time **nothing acted on the result**. An answer citing a case the
+context never contained was checked, scored, recorded, and returned anyway.
+That is a report, not a guardrail — and fabricated citations are the failure
+this domain actually sanctions people for.
+
+Three policies now:
+
+| policy | behaviour |
+|---|---|
+| `warn` | attach the report, return the answer — **the default**, and what every judged number here was measured under |
+| `retry` | regenerate once with the offending citations quoted back, keep the rewrite only if it verifies better |
+| `refuse` | withhold the answer below a citation-accuracy floor |
+
+`retry` quotes the failed citations verbatim rather than repeating "only cite
+the extracts" — the model already had that instruction and broke it. It keeps
+the second attempt only when the second attempt verifies better, because a
+retry is free to make things worse and accepting it unconditionally would let a
+guardrail lower citation accuracy while appearing to enforce it.
+
+`warn` stays the default deliberately. Changing it would move the judged
+numbers with no run to attribute the change to, and the judged evaluation of
+these policies has not been run yet.
 
 ### The model did not fit the card
 
@@ -308,9 +443,10 @@ lexgraph/
   chunking.py        fixed-window and paragraph-aware strategies
   embeddings.py      batched Ollama embedding with retry and a query cache
   llm.py             provider dispatch: Ollama, Gemini, OpenAI-compatible
+  cache.py           on-disk cache for temperature-0 calls
   router.py          NAIVE vs GRAPH by prototype similarity, no LLM call
-  generation.py      prompt, generate, verify citations
-  retrieval/         bm25 · dense · fusion (RRF) · rerank · pipeline
+  generation.py      prompt, generate, act on the citation check
+  retrieval/         bm25 · dense · fusion (RRF) · rerank · hyde · graph · pipeline
   eval/              retrieval_metrics · judge
   guardrails/        abstention · citations
 scripts/
@@ -321,6 +457,7 @@ scripts/
   calibrate_abstention.py  choose the refusal threshold from data
   derive_paragraph_labels.py  locate which paragraphs carry each answer
   validate_judge.py      known-answer probes and cross-judge agreement
+  sweep_chunk_size.py    is 500 words right, or just inherited?
   drift_check.py         scheduled regression check
   list_judge_models.py   which judge models a given key can actually reach
 data/goldset.json    65 questions: 25 standard, 30 hard, 10 out-of-corpus
@@ -341,13 +478,30 @@ cp .env.example .env              # add a judge key: aistudio.google.com/apikey
 
 python scripts/build_index.py       # ~4 min, both chunking strategies
 python scripts/validate_goldset.py  # verify the annotations against the corpus
-python scripts/eval_retrieval.py    # the ablation table; ~1 min, no LLM
+python scripts/derive_paragraph_labels.py
+python scripts/eval_retrieval.py    # the ablation table, no LLM
 python scripts/calibrate_abstention.py
 python scripts/eval_answers.py --generator ollama:qwen2.5:3b
+python scripts/validate_judge.py --probes
 python scripts/make_report.py       # renders reports/EVALUATION.md
 
 streamlit run app.py
 ```
+
+The graph arms need `output/*.parquet` from `graphrag index`, which is not
+committed; `eval_retrieval.py` skips them rather than failing when the index is
+absent. HyDE arms cost one generation per query and are excluded from the
+default sweep:
+
+```bash
+python scripts/eval_retrieval.py --configs hybrid hyde-hybrid --baseline hybrid
+python scripts/sweep_chunk_size.py
+```
+
+Every temperature-0 call is cached to `.llm_cache/`, which is what makes
+re-running any of this practical — 8.83s becomes 0.01s on a repeat. Sampling
+calls are never cached, since replaying one would turn a sampling experiment
+into a constant. `LEXGRAPH_CACHE=off` disables it.
 
 `eval_answers.py` is resumable. It writes after every question and, on
 relaunch, scores only the questions missing from the results file — which
@@ -376,9 +530,12 @@ docker compose up --build
 
 ## Limitations
 
-- 55 answerable questions is still a small gold set. It is large enough to
-  detect the reranking effect on R@1 and nDCG and BM25's collapse on paraphrase,
-  and demonstrably too small to separate configurations on R@5.
+- **55 answerable questions can establish exactly one difference in the
+  ablation**, and it is `graph-community` scoring worse. Under a paired
+  bootstrap every other configuration is indistinguishable from `dense`,
+  reranking included. The tier split and the R@1 movement are real
+  observations; they are not the same claim, and this README no longer states
+  them as one.
 - **The judge has not been validated against human labels.** What it has been
   checked for is stated precisely, because the gap matters. It ranks 5 of 5
   known-answer probes correctly and separates them widely — grounded text over
@@ -401,14 +558,22 @@ docker compose up --build
 - Paragraph-level ground truth covers 39 of 55 answerable questions. Six
   judgments carry no usable numbering, and a term-bearing paragraph marks where
   an answer is stated rather than the whole of where it is reasoned.
-- GraphRAG is compared on the answer side only. Its retrieval is not yet scored
-  on the same footing, though `text_unit_ids` in its output would allow it —
-  the extraction artefacts (3750 entities, 1505 relationships, 184 community
-  reports) are complete and on disk, so this needs an embedding pass, not the
-  hours-long extraction.
-- **GraphRAG's `local` search method crashes** on this index. Only
+- The graph arms are scored through this repository's own retrieval over
+  GraphRAG's artefacts, not through GraphRAG's query engine. That is deliberate
+  — it holds the embedder and the metrics fixed so the comparison isolates the
+  retrieval unit — but it means the result is about *what the graph produced*,
+  not about how `global` search would rank with its own prompt-based
+  aggregation on top.
+- `graph-community` recall is inflated, not depressed, by expansion: a report
+  covering 28 judgments fills 28 document slots. The finding survives that,
+  which makes it safe in one direction only. Do not read its *absolute* recall
+  as comparable to a chunk retriever's.
+- **GraphRAG's `local` search method still crashes** on this index. Only
   `entity_description` was ever embedded into LanceDB — the text-unit and
-  community stores local search reads are absent — so the failure is a missing
-  vector store rather than a corrupt one. `global` search works and is the
-  expensive method, fanning out across every community report, which is most of
-  why GraphRAG queries take minutes rather than seconds.
+  community stores local search reads were never built. Fixing it needs the
+  embedding pass, not the hours-long extraction, but this repository routes
+  around it rather than repairing GraphRAG's own store.
+- HyDE, the citation `retry`/`refuse` policies, and the chunk-size sweep change
+  what the pipeline *can* do; only the chunk-size sweep and the retrieval arms
+  have been measured end to end. The judged effect of the citation policies on
+  answer quality has not been run.

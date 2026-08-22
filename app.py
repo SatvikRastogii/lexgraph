@@ -1619,6 +1619,9 @@ with tab_ragas:
     else:
         with open(ABLATION_FILE, encoding="utf-8") as fh:
             ablation = json.load(fh)
+        # Underscore keys carry cross-configuration analysis (the paired
+        # comparisons), not a configuration's own scores.
+        ablation = {k: v for k, v in ablation.items() if not k.startswith("_")}
 
         rows = []
         for name, payload in ablation.items():
