@@ -348,6 +348,10 @@ def build_judge(spec: str | None = None) -> BaseClient:
 
 
 DEFAULT_GENERATOR = "ollama:llama3.1"
+# HyDE runs once per query and its output is thrown away after embedding, so
+# the small model that fits the card entirely is the right one: it needs the
+# legal register, not the reasoning.
+DEFAULT_HYDE_GENERATOR = "ollama:qwen2.5:3b"
 DEFAULT_JUDGE = "gemini:gemini-3-flash-preview"
 
 
