@@ -16,5 +16,11 @@ chroma_db/
 *.parquet
 *.log
 *.html
-ragas_results.json
-ragas_report.md
+reports/
+eval_runs/
+.pytest_cache/
+.github/
+tests/
+CLAUDE.md
+.claude/
+.agents/
