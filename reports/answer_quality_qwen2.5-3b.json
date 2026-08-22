@@ -5,76 +5,82 @@
     "hybrid-rerank": {
       "metrics": {
         "answer_relevancy": {
-          "mean": 3,
+          "mean": 4.12,
           "ci95": [
-            2.0,
-            4.25
+            3.64,
+            4.56
           ],
-          "n": 4
+          "n": 25
         },
         "citation_accuracy": {
-          "mean": 5.0,
+          "mean": 4.888,
           "ci95": [
-            5.0,
+            4.696000000000001,
             5.0
           ],
-          "n": 4
+          "n": 25
         },
         "coherence": {
-          "mean": 3.75,
+          "mean": 4.48,
           "ci95": [
-            2.5,
-            4.75
+            4.16,
+            4.76
           ],
-          "n": 4
+          "n": 25
         },
         "completeness": {
-          "mean": 2.25,
+          "mean": 3.32,
           "ci95": [
-            1.25,
-            3.5
+            2.76,
+            3.84
           ],
-          "n": 4
+          "n": 25
         },
         "context_precision": {
-          "mean": 4.5,
+          "mean": 4.64,
           "ci95": [
-            3.5,
-            5.0
+            4.36,
+            4.88
           ],
-          "n": 4
+          "n": 25
         },
         "faithfulness": {
-          "mean": 2,
+          "mean": 3.04,
           "ci95": [
-            1.25,
-            2.75
+            2.48,
+            3.6
           ],
-          "n": 4
+          "n": 25
         },
         "hallucination": {
-          "mean": 3.25,
+          "mean": 3.6,
           "ci95": [
-            2.5,
-            4.0
+            3.08,
+            4.08
           ],
-          "n": 4
+          "n": 25
         },
         "legal_reasoning": {
-          "mean": 2,
+          "mean": 3.04,
           "ci95": [
-            1.0,
-            3.25
+            2.44,
+            3.6
           ],
-          "n": 4
+          "n": 25
         }
       },
       "answer_words": {
-        "mean": 232.25,
-        "median": 217.5
+        "mean": 275.48,
+        "median": 245
       },
       "unparsed_judge_responses": 0,
-      "latency_ms_median": 11952.18315004604,
+      "latency_ms_median": 11967.36529993359,
+      "abstention": {
+        "out_of_corpus_questions": 10,
+        "correctly_refused": 8,
+        "refusal_rate": 0.8,
+        "wrongly_refused_answerable": 0
+      },
       "records": [
         {
           "id": "q01",
@@ -388,6 +394,2467 @@
             }
           },
           "wall_seconds": 26.409857999999076
+        },
+        {
+          "id": "q05",
+          "category": "single_hop_factual",
+          "answerable": true,
+          "generation": {
+            "question": "Does the creamy layer principle apply to Scheduled Castes and Scheduled Tribes in reservation matters?",
+            "answer": "Based on the provided judgment extracts, it is clear that the creamy layer principle does not apply to Scheduled Castes and Scheduled Tribes in reservation matters. This can be inferred from several judgments:\n\n1. **Ashoka Kumar Thakur v. Union of India (2008)**:\n   - In this case, Balakrishnan, C.J., held that the \"creamy layer\" principle is not applicable to Scheduled Castes and Scheduled Tribes as it is merely a principle of identification of the backward class and not applied as a principle of equality.\n\n2. **Subhash Chandra & Anr vs Delhi Subordinate Ser.Sel.Board & Ors (2009)**:\n   - The Court reiterated that for reservation purposes, the principles of \"creamy layer\" are not applicable to Scheduled Castes and Scheduled Tribes.\n   - It was observed that right from the beginning, Scheduled Castes and Scheduled Tribes were treated as a separate category and nobody ever disputed their identification.\n\n3. **Jarnail Singh vs Lachhmi Narain Gupta (2018)**:\n   - The judgment in this case further emphasized that when applying the creamy layer principle to Scheduled Castes and Scheduled Tribes, it does not tinker with the Presidential List under Articles 341 or 342 of the Constitution.\n   - It was stated that only those persons within the group who have come out of untouchability or backwardness by virtue of belonging to the creamy layer are excluded from the benefit of reservation.\n\n4. **E.V. Chinnaiah v. State of A.P. (2009)**:\n   - The Court held in this case that SCs and STs form a single class.\n   - It was specifically noted that the observations in Nagaraj case cannot be construed as requiring exclusion of creamy layer in SCs and STs, as the \"creamy layer\" principle is applied for identifying backward classes.\n\n5. **Nagaraj v. Union of India (2006)**:\n   - The Court reiterated that when a caste is identified as a socially and educationally backward caste, it becomes a \"socially and educationally backward class\" only when it sheds its creamy layer.\n   - However, this discussion was confined to Other Backward Classes (OBC) and has no relevance in the case of Scheduled Tribes and Scheduled Castes.\n\nIn summary, these judgments clearly indicate that the creamy layer principle does not apply to Scheduled Castes and Scheduled Tribes. Therefore, the proposition that the creamy layer principle applies to Scheduled Castes and Scheduled Tribes is not supported by any of the provided extracts.",
+            "abstained": false,
+            "abstention_reason": "",
+            "confidence": 0.9989047050476074,
+            "sources": [
+              "judgment_0216.txt",
+              "judgment_0221.txt"
+            ],
+            "citations": {
+              "supported": [
+                "Ashoka Kumar Thakur v. Union",
+                "Anr v. Delhi Subordinate Ser.Sel.Board",
+                "Jarnail Singh v. Lachhmi Narain Gupta",
+                "E.V. Chinnaiah v. State",
+                "Nagaraj v. Union"
+              ],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4593.305299989879,
+              "generation_ms": 11716.173200053163,
+              "total_ms": 16309.478500043042
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "Does the creamy layer principle apply to Scheduled Castes and Scheduled Tribes in reservation matters?",
+            "answer_chars": 2426,
+            "answer_words": 387,
+            "mean": 3.125,
+            "metrics": {
+              "faithfulness": {
+                "score": 2,
+                "reason": "The answer directly contradicts the provided context from Jarnail Singh (para 14), which explicitly holds that the creamy layer principle does apply to SCs and STs, while also inventing unprovided details for cases like E.V. Chinnaiah.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 3,
+                "reason": "The answer addresses the question directly but arrives at a legally incorrect conclusion that contradicts the binding latest precedent in the context.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 5,
+                "reason": "All retrieved passages are directly relevant to the question of whether the creamy layer applies to SCs and STs.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 2,
+                "reason": "The response completely misinterprets the outcome and binding rule established in Jarnail Singh (2018), failing to accurately answer the legal issue.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 3,
+                "reason": "The answer hallucinates specific holdings and details for E.V. Chinnaiah and misattributes discussions regarding Nagaraj that are not grounded in the text.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 4,
+                "reason": "The answer is clearly structured and readable, though internally contradictory because its synthesis conflicts with its own summarized points from Jarnail Singh.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 1,
+                "reason": "The answer demonstrates fundamentally flawed legal reasoning by failing to recognize the authoritative holding of the later Constitution Bench in Jarnail Singh (2018) applying the creamy layer to SC/STs.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "5/5 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 46.94503729999997
+        },
+        {
+          "id": "q06",
+          "category": "single_hop_factual",
+          "answerable": true,
+          "generation": {
+            "question": "Is the Forest Department an industry, and are daily wage workers engaged by it workmen?",
+            "answer": "Based on the provided judgment extracts, I can answer the question as follows:\n\n**Is the Forest Department an industry, and are daily wage workers engaged by it workmen?**\n\nIn **State Of U.P. And Ors. vs Putti Lal (1997)**, the Supreme Court held that:\n- The Forest Department is considered an \"industry\" for the purposes of the Act.\n- Daily wage workers employed by the Forest Department are classified as \"workmen.\"\n\nTherefore, based on the judgment extracts provided, it can be concluded that the Forest Department is indeed considered an industry and daily wage workers engaged by it are workmen under the relevant Act.",
+            "abstained": false,
+            "abstention_reason": "",
+            "confidence": 0.9458704233169556,
+            "sources": [
+              "judgment_0029.txt",
+              "judgment_0032.txt"
+            ],
+            "citations": {
+              "supported": [
+                "State Of U.P. And Ors. v. Putti Lal"
+              ],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4622.391299926676,
+              "generation_ms": 5610.674600000493,
+              "total_ms": 10233.065899927169
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "Is the Forest Department an industry, and are daily wage workers engaged by it workmen?",
+            "answer_chars": 623,
+            "answer_words": 103,
+            "mean": 4.75,
+            "metrics": {
+              "faithfulness": {
+                "score": 5,
+                "reason": "The answer accurately reflects the explicit statement in the provided context that the Supreme Court held the Forest Department is an industry and daily wagers are workmen.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The answer directly addresses both parts of the user's question.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 5,
+                "reason": "The retrieved context contains the specific holding required to answer the question.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 5,
+                "reason": "The answer provides a complete and direct response to the specific legal questions asked based on the provided text.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 5,
+                "reason": "There are no fabrications; the answer relies entirely on the provided text.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The answer is logically structured and easy to read.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 3,
+                "reason": "The answer correctly identifies the holding but does not provide further analysis or application of the legal principles beyond stating the conclusion.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "1/1 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 141.4776276999619
+        },
+        {
+          "id": "q07",
+          "category": "single_hop_factual",
+          "answerable": true,
+          "generation": {
+            "question": "Can an employee's service be regularised without following the prescribed process of recruitment?",
+            "answer": "Based on the judgment extracts provided, it is clear that an employee's service cannot be regularlyised without following the prescribed process of recruitment. This can be inferred from several judgments:\n\n1. **B.Nagarajan vs The Principal Secretary To Government (2018)** - In this case, the Hon'ble Supreme Court reiterated the principles laid down in previous cases such as State of Rajasthan and others vs V.Dayal Lal and Others [AIR 2011 SC 1193] and Nand Kumar vs. State of Bihar and Others [2014) 5 SCC 300]. The court held that unless employees claiming regularisation had been appointed in pursuance of a regular recruitment in accordance with relevant rules in an open competitive process against sanctioned vacant posts, the equality clause contained in Article 14 should be scrupulously followed. This judgment explicitly states that Courts should not issue directions for regularization of services which would violate the constitutional scheme.\n\n2. **State Of U.P. And Ors. vs Putti Lal (1997)** - In this case, the Supreme Court reiterated that service of daily wage employees cannot be regularized unless there are posts/vacancies available for their absorption. The court emphasized that Articles 14 of the Constitution guarantees equality before the law and ensures fairness and non-arbitrariness in government actions.\n\n3. **B.Nagarajan vs The Principal Secretary To Government (2018)** - In this case, the Hon'ble Supreme Court further clarified that regularisation/absorption is not a matter of course but depends upon the facts of the case following rules and regulations. It cannot be dehors the rules for such regularization/absorption.\n\n4. **B.Nagarajan vs The Principal Secretary To Government (2018)** - In this judgment, it was stated that the initial appointment of the writ petitioner was not in accordance with the recruitment Rules. Therefore, the learned counsel for the petitioner argued that the benefit of regularisation cannot be granted merely on the length of service and that initial appointment being irregular means the writ petitioner is not entitled to any relief.\n\n5. **B.Nagarajan vs The Principal Secretary To Government (2018)** - In this case, it was stated that similarly placed persons were considered for regularization and positive directions were given by this Court. However, the learned counsel for the petitioner argued that initial appointment being irregular means the writ petitioner is not entitled to any relief.\n\n**Conclusion:**\nBased on these judgments, an employee's service cannot be regularlyised without following the prescribed process of recruitment as per relevant rules in an open competitive process against sanctioned vacant posts. The Hon'ble Supreme Court has consistently held that regularization/absorption should only occur if there are vacancies and it must follow the constitutional scheme and applicable rules. Therefore, any attempt to regularize service without adhering to these procedures would be contrary to the judgment of the court.",
+            "abstained": false,
+            "abstention_reason": "",
+            "confidence": 0.986359997590383,
+            "sources": [
+              "judgment_0032.txt",
+              "judgment_0029.txt"
+            ],
+            "citations": {
+              "supported": [
+                "B.Nagarajan v. The Principal Secretary To Government",
+                "Nand Kumar v. State",
+                "State Of U.P. And Ors. v. Putti Lal",
+                "Article 14",
+                "AIR 2011 SC 1193"
+              ],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4166.322600096464,
+              "generation_ms": 12442.232400062494,
+              "total_ms": 16608.555000158958
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "Can an employee's service be regularised without following the prescribed process of recruitment?",
+            "answer_chars": 3023,
+            "answer_words": 453,
+            "mean": 4.5,
+            "metrics": {
+              "faithfulness": {
+                "score": 4,
+                "reason": "The answer includes references to cases (Nand Kumar) not present in the provided context, though the core legal principles cited are supported by the text.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The answer directly addresses the question regarding the regularisation of service without following prescribed recruitment processes.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 4,
+                "reason": "The retrieved passages are highly relevant, though the answer incorporates external knowledge not found in the provided snippets.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 5,
+                "reason": "The answer comprehensively covers the legal requirements for regularisation as established in the provided context.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 3,
+                "reason": "The answer cites 'Nand Kumar vs. State of Bihar', which is not mentioned in the provided context, constituting an unsupported detail.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The answer is well-structured, logically ordered, and easy to follow.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 5,
+                "reason": "The answer effectively synthesizes the provided case law to explain the constitutional and procedural limitations on regularisation.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "5/5 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 19.66439839999657
+        },
+        {
+          "id": "q08",
+          "category": "single_hop_factual",
+          "answerable": true,
+          "generation": {
+            "question": "What defect in a notice invalidates preventive action taken against a person alleged to be a goonda?",
+            "answer": "The defect in the notice that invalidates preventive action taken against a person alleged to be a goonda is a fatal defect, as it results in non-compliance with the provisions of Section 3(1) of the U.P. Control of Goondas Act, 1970. Specifically, the notice must set out the general nature of material allegations against the petitioner in respect of clauses (a), (b), and (c). The defect lies in the fact that column (d) of the notice does not contain any allegation or material allegation against the petitioner; instead, it mentions details of a criminal case where the petitioner was convicted for an offence of robbery and lists other pending cases and first information reports. This omission means that the District Magistrate has not set out the general nature of material allegations as required by Section 3(1) of the Act.\n\nFurthermore, Clause (d) is intended to set out the general nature of material allegations against the petitioner with a view to give him an opportunity to submit his explanation and defend himself. The judgment explicitly states that in the absence of such a statement, the action taken must be held to be illegal. Therefore, the defect in column (d) invalidates the preventive action taken against the petitioners by depriving them of the reasonable opportunity to furnish their explanations regarding the general nature of material allegations set out in clauses (a), (b), and (c).",
+            "abstained": false,
+            "abstention_reason": "",
+            "confidence": 0.8472028970718384,
+            "sources": [
+              "judgment_0076.txt"
+            ],
+            "citations": {
+              "supported": [
+                "Section 3(1)"
+              ],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4474.895199993625,
+              "generation_ms": 7701.168500003405,
+              "total_ms": 12176.06369999703
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "What defect in a notice invalidates preventive action taken against a person alleged to be a goonda?",
+            "answer_chars": 1419,
+            "answer_words": 232,
+            "mean": 5.0,
+            "metrics": {
+              "faithfulness": {
+                "score": 5,
+                "reason": "Every claim made in the answer is directly supported by the provided text from the Pavan @ Pavan Singhal case.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The answer directly addresses the question by identifying the specific defect that invalidates the preventive action.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 5,
+                "reason": "The retrieved passages are highly relevant and provide the exact legal reasoning required to answer the question.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 5,
+                "reason": "The answer covers the nature of the defect, the statutory requirement, and the legal consequences of the failure to comply.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 5,
+                "reason": "There are no fabrications; all details are derived from the provided context.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The answer is logically structured, easy to follow, and clearly explains the legal issue.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 5,
+                "reason": "The answer correctly identifies the holding, explains the statutory requirement of Section 3(1), and applies the reasoning regarding the deprivation of the opportunity to be heard.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "1/1 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 14.885969399940223
+        },
+        {
+          "id": "q09",
+          "category": "single_hop_factual",
+          "answerable": true,
+          "generation": {
+            "question": "Is a public authority obliged to disclose an investigation report under the Right to Information Act?",
+            "answer": "Based on the provided judgment extracts, there is no explicit holding that a public authority is obliged to disclose an investigation report under the Right to Information Act (RTI Act). The judgments discuss various aspects related to RTI Act compliance and exemptions but do not directly address whether disclosure of such reports is mandatory. Therefore, I cannot definitively state that a public authority is obliged to disclose an investigation report under the RTI Act based solely on these extracts.\n\nHowever, it can be inferred from the discussions in the judgments that:\n- The CIC held that information related to investigations could not be exempted (para 14-16 of [3]).\n- The CIC directed authorities to release relevant materials after investigation and recovery were complete (para 17-18 of [3]).\n\nThese extracts suggest a preference for disclosure over exemption, particularly when the investigation process is concluded. They do not explicitly mandate mandatory disclosure but indicate that withholding such information due to potential hindrance in investigations may be problematic under certain circumstances.",
+            "abstained": false,
+            "abstention_reason": "",
+            "confidence": 0.9662588278452555,
+            "sources": [
+              "judgment_0073.txt"
+            ],
+            "citations": {
+              "supported": [],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4468.357399920933,
+              "generation_ms": 6332.8313999809325,
+              "total_ms": 10801.188799901865
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "Is a public authority obliged to disclose an investigation report under the Right to Information Act?",
+            "answer_chars": 1127,
+            "answer_words": 168,
+            "mean": 3.625,
+            "metrics": {
+              "faithfulness": {
+                "score": 3,
+                "reason": "The answer claims there is no holding regarding disclosure, while the provided text explicitly discusses the CIC's order directing the disclosure of an investigation report.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 3,
+                "reason": "The answer is overly cautious and fails to acknowledge the clear legal principle established in the text that mere existence of an investigation is not a ground for refusal.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 5,
+                "reason": "The provided context is highly relevant to the question of disclosure of investigation reports under the RTI Act.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 2,
+                "reason": "The answer fails to explain the core legal test provided in the text: that the authority must show specific reasons why disclosure would hamper an investigation.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 4,
+                "reason": "The answer references paragraph numbers (17-18) that do not exist in the provided context.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The answer is well-structured and easy to follow.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 2,
+                "reason": "The answer fails to identify the holding that Section 8(1)(h) requires a showing of actual harm to the investigation, instead framing the issue as if no guidance exists.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "0/0 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 14.842000999953598
+        },
+        {
+          "id": "q10",
+          "category": "single_hop_factual",
+          "answerable": true,
+          "generation": {
+            "question": "Can the State claim sovereign immunity for tortious acts committed by police officers causing death in custody?",
+            "answer": "The State cannot claim sovereign immunity for tortious acts committed by police officers causing death in custody. This proposition is supported by the judgment in **Severina Ribeiro @ Cardinho (Mrs.) And ... vs Union Of India (Uoi) And Ors. (1989)**, where it was held that the State would be liable for the acts committed by their servants during the course of their employment with the State. The Court emphasized that the acts of police officers in giving third-degree treatment to an accused person while in custody and thus killing him are not referable to and based on the delegation of sovereign powers of the State to such police officers.\n\nIn **Sunkara Satyanarayana vs State Of Andhra Pradesh, Home ... (1999)**, the Supreme Court made clear that monetary or pecuniary compensation is an appropriate remedy for redressal of established infringements of fundamental rights. The State must proceed further and give compensatory relief by way of damages as in a civil action under the Public Law jurisdiction for the wrong done due to breach of public duty by the State.\n\nTherefore, based on these judgments, the State cannot claim sovereign immunity for tortious acts committed by police officers causing death in custody.",
+            "abstained": false,
+            "abstention_reason": "",
+            "confidence": 0.9795705954233804,
+            "sources": [
+              "judgment_0005.txt",
+              "judgment_0001.txt"
+            ],
+            "citations": {
+              "supported": [
+                "Sunkara Satyanarayana v. State Of Andhra Pradesh"
+              ],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4455.063999979757,
+              "generation_ms": 7395.19890001975,
+              "total_ms": 11850.262899999507
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "Can the State claim sovereign immunity for tortious acts committed by police officers causing death in custody?",
+            "answer_chars": 1231,
+            "answer_words": 200,
+            "mean": 5.0,
+            "metrics": {
+              "faithfulness": {
+                "score": 5,
+                "reason": "Every claim made in the answer is directly supported by the provided case law excerpts.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The answer directly addresses the question regarding sovereign immunity in cases of custodial death.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 5,
+                "reason": "The retrieved passages are highly relevant and provide the necessary legal basis to answer the question.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 5,
+                "reason": "The answer covers the core legal principle that sovereign immunity is not a valid defense for custodial death and mentions the remedy of compensation.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 5,
+                "reason": "There are no fabrications; all cited cases and principles are present in the context.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The answer is logically structured, well-written, and easy to follow.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 5,
+                "reason": "The answer correctly identifies the holding that custodial violence is not a sovereign function and explains the State's vicarious liability.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "1/1 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 14.47267190006096
+        },
+        {
+          "id": "q11",
+          "category": "single_hop_factual",
+          "answerable": true,
+          "generation": {
+            "question": "What is the legal status of police standing orders that govern the opening and maintenance of history sheets and rowdy sheets?",
+            "answer": "The legal status of police standing orders that govern the opening and maintenance of history sheets and rowdy sheets is addressed in the case Sunkara Satyanarayana vs State Of Andhra Pradesh, Home ... (1999).\n\nAccording to the judgment extracts provided:\n\n- Police Standing Order 742 deals with the classification of persons as rowdies and the opening and maintenance of rowdy sheets. This order was issued by the Government of Andhra Pradesh in G.O.Ms.No. 656 Home (Police-D) Department dated: 8-4-1971.\n- The judgment does not settle whether these orders are statutory or non-statutory, as it is stated that neither the Police Act nor the Police Standing Orders have been modified or amended since the advent of the Constitution of India in 1950. Therefore, the question of their constitutional validity is not before the court.\n\nThe judgment also indicates that:\n- The police may open history sheets automatically at the time of conviction for certain offenses.\n- History sheets can be maintained even if there is no conviction, provided the person has been known or believed to be addicted to crime.\n- History sheets are generally retained for two years and closed only on specific orders from a Gazetted Officer. Annual extensions can also be given by such officers.\n\nThe judgment does not explicitly state whether police standing orders that govern rowdy sheets have any legal status, as this issue is not addressed in the provided extracts. Therefore, based solely on the information available, it cannot be definitively stated what their legal status is regarding rowdy sheets.",
+            "abstained": false,
+            "abstention_reason": "",
+            "confidence": 0.9967316905657451,
+            "sources": [
+              "judgment_0001.txt"
+            ],
+            "citations": {
+              "supported": [
+                "Sunkara Satyanarayana v. State Of Andhra Pradesh"
+              ],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4395.398699911311,
+              "generation_ms": 8255.165999988094,
+              "total_ms": 12650.564699899405
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "What is the legal status of police standing orders that govern the opening and maintenance of history sheets and rowdy sheets?",
+            "answer_chars": 1586,
+            "answer_words": 255,
+            "mean": 3.25,
+            "metrics": {
+              "faithfulness": {
+                "score": 2,
+                "reason": "The answer incorrectly claims the court did not settle the status of the orders, contradicting the provided text which explicitly identifies them as non-statutory administrative instructions.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 4,
+                "reason": "The answer addresses the question but fails to correctly identify the legal status provided in the context.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 5,
+                "reason": "The provided context contains the direct answer to the question.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 2,
+                "reason": "The answer fails to report the court's explicit holding that the orders are non-statutory administrative instructions.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 2,
+                "reason": "The answer fabricates that the judgment does not settle the status of the orders and includes details about two-year retention periods not found in the provided text.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 4,
+                "reason": "The answer is well-structured and readable despite the inaccurate content.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 2,
+                "reason": "The answer fails to identify the court's holding regarding the legal nature of the administrative instructions.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "1/1 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 15.38486919994466
+        },
+        {
+          "id": "q12",
+          "category": "single_hop_factual",
+          "answerable": true,
+          "generation": {
+            "question": "Can the National Green Tribunal exercise jurisdiction on its own motion without a formal application?",
+            "answer": "Based on the provided judgment extracts, there is no explicit holding that the National Green Tribunal (NGT) can exercise jurisdiction on its own motion without a formal application. The judgments discuss various aspects related to the NGT's jurisdiction and powers but do not address whether it has inherent or suo motu power.\n\nThe key points from the extracts are:\n\n1. **Empowerment of the NGT**: The NGT is empowered to carry out restitutive functions for compensating persons affected by environmental events, including natural calamities (Municipal Corporation Of Gr. Mumbai vs Ankita Sinha (2021), para 18-41).\n\n2. **Transfers and Mandates**: Cases concerning the statutes mentioned in Schedule I of the NGT Act should be transferred to the specialized tribunal, the NGT (para 19.1). The NGT is mandated to handle environmental issues effectively and expeditiously (para 19.2).\n\n3. **Nature of the Tribunal**: The NGT is described as a sui generis forum with wide jurisdiction over multidisciplinary environmental cases (para 14.5).\n\n4. **Discretionary Powers**: While superior courts have discretionary powers under Article 32 and Article 226 to safeguard fundamental rights, such power does not extend to the NGT (para 12.2). The NGT's jurisdiction is limited by its statutory mandate.\n\n5. **Suo Motu Power**: There are discussions about the concept of suo motu power but no explicit holding that the NGT can exercise it without a formal application (Municipal Corporation Of Gr. Mumbai vs Ankita Sinha (2021), para 38-41).\n\nGiven these points, we cannot conclusively state from the provided extracts that the NGT has inherent or suo motu jurisdiction over environmental matters. The judgments discuss the NGT's role and powers but do not address whether it can exercise such power without a formal application.\n\nTherefore, the answer to the question \"Can the National Green Tribunal exercise jurisdiction on its own motion without a formal application?\" is that there is no explicit holding in the provided extracts supporting this proposition.",
+            "abstained": false,
+            "abstention_reason": "",
+            "confidence": 0.6332191626230876,
+            "sources": [
+              "judgment_0219.txt"
+            ],
+            "citations": {
+              "supported": [
+                "Municipal Corporation Of Gr. Mumbai v. Ankita Sinha",
+                "Article 32",
+                "Article 226"
+              ],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4484.090300044045,
+              "generation_ms": 10115.334200090729,
+              "total_ms": 14599.424500134774
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "Can the National Green Tribunal exercise jurisdiction on its own motion without a formal application?",
+            "answer_chars": 2053,
+            "answer_words": 314,
+            "mean": 3.25,
+            "metrics": {
+              "faithfulness": {
+                "score": 2,
+                "reason": "The answer claims the provided text does not address suo motu power, but the provided text includes a section header 'VI EXERCISE OF SUO MOTU POWER BY NGT', indicating the topic is present.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 3,
+                "reason": "The answer addresses the question but fails to identify that the provided context explicitly contains a section dedicated to the topic of suo motu power.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 5,
+                "reason": "The provided context is highly relevant as it contains the exact case law (Ankita Sinha) that settled the question of the NGT's suo motu jurisdiction.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 2,
+                "reason": "The answer fails to analyze the provided context regarding suo motu power, instead incorrectly stating that the text does not address it.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 2,
+                "reason": "The answer hallucinates that the provided text does not address suo motu power and invents a reference to 'para 12.2' which is not in the provided context.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The answer is well-structured and easy to follow, despite its substantive errors.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 2,
+                "reason": "The reasoning is flawed because it ignores the relevant section of the provided text and makes unsupported claims about the scope of the NGT's jurisdiction.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "3/3 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 18.480615499895066
+        },
+        {
+          "id": "q13",
+          "category": "single_hop_factual",
+          "answerable": true,
+          "generation": {
+            "question": "On what date must an application for a liquor licence be considered: the date of application or the date of consideration?",
+            "answer": "The question asks on what date an application for a liquor licence must be considered: the date of application or the date of consideration. Based on the judgment extracts provided, neither extract directly addresses this specific point. However, we can infer some relevant information from other parts of the judgments.\n\nIn State of Kerala v. B.Six Hotels Resort Private Ltd. (2010) (5) SCC 186, it was held that \"the consideration of application of FL-3 licence should be only with reference to the rules/law prevailing or in force on the date of consideration of the application by the excise authorities, with reference to the law and not as on the date of application.\" This suggests that the decision is based on when the application was considered rather than when it was filed.\n\nIn State of Kerala v. Surendra Das (2014) 3 SCALE 421; AIR 2014 SC 2762, the Court upheld a policy which declined issuance of fresh FL-3 licences to Three Star hotels and struck down \"distance criteria.\" This case does not provide specific guidance on when an application should be considered.\n\nGiven that neither extract directly addresses this question, we cannot definitively state what date must be used for consideration. However, based on the principle established in B.Six Hotels Resort Private Ltd., it appears that the date of consideration is more relevant than the date of application.\n\nTherefore, the answer to the question \"On what date must an application for a liquor licence be considered: the date of application or the date of consideration?\" can be stated as:\n\n**The date of consideration.**\n\nThis conclusion is based on the principle established in B.Six Hotels Resort Private Ltd., where it was held that decisions regarding FL-3 licences should be made with reference to the rules/law prevailing or in force on the date of consideration by the excise authorities, rather than the date of application.",
+            "abstained": false,
+            "abstention_reason": "",
+            "confidence": 0.6976264124115308,
+            "sources": [
+              "judgment_0218.txt"
+            ],
+            "citations": {
+              "supported": [
+                "Kerala v. B.Six Hotels Resort Private Ltd.",
+                "Kerala v. Surendra Das",
+                "AIR 2014 SC 2762"
+              ],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4460.594599950127,
+              "generation_ms": 9364.441400044598,
+              "total_ms": 13825.035999994725
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "On what date must an application for a liquor licence be considered: the date of application or the date of consideration?",
+            "answer_chars": 1909,
+            "answer_words": 312,
+            "mean": 4.75,
+            "metrics": {
+              "faithfulness": {
+                "score": 4,
+                "reason": "The answer correctly identifies the holding from the provided text but incorrectly claims the text does not directly address the question when it actually does.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The answer directly addresses the question and provides the correct legal standard.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 5,
+                "reason": "The provided context contains the exact holding required to answer the question.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 5,
+                "reason": "The answer provides the correct date and explains the underlying legal rationale regarding the lack of a vested right.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 4,
+                "reason": "The answer correctly cites the holding but incorrectly states that the provided text does not contain the answer.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The answer is logically structured and easy to follow.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 5,
+                "reason": "The answer correctly identifies the holding and the legal principle (lack of vested right) that justifies the application of the law as it exists at the time of consideration.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "3/3 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 16.307748100021854
+        },
+        {
+          "id": "q14",
+          "category": "single_hop_factual",
+          "answerable": true,
+          "generation": {
+            "question": "Does the power of superintendence of the High Court under Article 227 extend to administrative as well as judicial superintendence?",
+            "answer": "Based on the provided judgment extracts, the power of superintendence under Article 227(1) extends only to administrative supervision over all courts subject to its appellate jurisdiction and does not include judicial superintendence. The judgment clarifies that:\n\n- Under the original Article 227, the High Court had both administrative and judicial superintendence over all courts.\n- However, with the amendment of Article 227 in 1977 (effective from February 1, 1977), it is held that the power of superintendence has been brought on par with Section 224 of the Government of India Act, 1935. This implies a shift towards administrative supervision.\n- The judgment explicitly states: \"On a true and proper construction of the language employed in the aforesaid provisions it will appear clear that superintendence which every High Court is said to possess over all courts subject to its appellate jurisdiction under Sub-article (1) includes judicial superintendence or judicial supervision.\"\n- The judgment further notes: \"Under the Sub-article (1) it has been generally provided that every High Court shall have superintendence over all courts without specifying whether it is administrative, or judicial which ordinarily would mean superintendence of both kinds and this is made amply clear in Sub-article (5) according to which power of superintendence has been conferred upon the High Court to question any judgment of any inferior court provided that such judgment is otherwise subject to either appeal or revision to the High Court.\"\n- The amended Article 227(1) specifically states: \"Every High Court shall have superintendence over all courts subject to its appellate jurisdiction.\" This language does not include any reference to judicial supervision.\n\nTherefore, based on these extracts, it is clear that the power of superintendence under Article 227 extends only to administrative supervision and not judicial superintendence.",
+            "abstained": false,
+            "abstention_reason": "",
+            "confidence": 0.9982863108317057,
+            "sources": [
+              "judgment_0128.txt"
+            ],
+            "citations": {
+              "supported": [
+                "Article 227(1)",
+                "Article 227",
+                "Section 224"
+              ],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4518.468800000846,
+              "generation_ms": 9749.44309995044,
+              "total_ms": 14267.911899951287
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "Does the power of superintendence of the High Court under Article 227 extend to administrative as well as judicial superintendence?",
+            "answer_chars": 1941,
+            "answer_words": 291,
+            "mean": 3.125,
+            "metrics": {
+              "faithfulness": {
+                "score": 1,
+                "reason": "The answer contradicts the provided text by claiming the court held that Article 227 is limited to administrative superintendence, whereas the text only presents that as a contention of counsel and does not provide the court's final ruling on the amended article.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The answer directly addresses the question regarding the scope of Article 227 superintendence.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 4,
+                "reason": "The retrieved passages are highly relevant to the legal history and the specific contention regarding Article 227.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 2,
+                "reason": "The answer fails to acknowledge that the provided text is merely summarizing a party's argument rather than stating the court's final holding on the amended article.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 2,
+                "reason": "The answer fabricates quotes and legal conclusions that are not present in the provided context, specifically attributing a holding to the court that is not in the text.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 4,
+                "reason": "The answer is logically structured and easy to follow, despite its factual inaccuracies regarding the source text.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 2,
+                "reason": "The reasoning is flawed because it treats a party's contention as the court's final holding and misinterprets the provided case law.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "3/3 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 17.366793500026688
+        },
+        {
+          "id": "q15",
+          "category": "multi_hop_relational",
+          "answerable": true,
+          "generation": {
+            "question": "Is speedy trial a fundamental right, and can prolonged delay justify quashing a prosecution?",
+            "answer": "Based on the provided judgment extracts from Chote Lal Jain vs The State Of Rajasthan (1991), I can answer the question as follows:\n\nIs speedy trial a fundamental right, and can prolonged delay justify quashing a prosecution?\n\n**Proposition 1:** A speedy trial is a fundamental right of the accused within the ambit of Article 21 of the Constitution of India.\n\n- **Holding:** This proposition has been settled in this case. The judgment states that \"A speedy trial is a fundamental right of the accused within the ambit of Article 21 of the Constitution of India is no more in dispute.\"\n\n**Proposition 2:** While considering the length of delay, the Court will take into account the period consumed in the investigation of the case and the delay caused in actual proceedings in court after filing of the charge-sheet. A speedy investigation and a trial are equally mandated both by the letter and spirit of the Code of Criminal Procedure, 1973.\n\n- **Holding:** This proposition is also settled as it states that \"A speedy investigation and a trial are equally mandated both by the letter and spirit of the Code of Criminal Procedure, 1973.\"\n\n**Proposition 3:** While deciding such question, the Court shall take into account the working of the judicial system in India and the lack of satisfactory working conditions in judicial courts, including large pendency and institution of cases, inadequacy of judge strength and under-staffing etc.\n\n- **Holding:** This proposition is also settled as it states that \"While deciding such question, the Court shall take into account the working of the judicial system in India and the lack of satisfactory working conditions in judicial courts, including large pendency and institution of cases, inadequacy of judge strength and under-staffing etc.\"\n\n**Proposition 4:** In a pending case to decide the question whether the criminal proceedings should be quashed or any other appropriate direction be given to the trial court to secure the ends of justice will depend on several factors to be taken into consideration such as, the gravity and seriousness of the offence, whether the delay was occasioned by the tactic or conduct of the accused himself, whether the accused objected at any stage when such delay occurred and whether the accused is prejudiced in his defence on account of the delay?\n\n- **Holding:** This proposition is also settled as it states that \"In a pending case to decide the question whether the criminal proceedings should be quashed or any other appropriate direction be given to the trial Court to secure the ends of justice will depend on several factors to be taken into consideration, such as, the gravity and seriousness of the offence, whether the delay was occasioned by the tactic or conduct of the accused himself, whether the accused objected at any stage when such delay occurred and whether the accused is prejudiced in his defence on account of the delay?\"\n\n**Proposition 5:** If the delay has caused prejudice to the accused in the conduct (of..Ed) and his defence, the pending criminal proceedings should be normally quashed as in that situation it could be said that the accused has been denied an adequate opportunity to defend himself and the trial is not fair and reasonable.\n\n- **Holding:** This proposition is also settled as it states that \"If the delay has caused prejudice to the accused in the conduct (of..Ed) and his defence, the pending criminal proceedings should be normally quashed as in that situation it could be said that the accused has been denied an adequate opportunity to defend himself and the trial is not fair and reasonable.\"\n\n**Proposition 6:** In grave and serious offences against the society to relate to Nation's economy, defense or security, the criminal proceedings should not be normally quashed on the ground of delay simpliciter without anything further.\n\n- **Holding:** This proposition is also settled as it states that \"In grave and serious offences against the society to relate to Nation's economy, defense or security,",
+            "abstained": false,
+            "abstention_reason": "",
+            "confidence": 0.9970466613769532,
+            "sources": [
+              "judgment_0002.txt",
+              "judgment_0008.txt"
+            ],
+            "citations": {
+              "supported": [
+                "Chote Lal Jain v. The State Of Rajasthan",
+                "Article 21"
+              ],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4480.163800064474,
+              "generation_ms": 15145.033399923705,
+              "total_ms": 19625.19719998818
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "Is speedy trial a fundamental right, and can prolonged delay justify quashing a prosecution?",
+            "answer_chars": 4041,
+            "answer_words": 661,
+            "mean": 4.875,
+            "metrics": {
+              "faithfulness": {
+                "score": 5,
+                "reason": "Every claim made in the answer is directly quoted or paraphrased from the provided context.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The answer directly addresses both parts of the user's question using the provided legal text.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 5,
+                "reason": "The retrieved passages are highly relevant and contain the specific legal principles required to answer the question.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 5,
+                "reason": "The answer comprehensively covers the fundamental nature of the right and the specific factors courts use to determine if quashing is appropriate.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 5,
+                "reason": "There are no fabrications; the answer relies entirely on the provided text.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 4,
+                "reason": "The structure is logical, though the final proposition is cut off mid-sentence due to the context limit.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 5,
+                "reason": "The answer correctly identifies the legal principles and the multi-factor test used by the court to balance the right to a speedy trial against other societal interests.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "2/2 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 22.470930099952966
+        },
+        {
+          "id": "q16",
+          "category": "multi_hop_relational",
+          "answerable": true,
+          "generation": {
+            "question": "Which judgments discuss the fifty per cent ceiling on reservations, and how is that ceiling applied?",
+            "answer": "The judgments discussing the fifty per cent ceiling on reservations, and how it is applied, are found in M.Nagaraj & Others vs Union Of India & Others (2006), para 2-1 and Jarnail Singh vs Lachhmi Narain Gupta . (2018), para 122-124.\n\nIn M.Nagaraj & Others vs Union Of India & Others (2006), the judgment discusses the legislative amendment to Article 16 of the Constitution, specifically the insertion of a new clause (4B) which allows for unfilled vacancies from previous years to be considered separately and not included in determining the ceiling of fifty per cent reservation on total number of vacancies. This indicates that the fifty per cent limit applies to current as well as \"Backlog Vacancies.\"\n\nIn Jarnail Singh vs Lachhmi Narain Gupta . (2018), the judgment reiterates the constitutional requirements for reservations, including backwardness, inadequacy of representation, and overall administrative efficiency. It also discusses the extent of reservation, requiring the State to show compelling reasons before making such provisions. The judgment emphasizes that even if a State has compelling reasons, it must ensure its provision does not lead to excessiveness so as to breach the fifty per cent ceiling or obliterate the creamy layer.\n\nTherefore, both judgments discuss the fifty per cent ceiling on reservations and how it is applied in different contexts: one through legislative amendment (M.Nagaraj & Others vs Union Of India & Others (2006)), and the other through constitutional requirements for reservation provisions (Jarnail Singh vs Lachhmi Narain Gupta . (2018)).",
+            "abstained": false,
+            "abstention_reason": "",
+            "confidence": 0.861095094680786,
+            "sources": [
+              "judgment_0214.txt",
+              "judgment_0216.txt"
+            ],
+            "citations": {
+              "supported": [
+                "Others v. Union Of India",
+                "Jarnail Singh v. Lachhmi Narain Gupta",
+                "In Jarnail Singh v. Lachhmi Narain Gupta",
+                "Article 16"
+              ],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4507.879400043748,
+              "generation_ms": 8753.63350007683,
+              "total_ms": 13261.512900120579
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "Which judgments discuss the fifty per cent ceiling on reservations, and how is that ceiling applied?",
+            "answer_chars": 1593,
+            "answer_words": 246,
+            "mean": 5.0,
+            "metrics": {
+              "faithfulness": {
+                "score": 5,
+                "reason": "All claims are directly supported by the provided context passages.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The answer directly addresses both parts of the question regarding which judgments discuss the ceiling and how it is applied.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 5,
+                "reason": "The retrieved passages are highly relevant and provide the necessary information to answer the prompt.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 5,
+                "reason": "The answer covers the relevant cases and explains the application of the ceiling as described in the provided text.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 5,
+                "reason": "There are no fabrications; all details are derived from the provided context.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The answer is logically structured and easy to follow.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 5,
+                "reason": "The answer correctly identifies the legal principles and the distinction between the legislative amendment and the judicial reiteration of constitutional requirements.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "4/4 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 16.092202999978326
+        },
+        {
+          "id": "q17",
+          "category": "multi_hop_relational",
+          "answerable": true,
+          "generation": {
+            "question": "How do these judgments treat sub-classification within the Scheduled Castes for the purpose of reservation?",
+            "answer": "Based on the provided judgment extracts, the judgments treat sub-classification within the Scheduled Castes for the purpose of reservation in a nuanced manner. The key points are as follows:\n\n### Subhash Chandra & Anr vs Delhi Subordinate Ser.Sel.Board & Ors (2009), para 42\n- **Held:** There is no permissible sub-classification between Scheduled Castes and Other Backward Classes (OBC). \n- **Reasoning:** The judgment holds that if Scheduled Castes are to be treated as a separate class, then the benefits attached to them must also be conferred on OBCs. A person cannot be considered a Scheduled Caste for one purpose but not another.\n- **Implication:** Sub-classification between SC and OBC is not permissible under Article 16(4) of the Constitution.\n\n### M.Nagaraj & Others vs Union Of India & Others (2006), para 286\n- **Held:** While there can be a sub-classification within the \"backward class of citizens\" for purposes other than SC and ST, such classification is permissible between SCs and STs.\n- **Reasoning:** The judgment in Indra Sawhney (1993) held that the State could make such sub-classification between SCs and STs. This was seen as a way to balance formal equality with egalitarian equality by setting a 50% ceiling limit for OBCs vis-a-vis General Class (GC).\n- **Implication:** Sub-classification within Scheduled Castes is permissible, but not between SC/ST and OBC.\n\n### Jarnail Singh vs Lachhmi Narain Gupta . (2018), para 39-40\n- **Held:** Further sub-classification by way of micro-classification for the purpose of reservation in favor of Scheduled Castes is not permissible.\n- **Reasoning:** The judgment holds that members of Scheduled Castes are most backward among the backward classes and any further classification would violate the doctrine of reasonableness. Article 341 provides that exclusion from the Presidential List can only be done by Parliament, so State Legislatures cannot do this.\n- **Implication:** Sub-classification within Scheduled Castes is not permissible.\n\n### Jarnail Singh vs Lachhmi Narain Gupta . (2018), para 14\n- **Held:** The judgment in Nagaraj (2006) needs to be revisited on the grounds that States must collect quantifiable data showing backwardness of Scheduled Castes and Scheduled Tribes.\n- **Reasoning:** This requirement is contrary to Indra Sawhney (1993), where Jeevan Reddy, J., held that social and educational backwardness cannot apply to Scheduled Castes and Scheduled Tribes. Dr. Justice Thommen also stated that only such classes of citizens who are socially and educationally backward can be identified as backward classes.\n- **Implication:** The requirement for quantifiable data on backwardness is contrary to Indra Sawhney (1993).\n\n### Conclusion\nIn summary, the judgments treat sub-classification within Scheduled Castes with caution. While it is permissible between SCs and STs, further sub-classification by way of micro-classification or within Scheduled Castes themselves is not permissible under Article 16(4) of the Constitution. The judgments also emphasize the importance of quantifiable data showing backwardness for reservation purposes.",
+            "abstained": false,
+            "abstention_reason": "",
+            "confidence": 0.9513604998588562,
+            "sources": [
+              "judgment_0221.txt",
+              "judgment_0214.txt",
+              "judgment_0216.txt"
+            ],
+            "citations": {
+              "supported": [
+                "Anr v. Delhi Subordinate Ser.Sel.Board",
+                "Others v. Union Of India",
+                "Jarnail Singh v. Lachhmi Narain Gupta",
+                "Article 16(4)",
+                "Article 341"
+              ],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4444.725600071251,
+              "generation_ms": 14101.485599996522,
+              "total_ms": 18546.211200067773
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "How do these judgments treat sub-classification within the Scheduled Castes for the purpose of reservation?",
+            "answer_chars": 3131,
+            "answer_words": 467,
+            "mean": 3.25,
+            "metrics": {
+              "faithfulness": {
+                "score": 2,
+                "reason": "The answer includes citations to 'Jarnail Singh vs Lachhmi Narain Gupta' which were not provided in the context, and misinterprets the provided text regarding sub-classification.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 4,
+                "reason": "The answer addresses the question but relies on external knowledge not present in the provided context.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 3,
+                "reason": "The provided context was used, but the model supplemented it with significant external information not found in the source text.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 3,
+                "reason": "While it attempts to answer the question, it conflates the provided text with external cases, leading to a confused summary of the legal position.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 2,
+                "reason": "The answer introduces 'Jarnail Singh vs Lachhmi Narain Gupta' and its specific paragraphs, which are entirely absent from the provided context.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 4,
+                "reason": "The answer is well-structured and easy to follow, despite the inclusion of hallucinated sources.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 3,
+                "reason": "The reasoning attempts to synthesize the provided text but fails to accurately reflect the specific holdings within the provided context, instead relying on outside legal knowledge.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "5/5 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 21.3051456999965
+        },
+        {
+          "id": "q18",
+          "category": "multi_hop_relational",
+          "answerable": true,
+          "generation": {
+            "question": "Which cases concern the death sentence and the procedural safeguards surrounding its confirmation?",
+            "answer": "The cases that concern the death sentence and the procedural safeguards surrounding its confirmation are:\n\n1. **Mohd. Arif @ Ashfaq vs The Reg. Supreme Court Of India & Ors (2014)** - This case discusses the procedural safeguards for death sentences, including the requirement of special reasons for awarding a death penalty under Section 354 of the Code of Criminal Procedure, 1973 (CrPC). It also mentions that the authority of Sessions Courts to pass a sentence of death is further subjected to two limitations: giving special reasons for such a sentence and confirmation by the High Court.\n\n2. **Aloke Nath Dutta & Ors vs State Of West Bengal (2006)** - This case addresses the issue of mandatory sentencing in cases where death penalty is one of the possible penalties, particularly focusing on the age at which offenders are under 18 years old when they commit a capital offense.\n\n3. **Mohd. Arif @ Ashfaq vs The Reg. Supreme Court Of India & Ors (2014)** - This case reiterates the importance of oral hearings in review petitions arising out of death sentences, emphasizing that such hearings are mandated by Article 21 of the Indian Constitution to ensure a fair and reasonable procedure.\n\nThese cases provide insights into both the procedural safeguards for death sentences and the specific circumstances under which they may be imposed.",
+            "abstained": false,
+            "abstention_reason": "",
+            "confidence": 0.6182642261187236,
+            "sources": [
+              "judgment_0006.txt",
+              "judgment_0215.txt",
+              "judgment_0004.txt",
+              "judgment_0124.txt"
+            ],
+            "citations": {
+              "supported": [
+                "Ashfaq v. The Reg. Supreme Court Of India",
+                "Ors v. State Of West Bengal",
+                "Article 21",
+                "Section 354"
+              ],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4506.432099966332,
+              "generation_ms": 7786.88869997859,
+              "total_ms": 12293.320799944922
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "Which cases concern the death sentence and the procedural safeguards surrounding its confirmation?",
+            "answer_chars": 1346,
+            "answer_words": 221,
+            "mean": 4.625,
+            "metrics": {
+              "faithfulness": {
+                "score": 4,
+                "reason": "The answer correctly identifies the cases and their holdings, though it attributes the Section 354 CrPC discussion to Mohd. Arif when the context snippet for that section is labeled under the same case name but appears to be a general statutory summary.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The answer directly addresses the question by identifying relevant cases and their associated procedural safeguards.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 5,
+                "reason": "The retrieved passages were highly relevant and provided the necessary legal basis for the answer.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 4,
+                "reason": "The answer covers the procedural safeguards mentioned in the text well, though it could have explicitly listed the other cited precedents like Sahdeo or Kishori mentioned in the context.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 5,
+                "reason": "No information was fabricated; all details are derived from the provided context.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The answer is well-structured, logically ordered, and easy to read.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 4,
+                "reason": "The answer effectively identifies the holdings and procedural requirements, though it functions more as a summary than a deep analytical synthesis.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "4/4 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 20.381648700102232
+        },
+        {
+          "id": "q19",
+          "category": "multi_hop_relational",
+          "answerable": true,
+          "generation": {
+            "question": "How is the freedom of the press balanced against an individual's claim to privacy and reputation?",
+            "answer": "The question of how the freedom of the press is balanced against an individual's claim to privacy and reputation is addressed in various Indian case law. The judgment extracts provided do not settle this question definitively, but they offer insights into the principles involved.\n\n### Case 1: R.Rajagopal @ R.R.Gopal @ Nakkheeran ... vs J.Jayalalitha (2006)\n- **Proposition**: In this case, Mr. Jothi argued that there were two competing interests which had to be balanced\u2014right of the press to write and publish, and right of an individual against invasion of his/her privacy and threat of defamation.\n- **Holding**: The court recognized both the right of the press to write and publish as well as the right of individuals against invasion of their privacy. However, it also emphasized that no one has a right to publish anything concerning personal private matters without consent\u2014whether truthful or otherwise, whether laudatory or critical.\n\n### Case 2: The Employees' Federation And Ors. vs Tvs And Sons Ltd. And Anr. (1994)\n- **Proposition**: This case discusses the two aspects of privacy rights:\n  - General law of privacy which affords a tort action for damages resulting from an unlawful invasion of privacy.\n  - Constitutional recognition given to the right to privacy which protects personal privacy against unlawful governmental invasion.\n- **Holding**: The Supreme Court stated that while freedom of speech and expression is guaranteed by Article 19(1)(a), it is subject to reasonable restrictions placed thereon. Decency and defamation are two such grounds mentioned in clause (2). Existing laws like the law of torts providing for damages for invasion of privacy, defamation, and Section 498 of the Indian Penal Code are saved under clause (2).\n\n### Case 3: R.Rajagopal @ R.R.Gopal @ Nakkheeran ... vs J.Jayalalitha (2006)\n- **Proposition**: The Supreme Court reiterated that the right to privacy is implicit in the right to life and liberty guaranteed by Article 21 of the Constitution. It is a \"right to be let alone.\" A citizen has a right to safeguard the privacy of his own, his family, marriage, procreation, motherhood, childbearing, and education among other matters.\n- **Holding**: The court held that no one can publish anything concerning these personal matters without consent\u2014whether truthful or otherwise. There are exceptions for public officials where protection is not available unless they establish reckless disregard for truth.\n\n### Case 4: R.Rajagopal @ R.R.Gopal @ Nakkheeran ... vs J.Jayalalitha (2006)\n- **Proposition**: This case further elaborates on the right to privacy, including exceptions:\n  - Exception for female victims of sexual assault or similar offenses.\n  - Public officials are not protected from defamation unless they can prove reckless disregard for truth.\n- **Holding**: The court reiterated that freedom of press extends to engaging in uninhibited debate about public figures but must be balanced with the right to privacy and defamation.\n\n### Case 5: R.Rajagopal @ R.R.Gopal @ Nakkheeran ... vs J.Jayalalitha (2006)\n- **Proposition**: The court reiterated that Article 19(1) of the Constitution guarantees freedom of speech, but it must be balanced with the right to privacy. Freedom of press does not mean absolute freedom to publish defamatory articles without proof.\n- **Holding**: The court stated that while freedom of expression is guaranteed, it cannot be used recklessly or without regard for another person's honor and reputation.\n\n### Conclusion\nThe balance between the freedom of the press and an individual's right to privacy and reputation in India is nuanced. While there",
+            "abstained": false,
+            "abstention_reason": "",
+            "confidence": 0.8833454449971517,
+            "sources": [
+              "judgment_0074.txt",
+              "judgment_0072.txt"
+            ],
+            "citations": {
+              "supported": [
+                "The Employees' Federation And Ors. v. Tvs And Sons Ltd. And Anr.",
+                "Article 19(1)(a)",
+                "Article 21",
+                "Article 19(1)"
+              ],
+              "unsupported": [
+                "Section 498"
+              ],
+              "accuracy": 0.8
+            },
+            "latency": {
+              "retrieval_ms": 4449.286599992774,
+              "generation_ms": 15400.993200019002,
+              "total_ms": 19850.279800011776
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "How is the freedom of the press balanced against an individual's claim to privacy and reputation?",
+            "answer_chars": 3648,
+            "answer_words": 567,
+            "mean": 3.275,
+            "metrics": {
+              "faithfulness": {
+                "score": 2,
+                "reason": "The answer includes several 'holdings' and 'propositions' (Cases 3, 4, and 5) that are not present in the provided context, and it misidentifies the IPC section as 498 instead of 499.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The answer directly addresses the question regarding the balance between press freedom and privacy/reputation.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 3,
+                "reason": "While the retrieved passages are relevant, the model hallucinates additional content not found in the provided text.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 4,
+                "reason": "The answer covers the core tension described in the text, though it is cut off at the end.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 2,
+                "reason": "The answer invents multiple cases and specific legal holdings that are not contained in the provided context.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 3,
+                "reason": "The structure is clear, but the answer is abruptly cut off at the end and repeats the same case multiple times as if they were distinct sources.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 3,
+                "reason": "The answer identifies the competing interests but relies on fabricated case details to construct its analysis rather than strictly applying the provided text.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 4.2,
+                "reason": "4/5 citations found in the retrieved context; unsupported: Section 498",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 23.049422300071456
+        },
+        {
+          "id": "q20",
+          "category": "multi_hop_relational",
+          "answerable": true,
+          "generation": {
+            "question": "What did the courts hold about the extent of Parliament's power to amend fundamental rights?",
+            "answer": "Based on the provided judgment extracts from Sajjan Singh vs State Of Rajasthan(With Connected ... (1964), the courts held that:\n\n1. **Extent of Parliament's Power to Amend Fundamental Rights**:\n   - The court did not settle whether the power to amend fundamental rights is included in Article 368, but it clarified that even if such a provision were not explicitly stated, Parliament can still take those powers by suitable amendment of Article 368.\n   - The proviso to Article 368 does not apply to amendments made under Article 368 itself. This is because the word \"law\" in Article 13(2) refers to rules or regulations made in exercise of ordinary legislative power, and not amendments to the Constitution made in exercise of constituent power.\n\n2. **Nature of Fundamental Rights**:\n   - The court did not explicitly hold that fundamental rights are immutable or eternal. However, it noted that if Parliament were to amend the provisions concerning fundamental rights, such amendments would have to be tested under Article 13(2) of the Constitution.\n   - The proviso to Article 368 does not apply to amendments made in respect of fundamental rights because neither Art. 1 nor Art. 3 is included in the proviso.\n\n3. **Amendment of Fundamental Rights**:\n   - The court did not hold that Parliament can make any change to fundamental rights without being subject to Article 13(2). It emphasized that if a substantial modification of fundamental rights makes a very serious and substantial inroad on the powers of High Courts under Article 226, it may be necessary to consider whether the proviso would cover such a case or not.\n   - The court also noted that Parliament can consider including Part III itself in the proviso to Article 368 if they believe it is appropriate.\n\nIn summary, while the courts did not explicitly hold that fundamental rights are immutable, they affirmed that any amendment of fundamental rights must be tested under Article 13(2) and that such amendments would need to be considered within the context of the proviso to Article 368.",
+            "abstained": false,
+            "abstention_reason": "",
+            "confidence": 0.9856874187787374,
+            "sources": [
+              "judgment_0123.txt"
+            ],
+            "citations": {
+              "supported": [
+                "Sajjan Singh v. State Of Rajasthan",
+                "Article 226"
+              ],
+              "unsupported": [
+                "Article 368",
+                "Article 13(2)"
+              ],
+              "accuracy": 0.5
+            },
+            "latency": {
+              "retrieval_ms": 4515.226699993946,
+              "generation_ms": 10127.829000004567,
+              "total_ms": 14643.055699998513
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "What did the courts hold about the extent of Parliament's power to amend fundamental rights?",
+            "answer_chars": 2059,
+            "answer_words": 335,
+            "mean": 3.375,
+            "metrics": {
+              "faithfulness": {
+                "score": 2,
+                "reason": "The answer incorrectly states that amendments must be tested under Article 13(2), whereas the provided text explicitly states the court rejected that argument and held Article 13(2) does not apply to constitutional amendments.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The answer directly addresses the question regarding Parliament's power to amend fundamental rights based on the provided text.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 5,
+                "reason": "The retrieved passages are highly relevant to the legal question regarding the scope of Article 368 and fundamental rights.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 3,
+                "reason": "While it covers the main points, it misinterprets the core holding regarding the inapplicability of Article 13(2) to constitutional amendments.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 2,
+                "reason": "The answer fabricates the claim that the court held amendments must be tested under Article 13(2), which contradicts the provided text stating the court rejected that argument.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The answer is well-structured and easy to follow.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 2,
+                "reason": "The reasoning is flawed because it misidentifies the court's holding, claiming the court required testing under Article 13(2) when the text explicitly says the court rejected that interpretation.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 3.0,
+                "reason": "2/4 citations found in the retrieved context; unsupported: Article 368, Article 13(2)",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 17.8382011000067
+        },
+        {
+          "id": "q21",
+          "category": "article_scoped",
+          "answerable": true,
+          "generation": {
+            "question": "Which judgments treat Article 32 as their primary constitutional focus?",
+            "answer": "Based on the provided judgment extracts, Article 32 is not treated as their primary constitutional focus by any of the cases mentioned. The judgments do discuss Article 32 in relation to other provisions and principles but do not treat it as their primary focus. Therefore, no specific case can be identified that treats Article 32 as its primary constitutional focus based on the given extracts.",
+            "abstained": false,
+            "abstention_reason": "",
+            "confidence": 0.7639396389325459,
+            "sources": [
+              "judgment_0125.txt",
+              "judgment_0122.txt",
+              "judgment_0128.txt",
+              "judgment_0123.txt",
+              "judgment_0126.txt"
+            ],
+            "citations": {
+              "supported": [
+                "Article 32"
+              ],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4549.479500041343,
+              "generation_ms": 4869.587900000624,
+              "total_ms": 9419.067400041968
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "Which judgments treat Article 32 as their primary constitutional focus?",
+            "answer_chars": 396,
+            "answer_words": 65,
+            "mean": 3.625,
+            "metrics": {
+              "faithfulness": {
+                "score": 2,
+                "reason": "The answer incorrectly claims that none of the cases treat Article 32 as a primary focus, despite the provided text explicitly stating that the jurisdiction of the Court in the Rupa Ashok Hurra case was invoked under Article 32.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 3,
+                "reason": "The answer addresses the question but provides an incorrect conclusion based on the provided text.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 5,
+                "reason": "The provided context is highly relevant as it contains the text of Article 32 and discusses its application in Rupa Ashok Hurra.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 2,
+                "reason": "The answer fails to identify that Rupa Ashok Hurra vs Ashok Hurra is a case where Article 32 is the primary jurisdictional basis discussed.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 5,
+                "reason": "The answer does not invent external cases, though it misinterprets the provided text.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The answer is logically structured and easy to read.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 2,
+                "reason": "The reasoning is flawed because it ignores the explicit statement in the text that the writ petition was invoked under Article 32.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "1/1 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 12.115645599900745
+        },
+        {
+          "id": "q22",
+          "category": "article_scoped",
+          "answerable": true,
+          "generation": {
+            "question": "Which judgments centre on the right to equality under Article 14?",
+            "answer": "The judgments that centre on the right to equality under Article 14 are:\n\n1. **M.Nagaraj & Others vs Union Of India & Others (2006)** - This judgment discusses the concept of equality as enshrined in Article 14, emphasizing its role in ensuring fairness and non-arbitrariness in government actions. It also delves into the relationship between Article 14 and other provisions such as Articles 38, 39, and 39A, which are part of Part IV (Directive Principles of State Policy) of the Indian Constitution.\n\n2. **Dalpatraj Bhandari vs The President Of India And Ors. (1992)** - This judgment touches upon Article 14 by discussing its role in ensuring equality before the law and how it relates to other provisions such as Articles 16(1), which deals with citizens' rights in certain special circumstances, and Articles 38, 39, and 39A, which are part of Part IV. The judgment also mentions the doctrine of equality as discussed in Smt. Indira Nehru Gandhi v. Raj Narain (AIR 1975 SC 2299).\n\nThese judgments explicitly address Article 14 and its role in ensuring equality under the Indian Constitution.",
+            "abstained": false,
+            "abstention_reason": "",
+            "confidence": 0.9796562671661377,
+            "sources": [
+              "judgment_0214.txt",
+              "judgment_0034.txt",
+              "judgment_0029.txt"
+            ],
+            "citations": {
+              "supported": [
+                "Others v. Union Of India",
+                "Dalpatraj Bhandari v. The President Of India And Ors.",
+                "Smt. Indira Nehru Gandhi v. Raj Narain",
+                "Article 14",
+                "AIR 1975 SC 2299"
+              ],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4470.624500070699,
+              "generation_ms": 7587.406400009058,
+              "total_ms": 12058.030900079757
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "Which judgments centre on the right to equality under Article 14?",
+            "answer_chars": 1097,
+            "answer_words": 180,
+            "mean": 3.75,
+            "metrics": {
+              "faithfulness": {
+                "score": 2,
+                "reason": "The answer includes several references to Articles 39, 39A, and the case of Smt. Indira Nehru Gandhi v. Raj Narain, none of which are present in the provided context.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The answer directly identifies the cases mentioned in the context as relevant to Article 14.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 4,
+                "reason": "The retrieved passages are highly relevant, though the answer incorporates external information not found in the context.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 4,
+                "reason": "The answer identifies the relevant cases from the context but adds extraneous information not supported by the provided text.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 2,
+                "reason": "The answer fabricates references to Articles 39, 39A, and the case of Smt. Indira Nehru Gandhi v. Raj Narain, which are not in the source text.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The answer is well-structured and easy to follow.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 3,
+                "reason": "The answer identifies the cases but relies on hallucinated external authorities rather than analyzing the provided text.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "5/5 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 14.584068499971181
+        },
+        {
+          "id": "q23",
+          "category": "article_scoped",
+          "answerable": true,
+          "generation": {
+            "question": "Which judgments deal principally with the freedoms guaranteed by Article 19?",
+            "answer": "The judgments that deal principally with the freedoms guaranteed by Article 19 are:\n\n1. **Tvs Employees' Federation And Others vs Tvs And Sons Ltd. And Another (1994)** - This case discusses the fundamental right to freedom of speech and expression as enshrined in Article 19(1)(a) of the Indian Constitution, drawing on precedents from both Indian and United States jurisprudence.\n\n2. **W.N. Srinivasa Bhat And Anr. vs The State Of Madras And Anr. (1950)** - This case addresses the scope and implications of the fundamental right to freedom of speech and expression, including its relationship with the press, as guaranteed by Article 19(1)(a) of the Indian Constitution.\n\n3. **The Employees' Federation And Ors. vs Tvs And Sons Ltd. And Anr. (1994)** - This case also deals with the fundamental right to freedom of speech and expression under Article 19(1)(a), where Mathew J. quotes from earlier judgments in India and the United States.\n\nThese cases explicitly deal with the freedoms guaranteed by Article 19, particularly focusing on the right to freedom of speech and expression.",
+            "abstained": false,
+            "abstention_reason": "",
+            "confidence": 0.9815856138865153,
+            "sources": [
+              "judgment_0078.txt",
+              "judgment_0075.txt",
+              "judgment_0072.txt",
+              "judgment_0074.txt"
+            ],
+            "citations": {
+              "supported": [
+                "Tvs Employees' Federation And Others v. Tvs And Sons Ltd. And Another",
+                "W.N. Srinivasa Bhat And Anr. v. The State Of Madras And Anr.",
+                "The Employees' Federation And Ors. v. Tvs And Sons Ltd. And Anr.",
+                "Article 19",
+                "Article 19(1)(a)"
+              ],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4472.91829995811,
+              "generation_ms": 7494.44699997548,
+              "total_ms": 11967.36529993359
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "Which judgments deal principally with the freedoms guaranteed by Article 19?",
+            "answer_chars": 1086,
+            "answer_words": 173,
+            "mean": 4.375,
+            "metrics": {
+              "faithfulness": {
+                "score": 5,
+                "reason": "All claims made in the answer are supported by the provided context.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The answer directly identifies the cases from the context that discuss Article 19.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 5,
+                "reason": "The retrieved passages are directly relevant to the question asked.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 4,
+                "reason": "The answer covers the cases provided, though it redundantly lists the same case twice under different names.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 4,
+                "reason": "The answer lists the same case twice as separate entries (1 and 3), which is a minor error but not a fabrication of legal content.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 4,
+                "reason": "The answer is logically structured, though the repetition of the same case makes it slightly redundant.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 3,
+                "reason": "The answer identifies the cases and their focus but does not provide a deep analysis of the legal holdings or the application of the law.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "5/5 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 14.946339900023304
+        },
+        {
+          "id": "q24",
+          "category": "entity_relationship",
+          "answerable": true,
+          "generation": {
+            "question": "Which judgments in this corpus record a dissenting opinion?",
+            "answer": "Based on the provided judgment extracts, there are no explicit records of dissenting opinions. The extracts focus primarily on the procedural aspects related to review and revision of judgments by the Supreme Court, rather than recording specific dissenting views within a case. Therefore, I cannot identify any judgments in this corpus that record a dissenting opinion.\n\nTo reiterate:\n- No explicit dissenting opinions are recorded in the provided extracts.\n- The extracts discuss procedural matters related to reviewing judgments but do not mention any dissenters or their views.",
+            "abstained": false,
+            "abstention_reason": "",
+            "confidence": 0.5221671596169472,
+            "sources": [
+              "judgment_0122.txt",
+              "judgment_0125.txt",
+              "judgment_0216.txt",
+              "judgment_0075.txt",
+              "judgment_0004.txt"
+            ],
+            "citations": {
+              "supported": [],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4491.171199944802,
+              "generation_ms": 5303.110399981961,
+              "total_ms": 9794.281599926762
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "Which judgments in this corpus record a dissenting opinion?",
+            "answer_chars": 581,
+            "answer_words": 88,
+            "mean": 3.0,
+            "metrics": {
+              "faithfulness": {
+                "score": 1,
+                "reason": "The answer explicitly contradicts the provided text, which clearly identifies dissenting opinions by Ranganath Misra, J. and Venkatachaliah, J. in the Rupa Ashok Hurra case.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 1,
+                "reason": "The answer fails to identify the dissenting opinions explicitly mentioned in the provided context.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 5,
+                "reason": "The provided context contains the relevant information regarding dissenting opinions, even if the model failed to extract it.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 1,
+                "reason": "The answer completely misses the information present in the text regarding dissenting opinions.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 5,
+                "reason": "While the answer is factually incorrect regarding the content of the text, it does not invent external cases or legal provisions.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The answer is well-structured and easy to read, despite being factually wrong.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 1,
+                "reason": "The answer fails to perform any analysis of the provided text, resulting in a failure to identify the legal holdings and dissents described therein.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "0/0 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 12.666410600068048
+        },
+        {
+          "id": "q25",
+          "category": "single_hop_factual",
+          "answerable": true,
+          "generation": {
+            "question": "What did the court say about the right to water and the preservation of open spaces and public parks?",
+            "answer": "The court held in M/S Shri Krishna Colonisers ... vs State Of ... (2019) that the right to water and the preservation of open spaces and public parks are matters of great public concern and vital interest, protected by constitutional mandate. The court emphasized that any act of leasing or selling such sites for conversion to other user would be contrary to legislative intent and inconsistent with statutory requirements.\n\nThe judgment also reaffirmed that the reservation and preservation of open spaces for parks and playgrounds is a legitimate exercise of statutory power, rationally related to protecting residents from urbanization's ill effects. The court further held that any change in these spaces must align with the legislative intent having constitutional mandate; otherwise, it would be an abuse of statutory powers vested in the authorities.\n\nThe court also noted that open spaces are essential for development schemes and should not be used for other purposes without following legal formalities and procedures. If such actions violate fundamental rights, observance of statutory procedure shall not make them valid if they otherwise conflict with constitutional mandates.\n\nIn summary, the court emphasized the importance of preserving open spaces as a part of ensuring a healthy environment and upholding Article 21 of the Constitution, which guarantees the right to life and liberty. The court's judgment underscores that any attempt to alter these public spaces without due process is contrary to legislative intent and inconsistent with constitutional requirements.",
+            "abstained": false,
+            "abstention_reason": "",
+            "confidence": 0.95192840496699,
+            "sources": [
+              "judgment_0007.txt",
+              "judgment_0219.txt"
+            ],
+            "citations": {
+              "supported": [
+                "Article 21"
+              ],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4432.415899937041,
+              "generation_ms": 7592.779599945061,
+              "total_ms": 12025.195499882102
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "What did the court say about the right to water and the preservation of open spaces and public parks?",
+            "answer_chars": 1587,
+            "answer_words": 240,
+            "mean": 4.875,
+            "metrics": {
+              "faithfulness": {
+                "score": 5,
+                "reason": "All claims are directly supported by the provided text from the case.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The answer directly addresses the court's stance on both the right to water and the preservation of open spaces.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 5,
+                "reason": "The provided context contains the relevant legal principles and case holdings necessary to answer the question.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 4,
+                "reason": "The answer covers the preservation of open spaces thoroughly but could have been more specific regarding the court's reasoning on the right to water as a flood prevention mechanism.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 5,
+                "reason": "No information was fabricated; all details are derived from the provided context.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The answer is logically structured and easy to follow.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 5,
+                "reason": "The answer correctly identifies the court's reliance on Article 21 and the principle that statutory procedures cannot override fundamental rights.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "1/1 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 14.6457412999589
+        },
+        {
+          "id": "q26",
+          "category": "out_of_corpus",
+          "answerable": false,
+          "generation": {
+            "question": "What did the Supreme Court hold in Shreya Singhal v. Union of India about Section 66A of the Information Technology Act?",
+            "answer": "The judgment extracts provided do not contain any specific holding regarding Section 66A of the Information Technology Act (IT Act) in Shreya Singhal v. Union of India. Therefore, I cannot provide a direct answer based on these extracts alone. The extracts pertain to different legal issues and precedents related to Articles 14 and 19 of the Indian Constitution, as well as Section 66A does not appear in any of the provided case names or extracts.\n\nTo accurately determine what the Supreme Court held about Section 66A of the IT Act in Shreya Singhal v. Union of India, one would need to refer to the specific judgment from that case, which is not included in the given extracts.",
+            "abstained": false,
+            "abstention_reason": "",
+            "confidence": 0.6741594870885214,
+            "sources": [
+              "judgment_0033.txt",
+              "judgment_0028.txt",
+              "judgment_0073.txt",
+              "judgment_0076.txt",
+              "judgment_0034.txt"
+            ],
+            "citations": {
+              "supported": [],
+              "unsupported": [
+                "Shreya Singhal v. Union",
+                "Section 66A"
+              ],
+              "accuracy": 0.0
+            },
+            "latency": {
+              "retrieval_ms": 4423.824399942532,
+              "generation_ms": 5880.845300038345,
+              "total_ms": 10304.669699980877
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "What did the Supreme Court hold in Shreya Singhal v. Union of India about Section 66A of the Information Technology Act?",
+            "answer_chars": 681,
+            "answer_words": 117,
+            "mean": 3.375,
+            "metrics": {
+              "faithfulness": {
+                "score": 5,
+                "reason": "The answer correctly identifies that the provided context does not contain information about the Shreya Singhal case.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The answer directly addresses the user's question by explaining why it cannot be answered using the provided context.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 1,
+                "reason": "The provided context is entirely irrelevant to the specific case requested by the user.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 2,
+                "reason": "While the answer correctly states it cannot answer based on the context, it does not provide the actual legal holding requested, which is expected in a RAG system that should ideally have access to the relevant document.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 5,
+                "reason": "There are no fabrications in the response.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The response is logically structured and easy to follow.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 3,
+                "reason": "The response correctly identifies the limitation of the provided source material but lacks the substantive legal analysis of the case requested.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 1.0,
+                "reason": "0/2 citations found in the retrieved context; unsupported: Shreya Singhal v. Union, Section 66A",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 12.976341599947773
+        },
+        {
+          "id": "q27",
+          "category": "out_of_corpus",
+          "answerable": false,
+          "generation": {
+            "question": "What guidelines did the Supreme Court lay down in Vishaka v. State of Rajasthan on sexual harassment at the workplace?",
+            "answer": "The indexed judgments do not contain material that answers this question, so no answer is given. Answering from the model's general knowledge would not be grounded in the corpus.",
+            "abstained": true,
+            "abstention_reason": "retrieval confidence 0.301 is below the calibrated threshold 0.423",
+            "confidence": 0.3009302928422888,
+            "sources": [
+              "judgment_0002.txt",
+              "judgment_0216.txt",
+              "judgment_0001.txt",
+              "judgment_0126.txt",
+              "judgment_0215.txt"
+            ],
+            "citations": {
+              "supported": [],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4462.86979992874,
+              "total_ms": 4462.86979992874
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "What guidelines did the Supreme Court lay down in Vishaka v. State of Rajasthan on sexual harassment at the workplace?",
+            "answer_chars": 178,
+            "answer_words": 29,
+            "mean": 4.5,
+            "metrics": {
+              "faithfulness": {
+                "score": 5,
+                "reason": "The model correctly identified that the provided context does not contain information regarding the Vishaka guidelines.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The model directly addressed the prompt by stating it could not answer based on the provided context.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 1,
+                "reason": "None of the provided documents contain information about the Vishaka v. State of Rajasthan case.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 5,
+                "reason": "The model correctly identified the absence of information and refused to hallucinate, which is the complete and correct response given the constraints.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 5,
+                "reason": "The model did not invent any information.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The response is clear, concise, and logically structured.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 5,
+                "reason": "The model correctly applied the constraint of grounding the answer in the provided corpus rather than relying on external knowledge.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "0/0 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 8.092145700007677
+        },
+        {
+          "id": "q28",
+          "category": "out_of_corpus",
+          "answerable": false,
+          "generation": {
+            "question": "What did the Supreme Court decide in Navtej Singh Johar regarding Section 377 of the Indian Penal Code?",
+            "answer": "The Supreme Court in Navtej Singh Johar did not explicitly decide on Section 377 of the Indian Penal Code. The judgment extracts provided do not contain any specific holding regarding Section 377 or its constitutional validity. Therefore, based solely on the given extracts, it is not possible to determine what decision was made by the Supreme Court in Navtej Singh Johar concerning Section 377 of the Indian Penal Code.",
+            "abstained": false,
+            "abstention_reason": "",
+            "confidence": 0.8206643184026083,
+            "sources": [
+              "judgment_0124.txt",
+              "judgment_0072.txt",
+              "judgment_0006.txt"
+            ],
+            "citations": {
+              "supported": [],
+              "unsupported": [
+                "Section 377"
+              ],
+              "accuracy": 0.0
+            },
+            "latency": {
+              "retrieval_ms": 4482.821899931878,
+              "generation_ms": 4886.434599990025,
+              "total_ms": 9369.256499921903
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "What did the Supreme Court decide in Navtej Singh Johar regarding Section 377 of the Indian Penal Code?",
+            "answer_chars": 421,
+            "answer_words": 69,
+            "mean": 4.0,
+            "metrics": {
+              "faithfulness": {
+                "score": 5,
+                "reason": "The answer correctly states that the provided context does not contain information about the Navtej Singh Johar case.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The answer directly addresses the question by explaining that the provided context is insufficient to answer it.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 1,
+                "reason": "The provided context is entirely irrelevant to the question asked, as it discusses Section 302 and Section 499 of the IPC.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 5,
+                "reason": "The answer is complete given the constraints of the provided context, which lacks the necessary information.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 5,
+                "reason": "The answer does not fabricate any information and correctly identifies the absence of the relevant case in the context.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The answer is logically structured and easy to follow.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 5,
+                "reason": "The answer correctly identifies that it cannot provide a legal holding based on the provided materials, which is a sound analytical approach.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 1.0,
+                "reason": "0/1 citations found in the retrieved context; unsupported: Section 377",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 11.795239600003697
+        },
+        {
+          "id": "q29",
+          "category": "out_of_corpus",
+          "answerable": false,
+          "generation": {
+            "question": "What is the right to erasure under the European Union's General Data Protection Regulation?",
+            "answer": "The indexed judgments do not contain material that answers this question, so no answer is given. Answering from the model's general knowledge would not be grounded in the corpus.",
+            "abstained": true,
+            "abstention_reason": "retrieval confidence 0.001 is below the calibrated threshold 0.423",
+            "confidence": 0.0011506857583299277,
+            "sources": [
+              "judgment_0001.txt",
+              "judgment_0214.txt",
+              "judgment_0072.txt",
+              "judgment_0073.txt",
+              "judgment_0071.txt"
+            ],
+            "citations": {
+              "supported": [],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4439.109199913219,
+              "total_ms": 4439.109199913219
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "What is the right to erasure under the European Union's General Data Protection Regulation?",
+            "answer_chars": 178,
+            "answer_words": 29,
+            "mean": 4.5,
+            "metrics": {
+              "faithfulness": {
+                "score": 5,
+                "reason": "The model correctly identified that the provided context does not contain information regarding the GDPR.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The model correctly stated that it could not answer the question based on the provided context.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 1,
+                "reason": "The provided context is entirely irrelevant to the question about the EU's GDPR.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 5,
+                "reason": "The model accurately reported the inability to answer based on the provided documents.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 5,
+                "reason": "There are no fabrications in the response.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The response is clear, concise, and logically structured.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 5,
+                "reason": "The model correctly applied the constraint of only using the provided context to answer the query.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "0/0 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 7.335910300025716
+        },
+        {
+          "id": "q30",
+          "category": "out_of_corpus",
+          "answerable": false,
+          "generation": {
+            "question": "What did the United States Supreme Court hold in Roe v. Wade?",
+            "answer": "The indexed judgments do not contain material that answers this question, so no answer is given. Answering from the model's general knowledge would not be grounded in the corpus.",
+            "abstained": true,
+            "abstention_reason": "retrieval confidence 0.325 is below the calibrated threshold 0.423",
+            "confidence": 0.32476294636726377,
+            "sources": [
+              "judgment_0215.txt",
+              "judgment_0001.txt",
+              "judgment_0075.txt",
+              "judgment_0122.txt",
+              "judgment_0078.txt"
+            ],
+            "citations": {
+              "supported": [],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4512.321499991231,
+              "total_ms": 4512.321499991231
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "What did the United States Supreme Court hold in Roe v. Wade?",
+            "answer_chars": 178,
+            "answer_words": 29,
+            "mean": 4.5,
+            "metrics": {
+              "faithfulness": {
+                "score": 5,
+                "reason": "The model correctly identified that the provided context does not contain the holding of Roe v. Wade.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The model correctly addressed the prompt by stating it could not answer based on the provided context.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 1,
+                "reason": "The provided context contains no information regarding the holding of Roe v. Wade, despite mentioning the case name in passing.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 5,
+                "reason": "The model accurately reported that the information was missing from the provided source material.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 5,
+                "reason": "The model did not fabricate any information.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The response is clear, concise, and logically structured.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 5,
+                "reason": "The model correctly applied the constraint of grounding the answer in the provided context.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "0/0 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 6.991826299927197
+        },
+        {
+          "id": "q31",
+          "category": "out_of_corpus",
+          "answerable": false,
+          "generation": {
+            "question": "What are the corporate social responsibility obligations under Section 135 of the Companies Act, 2013?",
+            "answer": "The indexed judgments do not contain material that answers this question, so no answer is given. Answering from the model's general knowledge would not be grounded in the corpus.",
+            "abstained": true,
+            "abstention_reason": "retrieval confidence 0.002 is below the calibrated threshold 0.423",
+            "confidence": 0.0023517111549153924,
+            "sources": [
+              "judgment_0072.txt",
+              "judgment_0078.txt",
+              "judgment_0030.txt",
+              "judgment_0007.txt",
+              "judgment_0077.txt"
+            ],
+            "citations": {
+              "supported": [],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4450.787300011143,
+              "total_ms": 4450.787300011143
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "What are the corporate social responsibility obligations under Section 135 of the Companies Act, 2013?",
+            "answer_chars": 178,
+            "answer_words": 29,
+            "mean": 4.5,
+            "metrics": {
+              "faithfulness": {
+                "score": 5,
+                "reason": "The model correctly identified that the provided context does not contain information regarding Section 135 of the Companies Act, 2013.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The model directly addressed the query by stating it could not be answered from the provided context.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 1,
+                "reason": "The provided context consists entirely of case law regarding labor disputes and contains no information about corporate social responsibility or the Companies Act, 2013.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 5,
+                "reason": "The model correctly identified the limitation of the provided context and declined to answer based on external knowledge as instructed.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 5,
+                "reason": "There are no fabrications in the response.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The response is clear, concise, and logically structured.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 5,
+                "reason": "The model correctly applied the constraint of grounding the answer in the provided corpus rather than hallucinating information.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "0/0 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 7.14115599996876
+        },
+        {
+          "id": "q32",
+          "category": "out_of_corpus",
+          "answerable": false,
+          "generation": {
+            "question": "How does the Bharatiya Nyaya Sanhita define the offence of theft?",
+            "answer": "The indexed judgments do not contain material that answers this question, so no answer is given. Answering from the model's general knowledge would not be grounded in the corpus.",
+            "abstained": true,
+            "abstention_reason": "retrieval confidence 0.023 is below the calibrated threshold 0.423",
+            "confidence": 0.0228144770488143,
+            "sources": [
+              "judgment_0033.txt",
+              "judgment_0001.txt",
+              "judgment_0076.txt"
+            ],
+            "citations": {
+              "supported": [],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4472.7927999338135,
+              "total_ms": 4472.7927999338135
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "How does the Bharatiya Nyaya Sanhita define the offence of theft?",
+            "answer_chars": 178,
+            "answer_words": 29,
+            "mean": 4.5,
+            "metrics": {
+              "faithfulness": {
+                "score": 5,
+                "reason": "The model correctly identified that the provided context does not contain the definition of theft under the Bharatiya Nyaya Sanhita.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The model directly addressed the question by stating it could not be answered from the provided context.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 1,
+                "reason": "The provided context contains information about the Indian Penal Code and Evidence Act, but nothing regarding the Bharatiya Nyaya Sanhita.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 5,
+                "reason": "The model correctly identified the limitation of the provided context and refrained from providing an external answer.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 5,
+                "reason": "There are no fabrications in the response.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The response is clear, concise, and logically structured.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 5,
+                "reason": "The model correctly applied the constraint of grounding the answer in the provided corpus.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "0/0 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 6.8332846000557765
+        },
+        {
+          "id": "q33",
+          "category": "out_of_corpus",
+          "answerable": false,
+          "generation": {
+            "question": "What did the Supreme Court decide in the Sabarimala temple entry case about women's right to worship?",
+            "answer": "The indexed judgments do not contain material that answers this question, so no answer is given. Answering from the model's general knowledge would not be grounded in the corpus.",
+            "abstained": true,
+            "abstention_reason": "retrieval confidence 0.018 is below the calibrated threshold 0.423",
+            "confidence": 0.01785921019812425,
+            "sources": [
+              "judgment_0001.txt",
+              "judgment_0007.txt",
+              "judgment_0078.txt"
+            ],
+            "citations": {
+              "supported": [],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4477.2289000684395,
+              "total_ms": 4477.2289000684395
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "What did the Supreme Court decide in the Sabarimala temple entry case about women's right to worship?",
+            "answer_chars": 178,
+            "answer_words": 29,
+            "mean": 4.5,
+            "metrics": {
+              "faithfulness": {
+                "score": 5,
+                "reason": "The model correctly identified that the provided context does not contain information regarding the Sabarimala temple entry case.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The model directly addressed the question by stating it could not be answered from the provided context.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 1,
+                "reason": "The provided context is entirely irrelevant to the question asked.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 5,
+                "reason": "The model correctly identified the limitation of the provided context and provided a complete response based on that constraint.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 5,
+                "reason": "There are no hallucinations as the model correctly identified the absence of information.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The answer is clear, concise, and logically structured.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 5,
+                "reason": "The model correctly applied the constraint of only using the provided context to answer the legal query.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "0/0 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 6.908039200003259
+        },
+        {
+          "id": "q34",
+          "category": "out_of_corpus",
+          "answerable": false,
+          "generation": {
+            "question": "What did the Supreme Court hold about the practice of instant triple talaq?",
+            "answer": "The indexed judgments do not contain material that answers this question, so no answer is given. Answering from the model's general knowledge would not be grounded in the corpus.",
+            "abstained": true,
+            "abstention_reason": "retrieval confidence 0.027 is below the calibrated threshold 0.423",
+            "confidence": 0.027314106157670416,
+            "sources": [
+              "judgment_0215.txt",
+              "judgment_0029.txt",
+              "judgment_0122.txt",
+              "judgment_0078.txt",
+              "judgment_0034.txt"
+            ],
+            "citations": {
+              "supported": [],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4430.893100099638,
+              "total_ms": 4430.893100099638
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "What did the Supreme Court hold about the practice of instant triple talaq?",
+            "answer_chars": 178,
+            "answer_words": 29,
+            "mean": 4.5,
+            "metrics": {
+              "faithfulness": {
+                "score": 5,
+                "reason": "The model correctly identified that the provided context does not contain information regarding triple talaq.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The model directly addressed the question by stating it could not be answered from the provided context.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 1,
+                "reason": "The provided context is entirely irrelevant to the question asked.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 5,
+                "reason": "The model correctly identified the limitation of the provided context and refrained from answering based on external knowledge.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 5,
+                "reason": "There are no hallucinations in the response.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The response is clear, concise, and logically structured.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 5,
+                "reason": "The model correctly applied the constraint of only using the provided corpus to answer the legal question.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "0/0 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 7.1634937999770045
+        },
+        {
+          "id": "q35",
+          "category": "out_of_corpus",
+          "answerable": false,
+          "generation": {
+            "question": "What are the eligibility criteria and age limits for appointment to the Indian Administrative Service?",
+            "answer": "The indexed judgments do not contain material that answers this question, so no answer is given. Answering from the model's general knowledge would not be grounded in the corpus.",
+            "abstained": true,
+            "abstention_reason": "retrieval confidence 0.246 is below the calibrated threshold 0.423",
+            "confidence": 0.24572158356507617,
+            "sources": [
+              "judgment_0214.txt",
+              "judgment_0034.txt",
+              "judgment_0221.txt",
+              "judgment_0028.txt"
+            ],
+            "citations": {
+              "supported": [],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4476.435699965805,
+              "total_ms": 4476.435699965805
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "What are the eligibility criteria and age limits for appointment to the Indian Administrative Service?",
+            "answer_chars": 178,
+            "answer_words": 29,
+            "mean": 4.5,
+            "metrics": {
+              "faithfulness": {
+                "score": 5,
+                "reason": "The model correctly identified that the provided context does not contain information regarding IAS eligibility or age limits.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The model directly addressed the question by stating it could not be answered from the provided context.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 1,
+                "reason": "The provided context discusses judicial appointments and reservation policies, which are irrelevant to the specific question about IAS eligibility.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 5,
+                "reason": "The model correctly determined that the information was missing from the provided source material.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 5,
+                "reason": "The model did not fabricate any information.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The response is clear, concise, and logically structured.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 5,
+                "reason": "The model correctly applied the constraint of only using the provided corpus to answer the query.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "0/0 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 7.014565899968147
         }
       ],
       "complete": false

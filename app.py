@@ -1580,8 +1580,11 @@ with tab_analytics:
 # ═══════════════════════════════════════════════════════════════════════════════
 
 with tab_ragas:
-    st.markdown("### RAGAS Evaluation Benchmark")
-    st.markdown("*Comprehensive 8-metric comparison of Naive RAG vs GraphRAG using LLM-as-Judge evaluation.*")
+    st.markdown("### Evaluation")
+    st.markdown(
+        "*Retrieval configurations measured against a hand-annotated gold set; "
+        "answers scored by an independent judge.*"
+    )
 
     ABLATION_FILE = os.path.join("reports", "retrieval_ablation.json")
     CALIBRATION_FILE = os.path.join("reports", "abstention_calibration.json")
