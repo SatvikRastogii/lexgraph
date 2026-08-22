@@ -37,8 +37,30 @@ def evaluate(retriever, questions, top_k, ks):
         )
         scores["_id"] = question["id"]
         scores["_category"] = question["category"]
+        scores["_difficulty"] = question.get("difficulty", "standard")
         per_question.append(scores)
     return per_question, latencies
+
+
+def by_difficulty(per_question):
+    """Split the means by tier.
+
+    The standard questions turned out to be near-saturated -- MRR above 0.93
+    for every configuration -- so an aggregate number hides whether a change
+    helped. The hard tier is deliberately phrased to share little vocabulary
+    with the judgments it should retrieve, which is where the configurations
+    have room to differ.
+    """
+    tiers = {}
+    for tier in sorted({q["_difficulty"] for q in per_question}):
+        rows = [
+            {k: v for k, v in q.items() if not k.startswith("_")}
+            for q in per_question
+            if q["_difficulty"] == tier
+        ]
+        if rows:
+            tiers[tier] = {"n": len(rows), **aggregate(rows)}
+    return tiers
 
 
 def probe_out_of_corpus(retriever, questions, top_k):
@@ -95,6 +117,7 @@ def main():
                 "max": max(latencies),
             },
             "build_seconds": build_seconds,
+            "by_difficulty": by_difficulty(per_question),
             "per_question": per_question,
             "out_of_corpus_top_score": probe_out_of_corpus(retriever, unanswerable, args.k),
         }
@@ -124,6 +147,24 @@ def _print_table(results):
             f"{metrics['recall@10']:>7.3f}{metrics['ndcg@10']:>9.3f}"
             f"{metrics['mrr']:>7.3f}{payload['latency_ms']['p50']:>9.0f}"
         )
+
+    tiers = sorted({t for p in results.values() for t in p["by_difficulty"]})
+    if len(tiers) > 1:
+        print(f"\nBy difficulty tier ({', '.join(tiers)}):")
+        sub = f"{'configuration':<16}" + "".join(
+            f"{t + ' R@5':>14}{t + ' nDCG':>15}" for t in tiers
+        )
+        print(sub)
+        print("-" * len(sub))
+        for name, payload in results.items():
+            row = f"{name:<16}"
+            for tier in tiers:
+                stats = payload["by_difficulty"].get(tier)
+                row += (
+                    f"{stats['recall@5']:>14.3f}{stats['ndcg@10']:>15.3f}"
+                    if stats else f"{'-':>14}{'-':>15}"
+                )
+            print(row)
 
 
 if __name__ == "__main__":

@@ -230,6 +230,101 @@
       "must_contain": ["open space"],
       "answerable": true
     },
+
+    {
+      "id": "h01",
+      "question": "If someone is being held in jail, can they complain to a court about how they are being treated inside?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": ["judgment_0126.txt"],
+      "must_contain": ["prison"],
+      "answerable": true
+    },
+    {
+      "id": "h02",
+      "question": "When an investigation drags on past the deadline the law allows, does the person being held get to go free?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": ["judgment_0127.txt"],
+      "must_contain": ["167"],
+      "answerable": true
+    },
+    {
+      "id": "h03",
+      "question": "Is there a ceiling on how many posts can be set aside for disadvantaged groups?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": ["judgment_0214.txt", "judgment_0220.txt", "judgment_0034.txt"],
+      "must_contain": ["50%"],
+      "must_contain_any": true,
+      "answerable": true
+    },
+    {
+      "id": "h04",
+      "question": "Can a court reopen and correct its own final decision once every appeal has already been exhausted?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": ["judgment_0122.txt", "judgment_0125.txt"],
+      "must_contain": ["curative"],
+      "must_contain_any": true,
+      "answerable": true
+    },
+    {
+      "id": "h05",
+      "question": "Are people hired on a day-to-day basis by a government department protected by labour law?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": ["judgment_0029.txt"],
+      "must_contain": ["daily"],
+      "answerable": true
+    },
+    {
+      "id": "h06",
+      "question": "Must the government pay compensation when its officers cause a death while carrying out their duties?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": ["judgment_0005.txt"],
+      "must_contain": ["compensation"],
+      "answerable": true
+    },
+    {
+      "id": "h07",
+      "question": "May a magazine publish details of a well-known person's private life without asking them first?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": ["judgment_0074.txt"],
+      "must_contain": ["privacy"],
+      "answerable": true
+    },
+    {
+      "id": "h08",
+      "question": "What follows when an authority acts against a person without telling them what they are accused of?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": ["judgment_0076.txt"],
+      "must_contain": ["notice"],
+      "answerable": true
+    },
+    {
+      "id": "h09",
+      "question": "Can a person be left waiting many years before their matter is finally decided?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": ["judgment_0002.txt", "judgment_0008.txt"],
+      "must_contain": ["delay"],
+      "must_contain_any": true,
+      "answerable": true
+    },
+    {
+      "id": "h10",
+      "question": "Should a person facing the gravest possible punishment be heard aloud when asking the court to think again?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": ["judgment_0004.txt", "judgment_0006.txt"],
+      "must_contain": ["oral hearing"],
+      "must_contain_any": true,
+      "answerable": true
+    },
     {
       "id": "q26",
       "question": "What did the Supreme Court hold in Shreya Singhal v. Union of India about Section 66A of the Information Technology Act?",
