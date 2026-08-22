@@ -32,8 +32,13 @@ HEADLINE_KS = (1, 3, 5, 10)
 
 
 def evaluate(retriever, questions, top_k, ks):
-    """Score one retriever over the answerable gold-set questions."""
+    """Score one retriever over the answerable gold-set questions.
+
+    Returns the per-question scores, the latencies, and whether this
+    configuration emits paragraph labels at all -- see ``_strip_paragraph``.
+    """
     per_question, latencies = [], []
+    labelled_hits = 0
     for question in questions:
         hits, latency_ms = timed_search(retriever, question["question"], top_k)
         latencies.append(latency_ms)
@@ -51,6 +56,7 @@ def evaluate(retriever, questions, top_k, ks):
             for name, paragraphs in question.get("relevant_paragraphs", {}).items()
         }
         chunk_ranking = [(hit.doc_id, hit.para_label) for hit in hits]
+        labelled_hits += sum(1 for _, label in chunk_ranking if label)
         for k in ks:
             scores[f"paragraph_recall@{k}"] = paragraph_recall_at_k(
                 chunk_ranking, gold_paragraphs, k
@@ -60,7 +66,23 @@ def evaluate(retriever, questions, top_k, ks):
         scores["_category"] = question["category"]
         scores["_difficulty"] = question.get("difficulty", "standard")
         per_question.append(scores)
-    return per_question, latencies
+    return per_question, latencies, labelled_hits > 0
+
+
+def _strip_paragraph(per_question):
+    """Drop paragraph metrics from a configuration that cannot carry them.
+
+    ``dense-fixed`` chunks on 500-word windows, so no chunk knows which
+    paragraph it came from and every hit scores zero by construction. Printing
+    that as 0.000 would read as a retriever that never finds the right passage,
+    when the truth is that this configuration cannot say which passage it
+    found. Not applicable and zero are different claims, and only one of them
+    is true here.
+    """
+    for scores in per_question:
+        for key in [k for k in scores if k.startswith("paragraph_recall@")]:
+            del scores[key]
+    return per_question
 
 
 def by_difficulty(per_question):
@@ -122,7 +144,11 @@ def main():
         retriever = build_retriever(name)
         build_seconds = time.perf_counter() - started
 
-        per_question, latencies = evaluate(retriever, answerable, args.k, HEADLINE_KS)
+        per_question, latencies, has_paragraphs = evaluate(
+            retriever, answerable, args.k, HEADLINE_KS
+        )
+        if not has_paragraphs:
+            per_question = _strip_paragraph(per_question)
         means = aggregate([{k: v for k, v in q.items() if not k.startswith("_")}
                            for q in per_question])
         recall5 = [q["recall@5"] for q in per_question]
@@ -167,12 +193,14 @@ def _print_table(results):
             f"{name:<16}"
             f"{metrics['recall@1']:>7.3f}{metrics['recall@5']:>7.3f}"
             f"{metrics['recall@10']:>7.3f}{metrics['ndcg@10']:>9.3f}"
-            f"{metrics['mrr']:>7.3f}{metrics.get('paragraph_recall@5', 0):>9.3f}"
+            f"{metrics['mrr']:>7.3f}"
+            f"{_para(metrics.get('paragraph_recall@5')):>9}"
             f"{payload['latency_ms']['p50']:>9.0f}"
         )
     print("\nParaR@5 is recall@5 restricted to landing on a paragraph that "
           "carries the answer.\nThe gap against R@5 is how often the right "
-          "case was found at the wrong passage.")
+          "case was found at the wrong passage.\nn/a means the configuration's "
+          "chunks carry no paragraph labels to score.")
 
     tiers = sorted({t for p in results.values() for t in p["by_difficulty"]})
     if len(tiers) > 1:
@@ -191,6 +219,10 @@ def _print_table(results):
                     if stats else f"{'-':>14}{'-':>15}"
                 )
             print(row)
+
+
+def _para(value):
+    return "n/a" if value is None else f"{value:.3f}"
 
 
 if __name__ == "__main__":
