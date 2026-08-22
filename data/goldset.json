@@ -1,131 +1,596 @@
 {
   "version": "1.0",
-  "corpus": "input/ (40 judgment files, 38 unique cases)",
+  "corpus": "input/ (40 judgment files, 37 unique cases)",
   "notes": [
     "relevant_docs is the retrieval ground truth: the documents that actually contain the answer.",
     "must_contain lets scripts/validate_goldset.py prove each annotation against the corpus text, so the labels are checkable rather than asserted.",
     "answerable=false entries have no supporting document anywhere in the corpus. Correct behaviour is refusal, not an answer; they measure abstention.",
-    "judgment_0004/0006 and judgment_0122/0125 are duplicate case pairs present in input/. Both copies are listed as relevant where applicable, because both are legitimately correct retrievals."
+    "judgment_0004/0006, judgment_0072/0078 and judgment_0122/0125 are duplicate case pairs present in input/ -- the same judgment from two reporters. Both copies are listed as relevant where applicable, because both are legitimately correct retrievals.",
+    "difficulty=hard questions are deliberately phrased in lay terms that share little vocabulary with the judgment, so lexical and semantic retrieval can be told apart. The standard tier is near-saturated and cannot."
   ],
   "questions": [
+    {
+      "id": "h01",
+      "question": "If someone is being held in jail, can they complain to a court about how they are being treated inside?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": [
+        "judgment_0126.txt"
+      ],
+      "must_contain": [
+        "prison"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "h02",
+      "question": "When an investigation drags on past the deadline the law allows, does the person being held get to go free?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": [
+        "judgment_0127.txt"
+      ],
+      "must_contain": [
+        "167"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "h03",
+      "question": "Is there a ceiling on how many posts can be set aside for disadvantaged groups?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": [
+        "judgment_0214.txt",
+        "judgment_0220.txt",
+        "judgment_0034.txt"
+      ],
+      "must_contain": [
+        "50%"
+      ],
+      "must_contain_any": true,
+      "answerable": true
+    },
+    {
+      "id": "h04",
+      "question": "Can a court reopen and correct its own final decision once every appeal has already been exhausted?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": [
+        "judgment_0122.txt",
+        "judgment_0125.txt"
+      ],
+      "must_contain": [
+        "curative"
+      ],
+      "must_contain_any": true,
+      "answerable": true
+    },
+    {
+      "id": "h05",
+      "question": "Are people hired on a day-to-day basis by a government department protected by labour law?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": [
+        "judgment_0029.txt"
+      ],
+      "must_contain": [
+        "daily"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "h06",
+      "question": "Must the government pay compensation when its officers cause a death while carrying out their duties?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": [
+        "judgment_0005.txt"
+      ],
+      "must_contain": [
+        "compensation"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "h07",
+      "question": "May a magazine publish details of a well-known person's private life without asking them first?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": [
+        "judgment_0074.txt"
+      ],
+      "must_contain": [
+        "privacy"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "h08",
+      "question": "What follows when an authority acts against a person without telling them what they are accused of?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": [
+        "judgment_0076.txt"
+      ],
+      "must_contain": [
+        "notice"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "h09",
+      "question": "Can a person be left waiting many years before their matter is finally decided?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": [
+        "judgment_0002.txt",
+        "judgment_0008.txt"
+      ],
+      "must_contain": [
+        "delay"
+      ],
+      "must_contain_any": true,
+      "answerable": true
+    },
+    {
+      "id": "h10",
+      "question": "Should a person facing the gravest possible punishment be heard aloud when asking the court to think again?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": [
+        "judgment_0004.txt",
+        "judgment_0006.txt"
+      ],
+      "must_contain": [
+        "oral hearing"
+      ],
+      "must_contain_any": true,
+      "answerable": true
+    },
+    {
+      "id": "h11",
+      "question": "Can the police keep a permanent watch file on a man who finished serving his sentence years ago?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": [
+        "judgment_0001.txt"
+      ],
+      "must_contain": [
+        "history sheet"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "h12",
+      "question": "Is it fair to make an accused person disprove the case against him rather than have the state prove it?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": [
+        "judgment_0003.txt"
+      ],
+      "must_contain": [
+        "129A"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "h13",
+      "question": "After the country became a republic, could a law inherited from colonial rule still be used to send someone abroad to face trial?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": [
+        "judgment_0035.txt"
+      ],
+      "must_contain": [
+        "Fugitive Offenders"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "h14",
+      "question": "May the state take over and run a landowner's property because it thinks he cannot manage it himself?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": [
+        "judgment_0030.txt"
+      ],
+      "must_contain": [
+        "Court of Wards"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "h15",
+      "question": "Which level of magistrate is competent to try a complaint about caste-based exclusion?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": [
+        "judgment_0031.txt"
+      ],
+      "must_contain": [
+        "Protection of Civil Rights"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "h16",
+      "question": "Can parents and teachers ask a court to strike down what a school board decided children should be taught?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": [
+        "judgment_0071.txt"
+      ],
+      "must_contain": [
+        "syllabus"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "h17",
+      "question": "Can a company stop its own workers from circulating material that damages its reputation?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": [
+        "judgment_0072.txt",
+        "judgment_0078.txt"
+      ],
+      "must_contain": [
+        "defam"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "h18",
+      "question": "If a public office turns down a request for records, does it have to say why?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": [
+        "judgment_0073.txt"
+      ],
+      "must_contain": [
+        "Right to Information"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "h19",
+      "question": "Can officials seize a person's travel document and keep it without telling him the reason?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": [
+        "judgment_0077.txt"
+      ],
+      "must_contain": [
+        "passport"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "h20",
+      "question": "Is the legislature's power to alter the founding document limited when the change cuts into guaranteed freedoms?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": [
+        "judgment_0123.txt"
+      ],
+      "must_contain": [
+        "368"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "h21",
+      "question": "When a condemned prisoner's plea for clemency is left undecided for years, does that change what should happen to him?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": [
+        "judgment_0124.txt"
+      ],
+      "must_contain": [
+        "mercy"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "h22",
+      "question": "What became of pending challenges to tribunal rulings once the supervisory power of the higher courts was narrowed?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": [
+        "judgment_0128.txt"
+      ],
+      "must_contain": [
+        "227"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "h23",
+      "question": "Can a state cut short a law officer's appointment before the fixed term he was given runs out?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": [
+        "judgment_0129.txt"
+      ],
+      "must_contain": [
+        "Government Pleader"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "h24",
+      "question": "How should a court choose between imprisonment for life and execution when the proof is entirely indirect?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": [
+        "judgment_0215.txt"
+      ],
+      "must_contain": [
+        "rarest of rare"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "h25",
+      "question": "Do the better-off members of a listed community still get the benefit of set-aside promotions?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": [
+        "judgment_0216.txt",
+        "judgment_0214.txt"
+      ],
+      "must_contain": [
+        "creamy layer"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "h26",
+      "question": "Do people engaged to work on a university project have a claim to a permanent post?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": [
+        "judgment_0217.txt"
+      ],
+      "must_contain": [
+        "evaluator"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "h27",
+      "question": "Can a government limit the sale of alcohol to only the most expensive establishments and shut out the rest?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": [
+        "judgment_0218.txt"
+      ],
+      "must_contain": [
+        "liquor"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "h28",
+      "question": "May an environmental tribunal begin a case on its own when nobody has filed a complaint?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": [
+        "judgment_0219.txt"
+      ],
+      "must_contain": [
+        "suo motu"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "h29",
+      "question": "Does someone recognised as belonging to a listed caste in one state keep that standing after moving to another?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": [
+        "judgment_0221.txt"
+      ],
+      "must_contain": [
+        "341"
+      ],
+      "answerable": true
+    },
+    {
+      "id": "h30",
+      "question": "Can land that was set aside for growing fruit be used to put up houses instead?",
+      "category": "paraphrased",
+      "difficulty": "hard",
+      "relevant_docs": [
+        "judgment_0007.txt"
+      ],
+      "must_contain": [
+        "fruit belt"
+      ],
+      "answerable": true
+    },
     {
       "id": "q01",
       "question": "What is a curative petition and in what circumstances can the Supreme Court entertain one?",
       "category": "single_hop_factual",
-      "relevant_docs": ["judgment_0122.txt", "judgment_0125.txt"],
-      "must_contain": ["curative"],
+      "relevant_docs": [
+        "judgment_0122.txt",
+        "judgment_0125.txt"
+      ],
+      "must_contain": [
+        "curative"
+      ],
       "answerable": true
     },
     {
       "id": "q02",
       "question": "Can a prisoner invoke the writ jurisdiction of the court to challenge conditions inside jail?",
       "category": "single_hop_factual",
-      "relevant_docs": ["judgment_0126.txt"],
-      "must_contain": ["prison"],
+      "relevant_docs": [
+        "judgment_0126.txt"
+      ],
+      "must_contain": [
+        "prison"
+      ],
       "answerable": true
     },
     {
       "id": "q03",
       "question": "Is an accused entitled to default bail when the investigating agency fails to complete investigation within the statutory period under Section 167(2) CrPC?",
       "category": "single_hop_factual",
-      "relevant_docs": ["judgment_0127.txt"],
-      "must_contain": ["167"],
+      "relevant_docs": [
+        "judgment_0127.txt"
+      ],
+      "must_contain": [
+        "167"
+      ],
       "answerable": true
     },
     {
       "id": "q04",
       "question": "Must a review petition in a death sentence case be heard in open court rather than by circulation?",
       "category": "single_hop_factual",
-      "relevant_docs": ["judgment_0004.txt", "judgment_0006.txt"],
-      "must_contain": ["review"],
+      "relevant_docs": [
+        "judgment_0004.txt",
+        "judgment_0006.txt"
+      ],
+      "must_contain": [
+        "review"
+      ],
       "answerable": true
     },
     {
       "id": "q05",
       "question": "Does the creamy layer principle apply to Scheduled Castes and Scheduled Tribes in reservation matters?",
       "category": "single_hop_factual",
-      "relevant_docs": ["judgment_0216.txt"],
-      "must_contain": ["creamy layer"],
+      "relevant_docs": [
+        "judgment_0216.txt"
+      ],
+      "must_contain": [
+        "creamy layer"
+      ],
       "answerable": true
     },
     {
       "id": "q06",
       "question": "Is the Forest Department an industry, and are daily wage workers engaged by it workmen?",
       "category": "single_hop_factual",
-      "relevant_docs": ["judgment_0029.txt"],
-      "must_contain": ["Forest"],
+      "relevant_docs": [
+        "judgment_0029.txt"
+      ],
+      "must_contain": [
+        "Forest"
+      ],
       "answerable": true
     },
     {
       "id": "q07",
       "question": "Can an employee's service be regularised without following the prescribed process of recruitment?",
       "category": "single_hop_factual",
-      "relevant_docs": ["judgment_0032.txt"],
-      "must_contain": ["regularis"],
+      "relevant_docs": [
+        "judgment_0032.txt"
+      ],
+      "must_contain": [
+        "regularis"
+      ],
       "answerable": true
     },
     {
       "id": "q08",
       "question": "What defect in a notice invalidates preventive action taken against a person alleged to be a goonda?",
       "category": "single_hop_factual",
-      "relevant_docs": ["judgment_0076.txt"],
-      "must_contain": ["goonda"],
+      "relevant_docs": [
+        "judgment_0076.txt"
+      ],
+      "must_contain": [
+        "goonda"
+      ],
       "answerable": true
     },
     {
       "id": "q09",
       "question": "Is a public authority obliged to disclose an investigation report under the Right to Information Act?",
       "category": "single_hop_factual",
-      "relevant_docs": ["judgment_0073.txt"],
-      "must_contain": ["Information"],
+      "relevant_docs": [
+        "judgment_0073.txt"
+      ],
+      "must_contain": [
+        "Information"
+      ],
       "answerable": true
     },
     {
       "id": "q10",
       "question": "Can the State claim sovereign immunity for tortious acts committed by police officers causing death in custody?",
       "category": "single_hop_factual",
-      "relevant_docs": ["judgment_0005.txt"],
-      "must_contain": ["sovereign"],
+      "relevant_docs": [
+        "judgment_0005.txt"
+      ],
+      "must_contain": [
+        "sovereign"
+      ],
       "answerable": true
     },
     {
       "id": "q11",
       "question": "What is the legal status of police standing orders that govern the opening and maintenance of history sheets and rowdy sheets?",
       "category": "single_hop_factual",
-      "relevant_docs": ["judgment_0001.txt"],
-      "must_contain": ["history sheet"],
+      "relevant_docs": [
+        "judgment_0001.txt"
+      ],
+      "must_contain": [
+        "history sheet"
+      ],
       "answerable": true
     },
     {
       "id": "q12",
       "question": "Can the National Green Tribunal exercise jurisdiction on its own motion without a formal application?",
       "category": "single_hop_factual",
-      "relevant_docs": ["judgment_0219.txt"],
-      "must_contain": ["Tribunal"],
+      "relevant_docs": [
+        "judgment_0219.txt"
+      ],
+      "must_contain": [
+        "Tribunal"
+      ],
       "answerable": true
     },
     {
       "id": "q13",
       "question": "On what date must an application for a liquor licence be considered: the date of application or the date of consideration?",
       "category": "single_hop_factual",
-      "relevant_docs": ["judgment_0218.txt"],
-      "must_contain": ["licence"],
+      "relevant_docs": [
+        "judgment_0218.txt"
+      ],
+      "must_contain": [
+        "licence"
+      ],
       "answerable": true
     },
     {
       "id": "q14",
       "question": "Does the power of superintendence of the High Court under Article 227 extend to administrative as well as judicial superintendence?",
       "category": "single_hop_factual",
-      "relevant_docs": ["judgment_0128.txt"],
-      "must_contain": ["227"],
+      "relevant_docs": [
+        "judgment_0128.txt"
+      ],
+      "must_contain": [
+        "227"
+      ],
       "answerable": true
     },
     {
       "id": "q15",
       "question": "Is speedy trial a fundamental right, and can prolonged delay justify quashing a prosecution?",
       "category": "multi_hop_relational",
-      "relevant_docs": ["judgment_0002.txt", "judgment_0008.txt"],
-      "must_contain": ["speedy"],
+      "relevant_docs": [
+        "judgment_0002.txt",
+        "judgment_0008.txt"
+      ],
+      "must_contain": [
+        "speedy"
+      ],
       "must_contain_any": true,
       "answerable": true
     },
@@ -133,8 +598,14 @@
       "id": "q16",
       "question": "Which judgments discuss the fifty per cent ceiling on reservations, and how is that ceiling applied?",
       "category": "multi_hop_relational",
-      "relevant_docs": ["judgment_0214.txt", "judgment_0220.txt", "judgment_0034.txt"],
-      "must_contain": ["50%"],
+      "relevant_docs": [
+        "judgment_0214.txt",
+        "judgment_0220.txt",
+        "judgment_0034.txt"
+      ],
+      "must_contain": [
+        "50%"
+      ],
       "must_contain_any": true,
       "answerable": true
     },
@@ -142,8 +613,13 @@
       "id": "q17",
       "question": "How do these judgments treat sub-classification within the Scheduled Castes for the purpose of reservation?",
       "category": "multi_hop_relational",
-      "relevant_docs": ["judgment_0216.txt", "judgment_0221.txt"],
-      "must_contain": ["classification"],
+      "relevant_docs": [
+        "judgment_0216.txt",
+        "judgment_0221.txt"
+      ],
+      "must_contain": [
+        "classification"
+      ],
       "must_contain_any": true,
       "answerable": true
     },
@@ -151,8 +627,15 @@
       "id": "q18",
       "question": "Which cases concern the death sentence and the procedural safeguards surrounding its confirmation?",
       "category": "multi_hop_relational",
-      "relevant_docs": ["judgment_0004.txt", "judgment_0006.txt", "judgment_0124.txt", "judgment_0215.txt"],
-      "must_contain": ["death"],
+      "relevant_docs": [
+        "judgment_0004.txt",
+        "judgment_0006.txt",
+        "judgment_0124.txt",
+        "judgment_0215.txt"
+      ],
+      "must_contain": [
+        "death"
+      ],
       "must_contain_any": true,
       "answerable": true
     },
@@ -160,16 +643,24 @@
       "id": "q19",
       "question": "How is the freedom of the press balanced against an individual's claim to privacy and reputation?",
       "category": "multi_hop_relational",
-      "relevant_docs": ["judgment_0074.txt"],
-      "must_contain": ["press"],
+      "relevant_docs": [
+        "judgment_0074.txt"
+      ],
+      "must_contain": [
+        "press"
+      ],
       "answerable": true
     },
     {
       "id": "q20",
       "question": "What did the courts hold about the extent of Parliament's power to amend fundamental rights?",
       "category": "multi_hop_relational",
-      "relevant_docs": ["judgment_0123.txt"],
-      "must_contain": ["amend"],
+      "relevant_docs": [
+        "judgment_0123.txt"
+      ],
+      "must_contain": [
+        "amend"
+      ],
       "answerable": true
     },
     {
@@ -177,10 +668,18 @@
       "question": "Which judgments treat Article 32 as their primary constitutional focus?",
       "category": "article_scoped",
       "relevant_docs": [
-        "judgment_0122.txt", "judgment_0123.txt", "judgment_0124.txt", "judgment_0125.txt",
-        "judgment_0126.txt", "judgment_0127.txt", "judgment_0128.txt", "judgment_0129.txt"
+        "judgment_0122.txt",
+        "judgment_0123.txt",
+        "judgment_0124.txt",
+        "judgment_0125.txt",
+        "judgment_0126.txt",
+        "judgment_0127.txt",
+        "judgment_0128.txt",
+        "judgment_0129.txt"
       ],
-      "must_contain": ["Article 32"],
+      "must_contain": [
+        "Article 32"
+      ],
       "must_contain_any": true,
       "answerable": true
     },
@@ -189,10 +688,18 @@
       "question": "Which judgments centre on the right to equality under Article 14?",
       "category": "article_scoped",
       "relevant_docs": [
-        "judgment_0028.txt", "judgment_0029.txt", "judgment_0030.txt", "judgment_0031.txt",
-        "judgment_0032.txt", "judgment_0033.txt", "judgment_0034.txt", "judgment_0035.txt"
+        "judgment_0028.txt",
+        "judgment_0029.txt",
+        "judgment_0030.txt",
+        "judgment_0031.txt",
+        "judgment_0032.txt",
+        "judgment_0033.txt",
+        "judgment_0034.txt",
+        "judgment_0035.txt"
       ],
-      "must_contain": ["Article 14"],
+      "must_contain": [
+        "Article 14"
+      ],
       "must_contain_any": true,
       "answerable": true
     },
@@ -201,10 +708,18 @@
       "question": "Which judgments deal principally with the freedoms guaranteed by Article 19?",
       "category": "article_scoped",
       "relevant_docs": [
-        "judgment_0071.txt", "judgment_0072.txt", "judgment_0073.txt", "judgment_0074.txt",
-        "judgment_0075.txt", "judgment_0076.txt", "judgment_0077.txt", "judgment_0078.txt"
+        "judgment_0071.txt",
+        "judgment_0072.txt",
+        "judgment_0073.txt",
+        "judgment_0074.txt",
+        "judgment_0075.txt",
+        "judgment_0076.txt",
+        "judgment_0077.txt",
+        "judgment_0078.txt"
       ],
-      "must_contain": ["Article 19"],
+      "must_contain": [
+        "Article 19"
+      ],
       "must_contain_any": true,
       "answerable": true
     },
@@ -213,10 +728,21 @@
       "question": "Which judgments in this corpus record a dissenting opinion?",
       "category": "entity_relationship",
       "relevant_docs": [
-        "judgment_0004.txt", "judgment_0006.txt", "judgment_0032.txt", "judgment_0074.txt",
-        "judgment_0075.txt", "judgment_0076.txt", "judgment_0122.txt", "judgment_0123.txt",
-        "judgment_0124.txt", "judgment_0125.txt", "judgment_0129.txt", "judgment_0214.txt",
-        "judgment_0215.txt", "judgment_0216.txt", "judgment_0219.txt"
+        "judgment_0004.txt",
+        "judgment_0006.txt",
+        "judgment_0032.txt",
+        "judgment_0074.txt",
+        "judgment_0075.txt",
+        "judgment_0076.txt",
+        "judgment_0122.txt",
+        "judgment_0123.txt",
+        "judgment_0124.txt",
+        "judgment_0125.txt",
+        "judgment_0129.txt",
+        "judgment_0214.txt",
+        "judgment_0215.txt",
+        "judgment_0216.txt",
+        "judgment_0219.txt"
       ],
       "must_contain": [],
       "answerable": true,
@@ -226,103 +752,12 @@
       "id": "q25",
       "question": "What did the court say about the right to water and the preservation of open spaces and public parks?",
       "category": "single_hop_factual",
-      "relevant_docs": ["judgment_0007.txt"],
-      "must_contain": ["open space"],
-      "answerable": true
-    },
-
-    {
-      "id": "h01",
-      "question": "If someone is being held in jail, can they complain to a court about how they are being treated inside?",
-      "category": "paraphrased",
-      "difficulty": "hard",
-      "relevant_docs": ["judgment_0126.txt"],
-      "must_contain": ["prison"],
-      "answerable": true
-    },
-    {
-      "id": "h02",
-      "question": "When an investigation drags on past the deadline the law allows, does the person being held get to go free?",
-      "category": "paraphrased",
-      "difficulty": "hard",
-      "relevant_docs": ["judgment_0127.txt"],
-      "must_contain": ["167"],
-      "answerable": true
-    },
-    {
-      "id": "h03",
-      "question": "Is there a ceiling on how many posts can be set aside for disadvantaged groups?",
-      "category": "paraphrased",
-      "difficulty": "hard",
-      "relevant_docs": ["judgment_0214.txt", "judgment_0220.txt", "judgment_0034.txt"],
-      "must_contain": ["50%"],
-      "must_contain_any": true,
-      "answerable": true
-    },
-    {
-      "id": "h04",
-      "question": "Can a court reopen and correct its own final decision once every appeal has already been exhausted?",
-      "category": "paraphrased",
-      "difficulty": "hard",
-      "relevant_docs": ["judgment_0122.txt", "judgment_0125.txt"],
-      "must_contain": ["curative"],
-      "must_contain_any": true,
-      "answerable": true
-    },
-    {
-      "id": "h05",
-      "question": "Are people hired on a day-to-day basis by a government department protected by labour law?",
-      "category": "paraphrased",
-      "difficulty": "hard",
-      "relevant_docs": ["judgment_0029.txt"],
-      "must_contain": ["daily"],
-      "answerable": true
-    },
-    {
-      "id": "h06",
-      "question": "Must the government pay compensation when its officers cause a death while carrying out their duties?",
-      "category": "paraphrased",
-      "difficulty": "hard",
-      "relevant_docs": ["judgment_0005.txt"],
-      "must_contain": ["compensation"],
-      "answerable": true
-    },
-    {
-      "id": "h07",
-      "question": "May a magazine publish details of a well-known person's private life without asking them first?",
-      "category": "paraphrased",
-      "difficulty": "hard",
-      "relevant_docs": ["judgment_0074.txt"],
-      "must_contain": ["privacy"],
-      "answerable": true
-    },
-    {
-      "id": "h08",
-      "question": "What follows when an authority acts against a person without telling them what they are accused of?",
-      "category": "paraphrased",
-      "difficulty": "hard",
-      "relevant_docs": ["judgment_0076.txt"],
-      "must_contain": ["notice"],
-      "answerable": true
-    },
-    {
-      "id": "h09",
-      "question": "Can a person be left waiting many years before their matter is finally decided?",
-      "category": "paraphrased",
-      "difficulty": "hard",
-      "relevant_docs": ["judgment_0002.txt", "judgment_0008.txt"],
-      "must_contain": ["delay"],
-      "must_contain_any": true,
-      "answerable": true
-    },
-    {
-      "id": "h10",
-      "question": "Should a person facing the gravest possible punishment be heard aloud when asking the court to think again?",
-      "category": "paraphrased",
-      "difficulty": "hard",
-      "relevant_docs": ["judgment_0004.txt", "judgment_0006.txt"],
-      "must_contain": ["oral hearing"],
-      "must_contain_any": true,
+      "relevant_docs": [
+        "judgment_0007.txt"
+      ],
+      "must_contain": [
+        "open space"
+      ],
       "answerable": true
     },
     {
@@ -330,7 +765,10 @@
       "question": "What did the Supreme Court hold in Shreya Singhal v. Union of India about Section 66A of the Information Technology Act?",
       "category": "out_of_corpus",
       "relevant_docs": [],
-      "must_not_contain": ["Shreya Singhal", "66A"],
+      "must_not_contain": [
+        "Shreya Singhal",
+        "66A"
+      ],
       "answerable": false,
       "notes": "A famous Article 19 case the generator almost certainly knows from pre-training, on the same theme as the corpus's Article 19 documents. Answering it confidently is a retrieval failure."
     },
@@ -339,7 +777,9 @@
       "question": "What guidelines did the Supreme Court lay down in Vishaka v. State of Rajasthan on sexual harassment at the workplace?",
       "category": "out_of_corpus",
       "relevant_docs": [],
-      "must_not_contain": ["Vishaka"],
+      "must_not_contain": [
+        "Vishaka"
+      ],
       "answerable": false
     },
     {
@@ -347,7 +787,9 @@
       "question": "What did the Supreme Court decide in Navtej Singh Johar regarding Section 377 of the Indian Penal Code?",
       "category": "out_of_corpus",
       "relevant_docs": [],
-      "must_not_contain": ["Navtej"],
+      "must_not_contain": [
+        "Navtej"
+      ],
       "answerable": false
     },
     {
@@ -355,7 +797,10 @@
       "question": "What is the right to erasure under the European Union's General Data Protection Regulation?",
       "category": "out_of_corpus",
       "relevant_docs": [],
-      "must_not_contain": ["General Data Protection", "GDPR"],
+      "must_not_contain": [
+        "General Data Protection",
+        "GDPR"
+      ],
       "answerable": false
     },
     {
@@ -363,7 +808,10 @@
       "question": "What did the United States Supreme Court hold in Roe v. Wade?",
       "category": "out_of_corpus",
       "relevant_docs": [],
-      "must_not_contain": ["Roe v. Wade", "Roe vs Wade"],
+      "must_not_contain": [
+        "Roe v. Wade",
+        "Roe vs Wade"
+      ],
       "answerable": false
     },
     {
@@ -371,7 +819,10 @@
       "question": "What are the corporate social responsibility obligations under Section 135 of the Companies Act, 2013?",
       "category": "out_of_corpus",
       "relevant_docs": [],
-      "must_not_contain": ["corporate social responsibility", "Companies Act, 2013"],
+      "must_not_contain": [
+        "corporate social responsibility",
+        "Companies Act, 2013"
+      ],
       "answerable": false
     },
     {
@@ -379,7 +830,9 @@
       "question": "How does the Bharatiya Nyaya Sanhita define the offence of theft?",
       "category": "out_of_corpus",
       "relevant_docs": [],
-      "must_not_contain": ["Bharatiya Nyaya Sanhita"],
+      "must_not_contain": [
+        "Bharatiya Nyaya Sanhita"
+      ],
       "answerable": false
     },
     {
@@ -387,7 +840,9 @@
       "question": "What did the Supreme Court decide in the Sabarimala temple entry case about women's right to worship?",
       "category": "out_of_corpus",
       "relevant_docs": [],
-      "must_not_contain": ["Sabarimala"],
+      "must_not_contain": [
+        "Sabarimala"
+      ],
       "answerable": false
     },
     {
@@ -395,7 +850,9 @@
       "question": "What did the Supreme Court hold about the practice of instant triple talaq?",
       "category": "out_of_corpus",
       "relevant_docs": [],
-      "must_not_contain": ["triple talaq"],
+      "must_not_contain": [
+        "triple talaq"
+      ],
       "answerable": false
     },
     {
@@ -403,7 +860,9 @@
       "question": "What are the eligibility criteria and age limits for appointment to the Indian Administrative Service?",
       "category": "out_of_corpus",
       "relevant_docs": [],
-      "must_not_contain": ["Indian Administrative Service"],
+      "must_not_contain": [
+        "Indian Administrative Service"
+      ],
       "answerable": false
     }
   ]
