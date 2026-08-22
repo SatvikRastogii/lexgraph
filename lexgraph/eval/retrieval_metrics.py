@@ -184,6 +184,47 @@ def bootstrap_ci(
     return (low, high)
 
 
+def paired_bootstrap(
+    baseline: list[float],
+    candidate: list[float],
+    confidence: float = 0.95,
+    iterations: int = 10000,
+    seed: int = 0,
+) -> dict:
+    """Bootstrap the per-question *difference* between two configurations.
+
+    Comparing two independent confidence intervals and checking whether they
+    overlap is the wrong test, and it is the one this repository was making.
+    Overlapping intervals routinely hide a real difference, because the two
+    configurations answer the *same* questions: a question that is hard for one
+    is usually hard for the other, and that shared difficulty cancels in the
+    difference while inflating both intervals separately.
+
+    So the difference is resampled directly, question by question. The interval
+    returned is for the mean improvement, and it excluding zero is the claim
+    worth making -- not that two error bars happen not to touch.
+
+    ``wins`` and ``losses`` are reported alongside because a mean shift of the
+    same size means something different when it comes from two questions
+    changing a lot than from twenty changing a little.
+    """
+    if len(baseline) != len(candidate):
+        raise ValueError("paired comparison needs one score per question from each")
+    if not baseline:
+        return {"mean_difference": 0.0, "ci95": (0.0, 0.0), "wins": 0, "losses": 0}
+
+    differences = [c - b for b, c in zip(baseline, candidate, strict=True)]
+    low, high = bootstrap_ci(differences, confidence, iterations, seed)
+    return {
+        "mean_difference": sum(differences) / len(differences),
+        "ci95": (low, high),
+        "wins": sum(1 for d in differences if d > 0),
+        "losses": sum(1 for d in differences if d < 0),
+        "ties": sum(1 for d in differences if d == 0),
+        "significant": low > 0 or high < 0,
+    }
+
+
 def abstention_rate(answered: list[bool]) -> float:
     """Fraction of questions the system declined to answer."""
     if not answered:
