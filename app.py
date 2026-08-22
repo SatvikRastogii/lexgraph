@@ -502,11 +502,27 @@ def run_graphrag_query(query, method="local"):
 RETRIEVAL_CONFIG = os.getenv("LEXGRAPH_RETRIEVER", "hybrid-rerank")
 GENERATOR_SPEC = os.getenv("LEXGRAPH_GENERATOR", "ollama:llama3.1")
 
-# Calibrated on the gold set's out-of-corpus questions; see
-# reports/abstention_calibration.json and scripts/calibrate_abstention.py.
-# Only meaningful for the configuration it was calibrated against, so it is
-# disabled if the retriever is switched away from hybrid-rerank.
-ABSTENTION_THRESHOLD = 0.423 if RETRIEVAL_CONFIG == "hybrid-rerank" else None
+def _abstention_threshold(config):
+    """Read the calibrated refusal threshold for this retriever.
+
+    Read rather than hardcoded: the threshold is a property of the retriever's
+    score distribution, so it moves whenever the gold set or the retriever
+    changes. Adding the hard question tier shifted hybrid-rerank's from 0.423
+    to 0.375, and a constant would have silently gone stale.
+
+    Returns None when no calibration exists for this configuration, which
+    disables abstention rather than applying a threshold from a different
+    score scale — BM25's sits above 20, dense's near 0.75.
+    """
+    path = os.path.join("reports", "abstention_calibration.json")
+    try:
+        with open(path, encoding="utf-8") as handle:
+            return json.load(handle)[config]["threshold"]
+    except (OSError, KeyError, ValueError):
+        return None
+
+
+ABSTENTION_THRESHOLD = _abstention_threshold(RETRIEVAL_CONFIG)
 
 
 @st.cache_resource

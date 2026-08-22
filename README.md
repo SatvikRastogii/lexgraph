@@ -31,23 +31,44 @@ generation run locally through Ollama. Only the judge is remote, deliberately.
 
 ## Findings
 
-### Reranking earns its cost twice
+### BM25 collapses on paraphrase; dense does not
+
+The gold set has two tiers. Standard questions use the vocabulary of the
+judgments. Hard questions deliberately do not — *"if someone is being held in
+jail, can they complain about how they are treated inside"* instead of *"can a
+prisoner invoke writ jurisdiction"*. Splitting the metrics by tier is what
+makes the retrievers' characters visible:
+
+| configuration | hard R@5 | standard R@5 | drop | hard nDCG@10 |
+|---|---|---|---|---|
+| `bm25` | 0.717 | 0.857 | **−0.140** | 0.671 |
+| `dense-fixed` | 0.833 | 0.889 | −0.056 | 0.742 |
+| `dense` | 0.867 | 0.900 | −0.033 | 0.783 |
+| `hybrid` | 0.867 | 0.885 | −0.018 | **0.795** |
+| `hybrid-rerank` | 0.867 | **0.902** | −0.035 | 0.791 |
+
+Lexical matching loses 14 points the moment the question stops sharing words
+with the document. Dense retrieval loses 3. That gap is the whole argument for
+fusing them, and it is the reason the aggregate numbers below are worth less
+than this table.
+
+### The aggregate picture
 
 | configuration | R@1 | R@5 | R@5 95% CI | nDCG@10 | MRR | p50 |
 |---|---|---|---|---|---|---|
-| `dense-fixed` — 500-word chunks | 0.681 | 0.889 | [0.79, 0.97] | 0.906 | 0.980 | 2190ms |
-| `dense` — paragraph chunks | 0.628 | 0.902 | [0.82, 0.97] | 0.897 | 0.940 | 2193ms |
-| `bm25` | 0.636 | 0.857 | [0.74, 0.96] | 0.857 | 0.933 | **1ms** |
-| `hybrid` — RRF fusion | 0.676 | 0.885 | [0.78, 0.97] | 0.900 | 0.960 | 2195ms |
-| **`hybrid-rerank`** | **0.716** | **0.905** | [0.82, 0.97] | **0.933** | 0.980 | 4168ms |
+| `dense-fixed` | 0.610 | 0.873 | [0.78, 0.95] | 0.859 | 0.914 | 2152ms |
+| `dense` | 0.586 | 0.890 | [0.80, 0.96] | 0.861 | 0.895 | 2184ms |
+| `bm25` | 0.578 | 0.817 | [0.71, 0.92] | 0.803 | 0.858 | **2ms** |
+| `hybrid` | 0.621 | 0.880 | [0.79, 0.96] | 0.867 | 0.914 | 2188ms |
+| **`hybrid-rerank`** | **0.664** | **0.892** | [0.81, 0.96] | **0.890** | **0.924** | 4353ms |
 
 The cross-encoder helps where a cross-encoder should — at the top of the
-ranking. R@1 rises from 0.628 to 0.716 and nDCG@10 from 0.897 to 0.933.
+ranking. R@1 rises from 0.586 to 0.664 and nDCG@10 from 0.861 to 0.890.
 
-The Recall@5 column is a different story. Every interval overlaps every other
-interval. At 25 answerable questions this gold set **cannot** separate these
-configurations on R@5, and the honest reading is that it does not. The
-intervals are printed for that reason rather than hidden.
+Every Recall@5 interval still overlaps every other one. At 35 answerable
+questions this gold set **cannot** establish those differences, and the honest
+reading is that it does not. The intervals are printed for that reason rather
+than hidden.
 
 ### Cosine similarity is a poor signal for refusing to answer
 
@@ -57,18 +78,24 @@ whether the retriever scores those questions differently from real ones:
 
 | retriever | answerable | out-of-corpus | separation | Youden's J |
 |---|---|---|---|---|
-| dense | 0.737 | 0.698 | **+0.039** | 0.38 |
-| bm25 | 27.75 | 14.48 | +13.27 | 0.72 |
-| **hybrid-rerank** | 0.893 | 0.243 | **+0.649** | **0.80** |
+| dense | 0.718 | 0.698 | **+0.020** | 0.24 |
+| bm25 | 24.80 | 14.48 | +10.32 | 0.57 |
+| **hybrid-rerank** | 0.736 | 0.243 | **+0.492** | **0.63** |
 
 Dense similarity barely moves between the two populations. Catching 90% of
-out-of-corpus questions on that signal costs refusing 52% of answerable ones —
+out-of-corpus questions on that signal costs refusing 66% of answerable ones —
 which is why a confidence score built on cosine distance can only ever be a
 warning label beside an answer, not a decision to withhold one.
 
-The cross-encoder score separates cleanly. At a threshold of 0.423 it answers
-100% of answerable questions and refuses 80% of out-of-corpus ones. That
-threshold is chosen by maximising Youden's J against the gold set, not by feel.
+The cross-encoder score separates cleanly. At a threshold of 0.375 it answers
+83% of answerable questions and refuses 80% of out-of-corpus ones. That
+threshold is chosen by maximising Youden's J against the gold set, not by feel,
+and the dashboard reads it from the calibration file rather than hardcoding it
+— adding the hard tier moved it from 0.423 to 0.375, and a constant would have
+gone stale silently.
+
+Measured end to end during the judged run: **8 of 10 out-of-corpus questions
+refused, 0 answerable questions wrongly refused.**
 
 So reranking pays for its latency twice: once in ranking quality, and again by
 producing a score calibrated enough for a guardrail to work at all.
@@ -89,7 +116,35 @@ A related measurement: an Ollama embed request costs ~2.15s of **fixed**
 overhead on this hardware regardless of payload. Batches of 1, 2 and 8 take
 the same wall time; a batch of 32 amortises to ~94ms per item. The ChromaDB
 query itself is 3ms. Single-query dense retrieval is dominated by a constant,
-which is why BM25 at 1ms is not a rounding difference.
+which is why BM25 at 2ms is not a rounding difference.
+
+### What the smaller model actually costs you
+
+Both generators, same retriever, same questions, scored by the same
+independent judge:
+
+| metric | llama3.1 (8B) | qwen2.5:3b |
+|---|---|---|
+| answer relevancy | **4.95** | 4.12 |
+| coherence | **4.86** | 4.48 |
+| citation accuracy | 4.83 | **4.89** |
+| completeness | **4.05** | 3.32 |
+| context precision | 4.36 | **4.64** |
+| legal reasoning | **3.73** | 3.04 |
+| faithfulness | **3.41** | 3.04 |
+| hallucination ↑ | 3.00 | **3.60** |
+| median answer length | 262 words | 245 words |
+| **median latency** | **52.5s** | **12.0s** |
+
+llama3.1 is the better writer and the better legal reasoner. It is also 4.4×
+slower for an answer of the same length, and it hallucinates *more* — the one
+metric where the 3B model wins, which is what you would expect from a model
+that stays closer to its context because it has less parametric knowledge to
+fall back on.
+
+Neither column is the "right" answer. The point is that the tradeoff is now a
+measurement rather than an assumption. (The llama3.1 run is partial at n=22;
+see the caveat in Limitations.)
 
 ---
 
@@ -213,14 +268,19 @@ docker compose up --build
 
 ## Limitations
 
-- 25 answerable questions is a small gold set. It is large enough to detect the
-  reranking effect on R@1 and nDCG, and demonstrably too small to separate
-  configurations on R@5.
-- The gold set is close to saturated: MRR sits between 0.93 and 0.98 across
-  every configuration, meaning a relevant document is almost always at rank 1
-  already. A harder question tier would give the harness more room.
+- 35 answerable questions is a small gold set. It is large enough to detect the
+  reranking effect on R@1 and nDCG and BM25's collapse on paraphrase, and
+  demonstrably too small to separate configurations on R@5.
+- **The two generator runs are not equally complete.** qwen2.5:3b was scored on
+  all 35 answerable questions; llama3.1 reached 22 before the judge's free-tier
+  daily quota ran out. Per-question checkpointing preserved the partial run and
+  the report labels it as partial, but the comparison above is n=35 against
+  n=22 and should be read with that in mind.
 - The judge has not been validated against human labels. Independence from the
-  generator removes the worst bias, not all of it.
+  generator removes the worst bias, not all of it. Hand-scoring 20 answers and
+  reporting Spearman ρ against the judge is the obvious next step.
+- The hard tier is 10 questions. It separates the configurations far better
+  than the standard tier, which argues for making it much larger.
 - GraphRAG is compared on the answer side only. Its retrieval is not yet scored
   on the same footing, though `text_unit_ids` in its output would allow it.
 - **GraphRAG's `local` search method crashes** on this index — a vector-dimension

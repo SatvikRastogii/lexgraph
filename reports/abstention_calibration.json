@@ -1,29 +1,29 @@
 {
   "dense": {
     "threshold": 0.7577866752942404,
-    "separation": 0.03897712190945968,
-    "answerable_mean": 0.736969043413798,
+    "separation": 0.020299958671842422,
+    "answerable_mean": 0.7182918801761808,
     "unanswerable_mean": 0.6979919215043386,
-    "answered_when_answerable": 0.48,
+    "answered_when_answerable": 0.34285714285714286,
     "refused_when_unanswerable": 0.9,
-    "youden_j": 0.3799999999999999
+    "youden_j": 0.24285714285714288
   },
   "bm25": {
     "threshold": 21.06866774567043,
-    "separation": 13.270197243539272,
-    "answerable_mean": 27.747895784893085,
+    "separation": 10.32385160056641,
+    "answerable_mean": 24.801550141920227,
     "unanswerable_mean": 14.477698541353814,
-    "answered_when_answerable": 0.72,
+    "answered_when_answerable": 0.5714285714285714,
     "refused_when_unanswerable": 1.0,
-    "youden_j": 0.72
+    "youden_j": 0.5714285714285714
   },
   "hybrid-rerank": {
-    "threshold": 0.42346505299210546,
-    "separation": 0.6494002586420003,
-    "answerable_mean": 0.8928999257882436,
+    "threshold": 0.3752870132525762,
+    "separation": 0.49211741575239476,
+    "answerable_mean": 0.735617082898638,
     "unanswerable_mean": 0.24349966714624316,
-    "answered_when_answerable": 1.0,
+    "answered_when_answerable": 0.8285714285714286,
     "refused_when_unanswerable": 0.8,
-    "youden_j": 0.8
+    "youden_j": 0.6285714285714286
   }
 }
