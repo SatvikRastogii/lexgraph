@@ -26,6 +26,9 @@ legal_corpus/
 # Evaluation run artifacts (results are summarised in reports/, not committed raw)
 eval_runs/
 
+# Cached LLM responses (regenerable; LEXGRAPH_CACHE=off disables)
+.llm_cache/
+
 # Personal documents that happen to live in the working directory. This
 # repository is public; a CV carries a phone number and address.
 *Resume*.pdf
