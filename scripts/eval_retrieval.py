@@ -21,6 +21,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from lexgraph.eval.retrieval_metrics import (
     aggregate,
     bootstrap_ci,
+    paired_bootstrap,
     paragraph_recall_at_k,
     score_query,
 )
@@ -126,6 +127,10 @@ def main():
     parser.add_argument("--configs", nargs="*", default=list(CONFIGURATIONS))
     parser.add_argument("--k", type=int, default=10, help="hits retrieved per query")
     parser.add_argument("--results-file", default=RESULTS_PATH)
+    parser.add_argument("--baseline", default="dense",
+                        help="configuration the paired comparison is run against")
+    parser.add_argument("--metric", default="ndcg@10",
+                        help="per-question metric for the paired comparison")
     args = parser.parse_args()
 
     with open(args.goldset, encoding="utf-8") as handle:
@@ -141,7 +146,14 @@ def main():
     for name in args.configs:
         print(f"[{name}] {CONFIGURATIONS[name]}")
         started = time.perf_counter()
-        retriever = build_retriever(name)
+        try:
+            retriever = build_retriever(name)
+        except FileNotFoundError as error:
+            # The GraphRAG index is not committed. Skipping keeps the ablation
+            # runnable on a clean checkout instead of failing the whole sweep
+            # over an optional arm.
+            print(f"  skipped: {error}\n")
+            continue
         build_seconds = time.perf_counter() - started
 
         per_question, latencies, has_paragraphs = evaluate(
@@ -168,6 +180,11 @@ def main():
             "per_question": per_question,
             "out_of_corpus_top_score": probe_out_of_corpus(retriever, unanswerable, args.k),
         }
+        # A community report stands for every judgment it was built from, so
+        # one hit can fill many document slots. Recorded next to the recall it
+        # inflates, because the two numbers are only meaningful together.
+        if hasattr(retriever, "breadth"):
+            results[name]["documents_per_hit"] = retriever.breadth
         print(
             f"  recall@5 {means['recall@5']:.3f} [{low:.3f}, {high:.3f}]  "
             f"ndcg@10 {means['ndcg@10']:.3f}  mrr {means['mrr']:.3f}  "
@@ -175,6 +192,10 @@ def main():
         )
 
     _print_table(results)
+
+    comparisons = _compare(results, args.baseline, args.metric)
+    if comparisons:
+        results["_comparisons"] = comparisons
 
     os.makedirs(os.path.dirname(args.results_file), exist_ok=True)
     with open(args.results_file, "w", encoding="utf-8") as handle:
@@ -223,6 +244,42 @@ def _print_table(results):
 
 def _para(value):
     return "n/a" if value is None else f"{value:.3f}"
+
+
+def _compare(results, baseline, metric):
+    """Paired comparison of every configuration against one baseline.
+
+    Reported because the overlapping-interval reading the table above invites
+    is the wrong test. Each configuration answers the same questions, so the
+    difference can be resampled per question, and shared difficulty cancels
+    instead of inflating both intervals.
+    """
+    scored = {k: v for k, v in results.items() if not k.startswith("_")}
+    if baseline not in scored or len(scored) < 2:
+        return {}
+
+    def series(name):
+        return [q[metric] for q in sorted(scored[name]["per_question"], key=lambda q: q["_id"])]
+
+    reference = series(baseline)
+    comparisons = {}
+    print(f"\nPaired against {baseline} on {metric} "
+          f"(the difference is resampled, not the two means separately):")
+    header = f"  {'configuration':<18}{'Δ mean':>9}{'95% CI':>18}{'W/L/T':>12}  verdict"
+    print(header)
+    print("  " + "-" * (len(header) - 2))
+
+    for name in scored:
+        if name == baseline:
+            continue
+        stats = paired_bootstrap(reference, series(name))
+        comparisons[name] = stats
+        low, high = stats["ci95"]
+        record = f"{stats['wins']}/{stats['losses']}/{stats['ties']}"
+        verdict = "distinguishable" if stats["significant"] else "not distinguishable"
+        print(f"  {name:<18}{stats['mean_difference']:>+9.3f}"
+              f"{f'[{low:+.3f}, {high:+.3f}]':>18}{record:>12}  {verdict}")
+    return comparisons
 
 
 if __name__ == "__main__":
