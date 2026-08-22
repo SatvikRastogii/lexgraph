@@ -12,12 +12,14 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Code and config only — output/, cache/, chroma_db/, logs/, legal_corpus/, input/
 # are bind-mounted at runtime (see docker-compose.yml), not baked into the image.
-COPY app.py naive_rag.py hybrid_router.py analyze_contradictions.py ragas_evaluation.py ./
+COPY app.py analyze_contradictions.py telemetry.py ./
+COPY lexgraph/ ./lexgraph/
+COPY scripts/ ./scripts/
+COPY data/ ./data/
 COPY settings.yaml ./settings.yaml
 COPY prompts/ ./prompts/
-COPY benchmark_questions.json corpus_metadata.json ./
+COPY corpus_metadata.json ./
 COPY .streamlit/ ./.streamlit/
-COPY telemetry.py ragas_drift_check.py ./
 COPY monitoring/ ./monitoring/
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh

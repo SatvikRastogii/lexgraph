@@ -1,415 +1,227 @@
-<p align="center">
-  <img src="https://img.shields.io/badge/Python-3.11+-3776AB?style=for-the-badge&logo=python&logoColor=white" />
-  <img src="https://img.shields.io/badge/LLM-Llama_3.1_8B-FF6F00?style=for-the-badge&logo=meta&logoColor=white" />
-  <img src="https://img.shields.io/badge/Framework-GraphRAG-6366F1?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/UI-Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white" />
-  <img src="https://img.shields.io/badge/Inference-100%25_Local-10B981?style=for-the-badge" />
-</p>
-
-<h1 align="center">⚖️ LexGraph</h1>
-<h3 align="center">GraphRAG-Powered Legal Knowledge Navigator</h3>
+<h1 align="center">LexGraph</h1>
 
 <p align="center">
-  <em>A production-grade, fully local RAG system that transforms 40 Supreme Court judgments into an interconnected knowledge graph — then proves its superiority over traditional vector search with an 8-metric RAGAS benchmark.</em>
+  <em>An evaluation harness for retrieval systems, built on a corpus of Indian case law.</em>
 </p>
 
 <p align="center">
-  <strong>GraphRAG wins 81% of questions (17/21) across ALL query categories.</strong>
+  <img src="https://img.shields.io/badge/python-3.11%2B-3776AB?logo=python&logoColor=white" />
+  <img src="https://img.shields.io/badge/tests-110%20passing-3B6650" />
+  <img src="https://img.shields.io/badge/retrieval-BM25%20%2B%20dense%20%2B%20rerank-8F6620" />
+  <img src="https://img.shields.io/badge/inference-local%20(Ollama)-3F5670" />
 </p>
 
 ---
 
-## 🎯 What is LexGraph?
+## What this is
 
-LexGraph is an end-to-end legal AI research system that demonstrates the **measurable superiority of Graph-based Retrieval Augmented Generation (GraphRAG)** over traditional Naive RAG for complex legal reasoning tasks.
+Most RAG projects can show you an answer. Far fewer can tell you whether the
+answer was any good, or whether a change made it better.
 
-Built entirely for local inference on consumer hardware (RTX 4050, 6GB VRAM), the system:
+LexGraph is the second thing. It indexes 40 Indian court judgments and puts
+five retrieval configurations, two generator models and a graph index through
+the same measurement: a hand-annotated gold set with document-level ground
+truth, rank metrics that need no LLM, and answer scoring by a judge model from
+a different family than the generator.
 
-1. **Scrapes** 40 landmark Indian Supreme Court judgments from Indian Kanoon
-2. **Indexes** them into a knowledge graph with 3,750 entities and 1,505 relationships using Microsoft's GraphRAG
-3. **Routes** user queries through a Hybrid Semantic Router to the optimal pipeline
-4. **Evaluates** both pipelines across 8 RAGAS metrics using LLM-as-Judge
-5. **Visualizes** everything through a premium Streamlit dashboard with 7 interactive tabs
-
-> **Why does this matter?** Traditional RAG treats documents as isolated text chunks. GraphRAG understands that *Maneka Gandhi v. Union of India* (1978) expanded rights established in *A.K. Gopalan v. State of Madras* (1950), and that both were synthesized in *K.S. Puttaswamy v. Union of India* (2017). This structural awareness produces fundamentally better answers for complex legal queries.
-
----
-
-## 📊 Benchmark Results — RAGAS Evaluation
-
-> **21 questions · 8 metrics · 336 LLM judge calls · 100% local inference**
-
-### Overall Scores (1–5 scale)
-
-| Metric | Naive RAG | GraphRAG | Δ | Winner |
-|--------|:---------:|:--------:|:-:|--------|
-| **Faithfulness** | 3.57 | **4.38** | +0.81 | 🟣 GraphRAG |
-| **Answer Relevancy** | 4.05 | **4.62** | +0.57 | 🟣 GraphRAG |
-| **Completeness** | 3.62 | **3.95** | +0.33 | 🟣 GraphRAG |
-| **Hallucination Detection** ↑ | 3.43 | **4.05** | +0.62 | 🟣 GraphRAG |
-| **Coherence** | 3.95 | **4.00** | +0.05 | 🟣 GraphRAG |
-| **Citation Accuracy** | **3.67** | 3.62 | -0.05 | 🟢 Naive RAG |
-| **Legal Reasoning** | 3.57 | **3.71** | +0.14 | 🟣 GraphRAG |
-| **Context Precision** | **3.05** | N/A | — | 🟢 Naive RAG |
-
-> ↑ Higher = fewer hallucinations (5 = zero)
-
-### Performance by Query Category
-
-| Category | Naive RAG | GraphRAG | Winner |
-|----------|:---------:|:--------:|--------|
-| Single-Hop Factual | 3.50 | **4.16** | 🟣 GraphRAG |
-| Multi-Hop Relational | 3.58 | **3.92** | 🟣 GraphRAG |
-| Global Thematic | 4.06 | **4.09** | 🟣 GraphRAG |
-| Cross-Document Reasoning | 3.56 | **4.19** | 🟣 GraphRAG |
-| Entity Relationship | 3.38 | **3.94** | 🟣 GraphRAG |
-
-### Win/Loss Summary
-
-| Pipeline | Wins | Ties | Win Rate |
-|----------|:----:|:----:|:--------:|
-| **GraphRAG** | **17** | 3 | **81.0%** |
-| Naive RAG | 1 | 3 | 4.8% |
+Everything below is measured on an RTX 4050 with 6GB of VRAM. Retrieval and
+generation run locally through Ollama. Only the judge is remote, deliberately.
 
 ---
 
-## 🏗️ System Architecture
+## Findings
+
+### Reranking earns its cost twice
+
+| configuration | R@1 | R@5 | R@5 95% CI | nDCG@10 | MRR | p50 |
+|---|---|---|---|---|---|---|
+| `dense-fixed` — 500-word chunks | 0.681 | 0.889 | [0.79, 0.97] | 0.906 | 0.980 | 2190ms |
+| `dense` — paragraph chunks | 0.628 | 0.902 | [0.82, 0.97] | 0.897 | 0.940 | 2193ms |
+| `bm25` | 0.636 | 0.857 | [0.74, 0.96] | 0.857 | 0.933 | **1ms** |
+| `hybrid` — RRF fusion | 0.676 | 0.885 | [0.78, 0.97] | 0.900 | 0.960 | 2195ms |
+| **`hybrid-rerank`** | **0.716** | **0.905** | [0.82, 0.97] | **0.933** | 0.980 | 4168ms |
+
+The cross-encoder helps where a cross-encoder should — at the top of the
+ranking. R@1 rises from 0.628 to 0.716 and nDCG@10 from 0.897 to 0.933.
+
+The Recall@5 column is a different story. Every interval overlaps every other
+interval. At 25 answerable questions this gold set **cannot** separate these
+configurations on R@5, and the honest reading is that it does not. The
+intervals are printed for that reason rather than hidden.
+
+### Cosine similarity is a poor signal for refusing to answer
+
+Ten gold-set questions have no supporting document anywhere in the corpus. The
+right behaviour is refusal. Whether that is achievable depends entirely on
+whether the retriever scores those questions differently from real ones:
+
+| retriever | answerable | out-of-corpus | separation | Youden's J |
+|---|---|---|---|---|
+| dense | 0.737 | 0.698 | **+0.039** | 0.38 |
+| bm25 | 27.75 | 14.48 | +13.27 | 0.72 |
+| **hybrid-rerank** | 0.893 | 0.243 | **+0.649** | **0.80** |
+
+Dense similarity barely moves between the two populations. Catching 90% of
+out-of-corpus questions on that signal costs refusing 52% of answerable ones —
+which is why a confidence score built on cosine distance can only ever be a
+warning label beside an answer, not a decision to withhold one.
+
+The cross-encoder score separates cleanly. At a threshold of 0.423 it answers
+100% of answerable questions and refuses 80% of out-of-corpus ones. That
+threshold is chosen by maximising Youden's J against the gold set, not by feel.
+
+So reranking pays for its latency twice: once in ranking quality, and again by
+producing a score calibrated enough for a guardrail to work at all.
+
+### The model did not fit the card
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                        USER QUERY                               │
-└──────────────────────────┬──────────────────────────────────────┘
-                           │
-                           ▼
-              ┌────────────────────────┐
-              │   HYBRID SEMANTIC      │  Latency: ~50ms
-              │      ROUTER            │  No LLM inference
-              │  (nomic-embed-text)    │  Cosine similarity
-              └─────┬──────────┬───────┘
-                    │          │
-          ┌─────────┘          └──────────┐
-          ▼                               ▼
-┌──────────────────┐           ┌──────────────────────┐
-│   NAIVE RAG      │           │     GRAPHRAG          │
-│                  │           │                       │
-│  ChromaDB        │           │  3,750 Entities       │
-│  Vector Search   │           │  1,505 Relationships  │
-│  Top-K Retrieval │           │  184 Communities       │
-│  ~50s latency    │           │  Global Synthesis      │
-│                  │           │  ~208s latency         │
-└───────┬──────────┘           └───────┬───────────────┘
-        │                              │
-        └──────────┬───────────────────┘
-                   ▼
-        ┌──────────────────────┐
-        │   LLAMA 3.1 8B       │
-        │   (Ollama, local)    │
-        │   Answer Generation  │
-        └──────────┬───────────┘
-                   │
-                   ▼
-        ┌──────────────────────┐
-        │  STREAMLIT DASHBOARD │
-        │  7 Interactive Tabs  │
-        │  Dark Glassmorphism  │
-        └──────────────────────┘
+llama3.1:latest   7.2 GB required   43%/57% CPU/GPU   12.0 tok/s   ~100s cold start
+qwen2.5:3b        2.7 GB required   100% GPU          58.8 tok/s
 ```
 
-### Key Design Decisions
+`llama3.1` needs 7.2GB resident on a 6GB card, so Ollama spills 43% of it to
+system RAM across PCIe. Worse, it and `nomic-embed-text` evict each other, and
+every eviction pays the cold start again. This is the actual cause of the
+system feeling slow — not the corpus, not the pipeline.
 
-| Decision | Rationale |
-|----------|-----------|
-| **Hybrid Router** over static rules | Embedding-based classification adapts to unseen queries without LLM inference (~50ms) |
-| **GraphRAG Global** over Local mode | Global synthesizes across community reports — the true differentiator over vector search |
-| **LLM-as-Judge** over heuristic metrics | Automated evaluation at scale without human annotators; reproducible benchmarks |
-| **Ollama** over cloud APIs | 100% local inference; zero API costs; works offline; data privacy |
-| **ChromaDB** for Naive RAG | Lightweight persistent vector store; no external server needed |
+A related measurement: an Ollama embed request costs ~2.15s of **fixed**
+overhead on this hardware regardless of payload. Batches of 1, 2 and 8 take
+the same wall time; a batch of 32 amortises to ~94ms per item. The ChromaDB
+query itself is 3ms. Single-query dense retrieval is dominated by a constant,
+which is why BM25 at 1ms is not a rounding difference.
 
 ---
 
-## ✨ Features
+## How the evaluation is kept honest
 
-### 🔍 Query Engine
-- **Side-by-side comparison mode** — run both pipelines on the same query
-- **Automatic semantic routing** — queries classified in ~50ms without LLM
-- **Confidence scoring** — cosine similarity-based confidence for Naive RAG
-- **Pipeline override** — force a specific pipeline or run both
+**The judge is never the generator.** Scoring llama3.1's answers with
+llama3.1 is self-evaluation. `require_independent_judge()` raises rather than
+letting a self-judged run quietly report better numbers.
 
-### ⏳ Temporal Timeline
-- **Interactive Plotly scatter chart** — every case plotted chronologically, color-coded by era
-- **4 legal eras** — Foundation (1950–69), Expansion (1970–84), Golden Triangle (1985–04), Digital Rights (2005+)
-- **Vertical timeline cards** — glassmorphism cards with article badges, judges, and Indian Kanoon links
-- **Radar chart** — most cited constitutional articles across the corpus
-- **AI narrative generator** — Llama 3.1 writes a scholarly evolution narrative for any legal topic
+**Ground truth is machine-verified.** `scripts/validate_goldset.py` checks that
+every supporting document exists and contains the terms its annotation claims,
+that no out-of-corpus question is secretly answerable, and that dissent labels
+match the document headers. It runs in CI. It caught four bad labels on its
+first run, including three questions marked out-of-corpus that the corpus
+actually cites.
 
-### 🕸️ Knowledge Graph
-- **Interactive network visualization** — 3,750 entities with spring-layout positioning
-- **Color-coded entity types** — Cases, Persons, Articles, Legal Principles, Courts, Doctrines
-- **Adjustable density** — slider to control displayed nodes (30–300)
-- **Entity type distribution** — bar chart of the top 15 entity types
+**Citation accuracy is measured, not judged.** Case names, article and section
+references and reported citations are extracted from the answer and checked
+against the retrieved text. Asking a model to grade this lets a fabricated
+citation be scored generously; a regex cannot be talked round.
 
-### ⚔️ Contradiction Detector
-- **Keyword-based conflict detection** — scans relationships for dispute indicators (overruled, dissented, reversed, etc.)
-- **AI analysis** — Llama 3.1 explains the legal significance of each dispute
-- **Weighted ranking** — disputes sorted by edge weight for importance
+**Answer length travels with every score.** LLM judges reward verbosity, so a
+score gap that is really a length gap stays visible in the output.
 
-### 🏆 RAGAS Benchmark Dashboard
-- **Radar chart** — overlaid Naive vs GraphRAG across 7 metrics
-- **Grouped bar chart** — head-to-head metric comparison
-- **Category heatmap** — performance breakdown by query type
-- **Win/loss donut chart** — 17/21 GraphRAG victories
-- **Per-question breakdown** — full 21-question results table
-- **Latency line chart** — response time comparison per question
-- **Methodology cards** — evaluation framework details
+**Every mean carries a bootstrap interval.** At a few dozen questions, a bare
+mean implies a precision the sample size does not support.
 
-### 📚 Data Explorer
-- **Raw data inspection** — entities, relationships, communities, and documents
-- **Entity search** — fuzzy search across 3,750 knowledge graph entities
-
-### 📊 Session Analytics
-- **Route distribution** — Naive vs GraphRAG usage pie chart
-- **Query history** — timestamped log of all session queries
-- **Knowledge graph health** — edge weights, entity types, dispute rates
+**Out-of-corpus probes are near-misses.** Shreya Singhal, Sabarimala, Navtej
+Singh Johar, triple talaq — all absent from the corpus, all certainly known to
+the generator from pre-training. A fluent answer to one of them is a retrieval
+failure wearing the costume of a success. Cases the corpus merely *cites*
+(Maneka Gandhi appears in 10 documents, Kesavananda in 4) were rejected as
+probes for exactly that reason.
 
 ---
 
-## 🗂️ Project Structure
+## Being straight about the corpus
+
+This matters more than any number above, so it goes in the README rather than a
+footnote.
+
+- **40 files, 38 unique cases.** Two are duplicate pairs. They are kept because
+  the GraphRAG index was built over all 40, and removing them from `input/`
+  without re-indexing would make the two pipelines incomparable again.
+- **17 Supreme Court, 22 High Court, 1 unclear.** An earlier version of this
+  README described all 40 as Supreme Court judgments. That was wrong.
+- **These are not landmark constitutional cases.** They are keyword-scrape
+  results that mention Articles 14, 19, 21 or 32 — service law, criminal
+  procedure, prohibition, reservation. *Maneka Gandhi*, *Kesavananda Bharati*,
+  *Puttaswamy* and *Vishaka* are **not in the corpus**, though several
+  judgments cite them.
+- **The published benchmark that preceded this one was invalid.** GraphRAG
+  indexed `input/` (40 documents) while the vector pipeline indexed a
+  keyword-filtered slice of `legal_corpus/` (9 documents). The overlap was
+  **zero**. The "GraphRAG wins 81%" result compared two disjoint corpora, with
+  llama3.1 scoring its own answers, on questions about cases neither pipeline
+  had ever seen. Both the result and the code that produced it have been
+  removed rather than corrected.
+
+---
+
+## Layout
 
 ```
-graphrag-project/
-├── app.py                    # Streamlit UI (7 tabs, 1750+ lines)
-├── naive_rag.py              # Custom Naive RAG pipeline with ChromaDB
-├── hybrid_router.py          # Semantic embedding router (nomic-embed-text)
-├── analyze_contradictions.py # Judicial contradiction detector
-├── ragas_evaluation.py       # 8-metric RAGAS benchmark engine
-├── scraper.py                # Indian Kanoon judgment scraper
-├── settings.yaml             # GraphRAG configuration (optimized for RTX 4050)
-├── benchmark_questions.json  # 21 evaluation questions across 5 categories
-├── corpus_metadata.json      # Case metadata (titles, years, judges, articles)
-├── ragas_results.json        # Raw evaluation results (all 21 questions)
-├── ragas_report.md           # Generated benchmark report
-├── input/                    # 40 Supreme Court judgment texts
-├── output/                   # GraphRAG index (entities, relationships, communities)
-├── chroma_db/                # ChromaDB vector store for Naive RAG
-├── prompts/                  # Custom GraphRAG prompts
-└── .gitignore                # Excludes large binary files
+lexgraph/
+  corpus.py          parse the scraper's header block; load from input/
+  chunking.py        fixed-window and paragraph-aware strategies
+  embeddings.py      batched Ollama embedding with retry and a query cache
+  llm.py             provider dispatch: Ollama, Gemini, OpenAI-compatible
+  router.py          NAIVE vs GRAPH by prototype similarity, no LLM call
+  generation.py      prompt, generate, verify citations
+  retrieval/         bm25 · dense · fusion (RRF) · rerank · pipeline
+  eval/              retrieval_metrics · judge
+  guardrails/        abstention · citations
+scripts/
+  build_index.py         index input/ into ChromaDB, one collection per strategy
+  validate_goldset.py    verify every annotation against the corpus text
+  eval_retrieval.py      the ablation table; no LLM, runs in about a minute
+  eval_answers.py        judged answer quality with an independent judge
+  calibrate_abstention.py  choose the refusal threshold from data
+  drift_check.py         scheduled regression check
+  list_judge_models.py   which judge models a given key can actually reach
+data/goldset.json    35 questions, 25 answerable, 10 out-of-corpus
+tests/               110 tests, no network or GPU required
 ```
 
 ---
 
-## 🚀 Getting Started
-
-### Prerequisites
-
-| Requirement | Version | Purpose |
-|-------------|---------|---------|
-| Python | 3.11+ | Runtime |
-| Ollama | Latest | Local LLM inference |
-| NVIDIA GPU | 6GB+ VRAM | LLM acceleration (CPU fallback available) |
-
-### Installation
+## Running it
 
 ```bash
-# 1. Clone the repository
-git clone https://github.com/SatvikRastogii/lexgraph.git
-cd lexgraph
-
-# 2. Install dependencies
-pip install streamlit plotly networkx pandas numpy requests chromadb pyarrow
-
-# 3. Install and start Ollama
-# Download from https://ollama.ai
-ollama pull llama3.1
+pip install -r requirements.txt
+ollama serve
 ollama pull nomic-embed-text
-ollama serve  # Keep this running in a separate terminal
+ollama pull qwen2.5:3b            # fits 6GB fully; llama3.1 does not
 
-# 4. Install GraphRAG
-pip install graphrag
+cp .env.example .env              # add a judge key: aistudio.google.com/apikey
+
+python scripts/build_index.py     # ~4 min, both chunking strategies
+python scripts/validate_goldset.py
+python scripts/eval_retrieval.py  # the ablation table
+python scripts/eval_answers.py --generator ollama:qwen2.5:3b
+
+streamlit run app.py
 ```
 
-### Building the Knowledge Graph Index
+The GraphRAG index (`output/*.parquet`) is a separate, hours-long offline step
+and is not committed:
 
 ```bash
-# This takes ~45 hours on RTX 4050 (6GB VRAM)
-# The index only needs to be built once
 graphrag index --root .
 ```
 
-### Building the Naive RAG Vector Store
+Full stack with Prometheus and Grafana:
 
 ```bash
-# Builds the ChromaDB collection from the input documents
-python naive_rag.py
-```
-
-### Running the Application
-
-```bash
-streamlit run app.py
-# Opens at http://localhost:8501
-```
-
-### Running the RAGAS Evaluation
-
-```bash
-# Takes ~2 hours on RTX 4050
-python ragas_evaluation.py
-# Generates: ragas_results.json + ragas_report.md
+docker compose up --build
 ```
 
 ---
 
-## 📐 Knowledge Graph Statistics
+## Limitations
 
-| Metric | Value |
-|--------|-------|
-| **Source Documents** | 40 Supreme Court judgments |
-| **Entities Extracted** | 3,750 |
-| **Relationships Mapped** | 1,505 |
-| **Community Reports** | 184 |
-| **Entity Types** | 99 (Person, Organization, Legal Principle, Article, etc.) |
-| **Indexing Time** | ~45 hours (RTX 4050, 6GB VRAM) |
-| **Vector Store Chunks** | ~2,000 (ChromaDB) |
-
----
-
-## 🧪 Evaluation Methodology
-
-### Framework
-The evaluation uses a custom **RAGAS (Retrieval Augmented Generation Assessment)** implementation with **LLM-as-Judge** scoring. Each question is:
-
-1. Sent to **both** Naive RAG and GraphRAG pipelines
-2. Both answers are scored independently by Llama 3.1 on **8 metrics**
-3. Scores are on a **1–5 scale** (5 = best)
-4. Results are aggregated across **21 questions** in **5 categories**
-
-### Metrics
-
-| # | Metric | What It Measures |
-|---|--------|------------------|
-| 1 | **Faithfulness** | Is every claim supported by the retrieved context? |
-| 2 | **Answer Relevancy** | Does the answer directly address the question? |
-| 3 | **Context Precision** | Are the retrieved chunks relevant? (Naive RAG only) |
-| 4 | **Completeness** | Does the answer cover all aspects of the question? |
-| 5 | **Hallucination Detection** | Does the answer fabricate cases, dates, or legal principles? |
-| 6 | **Coherence** | Is the answer logically structured and well-organized? |
-| 7 | **Citation Accuracy** | Does the answer reference real, verifiable case law? |
-| 8 | **Legal Reasoning** | Does the answer demonstrate sound legal analytical methodology? |
-
-### Question Categories
-
-| Category | Count | Example |
-|----------|:-----:|---------|
-| Single-Hop Factual | 4 | *"What does Article 21 guarantee?"* |
-| Multi-Hop Relational | 5 | *"How are Articles 14, 19, and 21 interconnected?"* |
-| Global Thematic | 4 | *"What are the dominant themes across Supreme Court judgments?"* |
-| Cross-Document Reasoning | 4 | *"How has Article 21 interpretation evolved from the 1950s to 2020s?"* |
-| Entity Relationship | 4 | *"How are Puttaswamy, Maneka Gandhi, and Kesavananda Bharati linked?"* |
-
----
-
-## ⚙️ Technical Deep Dives
-
-### Hybrid Semantic Router
-
-The router classifies queries **without any LLM inference** using pure embedding similarity:
-
-```python
-# Pre-embedded prototype questions for each category
-SIMPLE_PROTOTYPES = ["What does Article 21 guarantee?", ...]
-COMPLEX_PROTOTYPES = ["How has Article 21 evolved across decades?", ...]
-
-# At query time: embed → cosine similarity → route decision
-query_embedding = ollama_embed(query)
-simple_score = mean(top_3_cosine_similarities(query_embedding, simple_embeddings))
-complex_score = mean(top_3_cosine_similarities(query_embedding, complex_embeddings))
-
-route = "NAIVE" if simple_score > complex_score else "GRAPH"
-```
-
-**Latency:** ~50ms (embedding only, no LLM inference)
-
-### GraphRAG Global Synthesis
-
-Unlike Naive RAG's point-lookup retrieval, GraphRAG's global mode:
-
-1. Reads **184 community reports** synthesizing entity clusters
-2. Maps the query to relevant communities
-3. Generates an answer that synthesizes information **across the entire knowledge graph**
-4. This enables multi-hop reasoning: *Case A → Principle B → Case C → Modern Interpretation D*
-
-### Contradiction Detection
-
-Two detection methods:
-
-1. **Keyword Scan** — Regex matching against 19 dispute indicators (`overruled`, `dissented`, `reversed`, etc.)
-2. **Triangle Principle** — Detects when Entity A has conflicting relationships with Entity B and Entity C (A→B positive, A→C positive, B→C negative)
-
----
-
-## 🎨 UI Design
-
-The dashboard uses a **Dark Glassmorphism** theme with:
-
-- `backdrop-filter: blur(20px)` glass cards
-- Indigo-purple gradient color palette (`#6366f1` → `#a78bfa` → `#c084fc`)
-- Inter + JetBrains Mono typography
-- Smooth hover animations with `cubic-bezier` easing
-- Custom CSS scrollbars and tab styling
-- Plotly charts with transparent backgrounds matching the dark theme
-
----
-
-## 🔧 Hardware & Performance
-
-| Component | Specification |
-|-----------|--------------|
-| GPU | NVIDIA RTX 4050 (6GB VRAM) |
-| LLM | Llama 3.1 8B (Q4_K_M quantization via Ollama) |
-| Embedding Model | nomic-embed-text (768 dimensions) |
-| Indexing Time | ~45 hours (one-time) |
-| Naive RAG Latency | ~50s avg per query |
-| GraphRAG Latency | ~208s avg per query |
-| Router Latency | ~50ms per classification |
-| RAGAS Evaluation | ~2 hours (21 questions × 2 pipelines × 8 metrics) |
-
----
-
-## 📚 Corpus
-
-The system indexes **40 landmark Indian Supreme Court judgments** spanning 1950–2024, covering:
-
-- **Constitutional Articles:** 14 (Equality), 19 (Freedoms), 21 (Life & Liberty), 32 (Remedies)
-- **Landmark Cases:** Kesavananda Bharati, Maneka Gandhi, K.S. Puttaswamy, Vishakha, and 36 others
-- **Legal Principles:** Basic Structure Doctrine, Golden Triangle, Due Process, Right to Privacy
-- **Source:** [Indian Kanoon](https://indiankanoon.org/) — India's largest legal search engine
-
----
-
-## 🏆 Key Takeaways for Interviews
-
-1. **Systems Engineering** — Managed a 45-hour indexing pipeline on resource-constrained hardware (6GB VRAM), implementing retry logic and concurrency limits
-2. **Architecture Design** — The Hybrid Semantic Router is a novel contribution: sub-100ms query classification without LLM inference, using embedding similarity against prototype question banks
-3. **Rigorous Evaluation** — 8-metric RAGAS benchmark with 336 automated LLM judge calls, demonstrating GraphRAG's 81% win rate with statistical breakdowns by category
-4. **Domain Expertise** — Deep understanding of Indian constitutional law jurisprudence, from the Basic Structure Doctrine to the Right to Privacy
-5. **Full-Stack Delivery** — End-to-end implementation: web scraping → data processing → knowledge graph construction → dual RAG pipelines → evaluation framework → premium UI
-
----
-
-## 📄 License
-
-This project is for educational and portfolio demonstration purposes.
-
----
-
-## 👤 Author
-
-**Satvik Rastogi**
-
-Built with ❤️ using GraphRAG, Ollama, Streamlit, and 40 Supreme Court judgments — running 100% locally on consumer hardware.
-
----
-
-<p align="center">
-  <em>⚖️ "The Constitution is not a mere lawyer's document, it is a vehicle of life." — Dr. B.R. Ambedkar</em>
-</p>
+- 25 answerable questions is a small gold set. It is large enough to detect the
+  reranking effect on R@1 and nDCG, and demonstrably too small to separate
+  configurations on R@5.
+- The gold set is close to saturated: MRR sits between 0.93 and 0.98 across
+  every configuration, meaning a relevant document is almost always at rank 1
+  already. A harder question tier would give the harness more room.
+- The judge has not been validated against human labels. Independence from the
+  generator removes the worst bias, not all of it.
+- GraphRAG is compared on the answer side only. Its retrieval is not yet scored
+  on the same footing, though `text_unit_ids` in its output would allow it.
+- Document-level ground truth, not paragraph-level. Paragraph spans are tracked
+  in chunk metadata but not annotated in the gold set.

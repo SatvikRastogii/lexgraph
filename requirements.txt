@@ -9,8 +9,11 @@ plotly>=5.18
 networkx>=3.0
 requests>=2.31
 chromadb>=0.4
-ollama>=0.1
 pyarrow>=22,<23
+
+# Cross-encoder reranking. ONNX runtime, ~20MB model, CPU, tens of
+# milliseconds -- as against roughly 2GB of torch for sentence-transformers.
+flashrank>=0.2
 lancedb>=0.20,<0.25
 graphrag>=3.0,<4
 tiktoken>=0.12

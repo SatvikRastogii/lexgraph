@@ -5,12 +5,12 @@
     "hybrid-rerank": {
       "metrics": {
         "answer_relevancy": {
-          "mean": 5,
+          "mean": 3,
           "ci95": [
-            5,
-            5
+            2.0,
+            4.25
           ],
-          "n": 1
+          "n": 4
         },
         "citation_accuracy": {
           "mean": 5.0,
@@ -18,63 +18,63 @@
             5.0,
             5.0
           ],
-          "n": 1
+          "n": 4
         },
         "coherence": {
-          "mean": 5,
+          "mean": 3.75,
           "ci95": [
-            5,
-            5
+            2.5,
+            4.75
           ],
-          "n": 1
+          "n": 4
         },
         "completeness": {
-          "mean": 4,
+          "mean": 2.25,
           "ci95": [
-            4,
-            4
+            1.25,
+            3.5
           ],
-          "n": 1
+          "n": 4
         },
         "context_precision": {
-          "mean": 5,
+          "mean": 4.5,
           "ci95": [
-            5,
-            5
+            3.5,
+            5.0
           ],
-          "n": 1
+          "n": 4
         },
         "faithfulness": {
-          "mean": 3,
+          "mean": 2,
           "ci95": [
-            3,
-            3
+            1.25,
+            2.75
           ],
-          "n": 1
+          "n": 4
         },
         "hallucination": {
-          "mean": 4,
+          "mean": 3.25,
           "ci95": [
-            4,
-            4
+            2.5,
+            4.0
           ],
-          "n": 1
+          "n": 4
         },
         "legal_reasoning": {
-          "mean": 4,
+          "mean": 2,
           "ci95": [
-            4,
-            4
+            1.0,
+            3.25
           ],
-          "n": 1
+          "n": 4
         }
       },
       "answer_words": {
-        "mean": 325,
-        "median": 325
+        "mean": 232.25,
+        "median": 217.5
       },
       "unparsed_judge_responses": 0,
-      "latency_ms_median": 22626.00809999276,
+      "latency_ms_median": 11952.18315004604,
       "records": [
         {
           "id": "q01",
@@ -155,6 +155,239 @@
             }
           },
           "wall_seconds": 138.80231619998813
+        },
+        {
+          "id": "q02",
+          "category": "single_hop_factual",
+          "answerable": true,
+          "generation": {
+            "question": "Can a prisoner invoke the writ jurisdiction of the court to challenge conditions inside jail?",
+            "answer": "The judgment extracts provided do not settle whether a prisoner can invoke the writ jurisdiction of the court to challenge conditions inside jail. The extracts discuss the protection of prisoners' rights by courts through their writ jurisdiction and contempt power, as well as the constitutional obligations towards prisoners under Articles 14, 19, and 21 of the Indian Constitution. They also touch upon the broader expansion of habeas corpus writs to include examination of how inmates are held or treated during their sentence.\n\nHowever, these extracts do not explicitly address whether a prisoner can invoke the court's writ jurisdiction to challenge conditions inside jail. Therefore, based solely on the provided judgment extracts, it cannot be definitively stated that such an invocation is possible or necessary. The extracts indicate that courts have the power and duty to ensure that constitutional purposes of deprivation of liberty are not defeated by prison administration but do not provide a clear stance on whether prisoners can use their writ jurisdiction to challenge conditions inside jail.",
+            "abstained": false,
+            "abstention_reason": "",
+            "confidence": 0.8296578168869019,
+            "sources": [
+              "judgment_0126.txt",
+              "judgment_0124.txt"
+            ],
+            "citations": {
+              "supported": [],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4694.911700091325,
+              "generation_ms": 6404.216700000688,
+              "total_ms": 11099.128400092013
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "Can a prisoner invoke the writ jurisdiction of the court to challenge conditions inside jail?",
+            "answer_chars": 1109,
+            "answer_words": 169,
+            "mean": 2.875,
+            "metrics": {
+              "faithfulness": {
+                "score": 1,
+                "reason": "The answer directly contradicts the provided context, which explicitly affirms under Arts. 32 and 226 that the court has the power and duty to give relief and run writ power to the rescue of prisoners challenging prison conditions and cruelty.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 2,
+                "reason": "The answer incorrectly claims the question cannot be answered from the text, providing an evasive and erroneous conclusion.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 5,
+                "reason": "The retrieved extracts from Sunil Batra directly and unequivocally address the court's writ jurisdiction regarding prison conditions and prisoners' rights.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 1,
+                "reason": "The answer fails to answer the question affirmatively and misses the core holdings explicitly stated in the context.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 4,
+                "reason": "While it mentions Articles 14, 19, and 21 not explicitly enumerated in the snippet, the primary defect is a total mischaracterization of the text rather than inventing case names.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 4,
+                "reason": "The text is well-written and grammatically coherent, even though its substantive premise is completely flawed.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 1,
+                "reason": "The answer demonstrates deficient legal reasoning by failing to identify clear holdings affirming writ jurisdiction under Articles 32 and 226 for prison conditions.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "0/0 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 39.63906419998966
+        },
+        {
+          "id": "q03",
+          "category": "single_hop_factual",
+          "answerable": true,
+          "generation": {
+            "question": "Is an accused entitled to default bail when the investigating agency fails to complete investigation within the statutory period under Section 167(2) CrPC?",
+            "answer": "Based on the provided judgment extracts, there is no explicit holding in any of these cases regarding whether an accused is entitled to default bail when the investigating agency fails to complete the investigation within the statutory period under Section 167(2) CrPC. The judgments discuss various aspects related to default bail and remand periods but do not directly address this specific scenario.\n\nThe judgment extracts indicate that:\n- There are provisions in Section 167(2) of the Code of Criminal Procedure (CrPC), which sets time limits for remanding an accused person during continued investigation.\n- Failure to complete the investigation within these statutory periods grants the accused the right to default bail under Article 21 of the Constitution of India, as provided by Section 167(2).\n- The right to default bail is considered a fundamental right and not merely a procedural formality.\n\nHowever, none of the extracts explicitly state whether an accused can claim default bail if the investigation has not been completed within the statutory period. Therefore, based solely on the provided judgment extracts, it cannot be conclusively determined that an accused is entitled to default bail in such circumstances.",
+            "abstained": false,
+            "abstention_reason": "",
+            "confidence": 0.9989325722058614,
+            "sources": [
+              "judgment_0127.txt"
+            ],
+            "citations": {
+              "supported": [
+                "Article 21",
+                "Section 167(2)"
+              ],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4583.294100011699,
+              "generation_ms": 6860.798500012606,
+              "total_ms": 11444.092600024305
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "Is an accused entitled to default bail when the investigating agency fails to complete investigation within the statutory period under Section 167(2) CrPC?",
+            "answer_chars": 1231,
+            "answer_words": 190,
+            "mean": 2.75,
+            "metrics": {
+              "faithfulness": {
+                "score": 2,
+                "reason": "The answer directly contradicts the provided context, which explicitly affirms that failure to complete investigation triggers an indefeasible right to default bail.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 2,
+                "reason": "The answer provides an incorrect negative conclusion despite the context directly answering the question affirmatively.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 5,
+                "reason": "The retrieved context passages are directly relevant and explicitly address the entitlement to default bail under Section 167(2) CrPC.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 2,
+                "reason": "The response fails to correctly identify and synthesize the core legal holding clearly articulated across all provided extracts.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 3,
+                "reason": "The answer fabricates the premise that the context lacks an explicit holding when the text explicitly contains that exact holding.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 2,
+                "reason": "The response is self-contradictory, acknowledging in its bullet points that failure grants the right to default bail while asserting in its conclusion that it cannot be determined.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 1,
+                "reason": "The answer exhibits fundamentally flawed legal reasoning by misreading explicit statutory and constitutional principles laid out directly in the text.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "2/2 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 37.606551399920136
+        },
+        {
+          "id": "q04",
+          "category": "single_hop_factual",
+          "answerable": true,
+          "generation": {
+            "question": "Must a review petition in a death sentence case be heard in open court rather than by circulation?",
+            "answer": "The question of whether a review petition in a death sentence case should be heard in open court rather than by circulation is not explicitly settled by the provided judgment extracts. The extracts do not contain any holding or decision regarding this specific issue.\n\nHowever, based on the information given:\n\n- There are references to Order XL Rule 3 of the Supreme Court Rules, which provides that all review applications could now be disposed of and heard by circulation without oral argument.\n- The judgment mentions that an application for review shall as far as practicable be circulated to the same Judge or Bench of Judges that delivered the judgment or order sought to be reviewed. \n- There is a reference to P.N. Eswara Iyer & Others v. Registrar, Supreme Court of India (1980) 4 SCC 680, where the Court upheld the amendment in Order XL Rule 3 of the Supreme Court Rules which did away with oral hearing of review petitions in open court.\n- The judgment also discusses that even though the new rules eliminate oral hearing in a review application, the discretion is preserved in the Court to grant an oral hearing in appropriate cases.\n\nGiven these extracts, it appears that the current practice allows for review applications to be heard by circulation without oral argument. However, whether this should continue or if there are specific circumstances where an open court hearing would be desirable remains unclear based on the provided information.",
+            "abstained": false,
+            "abstention_reason": "",
+            "confidence": 0.9938238501548766,
+            "sources": [
+              "judgment_0004.txt",
+              "judgment_0006.txt"
+            ],
+            "citations": {
+              "supported": [
+                "Others v. Registrar",
+                "(1980) 4 SCC 680"
+              ],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4567.091300035827,
+              "generation_ms": 7893.182400031947,
+              "total_ms": 12460.273700067773
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "Must a review petition in a death sentence case be heard in open court rather than by circulation?",
+            "answer_chars": 1463,
+            "answer_words": 245,
+            "mean": 2.875,
+            "metrics": {
+              "faithfulness": {
+                "score": 2,
+                "reason": "The answer mentions specific details such as 'P.N. Eswara Iyer & Others v. Registrar' and Bench circulation specifics that do not appear anywhere in the provided context.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 3,
+                "reason": "The answer discusses review petitions and circulation but fails to decisively state the established legal rule because it relies on incomplete context extracts.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 3,
+                "reason": "The provided context contains submissions and rule backgrounds from the relevant case (Mohd. Arif) but cuts off before the definitive holding answering the question.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 2,
+                "reason": "The answer leaves the core legal question unresolved, merely reciting background points rather than providing a conclusive answer.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 2,
+                "reason": "The model brings in external case citations (P.N. Eswara Iyer) and rules not found in the given context.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 4,
+                "reason": "The response is structured clearly with bullet points and logical transitions.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 2,
+                "reason": "The answer fails to synthesize a proper legal conclusion, remaining inconclusive due to ungrounded speculation.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "2/2 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 26.409857999999076
         }
       ],
       "complete": false
