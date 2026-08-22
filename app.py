@@ -524,7 +524,7 @@ def get_generator():
     return get_client(GENERATOR_SPEC)
 
 
-def run_naive_rag_query(query):
+def run_vector_query(query):
     """Run the vector-retrieval pipeline.
 
     Delegates to lexgraph rather than reimplementing retrieval and prompting
@@ -796,12 +796,12 @@ with tab_query:
 
     col_mode1, col_mode2 = st.columns(2)
     with col_mode1:
-        # "local" defaults last: it crashes (LanceDB vector-dim mismatch between
-        # the index's stored embeddings and the live nomic-embed-text config) --
-        # same issue ragas_evaluation.py already worked around by forcing "global".
+        # "global" is the default because "local" crashes: a vector-dimension
+        # mismatch between the embeddings stored in LanceDB at index time and
+        # the live nomic-embed-text configuration. Fixing it needs a re-index.
         graphrag_method = st.selectbox("GraphRAG Method", ["global", "local"], index=0)
     with col_mode2:
-        force_pipeline = st.selectbox("Pipeline Override", ["Auto (Hybrid Router)", "Force Naive RAG", "Force GraphRAG", "Run Both (Compare)"], index=0)
+        force_pipeline = st.selectbox("Pipeline Override", ["Auto (Router)", "Force Vector RAG", "Force GraphRAG", "Run Both (Compare)"], index=0)
 
     if st.button("Execute Query", type="primary", use_container_width=True) and query:
         st.session_state.total_queries += 1
@@ -815,7 +815,7 @@ with tab_query:
 
         # Override
         run_both = False
-        if force_pipeline == "Force Naive RAG":
+        if force_pipeline == "Force Vector RAG":
             route = "NAIVE"
         elif force_pipeline == "Force GraphRAG":
             route = "GRAPH"
@@ -834,10 +834,10 @@ with tab_query:
             col_naive, col_graph = st.columns(2)
 
             with col_naive:
-                st.markdown("#### Naive RAG")
+                st.markdown("#### Vector RAG")
                 with st.spinner("Searching vectors..."):
                     t0 = time.perf_counter()
-                    naive_result = run_naive_rag_query(query)
+                    naive_result = run_vector_query(query)
                     naive_ms = round((time.perf_counter() - t0) * 1000, 1)
 
                 if naive_result.get("abstained"):
@@ -871,7 +871,7 @@ with tab_query:
             # Latency comparison chart
             st.markdown("#### Latency Comparison")
             lat_fig = go.Figure(data=[
-                go.Bar(name="Naive RAG", x=["Pipeline"], y=[naive_ms], marker_color="#6fae8e"),
+                go.Bar(name="Vector RAG", x=["Pipeline"], y=[naive_ms], marker_color="#6fae8e"),
                 go.Bar(name="GraphRAG", x=["Pipeline"], y=[graph_ms], marker_color="#c2a45a"),
             ])
             lat_fig.update_layout(
@@ -907,7 +907,7 @@ with tab_query:
         elif route == "NAIVE":
             with st.spinner("🔍 Searching vector store..."):
                 t0 = time.perf_counter()
-                result = run_naive_rag_query(query)
+                result = run_vector_query(query)
                 elapsed = round((time.perf_counter() - t0) * 1000, 1)
 
             if result.get("abstained"):

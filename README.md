@@ -223,5 +223,11 @@ docker compose up --build
   generator removes the worst bias, not all of it.
 - GraphRAG is compared on the answer side only. Its retrieval is not yet scored
   on the same footing, though `text_unit_ids` in its output would allow it.
+- **GraphRAG's `local` search method crashes** on this index — a vector-dimension
+  mismatch between the embeddings LanceDB stored at index time and the live
+  `nomic-embed-text` configuration. Only `global` search works, and fixing it
+  requires a full re-index. `global` is also the expensive method (it fans out
+  across every community report), which is most of why GraphRAG queries take
+  minutes rather than seconds.
 - Document-level ground truth, not paragraph-level. Paragraph spans are tracked
   in chunk metadata but not annotated in the gold set.
