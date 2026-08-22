@@ -63,45 +63,98 @@ def assess(hits: list[Hit], threshold: float, top_n: int = 3) -> AbstentionDecis
     return AbstentionDecision(True, confidence, "")
 
 
-def calibrate_threshold(
-    answerable_confidences: list[float],
-    unanswerable_confidences: list[float],
-) -> tuple[float, dict]:
-    """Pick the threshold that best separates answerable from unanswerable.
+MIN_ANSWER_RATE = 0.80
 
-    Sweeps every midpoint between observed confidences and maximises Youden's J
-    (sensitivity + specificity - 1), which weights both errors equally --
-    answering an unanswerable question and refusing an answerable one are both
-    failures here.
 
-    Returns the threshold and the statistics it achieves.
-    """
-    if not answerable_confidences or not unanswerable_confidences:
-        raise ValueError("both answerable and unanswerable confidences are required")
-
+def _sweep(answerable_confidences, unanswerable_confidences):
+    """Every candidate threshold with the rates it achieves."""
     observed = sorted(set(answerable_confidences + unanswerable_confidences))
     candidates = [
         (observed[i] + observed[i + 1]) / 2 for i in range(len(observed) - 1)
     ] or [observed[0]]
 
-    best_threshold, best_j, best_stats = candidates[0], -1.0, {}
+    points = []
     for threshold in candidates:
         answered = sum(1 for c in answerable_confidences if c >= threshold)
         refused = sum(1 for c in unanswerable_confidences if c < threshold)
         sensitivity = answered / len(answerable_confidences)
         specificity = refused / len(unanswerable_confidences)
-        youden_j = sensitivity + specificity - 1
-        if youden_j > best_j:
-            best_j = youden_j
-            best_threshold = threshold
-            best_stats = {
-                "threshold": threshold,
-                "answered_when_answerable": sensitivity,
-                "refused_when_unanswerable": specificity,
-                "youden_j": youden_j,
-            }
+        points.append({
+            "threshold": threshold,
+            "answered_when_answerable": sensitivity,
+            "refused_when_unanswerable": specificity,
+            "youden_j": sensitivity + specificity - 1,
+        })
+    return points
 
-    return best_threshold, best_stats
+
+def calibrate_threshold(
+    answerable_confidences: list[float],
+    unanswerable_confidences: list[float],
+    min_answer_rate: float | None = MIN_ANSWER_RATE,
+) -> tuple[float, dict]:
+    """Pick an operating point on the abstention signal.
+
+    Sweeps every midpoint between observed confidences. Which point to take is
+    a choice about cost, and this is where the first version of this function
+    was quietly wrong: it maximised Youden's J, which weights both errors
+    equally, and nothing in the system says they are.
+
+    They are not. A refused question the corpus can answer is a visible failure
+    the user sees immediately. An answered out-of-corpus question is caught
+    downstream -- citations are verified against the retrieved context, so a
+    fabricated authority is already detected. Equal weighting therefore buys
+    specificity that is partly redundant with a cheaper guardrail, and pays for
+    it in the failure that is not.
+
+    That mattered little while the gold set was easy: J-optimal answered every
+    answerable question. On the paraphrase tier a genuine question phrased in
+    lay language scores much like an out-of-corpus one, the two populations
+    overlap, and J-optimal collapses to answering 44% of real questions. The
+    signal did not get worse -- the questions got harder and exposed what the
+    criterion was really choosing.
+
+    So ``min_answer_rate`` fixes the floor on answering real questions, and
+    among the thresholds that clear it the most specific one wins. Pass None
+    for the unconstrained J-optimal point, which is reported alongside either
+    way so the trade-off stays visible rather than baked in.
+    """
+    if not answerable_confidences or not unanswerable_confidences:
+        raise ValueError("both answerable and unanswerable confidences are required")
+
+    points = _sweep(answerable_confidences, unanswerable_confidences)
+    youden = max(points, key=lambda p: p["youden_j"])
+
+    if min_answer_rate is None:
+        return youden["threshold"], {**youden, "criterion": "youden_j"}
+
+    eligible = [
+        p for p in points if p["answered_when_answerable"] >= min_answer_rate
+    ]
+    if not eligible:
+        # No threshold answers enough real questions. Reporting the J-optimal
+        # point here would hide that; the caller needs to know the constraint
+        # could not be met on this signal.
+        return youden["threshold"], {
+            **youden,
+            "criterion": "youden_j",
+            "constraint_unmet": min_answer_rate,
+        }
+
+    chosen = max(
+        eligible,
+        key=lambda p: (p["refused_when_unanswerable"], p["answered_when_answerable"]),
+    )
+    return chosen["threshold"], {
+        **chosen,
+        "criterion": f"most specific threshold answering >= {min_answer_rate:.0%}",
+        "youden_j_alternative": {
+            "threshold": youden["threshold"],
+            "answered_when_answerable": youden["answered_when_answerable"],
+            "refused_when_unanswerable": youden["refused_when_unanswerable"],
+            "youden_j": youden["youden_j"],
+        },
+    }
 
 
 def separation(

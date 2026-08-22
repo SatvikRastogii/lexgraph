@@ -166,3 +166,39 @@ def test_separation_is_positive_when_answerable_scores_higher():
 
 def test_separation_is_zero_for_identical_populations():
     assert separation([0.5, 0.5], [0.5, 0.5]) == pytest.approx(0.0)
+
+
+def test_operating_point_keeps_answering_real_questions():
+    # Populations that overlap the way the hard tier made them overlap: some
+    # genuine questions score below some out-of-corpus ones.
+    answerable = [0.30, 0.45, 0.55, 0.60, 0.75, 0.80, 0.85, 0.90, 0.92, 0.95]
+    unanswerable = [0.20, 0.25, 0.35, 0.50, 0.65]
+
+    constrained, stats = calibrate_threshold(answerable, unanswerable)
+    assert stats["answered_when_answerable"] >= 0.80
+
+    unconstrained, j_stats = calibrate_threshold(
+        answerable, unanswerable, min_answer_rate=None
+    )
+    # Maximising Youden's J alone is free to refuse real questions to buy
+    # specificity; the constrained point must not sit above it.
+    assert constrained <= unconstrained
+    assert j_stats["criterion"] == "youden_j"
+
+
+def test_operating_point_reports_the_alternative_it_passed_over():
+    answerable = [0.30, 0.60, 0.80, 0.90, 0.95]
+    unanswerable = [0.20, 0.40, 0.70]
+    _, stats = calibrate_threshold(answerable, unanswerable)
+    assert "youden_j_alternative" in stats, "the trade-off must stay visible"
+
+
+def test_unmeetable_constraint_is_flagged_not_silently_dropped():
+    # An out-of-corpus question scoring between the two real ones: every
+    # candidate threshold sits above one of them, so no operating point can
+    # answer 80%. Falling back to Youden's J without saying so would hide that
+    # the requested floor was never reached.
+    answerable = [0.10, 0.90]
+    unanswerable = [0.50]
+    _, stats = calibrate_threshold(answerable, unanswerable, min_answer_rate=0.8)
+    assert stats.get("constraint_unmet") == 0.8
