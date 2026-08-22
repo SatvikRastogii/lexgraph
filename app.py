@@ -428,101 +428,37 @@ def ollama_chat(prompt, model=LLM_MODEL, max_tokens=500):
         return f"⚠ Error: {str(e)}"
 
 
-def ollama_embed(text):
-    """Get embedding from Ollama."""
-    try:
-        resp = requests.post(
-            f"{OLLAMA_HOST}/api/embed",
-            json={"model": EMBEDDING_MODEL, "input": text},
-            timeout=30,
-        )
-        resp.raise_for_status()
-        return np.array(resp.json()["embeddings"][0])
-    except:
-        return None
-
-
-# ─── HYBRID SEMANTIC ROUTER ──────────────────────────────────────────────────
-
-SIMPLE_PROTOTYPES = [
-    "What does Article 21 of the Indian Constitution guarantee?",
-    "What is the right to equality under Article 14?",
-    "What year was the Maneka Gandhi case decided?",
-    "Who was the petitioner in the Kesavananda Bharati case?",
-    "What did the Supreme Court hold regarding passport cancellation?",
-    "What freedoms are protected under Article 19?",
-    "What remedies does Article 32 provide?",
-    "What is the basic structure doctrine?",
-    "Define reasonable restrictions under Article 19(2).",
-    "What are the grounds for preventive detention under Article 22?",
-]
-COMPLEX_PROTOTYPES = [
-    "How are Articles 14, 19, and 21 interconnected in Supreme Court judgments?",
-    "How has the interpretation of Article 21 evolved from the 1950s to 2020s?",
-    "Which legal principles from early Article 21 cases were expanded in privacy judgments?",
-    "What is the relationship between the Maneka Gandhi, Puttaswamy, and Kesavananda Bharati cases?",
-    "How has the Supreme Court balanced individual rights against state power across decades?",
-    "Which landmark cases form the foundational lineage of privacy rights in India?",
-    "How did the golden triangle of Articles 14, 19, and 21 evolve across constitutional bench decisions?",
-    "Compare the approaches of different benches to the scope of personal liberty.",
-    "What patterns exist in how the court interprets reasonable restrictions across multiple cases?",
-    "In which fundamental rights cases did dissenting opinions later become majority views?",
-]
+# ─── SEMANTIC ROUTER ─────────────────────────────────────────────────────────
+# Prototypes and scoring live in lexgraph/router.py. The old prototype banks
+# here named Maneka Gandhi, Kesavananda Bharati and Puttaswamy -- none of which
+# are in the indexed corpus, so the router was being anchored on cases it could
+# never retrieve.
 
 @st.cache_resource
 def init_router_embeddings():
-    """Pre-embed router prototypes (runs once at server boot)."""
-    simple_embs, complex_embs = [], []
-    for q in SIMPLE_PROTOTYPES:
-        emb = ollama_embed(q)
-        if emb is not None:
-            simple_embs.append(emb)
-    for q in COMPLEX_PROTOTYPES:
-        emb = ollama_embed(q)
-        if emb is not None:
-            complex_embs.append(emb)
-    return np.array(simple_embs) if simple_embs else None, np.array(complex_embs) if complex_embs else None
+    """Build the router once at server boot.
+
+    The prototypes and scoring rule live in lexgraph.router. They used to be
+    duplicated here and in hybrid_router.py, with a note that any change had
+    to be mirrored between the two by hand.
+    """
+    from lexgraph.router import SemanticRouter
+
+    try:
+        return SemanticRouter()
+    except Exception:
+        return None
 
 
-def cosine_sim(a, b):
-    dot = np.dot(a, b)
-    norm = np.linalg.norm(a) * np.linalg.norm(b)
-    return float(dot / norm) if norm > 0 else 0.0
-
-
-def route_query(query, simple_embs, complex_embs):
-    """Classify query as NAIVE or GRAPH via semantic similarity."""
-    if simple_embs is None or complex_embs is None:
-        return "GRAPH", 0.5  # fallback
-
-    q_emb = ollama_embed(query)
-    if q_emb is None:
+def route_query(query, router, _unused=None):
+    """Classify a query as NAIVE or GRAPH. Falls back to GRAPH if unavailable."""
+    if router is None:
         return "GRAPH", 0.5
-
-    simple_scores = [cosine_sim(q_emb, e) for e in simple_embs]
-    complex_scores = [cosine_sim(q_emb, e) for e in complex_embs]
-
-    # Single best match per bank, not top-3 average: averaging let queries that
-    # share keywords with several mediocre complex-bank matches (e.g. "what is
-    # article 21" vs multiple Article-21-flavored complex prototypes) out-vote
-    # one excellent simple-bank match. Verified against benchmark_questions.json:
-    # max-of-bank scores 21/22 vs top-3-average's 19/22, no regressions.
-    avg_simple = max(simple_scores)
-    avg_complex = max(complex_scores)
-
-    route = "NAIVE" if avg_simple > avg_complex else "GRAPH"
-
-    # Confidence = margin between the winning and losing bank's best match,
-    # scaled against the typical margin range seen on real (non-prototype-
-    # identical) queries in benchmark_questions.json (~0.02-0.3). The old
-    # ratio formula (max/(max+min))*2-1 compressed even healthy margins
-    # toward 0 because both banks' top cosine similarities are usually high
-    # for any in-domain legal query -- it couldn't distinguish a correct-but-
-    # close call from a genuinely wrong one.
-    margin = abs(avg_simple - avg_complex)
-    confidence = round(min(1.0, margin / 0.3), 3)
-
-    return route, confidence
+    try:
+        decision = router.classify(query)
+        return decision.route, decision.confidence
+    except Exception:
+        return "GRAPH", 0.5
 
 
 # ─── GRAPHRAG QUERY (via CLI) ────────────────────────────────────────────────
@@ -561,66 +497,96 @@ def run_graphrag_query(query, method="local"):
 
 # ─── NAIVE RAG QUERY (inline) ────────────────────────────────────────────────
 
-def run_naive_rag_query(query):
-    """Run a lightweight Naive RAG query using ChromaDB + Ollama."""
-    latency = {}
+# Retrieval configuration and generator are env-overridable so the dashboard
+# can be pointed at whichever the ablation currently favours without an edit.
+RETRIEVAL_CONFIG = os.getenv("LEXGRAPH_RETRIEVER", "hybrid-rerank")
+GENERATOR_SPEC = os.getenv("LEXGRAPH_GENERATOR", "ollama:llama3.1")
+
+def _abstention_threshold(config):
+    """Read the calibrated refusal threshold for this retriever.
+
+    Read rather than hardcoded: the threshold is a property of the retriever's
+    score distribution, so it moves whenever the gold set or the retriever
+    changes. Adding the hard question tier shifted hybrid-rerank's from 0.423
+    to 0.375, and a constant would have silently gone stale.
+
+    Returns None when no calibration exists for this configuration, which
+    disables abstention rather than applying a threshold from a different
+    score scale — BM25's sits above 20, dense's near 0.75.
+    """
+    path = os.path.join("reports", "abstention_calibration.json")
     try:
-        import chromadb
-        from chromadb.utils import embedding_functions
+        with open(path, encoding="utf-8") as handle:
+            return json.load(handle)[config]["threshold"]
+    except (OSError, KeyError, ValueError):
+        return None
 
-        t0 = time.perf_counter()
-        client = chromadb.PersistentClient(path="chroma_db")
-        embed_fn = embedding_functions.OllamaEmbeddingFunction(
-            model_name=EMBEDDING_MODEL, url=OLLAMA_HOST
+
+ABSTENTION_THRESHOLD = _abstention_threshold(RETRIEVAL_CONFIG)
+
+
+@st.cache_resource
+def get_retriever():
+    """Build the retrieval pipeline once per server process."""
+    from lexgraph.retrieval.pipeline import build_retriever
+
+    return build_retriever(RETRIEVAL_CONFIG)
+
+
+@st.cache_resource
+def get_generator():
+    from lexgraph.llm import get_client
+
+    return get_client(GENERATOR_SPEC)
+
+
+def run_vector_query(query):
+    """Run the vector-retrieval pipeline.
+
+    Delegates to lexgraph rather than reimplementing retrieval and prompting
+    inline. The inline copy read the `legal_judgments` collection, which was
+    built from a keyword-filtered slice of legal_corpus/ and shared no
+    documents at all with the set GraphRAG indexes -- so this panel and the
+    GraphRAG panel beside it were answering from different corpora.
+    """
+    from lexgraph.generation import answer_question
+
+    try:
+        generated = answer_question(
+            query,
+            get_retriever(),
+            get_generator(),
+            top_k=5,
+            abstention_threshold=ABSTENTION_THRESHOLD,
         )
-        collection = client.get_collection(name="legal_judgments", embedding_function=embed_fn)
-
-        results = collection.query(query_texts=[query], n_results=5, include=["documents", "metadatas", "distances"])
-        latency["retrieval_ms"] = round((time.perf_counter() - t0) * 1000, 1)
-
-        chunks = results["documents"][0]
-        distances = results["distances"][0]
-        metadatas = results["metadatas"][0]
-
-        similarities = [round(1 - d, 4) for d in distances]
-        avg_conf = sum(similarities) / len(similarities) if similarities else 0
-
-        context = "\n\n---\n\n".join([
-            f"[Source: {m.get('source', '?')} | Year: {m.get('year', '?')}]\n{c}"
-            for c, m in zip(chunks, metadatas)
-        ])
-
-        prompt = f"""You are a legal research assistant specializing in Indian constitutional law.
-Answer the question based ONLY on the provided court judgment excerpts.
-Be specific, cite the sources, and acknowledge if the context is insufficient.
-
-QUESTION: {query}
-
-RELEVANT JUDGMENT EXCERPTS:
-{context}
-
-ANSWER:"""
-
-        t0 = time.perf_counter()
-        answer = ollama_chat(prompt, max_tokens=800)
-        latency["generation_ms"] = round((time.perf_counter() - t0) * 1000, 1)
-
-        sources = []
-        for m, sim in zip(metadatas, similarities):
-            sources.append({
-                "source": m.get("source", "unknown"),
-                "year": m.get("year", "?"),
-                "similarity": sim,
-            })
-
+        latency = {k: round(v, 1) for k, v in generated.latency.items()}
         return {
-            "answer": answer,
-            "confidence": avg_conf,
-            "sources": sources,
+            "answer": generated.answer,
+            "confidence": generated.abstention.confidence if generated.abstention else 0.0,
+            "sources": [
+                {
+                    "source": hit.doc_id,
+                    "year": hit.year,
+                    "similarity": round(hit.score, 4),
+                    "citation": hit.citation,
+                }
+                for hit in generated.hits
+            ],
             "latency": latency,
+            "abstained": generated.abstained,
+            "unsupported_citations": (
+                generated.citations.unsupported if generated.citations else []
+            ),
         }
     except Exception as e:
-        return {"answer": f"⚠ Naive RAG error: {str(e)}", "confidence": 0.0, "sources": [], "latency": latency}
+        return {
+            "answer": f"⚠ Retrieval pipeline error: {e}",
+            "confidence": 0.0,
+            "sources": [],
+            "latency": {},
+            "abstained": False,
+            "unsupported_citations": [],
+        }
 
 
 # ─── KNOWLEDGE GRAPH VISUALIZATION ──────────────────────────────────────────
@@ -846,26 +812,26 @@ with tab_query:
 
     col_mode1, col_mode2 = st.columns(2)
     with col_mode1:
-        # "local" defaults last: it crashes (LanceDB vector-dim mismatch between
-        # the index's stored embeddings and the live nomic-embed-text config) --
-        # same issue ragas_evaluation.py already worked around by forcing "global".
+        # "global" is the default because "local" crashes: a vector-dimension
+        # mismatch between the embeddings stored in LanceDB at index time and
+        # the live nomic-embed-text configuration. Fixing it needs a re-index.
         graphrag_method = st.selectbox("GraphRAG Method", ["global", "local"], index=0)
     with col_mode2:
-        force_pipeline = st.selectbox("Pipeline Override", ["Auto (Hybrid Router)", "Force Naive RAG", "Force GraphRAG", "Run Both (Compare)"], index=0)
+        force_pipeline = st.selectbox("Pipeline Override", ["Auto (Router)", "Force Vector RAG", "Force GraphRAG", "Run Both (Compare)"], index=0)
 
     if st.button("Execute Query", type="primary", use_container_width=True) and query:
         st.session_state.total_queries += 1
 
         # Route
         with st.spinner("🧭 Routing query via Semantic Embedding Router..."):
-            simple_embs, complex_embs = init_router_embeddings()
+            router = init_router_embeddings()
             route_start = time.perf_counter()
-            route, route_conf = route_query(query, simple_embs, complex_embs)
+            route, route_conf = route_query(query, router)
             route_ms = round((time.perf_counter() - route_start) * 1000, 1)
 
         # Override
         run_both = False
-        if force_pipeline == "Force Naive RAG":
+        if force_pipeline == "Force Vector RAG":
             route = "NAIVE"
         elif force_pipeline == "Force GraphRAG":
             route = "GRAPH"
@@ -884,19 +850,28 @@ with tab_query:
             col_naive, col_graph = st.columns(2)
 
             with col_naive:
-                st.markdown("#### Naive RAG")
+                st.markdown("#### Vector RAG")
                 with st.spinner("Searching vectors..."):
                     t0 = time.perf_counter()
-                    naive_result = run_naive_rag_query(query)
+                    naive_result = run_vector_query(query)
                     naive_ms = round((time.perf_counter() - t0) * 1000, 1)
 
-                st.markdown(naive_result["answer"])
+                if naive_result.get("abstained"):
+                    st.warning(naive_result["answer"])
+                else:
+                    st.markdown(naive_result["answer"])
                 st.caption(f"⏱ {naive_ms}ms")
+
+                if naive_result.get("unsupported_citations"):
+                    st.error(
+                        f"{len(naive_result['unsupported_citations'])} unverified citation(s): "
+                        + ", ".join(naive_result["unsupported_citations"][:3])
+                    )
 
                 if naive_result["sources"]:
                     with st.expander("📚 Citations"):
                         for s in naive_result["sources"]:
-                            st.markdown(f'<div class="citation-box">{s["source"]} ({s["year"]}) — sim: {s["similarity"]}</div>', unsafe_allow_html=True)
+                            st.markdown(f'<div class="citation-box">{s.get("citation") or s["source"]} — score: {s["similarity"]}</div>', unsafe_allow_html=True)
 
             with col_graph:
                 st.markdown("#### GraphRAG")
@@ -912,7 +887,7 @@ with tab_query:
             # Latency comparison chart
             st.markdown("#### Latency Comparison")
             lat_fig = go.Figure(data=[
-                go.Bar(name="Naive RAG", x=["Pipeline"], y=[naive_ms], marker_color="#6fae8e"),
+                go.Bar(name="Vector RAG", x=["Pipeline"], y=[naive_ms], marker_color="#6fae8e"),
                 go.Bar(name="GraphRAG", x=["Pipeline"], y=[graph_ms], marker_color="#c2a45a"),
             ])
             lat_fig.update_layout(
@@ -948,15 +923,25 @@ with tab_query:
         elif route == "NAIVE":
             with st.spinner("🔍 Searching vector store..."):
                 t0 = time.perf_counter()
-                result = run_naive_rag_query(query)
+                result = run_vector_query(query)
                 elapsed = round((time.perf_counter() - t0) * 1000, 1)
 
-            st.markdown(f'<div class="glass-card">{result["answer"]}</div>', unsafe_allow_html=True)
+            if result.get("abstained"):
+                st.warning(result["answer"])
+            else:
+                st.markdown(f'<div class="glass-card">{result["answer"]}</div>', unsafe_allow_html=True)
+
+            if result.get("unsupported_citations"):
+                st.error(
+                    f"{len(result['unsupported_citations'])} citation(s) in this answer "
+                    f"do not appear in the retrieved judgments and may be fabricated: "
+                    + ", ".join(result["unsupported_citations"][:5])
+                )
 
             if result["sources"]:
                 with st.expander("📚 Citations & Sources"):
                     for s in result["sources"]:
-                        st.markdown(f'<div class="citation-box">{s["source"]} ({s["year"]}) — Similarity: {s["similarity"]}</div>', unsafe_allow_html=True)
+                        st.markdown(f'<div class="citation-box">{s.get("citation") or s["source"]} — score: {s["similarity"]}</div>', unsafe_allow_html=True)
 
             st.caption(f"⏱ Total latency: {elapsed}ms")
             st.session_state.naive_count += 1
@@ -1611,244 +1596,218 @@ with tab_analytics:
 # ═══════════════════════════════════════════════════════════════════════════════
 
 with tab_ragas:
-    st.markdown("### RAGAS Evaluation Benchmark")
-    st.markdown("*Comprehensive 8-metric comparison of Naive RAG vs GraphRAG using LLM-as-Judge evaluation.*")
+    st.markdown("### Evaluation")
+    st.markdown(
+        "*Retrieval configurations measured against a hand-annotated gold set; "
+        "answers scored by an independent judge.*"
+    )
 
-    RAGAS_FILE = "ragas_results.json"
+    ABLATION_FILE = os.path.join("reports", "retrieval_ablation.json")
+    CALIBRATION_FILE = os.path.join("reports", "abstention_calibration.json")
+    QUALITY_GLOB = os.path.join("reports", "answer_quality_*.json")
 
-    if not os.path.exists(RAGAS_FILE):
-        st.warning("No RAGAS results found. Run `python ragas_evaluation.py` to generate the benchmark.")
+    st.caption(
+        "Retrieval is scored against a hand-annotated gold set with document-level "
+        "ground truth — no LLM in the loop. Answers are scored by a judge model from "
+        "a different family than the generator."
+    )
+
+    # ── Retrieval ablation ──
+    st.markdown("#### Retrieval ablation")
+    if not os.path.exists(ABLATION_FILE):
+        st.warning("No ablation yet. Run `python scripts/eval_retrieval.py`.")
     else:
-        ragas_data = json.load(open(RAGAS_FILE, "r", encoding="utf-8"))
-        METRICS = ["faithfulness", "relevancy", "completeness", "hallucination", "coherence", "citation_accuracy", "legal_reasoning"]
-        METRIC_LABELS = ["Faithfulness", "Relevancy", "Completeness", "Hallucination↑", "Coherence", "Citation Acc.", "Legal Reasoning"]
+        with open(ABLATION_FILE, encoding="utf-8") as fh:
+            ablation = json.load(fh)
 
-        # ── Compute averages ──
-        naive_avgs, graph_avgs = [], []
-        for m in METRICS:
-            n_scores = [d["naive"][m]["score"] for d in ragas_data if m in d["naive"] and d["naive"][m]["score"] > 0]
-            g_scores = [d["graphrag"][m]["score"] for d in ragas_data if m in d["graphrag"] and d["graphrag"][m]["score"] > 0]
-            naive_avgs.append(round(sum(n_scores)/len(n_scores), 2) if n_scores else 0)
-            graph_avgs.append(round(sum(g_scores)/len(g_scores), 2) if g_scores else 0)
-
-        # ── Hero stat cards ──
-        wins_g = sum(1 for n, g in zip(naive_avgs, graph_avgs) if g > n)
-        wins_n = sum(1 for n, g in zip(naive_avgs, graph_avgs) if n > g)
-        ties = sum(1 for n, g in zip(naive_avgs, graph_avgs) if n == g)
-
-        hc1, hc2, hc3, hc4 = st.columns(4)
-        with hc1:
-            st.markdown(f'<div class="stat-card"><div class="stat-number">{len(ragas_data)}</div><div class="stat-label">Questions</div></div>', unsafe_allow_html=True)
-        with hc2:
-            st.markdown(f'<div class="stat-card"><div class="stat-number">{len(METRICS)}</div><div class="stat-label">Metrics</div></div>', unsafe_allow_html=True)
-        with hc3:
-            st.markdown(f'<div class="stat-card"><div class="stat-number" style="-webkit-text-fill-color:#ddbe77;">{wins_g}</div><div class="stat-label">GraphRAG Wins</div></div>', unsafe_allow_html=True)
-        with hc4:
-            st.markdown(f'<div class="stat-card"><div class="stat-number" style="-webkit-text-fill-color:#10b981;">{wins_n}</div><div class="stat-label">Naive RAG Wins</div></div>', unsafe_allow_html=True)
-
-        st.markdown("")
-
-        # ── Radar Chart ──
-        st.markdown("#### Metric Radar — Naive RAG vs GraphRAG")
-
-        fig_radar = go.Figure()
-        fig_radar.add_trace(go.Scatterpolar(
-            r=naive_avgs + [naive_avgs[0]], theta=METRIC_LABELS + [METRIC_LABELS[0]],
-            fill="toself", fillcolor="rgba(111, 174, 142, 0.12)",
-            line=dict(color="#6fae8e", width=2), name="Naive RAG",
-            marker=dict(size=6),
-        ))
-        fig_radar.add_trace(go.Scatterpolar(
-            r=graph_avgs + [graph_avgs[0]], theta=METRIC_LABELS + [METRIC_LABELS[0]],
-            fill="toself", fillcolor="rgba(194, 164, 90, 0.12)",
-            line=dict(color="#c2a45a", width=2), name="GraphRAG",
-            marker=dict(size=6),
-        ))
-        fig_radar.update_layout(
-            polar=dict(
-                bgcolor="rgba(0,0,0,0)",
-                radialaxis=dict(visible=True, range=[0, 5], gridcolor="rgba(194,164,90,0.1)", tickfont=dict(color="#766d5d", size=9)),
-                angularaxis=dict(tickfont=dict(size=11, color="#cfc6b5"), gridcolor="rgba(194,164,90,0.12)"),
-            ),
-            plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
-            font=dict(color="#a89e8b"), height=480, margin=dict(l=60, r=60, t=40, b=40),
-            legend=dict(orientation="h", yanchor="bottom", y=-0.15, xanchor="center", x=0.5, font=dict(size=12)),
+        rows = []
+        for name, payload in ablation.items():
+            m = payload["metrics"]
+            low, high = payload["recall@5_ci95"]
+            rows.append({
+                "Configuration": name,
+                "R@1": round(m["recall@1"], 3),
+                "R@5": round(m["recall@5"], 3),
+                "R@5 95% CI": f"[{low:.2f}, {high:.2f}]",
+                "nDCG@10": round(m["ndcg@10"], 3),
+                "MRR": round(m["mrr"], 3),
+                "p50 ms": round(payload["latency_ms"]["p50"]),
+            })
+        st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
+        st.caption(
+            "Intervals are percentile bootstrap over per-question scores. Where they "
+            "overlap, the difference is not established at this sample size."
         )
-        st.plotly_chart(fig_radar, use_container_width=True)
 
-        # ── Grouped Bar Chart ──
-        st.markdown("#### Head-to-Head Comparison")
-
-        fig_bars = go.Figure(data=[
-            go.Bar(name="Naive RAG", x=METRIC_LABELS, y=naive_avgs, marker_color="#6fae8e",
-                   text=[f"{v:.1f}" for v in naive_avgs], textposition="outside",
-                   textfont=dict(color="#9bd0b8", size=11)),
-            go.Bar(name="GraphRAG", x=METRIC_LABELS, y=graph_avgs, marker_color="#c2a45a",
-                   text=[f"{v:.1f}" for v in graph_avgs], textposition="outside",
-                   textfont=dict(color="#ddbe77", size=11)),
-        ])
-        fig_bars.update_layout(
-            barmode="group", height=380,
+        fig_abl = go.Figure()
+        names = list(ablation)
+        fig_abl.add_trace(go.Bar(
+            name="Recall@5", x=names,
+            y=[ablation[n]["metrics"]["recall@5"] for n in names],
+            marker_color="#6fae8e",
+            error_y=dict(
+                type="data", symmetric=False,
+                array=[ablation[n]["recall@5_ci95"][1] - ablation[n]["metrics"]["recall@5"] for n in names],
+                arrayminus=[ablation[n]["metrics"]["recall@5"] - ablation[n]["recall@5_ci95"][0] for n in names],
+                color="#3f6650", thickness=1.5,
+            ),
+        ))
+        fig_abl.add_trace(go.Bar(
+            name="nDCG@10", x=names,
+            y=[ablation[n]["metrics"]["ndcg@10"] for n in names],
+            marker_color="#c2a45a",
+        ))
+        fig_abl.update_layout(
+            barmode="group", height=340,
             plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
-            font=dict(color="#a89e8b"), yaxis=dict(range=[0, 5.5], gridcolor="rgba(194,164,90,0.08)", title="Score (1-5)"),
-            xaxis=dict(tickfont=dict(size=10)),
+            font=dict(color="#a89e8b"),
+            yaxis=dict(range=[0, 1.05], gridcolor="rgba(194,164,90,0.08)", title="Score"),
             legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5),
             margin=dict(l=40, r=20, t=40, b=60),
         )
-        st.plotly_chart(fig_bars, use_container_width=True)
+        st.plotly_chart(fig_abl, use_container_width=True)
 
-        # ── Category Heatmap ──
-        st.markdown("---")
-        st.markdown("#### Performance by Category")
+    # ── Answer quality, per generator ──
+    st.markdown("---")
+    st.markdown("#### Answer quality")
 
-        categories = list(dict.fromkeys(d["category"] for d in ragas_data))
-        cat_naive, cat_graph = [], []
-        for cat in categories:
-            cat_items = [d for d in ragas_data if d["category"] == cat]
-            n_vals = []
-            g_vals = []
-            for d in cat_items:
-                for m in METRICS:
-                    if m in d["naive"] and d["naive"][m]["score"] > 0:
-                        n_vals.append(d["naive"][m]["score"])
-                    if m in d["graphrag"] and d["graphrag"][m]["score"] > 0:
-                        g_vals.append(d["graphrag"][m]["score"])
-            cat_naive.append(round(sum(n_vals)/len(n_vals), 2) if n_vals else 0)
-            cat_graph.append(round(sum(g_vals)/len(g_vals), 2) if g_vals else 0)
+    import glob as _glob
 
-        cat_labels = [c.replace("_", " ").title() for c in categories]
-        deltas = [round(g - n, 2) for n, g in zip(cat_naive, cat_graph)]
+    quality_files = sorted(_glob.glob(QUALITY_GLOB))
+    if not quality_files:
+        st.warning(
+            "No judged results yet. Run "
+            "`python scripts/eval_answers.py --generator ollama:qwen2.5:3b`."
+        )
+    else:
+        runs = {}
+        for path in quality_files:
+            with open(path, encoding="utf-8") as fh:
+                payload = json.load(fh)
+            for config, summary in payload["configs"].items():
+                runs[f"{payload['generator']} · {config}"] = (payload, summary)
 
-        fig_cat = go.Figure(data=[
-            go.Bar(name="Naive RAG", y=cat_labels, x=cat_naive, orientation="h", marker_color="#6fae8e",
-                   text=[f"{v:.2f}" for v in cat_naive], textposition="inside", textfont=dict(color="white", size=11)),
-            go.Bar(name="GraphRAG", y=cat_labels, x=cat_graph, orientation="h", marker_color="#c2a45a",
-                   text=[f"{v:.2f}" for v in cat_graph], textposition="inside", textfont=dict(color="white", size=11)),
-        ])
-        fig_cat.update_layout(
-            barmode="group", height=320,
+        st.caption(
+            "Judge: "
+            + ", ".join(sorted({p["judge"] for p, _ in runs.values()}))
+            + " — a different model family from the generator, so these are not "
+            "self-scored. Bars show 95% bootstrap intervals."
+        )
+
+        metric_names = sorted({
+            m for _, summary in runs.values() for m in summary["metrics"]
+        })
+        fig_q = go.Figure()
+        palette = ["#6fae8e", "#c2a45a", "#8fadce", "#d98080"]
+        for index, (label, (_, summary)) in enumerate(runs.items()):
+            means = [summary["metrics"].get(m, {}).get("mean", 0) for m in metric_names]
+            highs = [summary["metrics"].get(m, {}).get("ci95", [0, 0])[1] for m in metric_names]
+            lows = [summary["metrics"].get(m, {}).get("ci95", [0, 0])[0] for m in metric_names]
+            fig_q.add_trace(go.Bar(
+                name=label, x=[m.replace("_", " ") for m in metric_names], y=means,
+                marker_color=palette[index % len(palette)],
+                error_y=dict(
+                    type="data", symmetric=False,
+                    array=[h - v for h, v in zip(highs, means)],
+                    arrayminus=[v - l for l, v in zip(lows, means)],
+                    color="#766d5d", thickness=1.5,
+                ),
+            ))
+        fig_q.update_layout(
+            barmode="group", height=400,
             plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
-            font=dict(color="#a89e8b"), xaxis=dict(range=[0, 5], title="Avg Score", gridcolor="rgba(194,164,90,0.08)"),
+            font=dict(color="#a89e8b"),
+            yaxis=dict(range=[0, 5.5], gridcolor="rgba(194,164,90,0.08)", title="Score (1-5)"),
+            xaxis=dict(tickfont=dict(size=10)),
             legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5),
-            margin=dict(l=180, r=20, t=40, b=40),
+            margin=dict(l=40, r=20, t=40, b=80),
         )
-        st.plotly_chart(fig_cat, use_container_width=True)
+        st.plotly_chart(fig_q, use_container_width=True)
 
-        # ── Delta advantage column ──
-        st.markdown("**GraphRAG Advantage (Δ) by Category:**")
-        delta_cols = st.columns(len(categories))
-        for i, (cat, d_val) in enumerate(zip(cat_labels, deltas)):
-            color = "#ddbe77" if d_val > 0 else "#ef4444" if d_val < 0 else "#766d5d"
-            sign = "+" if d_val > 0 else ""
-            delta_cols[i].markdown(
-                f'<div style="text-align:center;"><span style="font-size:1.5rem;font-weight:800;color:{color};">{sign}{d_val}</span>'
-                f'<br><span style="font-size:0.7rem;color:#766d5d;">{cat}</span></div>', unsafe_allow_html=True)
-
-        # ── Win/Loss Donut ──
-        st.markdown("---")
-        col_donut, col_table = st.columns([1, 2])
-
-        with col_donut:
-            st.markdown("#### Win Rate (Per Question)")
-            q_wins_g, q_wins_n, q_ties = 0, 0, 0
-            for d in ragas_data:
-                n_avg = sum(d["naive"][m]["score"] for m in METRICS if m in d["naive"] and d["naive"][m]["score"] > 0)
-                g_avg = sum(d["graphrag"][m]["score"] for m in METRICS if m in d["graphrag"] and d["graphrag"][m]["score"] > 0)
-                if g_avg > n_avg:
-                    q_wins_g += 1
-                elif n_avg > g_avg:
-                    q_wins_n += 1
-                else:
-                    q_ties += 1
-
-            fig_donut = go.Figure(data=[go.Pie(
-                labels=["GraphRAG Wins", "Naive RAG Wins", "Ties"],
-                values=[q_wins_g, q_wins_n, q_ties],
-                marker=dict(colors=["#c2a45a", "#6fae8e", "#332e24"]),
-                hole=0.55, textinfo="label+value",
-                textfont=dict(color="#ece6d8", size=11),
-            )])
-            fig_donut.update_layout(
-                plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
-                font=dict(color="#a89e8b"), height=300, showlegend=False,
-                margin=dict(l=10, r=10, t=10, b=10),
-                annotations=[dict(text=f"<b>{q_wins_g}/{len(ragas_data)}</b>", x=0.5, y=0.5, font_size=22, font_color="#ddbe77", showarrow=False)],
+        # Answer length sits beside the scores deliberately: LLM judges reward
+        # verbosity, so a score gap that is really a length gap stays visible.
+        len_cols = st.columns(len(runs))
+        for col, (label, (_, summary)) in zip(len_cols, runs.items()):
+            col.metric(
+                label.split(" · ")[0],
+                f"{summary['answer_words']['median']:.0f} words",
+                f"{summary['latency_ms_median'] / 1000:.1f}s median",
             )
-            st.plotly_chart(fig_donut, use_container_width=True)
 
-        # ── Per-Question Breakdown Table ──
-        with col_table:
-            st.markdown("#### Per-Question Scores")
-            table_rows = []
-            for i, d in enumerate(ragas_data, 1):
-                n_vals = [d["naive"][m]["score"] for m in METRICS if m in d["naive"] and d["naive"][m]["score"] > 0]
-                g_vals = [d["graphrag"][m]["score"] for m in METRICS if m in d["graphrag"] and d["graphrag"][m]["score"] > 0]
-                n_avg = round(sum(n_vals)/len(n_vals), 2) if n_vals else 0
-                g_avg = round(sum(g_vals)/len(g_vals), 2) if g_vals else 0
-                winner = "🟣" if g_avg > n_avg else "🟢" if n_avg > g_avg else "🟡"
-                table_rows.append({
-                    "#": i, "Question": d["question"][:55] + "...",
-                    "Category": d["category"].replace("_", " ").title()[:18],
-                    "Naive": n_avg, "Graph": g_avg, "W": winner,
-                })
-            st.dataframe(pd.DataFrame(table_rows), use_container_width=True, height=350, hide_index=True)
+        for label, (_, summary) in runs.items():
+            if summary.get("unparsed_judge_responses"):
+                st.caption(
+                    f"{label}: {summary['unparsed_judge_responses']} judge response(s) "
+                    "could not be parsed and are excluded from the means above."
+                )
+            if "abstention" in summary:
+                stats = summary["abstention"]
+                st.caption(
+                    f"{label}: refused {stats['correctly_refused']}/"
+                    f"{stats['out_of_corpus_questions']} out-of-corpus questions, "
+                    f"wrongly refused {stats['wrongly_refused_answerable']} answerable."
+                )
 
-        # ── Latency Comparison ──
+    # ── Abstention calibration ──
+    if os.path.exists(CALIBRATION_FILE):
         st.markdown("---")
-        st.markdown("#### Latency Comparison")
-
-        naive_lats = [d["naive"].get("latency_ms", 0) for d in ragas_data]
-        graph_lats = [d["graphrag"].get("latency_ms", 0) for d in ragas_data]
-
-        lat_col1, lat_col2, lat_col3 = st.columns(3)
-        avg_n_lat = sum(naive_lats)/len(naive_lats)/1000 if naive_lats else 0
-        avg_g_lat = sum(graph_lats)/len(graph_lats)/1000 if graph_lats else 0
-        lat_col1.metric("Naive RAG Avg", f"{avg_n_lat:.1f}s")
-        lat_col2.metric("GraphRAG Avg", f"{avg_g_lat:.1f}s")
-        lat_col3.metric("Speedup Factor", f"{avg_g_lat/avg_n_lat:.1f}x" if avg_n_lat > 0 else "N/A")
-
-        q_labels = [f"Q{i+1}" for i in range(len(ragas_data))]
-        fig_lat = go.Figure(data=[
-            go.Scatter(x=q_labels, y=[l/1000 for l in naive_lats], mode="lines+markers",
-                       name="Naive RAG", line=dict(color="#6fae8e", width=2), marker=dict(size=6)),
-            go.Scatter(x=q_labels, y=[l/1000 for l in graph_lats], mode="lines+markers",
-                       name="GraphRAG", line=dict(color="#c2a45a", width=2), marker=dict(size=6)),
-        ])
-        fig_lat.update_layout(
-            height=300, plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
-            font=dict(color="#a89e8b"), yaxis=dict(title="Seconds", gridcolor="rgba(194,164,90,0.08)"),
-            legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5),
-            margin=dict(l=40, r=20, t=40, b=40),
+        st.markdown("#### Abstention calibration")
+        with open(CALIBRATION_FILE, encoding="utf-8") as fh:
+            calibration = json.load(fh)
+        st.dataframe(
+            pd.DataFrame([
+                {
+                    "Retriever": name,
+                    "Answerable conf.": round(payload["answerable_mean"], 3),
+                    "Out-of-corpus conf.": round(payload["unanswerable_mean"], 3),
+                    "Separation": round(payload["separation"], 3),
+                    "Threshold": round(payload["threshold"], 3),
+                    "Answers answerable": f"{payload['answered_when_answerable']:.0%}",
+                    "Refuses unanswerable": f"{payload['refused_when_unanswerable']:.0%}",
+                }
+                for name, payload in calibration.items()
+            ]),
+            use_container_width=True, hide_index=True,
         )
-        st.plotly_chart(fig_lat, use_container_width=True)
+        st.caption(
+            "Thresholds are chosen by maximising Youden's J against the gold set's "
+            "out-of-corpus questions, not hand-picked. Separation is the gap between "
+            "the two populations' mean confidence — a retriever whose separation is "
+            "near zero cannot support abstention at any threshold."
+        )
 
-        # ── Methodology ──
-        st.markdown("---")
-        st.markdown("#### Methodology")
-        meth_col1, meth_col2 = st.columns(2)
-        with meth_col1:
-            st.markdown('''
-            <div class="glass-card">
-                <strong>Evaluation Framework</strong><br>
-                <span style="color:#cfc6b5;">RAGAS (Retrieval Augmented Generation Assessment)</span><br><br>
-                <strong>Judge Model</strong><br>
-                <span style="color:#cfc6b5;">Llama 3.1 8B — LLM-as-Judge, temperature=0</span><br><br>
-                <strong>Hardware</strong><br>
-                <span style="color:#cfc6b5;">RTX 4050 (6GB VRAM), 100% local inference</span>
-            </div>
-            ''', unsafe_allow_html=True)
-        with meth_col2:
-            st.markdown('''
-            <div class="glass-card">
-                <strong>Metrics (8 total)</strong><br>
-                <span style="color:#6ee7b7;">1.</span> Faithfulness · 
-                <span style="color:#6ee7b7;">2.</span> Answer Relevancy<br>
-                <span style="color:#6ee7b7;">3.</span> Completeness · 
-                <span style="color:#6ee7b7;">4.</span> Hallucination Detection<br>
-                <span style="color:#6ee7b7;">5.</span> Coherence · 
-                <span style="color:#6ee7b7;">6.</span> Citation Accuracy<br>
-                <span style="color:#6ee7b7;">7.</span> Legal Reasoning · 
-                <span style="color:#6ee7b7;">8.</span> Context Precision<br><br>
-                <strong>Scoring:</strong> <span style="color:#cfc6b5;">1–5 scale (5 = best)</span>
-            </div>
-            ''', unsafe_allow_html=True)
+    # ── Methodology ──
+    st.markdown("---")
+    st.markdown("#### Methodology")
+    meth_col1, meth_col2 = st.columns(2)
+    with meth_col1:
+        st.markdown('''
+        <div class="glass-card">
+            <strong>Retrieval</strong><br>
+            <span style="color:#cfc6b5;">35-question hand-annotated gold set with
+            document-level ground truth, machine-verified against the corpus.
+            Recall@k, nDCG@k and MRR computed without an LLM.</span><br><br>
+            <strong>Judge</strong><br>
+            <span style="color:#cfc6b5;">A different model family from the generator.
+            Self-judged runs are refused, not merely discouraged.</span><br><br>
+            <strong>Hardware</strong><br>
+            <span style="color:#cfc6b5;">RTX 4050, 6GB VRAM. Retrieval and generation
+            fully local; only the judge is remote.</span>
+        </div>
+        ''', unsafe_allow_html=True)
+    with meth_col2:
+        st.markdown('''
+        <div class="glass-card">
+            <strong>Reading these numbers</strong><br>
+            <span style="color:#cfc6b5;">Every mean carries a 95% percentile bootstrap
+            interval. At 25 answerable questions those intervals are wide, and
+            overlapping intervals mean the difference is not established —
+            they are shown rather than hidden for that reason.</span><br><br>
+            <strong>Citation accuracy is measured, not judged</strong><br>
+            <span style="color:#cfc6b5;">Case names, article and section references
+            are extracted from the answer and checked against the retrieved text.
+            A fabricated citation cannot be scored generously.</span><br><br>
+            <strong>Corpus</strong><br>
+            <span style="color:#cfc6b5;">Both pipelines index the same 40 documents.</span>
+        </div>
+        ''', unsafe_allow_html=True)

@@ -27,9 +27,19 @@ services:
         condition: service_healthy
     environment:
       - OLLAMA_HOST=http://ollama:11434
+      # Only the evaluation scripts need a judge key; the dashboard does not.
+      # Passed through rather than baked in, and .env stays out of the image.
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY:-}
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - LEXGRAPH_RETRIEVER=${LEXGRAPH_RETRIEVER:-hybrid-rerank}
+      - LEXGRAPH_GENERATOR=${LEXGRAPH_GENERATOR:-ollama:qwen2.5:3b}
     ports:
       - "8501:8501"
     volumes:
+      # input/ is mounted, not baked in: the BM25 half of the hybrid retriever
+      # builds its index from the judgment text at startup, so the container
+      # needs the corpus even though only ChromaDB holds the vectors.
+      - ./input:/app/input:ro
       - ./output:/app/output
       - ./cache:/app/cache
       - ./chroma_db:/app/chroma_db
