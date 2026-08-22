@@ -47,6 +47,7 @@ class OllamaEmbedder:
         self.batch_size = batch_size
         self.timeout = timeout
         self.max_retries = max_retries
+        self._query_cache: dict[str, list[float]] = {}
 
     def _post(self, inputs: list[str]) -> list[list[float]]:
         last_error: Exception | None = None
@@ -87,7 +88,23 @@ class OllamaEmbedder:
         return vectors
 
     def embed_one(self, text: str) -> list[float]:
-        return self._post([text])[0]
+        """Embed a single text, memoised per process.
+
+        Measured on this hardware, an Ollama embed request costs ~2.15s of
+        fixed overhead regardless of payload: batches of 1, 2 and 8 all take
+        the same wall time, while a batch of 32 amortises to ~94ms per item.
+        So the per-request constant, not the model, dominates single-query
+        retrieval.
+
+        The evaluation sweeps re-embed the same gold-set questions once per
+        configuration, which is pure waste against a constant that large. The
+        cache is on the query path only; indexing already batches.
+        """
+        cached = self._query_cache.get(text)
+        if cached is None:
+            cached = self._post([text])[0]
+            self._query_cache[text] = cached
+        return cached
 
     def health_check(self) -> None:
         """Fail fast with a readable message if Ollama or the model is missing."""

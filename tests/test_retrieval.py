@@ -164,3 +164,27 @@ def test_hit_citation_formats_case_year_and_paragraph():
         title="Sunil Batra vs Delhi Administration", year="1979", para_label="para 12-15",
     )
     assert hit.citation == "Sunil Batra vs Delhi Administration (1979), para 12-15"
+
+
+# --- embedding cache ---------------------------------------------------------
+
+def test_query_embeddings_are_cached_per_process():
+    from lexgraph.embeddings import OllamaEmbedder
+
+    embedder = OllamaEmbedder()
+    calls = []
+
+    def fake_post(inputs):
+        calls.append(list(inputs))
+        return [[0.1, 0.2, 0.3] for _ in inputs]
+
+    embedder._post = fake_post
+
+    first = embedder.embed_one("What is a curative petition?")
+    second = embedder.embed_one("What is a curative petition?")
+
+    assert first == second
+    assert len(calls) == 1, "the second identical query must not hit Ollama again"
+
+    embedder.embed_one("A different question?")
+    assert len(calls) == 2
