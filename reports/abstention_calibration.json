@@ -1,0 +1,29 @@
+{
+  "dense": {
+    "threshold": 0.7577866752942404,
+    "separation": 0.03897712190945968,
+    "answerable_mean": 0.736969043413798,
+    "unanswerable_mean": 0.6979919215043386,
+    "answered_when_answerable": 0.48,
+    "refused_when_unanswerable": 0.9,
+    "youden_j": 0.3799999999999999
+  },
+  "bm25": {
+    "threshold": 21.06866774567043,
+    "separation": 13.270197243539272,
+    "answerable_mean": 27.747895784893085,
+    "unanswerable_mean": 14.477698541353814,
+    "answered_when_answerable": 0.72,
+    "refused_when_unanswerable": 1.0,
+    "youden_j": 0.72
+  },
+  "hybrid-rerank": {
+    "threshold": 0.42346505299210546,
+    "separation": 0.6494002586420003,
+    "answerable_mean": 0.8928999257882436,
+    "unanswerable_mean": 0.24349966714624316,
+    "answered_when_answerable": 1.0,
+    "refused_when_unanswerable": 0.8,
+    "youden_j": 0.8
+  }
+}

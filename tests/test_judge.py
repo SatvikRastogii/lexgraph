@@ -9,14 +9,28 @@ from lexgraph.eval.judge import (
 from lexgraph.llm import judge_is_independent
 
 
+ALL_METRICS = [
+    "faithfulness", "answer_relevancy", "context_precision",
+    "completeness", "hallucination", "coherence", "legal_reasoning",
+]
+
+
+def batch_response(score=4, metrics=None):
+    """A well-formed batched judge response."""
+    body = ", ".join(
+        f'"{m}": {{"score": {score}, "reason": "ok"}}' for m in (metrics or ALL_METRICS)
+    )
+    return f"{{{body}}}"
+
+
 class FakeJudge:
     """Returns canned responses so judge logic is testable without a network."""
 
-    def __init__(self, response='{"score": 4, "reason": "well grounded"}'):
-        self.response = response
+    def __init__(self, response=None):
+        self.response = response if response is not None else batch_response()
         self.prompts = []
 
-    def chat(self, prompt, max_tokens=200, temperature=0.0):
+    def chat(self, prompt, max_tokens=1600, temperature=0.0):
         self.prompts.append(prompt)
         return self.response
 
@@ -96,7 +110,7 @@ def test_score_pipeline_records_answer_length():
 
 
 def test_citation_accuracy_is_measured_not_judged():
-    judge = FakeJudge('{"score": 5, "reason": "perfect"}')
+    judge = FakeJudge(batch_response(score=5, metrics=["faithfulness"]))
     scores = score_pipeline(
         "naive", "Which article applies?",
         "The answer relies on Article 99, which is decisive.",
@@ -129,13 +143,24 @@ def test_context_precision_is_skipped_without_context():
     assert "faithfulness" in scores.metrics
 
 
-def test_context_is_only_sent_for_metrics_that_need_it():
+def test_all_metrics_are_scored_in_one_call():
+    # Seven calls per answer put a two-generator sweep past any free-tier
+    # daily quota; one call does the same work.
     judge = FakeJudge()
-    score_pipeline(
-        "naive", "Q?", "A.", ["SECRET_CONTEXT_MARKER"], judge,
-        metrics=["answer_relevancy"],
+    scores = score_pipeline("naive", "Q?", "A.", ["ctx"], judge)
+    assert len(judge.prompts) == 1
+    assert set(ALL_METRICS) <= set(scores.metrics)
+
+
+def test_one_malformed_metric_does_not_lose_the_others():
+    judge = FakeJudge(
+        '{"faithfulness": {"score": 4, "reason": "ok"}, "coherence": "broken"}'
     )
-    assert "SECRET_CONTEXT_MARKER" not in judge.prompts[0]
+    scores = score_pipeline(
+        "naive", "Q?", "A.", ["ctx"], judge, metrics=["faithfulness", "coherence"]
+    )
+    assert scores.metrics["faithfulness"].score == 4
+    assert scores.metrics["coherence"].parsed is False
 
 
 def test_completeness_rubric_warns_the_judge_against_length_bias():
@@ -151,7 +176,7 @@ def test_hallucination_rubric_states_its_direction():
 
 
 def test_mean_ignores_nothing_and_matches_hand_computation():
-    judge = FakeJudge('{"score": 4, "reason": "ok"}')
+    judge = FakeJudge(batch_response(score=4, metrics=["faithfulness", "coherence"]))
     scores = score_pipeline(
         "naive", "Q?", "Article 21 applies.",
         ["Article 21 protects life."], judge,

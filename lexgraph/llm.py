@@ -13,7 +13,7 @@ a problem that does not exist here.
 Clients are named ``provider:model``:
 
     ollama:llama3.1
-    gemini:gemini-3.5-flash
+    gemini:gemini-3-flash-preview
     groq:llama-3.3-70b-versatile
     openai:gpt-4o-mini
 
@@ -131,7 +131,7 @@ class GeminiClient(BaseClient):
 
     def __init__(
         self,
-        model: str = "gemini-3.5-flash",
+        model: str = "gemini-3-flash-preview",
         api_key: str | None = None,
         thinking_budget: int | None = 0,
         **kwargs,
@@ -226,7 +226,7 @@ _OPENAI_COMPATIBLE = {
 }
 
 DEFAULT_GENERATOR = "ollama:llama3.1"
-DEFAULT_JUDGE = "gemini:gemini-3.5-flash"
+DEFAULT_JUDGE = "gemini:gemini-3-flash-preview"
 
 
 def get_client(spec: str) -> BaseClient:
@@ -238,7 +238,7 @@ def get_client(spec: str) -> BaseClient:
     if provider == "ollama":
         return OllamaClient(model or "llama3.1")
     if provider == "gemini":
-        return GeminiClient(model or "gemini-3.5-flash")
+        return GeminiClient(model or "gemini-3-flash-preview")
     if provider in _OPENAI_COMPATIBLE:
         base_url, key_var, rpm = _OPENAI_COMPATIBLE[provider]
         if not model:

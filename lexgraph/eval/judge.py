@@ -155,21 +155,68 @@ _RUBRIC = {
 }
 
 
-def _build_prompt(metric: str, question: str, answer: str, contexts: list[str]) -> str:
-    title, scale, needs_context = _RUBRIC[metric]
-    parts = [
-        "You are an impartial evaluation judge for a legal question-answering system.",
-        f"Score the following on a 1-5 scale.\n\n{title}\n{scale}",
-        f"\nQUESTION:\n{question}",
-    ]
-    if needs_context:
-        joined = "\n\n---\n\n".join(contexts[:4]) if contexts else "(no context retrieved)"
-        parts.append(f"\nCONTEXT PROVIDED TO THE SYSTEM:\n{joined[:6000]}")
-    parts.append(f"\nANSWER BEING EVALUATED:\n{answer[:4000]}")
-    parts.append(
-        '\nRespond with ONLY a JSON object: {"score": <1-5>, "reason": "<one sentence>"}'
+def parse_batch_scores(response: str, metrics: list[str]) -> dict[str, MetricScore]:
+    """Parse one JSON object holding a score per metric.
+
+    Each metric is recovered independently, so one malformed entry costs that
+    metric and not the whole question.
+    """
+    scores: dict[str, MetricScore] = {}
+    match = re.search(r"\{.*\}", response, re.DOTALL)
+    payload = {}
+    if match:
+        try:
+            payload = json.loads(match.group())
+        except json.JSONDecodeError:
+            payload = {}
+
+    for metric in metrics:
+        entry = payload.get(metric)
+        if isinstance(entry, dict) and entry.get("score") is not None:
+            try:
+                value = max(SCALE_MIN, min(SCALE_MAX, int(float(entry["score"]))))
+                scores[metric] = MetricScore(value, str(entry.get("reason", "")).strip())
+                continue
+            except (ValueError, TypeError):
+                pass
+        if isinstance(entry, (int, float)):
+            scores[metric] = MetricScore(max(SCALE_MIN, min(SCALE_MAX, int(entry))))
+            continue
+        scores[metric] = MetricScore(
+            0.0, f"missing or unparseable in judge response: {response[:100]}", parsed=False
+        )
+    return scores
+
+
+def _build_batch_prompt(
+    question: str, answer: str, contexts: list[str], metrics: list[str]
+) -> str:
+    """One prompt scoring every metric.
+
+    Scoring each metric in its own request meant seven calls per answer, or
+    490 for a two-generator sweep over the gold set -- past any free-tier
+    daily quota, and seven times the latency for no measurable benefit. The
+    rubric is stated in full either way, so the judge is anchored the same.
+    """
+    rubric_lines = []
+    for metric in metrics:
+        title, scale, _ = _RUBRIC[metric]
+        rubric_lines.append(f"{metric}\n  {title}\n  {scale}")
+
+    joined = "\n\n---\n\n".join(contexts[:4]) if contexts else "(no context retrieved)"
+    schema = ", ".join(f'"{m}": {{"score": <1-5>, "reason": "<one sentence>"}}' for m in metrics)
+
+    return (
+        "You are an impartial evaluation judge for a legal question-answering "
+        "system. Score the answer below on each metric independently, on a 1-5 "
+        "scale. Judge each metric on its own terms; do not let one score pull "
+        "the others.\n\n"
+        f"METRICS:\n{chr(10).join(rubric_lines)}\n\n"
+        f"QUESTION:\n{question}\n\n"
+        f"CONTEXT PROVIDED TO THE SYSTEM:\n{joined[:6000]}\n\n"
+        f"ANSWER BEING EVALUATED:\n{answer[:4000]}\n\n"
+        f"Respond with ONLY a JSON object of exactly this shape:\n{{{schema}}}"
     )
-    return "\n".join(parts)
 
 
 def score_pipeline(
@@ -180,7 +227,7 @@ def score_pipeline(
     judge: BaseClient,
     metrics: list[str] | None = None,
 ) -> PipelineScores:
-    """Score one pipeline's answer across every metric."""
+    """Score one pipeline's answer across every metric in a single judge call."""
     result = PipelineScores(
         label=label,
         question=question,
@@ -188,15 +235,17 @@ def score_pipeline(
         answer_words=len(answer.split()),
     )
 
-    for metric in metrics or list(_RUBRIC):
-        if metric == "context_precision" and not contexts:
-            continue
+    requested = list(metrics or _RUBRIC)
+    if not contexts:
+        requested = [m for m in requested if m != "context_precision"]
+
+    if requested:
         response = judge.chat(
-            _build_prompt(metric, question, answer, contexts),
-            max_tokens=512,
+            _build_batch_prompt(question, answer, contexts, requested),
+            max_tokens=1600,
             temperature=0.0,
         )
-        result.metrics[metric] = parse_score(response)
+        result.metrics.update(parse_batch_scores(response, requested))
 
     # Deterministic, not judged.
     report = verify_citations(answer, contexts)
