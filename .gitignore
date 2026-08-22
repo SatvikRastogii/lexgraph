@@ -26,6 +26,12 @@ legal_corpus/
 # Evaluation run artifacts (results are summarised in reports/, not committed raw)
 eval_runs/
 
+# Personal documents that happen to live in the working directory. This
+# repository is public; a CV carries a phone number and address.
+*Resume*.pdf
+*resume*.pdf
+*CV*.pdf
+
 # Editor / tooling
 .idea/
 .vscode/
