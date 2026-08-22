@@ -13,9 +13,13 @@ a problem that does not exist here.
 Clients are named ``provider:model``:
 
     ollama:llama3.1
-    gemini:gemini-2.5-flash
+    gemini:gemini-3.5-flash
     groq:llama-3.3-70b-versatile
     openai:gpt-4o-mini
+
+Gemini model names are retired fairly aggressively and availability varies by
+key, so scripts/list_judge_models.py reports what a given key can actually
+reach rather than leaving a 404 to be decoded.
 
 Keys come from the environment (GEMINI_API_KEY, GROQ_API_KEY, OPENAI_API_KEY,
 CEREBRAS_API_KEY), loaded from .env if present.
@@ -125,9 +129,23 @@ class GeminiClient(BaseClient):
     name = "gemini"
     endpoint = "https://generativelanguage.googleapis.com/v1beta/models"
 
-    def __init__(self, model: str = "gemini-2.5-flash", api_key: str | None = None, **kwargs):
+    def __init__(
+        self,
+        model: str = "gemini-3.5-flash",
+        api_key: str | None = None,
+        thinking_budget: int | None = 0,
+        **kwargs,
+    ):
         kwargs.setdefault("requests_per_minute", 10)
         super().__init__(model, **kwargs)
+        # Gemini 3.x models spend output budget on internal reasoning before
+        # emitting anything. At maxOutputTokens=200 a scoring call was measured
+        # using 192 tokens on thoughts and 4 on output, returning a truncated
+        # '{"score":' that parses as nothing. Scoring against a fixed rubric
+        # does not need chain-of-thought, so it is disabled by default; this
+        # also leaves the whole budget for the answer and conserves free-tier
+        # quota. Set thinking_budget=None to let the model think.
+        self.thinking_budget = thinking_budget
         self.api_key = api_key or os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
         if not self.api_key:
             raise LLMError(
@@ -136,18 +154,21 @@ class GeminiClient(BaseClient):
             )
 
     def _chat(self, prompt: str, max_tokens: int, temperature: float) -> str:
+        config = {"temperature": temperature, "maxOutputTokens": max_tokens}
+        if self.thinking_budget is not None:
+            config["thinkingConfig"] = {"thinkingBudget": self.thinking_budget}
+
         response = requests.post(
             f"{self.endpoint}/{self.model}:generateContent",
             headers={"x-goog-api-key": self.api_key, "Content-Type": "application/json"},
-            json={
-                "contents": [{"parts": [{"text": prompt}]}],
-                "generationConfig": {
-                    "temperature": temperature,
-                    "maxOutputTokens": max_tokens,
-                },
-            },
+            json={"contents": [{"parts": [{"text": prompt}]}], "generationConfig": config},
             timeout=180,
         )
+        if response.status_code == 404 and "no longer available" in response.text:
+            raise LLMError(
+                f"Model {self.model!r} is retired or not enabled for this key. "
+                f"Run scripts/list_judge_models.py to see what this key can reach."
+            )
         if response.status_code != 200:
             raise LLMError(f"{response.status_code}: {response.text[:300]}")
 
@@ -157,8 +178,14 @@ class GeminiClient(BaseClient):
         parts = candidates[0].get("content", {}).get("parts") or []
         text = "".join(part.get("text", "") for part in parts).strip()
         if not text:
-            # A hit MAX_TOKENS or safety stop returns a candidate with no text.
-            raise LLMError(f"empty response (finishReason={candidates[0].get('finishReason')})")
+            finish = candidates[0].get("finishReason")
+            hint = (
+                " -- the token budget was consumed by internal thinking; raise "
+                "max_tokens or set thinking_budget=0"
+                if finish == "MAX_TOKENS"
+                else ""
+            )
+            raise LLMError(f"empty response (finishReason={finish}){hint}")
         return text
 
 
@@ -199,7 +226,7 @@ _OPENAI_COMPATIBLE = {
 }
 
 DEFAULT_GENERATOR = "ollama:llama3.1"
-DEFAULT_JUDGE = "gemini:gemini-2.5-flash"
+DEFAULT_JUDGE = "gemini:gemini-3.5-flash"
 
 
 def get_client(spec: str) -> BaseClient:
@@ -211,7 +238,7 @@ def get_client(spec: str) -> BaseClient:
     if provider == "ollama":
         return OllamaClient(model or "llama3.1")
     if provider == "gemini":
-        return GeminiClient(model or "gemini-2.5-flash")
+        return GeminiClient(model or "gemini-3.5-flash")
     if provider in _OPENAI_COMPATIBLE:
         base_url, key_var, rpm = _OPENAI_COMPATIBLE[provider]
         if not model:

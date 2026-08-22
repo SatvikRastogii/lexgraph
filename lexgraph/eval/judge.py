@@ -193,7 +193,7 @@ def score_pipeline(
             continue
         response = judge.chat(
             _build_prompt(metric, question, answer, contexts),
-            max_tokens=200,
+            max_tokens=512,
             temperature=0.0,
         )
         result.metrics[metric] = parse_score(response)
