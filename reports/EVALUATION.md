@@ -1,6 +1,6 @@
 # LexGraph — evaluation results
 
-Generated 2026-08-22 21:55. Gold set: 35 answerable, 10 out-of-corpus, over 40 judgments (38 unique cases).
+Generated 2026-08-23 01:25. Gold set: 55 answerable, 10 out-of-corpus, over 40 judgments (38 unique cases).
 
 Regenerate with `python scripts/make_report.py`.
 
@@ -10,23 +10,23 @@ Document-level ground truth, no LLM in the loop.
 
 | configuration | R@1 | R@5 | R@5 95% CI | nDCG@10 | MRR | p50 |
 |---|---|---|---|---|---|---|
-| `dense-fixed` | 0.610 | 0.873 | [0.78, 0.95] | 0.859 | 0.914 | 2152ms |
-| `dense` | 0.586 | 0.890 | [0.80, 0.96] | 0.861 | 0.895 | 2184ms |
-| `bm25` | 0.578 | 0.817 | [0.71, 0.92] | 0.803 | 0.858 | 2ms |
-| `hybrid` | 0.621 | 0.880 | [0.79, 0.96] | 0.867 | 0.914 | 2188ms |
-| `hybrid-rerank` | 0.664 | 0.892 | [0.81, 0.96] | 0.890 | 0.924 | 4353ms |
+| `dense-fixed` | 0.570 | 0.865 | [0.78, 0.94] | 0.809 | 0.830 | 2195ms |
+| `dense` | 0.582 | 0.886 | [0.81, 0.95] | 0.831 | 0.839 | 2223ms |
+| `bm25` | 0.586 | 0.802 | [0.70, 0.89] | 0.775 | 0.810 | 4ms |
+| `hybrid` | 0.632 | 0.879 | [0.80, 0.95] | 0.847 | 0.873 | 2203ms |
+| `hybrid-rerank` | 0.659 | 0.886 | [0.81, 0.95] | 0.860 | 0.879 | 4456ms |
 
 ### By difficulty tier
 
 | configuration | hard R@5 | hard nDCG@10 | standard R@5 | standard nDCG@10 |
 |---|---|---|---|---|
-| `dense-fixed` | 0.833 | 0.742 | 0.889 | 0.906 |
-| `dense` | 0.867 | 0.783 | 0.900 | 0.892 |
-| `bm25` | 0.717 | 0.671 | 0.857 | 0.857 |
-| `hybrid` | 0.867 | 0.795 | 0.885 | 0.897 |
-| `hybrid-rerank` | 0.867 | 0.791 | 0.902 | 0.930 |
+| `dense-fixed` | 0.844 | 0.728 | 0.889 | 0.906 |
+| `dense` | 0.872 | 0.775 | 0.902 | 0.897 |
+| `bm25` | 0.756 | 0.707 | 0.857 | 0.857 |
+| `hybrid` | 0.872 | 0.803 | 0.887 | 0.901 |
+| `hybrid-rerank` | 0.872 | 0.801 | 0.902 | 0.929 |
 
-n per tier: hard = 10, standard = 25.
+n per tier: hard = 30, standard = 25.
 
 Intervals are percentile bootstrap over per-question scores. Where they overlap, the difference between configurations is not established at this sample size.
 
@@ -34,9 +34,9 @@ Intervals are percentile bootstrap over per-question scores. Where they overlap,
 
 | retriever | answerable | out-of-corpus | separation | threshold | answers | refuses |
 |---|---|---|---|---|---|---|
-| `dense` | 0.718 | 0.698 | +0.020 | 0.758 | 34% | 90% |
-| `bm25` | 24.802 | 14.478 | +10.324 | 21.069 | 57% | 100% |
-| `hybrid-rerank` | 0.736 | 0.243 | +0.492 | 0.375 | 83% | 80% |
+| `dense` | 0.699 | 0.696 | +0.004 | 0.631 | 91% | 20% |
+| `bm25` | 22.134 | 14.467 | +7.668 | 14.923 | 82% | 70% |
+| `hybrid-rerank` | 0.576 | 0.248 | +0.328 | 0.027 | 89% | 50% |
 
 Thresholds maximise Youden's J against the gold set's out-of-corpus questions. Separation is the gap between the two populations' mean confidence; a retriever whose separation is near zero cannot support abstention at any threshold.
 

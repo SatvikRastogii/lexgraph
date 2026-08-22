@@ -41,34 +41,72 @@ makes the retrievers' characters visible:
 
 | configuration | hard R@5 | standard R@5 | drop | hard nDCG@10 |
 |---|---|---|---|---|
-| `bm25` | 0.717 | 0.857 | **−0.140** | 0.671 |
-| `dense-fixed` | 0.833 | 0.889 | −0.056 | 0.742 |
-| `dense` | 0.867 | 0.900 | −0.033 | 0.783 |
-| `hybrid` | 0.867 | 0.885 | −0.018 | **0.795** |
-| `hybrid-rerank` | 0.867 | **0.902** | −0.035 | 0.791 |
+| `bm25` | 0.756 | 0.857 | **−0.102** | 0.707 |
+| `dense-fixed` | 0.844 | 0.889 | −0.045 | 0.728 |
+| `dense` | 0.872 | **0.902** | −0.030 | 0.775 |
+| `hybrid` | 0.872 | 0.887 | **−0.015** | **0.803** |
+| `hybrid-rerank` | 0.872 | **0.902** | −0.030 | 0.801 |
 
-Lexical matching loses 14 points the moment the question stops sharing words
-with the document. Dense retrieval loses 3. That gap is the whole argument for
-fusing them, and it is the reason the aggregate numbers below are worth less
-than this table.
+Lexical matching loses ten points the moment the question stops sharing words
+with the document. Dense retrieval loses three, and fusing the two loses one
+and a half. That gap is the whole argument for hybrid retrieval, and it is the
+reason the aggregate numbers below are worth less than this table.
+
+The tier holds 30 questions, up from the 10 it was first built with. The
+direction did not change when it tripled, which is the only reason it is
+quoted as a finding rather than an anecdote — BM25's drop moved from −0.140 to
+−0.102 as the sample grew, which is roughly what a small-sample effect size
+does when it stops being a small sample.
+
+### Right case, wrong paragraph
+
+Recall counts a document as found if any of its chunks is retrieved, including
+the chunk listing which counsel appeared for whom. `paragraph_recall@5` asks
+the stricter question: did the retriever land on a paragraph that actually
+carries the answer?
+
+| configuration | R@5 | ParaR@5 | gap |
+|---|---|---|---|
+| `bm25` | 0.802 | 0.700 | −0.102 |
+| `dense` | 0.886 | 0.792 | −0.094 |
+| `hybrid-rerank` | 0.886 | **0.805** | **−0.081** |
+| `dense-fixed` | 0.865 | n/a | — |
+
+Roughly eight to ten points of every configuration's recall is the right
+judgment at the wrong passage, and the cross-encoder closes the least of it.
+`dense-fixed` reads *n/a*, not zero: 500-word windows carry no paragraph
+labels, so the configuration cannot say which passage it found. Not applicable
+and zero are different claims and only one of them is true.
+
+Paragraph labels are derived by locating each question's already-verified
+`must_contain` terms inside the judgment's own numbering, then re-checked in
+CI — see `scripts/derive_paragraph_labels.py`. They cover 39 of 55 answerable
+questions. A term-bearing paragraph is where an answer is *stated*, which is
+not always the whole of where it is *reasoned*, so read this as a floor on
+passage quality rather than a full account of it.
 
 ### The aggregate picture
 
-| configuration | R@1 | R@5 | R@5 95% CI | nDCG@10 | MRR | p50 |
-|---|---|---|---|---|---|---|
-| `dense-fixed` | 0.610 | 0.873 | [0.78, 0.95] | 0.859 | 0.914 | 2152ms |
-| `dense` | 0.586 | 0.890 | [0.80, 0.96] | 0.861 | 0.895 | 2184ms |
-| `bm25` | 0.578 | 0.817 | [0.71, 0.92] | 0.803 | 0.858 | **2ms** |
-| `hybrid` | 0.621 | 0.880 | [0.79, 0.96] | 0.867 | 0.914 | 2188ms |
-| **`hybrid-rerank`** | **0.664** | **0.892** | [0.81, 0.96] | **0.890** | **0.924** | 4353ms |
+| configuration | R@1 | R@5 | R@5 95% CI | nDCG@10 | MRR | ParaR@5 | p50 |
+|---|---|---|---|---|---|---|---|
+| `dense-fixed` | 0.570 | 0.865 | [0.78, 0.94] | 0.809 | 0.830 | n/a | 2195ms |
+| `dense` | 0.582 | 0.886 | [0.81, 0.95] | 0.831 | 0.839 | 0.792 | 2223ms |
+| `bm25` | 0.586 | 0.802 | [0.70, 0.89] | 0.775 | 0.810 | 0.700 | **4ms** |
+| `hybrid` | 0.632 | 0.879 | [0.80, 0.95] | 0.847 | 0.873 | 0.799 | 2203ms |
+| **`hybrid-rerank`** | **0.659** | **0.886** | [0.81, 0.95] | **0.860** | **0.879** | **0.805** | 4456ms |
 
 The cross-encoder helps where a cross-encoder should — at the top of the
-ranking. R@1 rises from 0.586 to 0.664 and nDCG@10 from 0.861 to 0.890.
+ranking. R@1 rises from 0.582 to 0.659 and nDCG@10 from 0.831 to 0.860, for
+roughly double the latency.
 
-Every Recall@5 interval still overlaps every other one. At 35 answerable
+Every Recall@5 interval still overlaps every other one. At 55 answerable
 questions this gold set **cannot** establish those differences, and the honest
 reading is that it does not. The intervals are printed for that reason rather
 than hidden.
+
+These numbers are lower than the ones this table carried at 35 questions. The
+retrievers did not get worse; 20 harder questions were added, and an easier
+question set was flattering all five configurations equally.
 
 ### Cosine similarity is a poor signal for refusing to answer
 
@@ -76,37 +114,51 @@ Ten gold-set questions have no supporting document anywhere in the corpus. The
 right behaviour is refusal. Whether that is achievable depends entirely on
 whether the retriever scores those questions differently from real ones:
 
-| retriever | answerable | out-of-corpus | separation | Youden's J |
-|---|---|---|---|---|
-| dense | 0.718 | 0.698 | **+0.020** | 0.24 |
-| bm25 | 24.80 | 14.48 | +10.32 | 0.57 |
-| **hybrid-rerank** | 0.736 | 0.243 | **+0.492** | **0.63** |
+| retriever | answerable | out-of-corpus | separation |
+|---|---|---|---|
+| dense | 0.699 | 0.695 | **+0.004** |
+| bm25 | 22.13 | 14.47 | +7.67 |
+| **hybrid-rerank** | 0.576 | 0.249 | **+0.328** |
 
-Dense similarity barely moves between the two populations. Catching 90% of
-out-of-corpus questions on that signal costs refusing 66% of answerable ones —
-which is why a confidence score built on cosine distance can only ever be a
-warning label beside an answer, not a decision to withhold one.
+Dense similarity does not move between the two populations at all. A threshold
+on a signal with four thousandths of separation is theatre, and the calibration
+script prints a warning when it sees one — a cosine score can be a warning
+label beside an answer, never a decision to withhold one.
 
-The cross-encoder score separates cleanly. At a threshold of 0.375 it answers
-83% of answerable questions and refuses 80% of out-of-corpus ones. That
-threshold is chosen by maximising Youden's J against the gold set, not by feel,
-and the dashboard reads it from the calibration file rather than hardcoding it
-— adding the hard tier moved it from 0.423 to 0.375, and a constant would have
-gone stale silently.
+The cross-encoder does separate. What the hard tier revealed is that
+separating and *thresholding usefully* are different things:
 
-Measured end to end during the judged run: **8 of 10 out-of-corpus questions
-correctly refused, at the cost of wrongly refusing 6 of 35 answerable ones.**
+| retriever | operating point | J-optimal point |
+|---|---|---|
+| dense | answers 91%, refuses 20% | answers 13%, refuses 100% |
+| bm25 | answers 82%, refuses **70%** | answers 73%, refuses 80% |
+| hybrid-rerank | answers **89%**, refuses 50% | answers 44%, refuses 100% |
 
-That second number is the honest half of the result. On the easier question
-set the same guardrail refused nothing it should have answered; adding the
-paraphrase tier pushed genuinely answerable questions down toward the refusal
-threshold, because a question sharing little vocabulary with its source scores
-lower under the cross-encoder whether or not the corpus can answer it. A
-guardrail tuned on easy questions looks free. Tuned on hard ones, it has a
-price, and the price is visible here rather than averaged away.
+The right-hand column is what this project used to report. Maximising Youden's
+J weights both errors equally, and on the easier question set that cost
+nothing — the J-optimal threshold answered every answerable question. On the
+paraphrase tier it collapses to answering 44% of genuine questions, because a
+real question phrased in lay language scores much like an out-of-corpus one.
+The signal did not get worse. The questions got harder and exposed what the
+criterion had been choosing all along.
 
-So reranking pays for its latency twice: once in ranking quality, and again by
-producing a score calibrated enough for a guardrail to work at all.
+Equal weighting is also the wrong loss here. A refused answerable question is a
+visible failure. An answered out-of-corpus question is already caught
+downstream, because citations are verified against the retrieved context. So
+the threshold is now chosen as *the most specific point that still answers at
+least 80% of answerable questions*, and the J-optimal alternative is recorded
+beside it so the trade-off stays legible rather than baked in.
+
+One reversal worth stating: **on the harder gold set BM25's raw score is a
+better abstention signal than the cross-encoder's** — 82%/70% against 89%/50%.
+The earlier version of this README concluded that reranking "pays for its
+latency twice", once in ranking and again in calibration. On 25 easy questions
+that was what the data showed. On 55 it is not, and the sentence has been
+removed rather than kept because it read well.
+
+The dashboard reads the threshold from the calibration file rather than
+hardcoding it, which is why expanding the gold set moved it instead of
+silently leaving a stale constant in the source.
 
 ### The model did not fit the card
 
@@ -128,11 +180,14 @@ which is why BM25 at 2ms is not a rounding difference.
 
 ### What the smaller model actually costs you
 
-Both generators, same retriever, same questions, scored by the same
-independent judge:
+Both generators, same retriever, same questions, same independent judge, zero
+unparsed judge responses on either run.
 
-Both generators, same retriever, same 45 questions, same judge, n=35
-answerable, zero unparsed judge responses on either run:
+> These numbers are from the **45-question** gold set, before the hard tier was
+> expanded to 30. The retrieval tables above are current at 65 questions; this
+> one is not. Re-running it costs an hour of local generation per generator
+> plus a day of judge quota, so it is labelled rather than quietly refreshed.
+> n=35 answerable.
 
 | metric | llama3.1 (8B) | qwen2.5:3b | Δ |
 |---|---|---|---|
@@ -222,9 +277,12 @@ probes for exactly that reason.
 This matters more than any number above, so it goes in the README rather than a
 footnote.
 
-- **40 files, 38 unique cases.** Two are duplicate pairs. They are kept because
-  the GraphRAG index was built over all 40, and removing them from `input/`
-  without re-indexing would make the two pipelines incomparable again.
+- **40 files, 37 unique cases.** Three are duplicate pairs — the same judgment
+  as filed by two reporters, which a word-sequence comparison puts at 0.86 to
+  0.97 similarity. They are kept because the GraphRAG index was built over all
+  40, and removing them from `input/` without re-indexing would make the two
+  pipelines incomparable again. Both copies are listed as relevant in the gold
+  set, since retrieving either is correct.
 - **17 Supreme Court, 22 High Court, 1 unclear.** An earlier version of this
   README described all 40 as Supreme Court judgments. That was wrong.
 - **These are not landmark constitutional cases.** They are keyword-scrape
@@ -261,10 +319,12 @@ scripts/
   eval_retrieval.py      the ablation table; no LLM, runs in about a minute
   eval_answers.py        judged answer quality with an independent judge
   calibrate_abstention.py  choose the refusal threshold from data
+  derive_paragraph_labels.py  locate which paragraphs carry each answer
+  validate_judge.py      known-answer probes and cross-judge agreement
   drift_check.py         scheduled regression check
   list_judge_models.py   which judge models a given key can actually reach
-data/goldset.json    35 questions, 25 answerable, 10 out-of-corpus
-tests/               110 tests, no network or GPU required
+data/goldset.json    65 questions: 25 standard, 30 hard, 10 out-of-corpus
+tests/               128 tests, no network or GPU required
 ```
 
 ---
@@ -316,27 +376,39 @@ docker compose up --build
 
 ## Limitations
 
-- 35 answerable questions is a small gold set. It is large enough to detect the
-  reranking effect on R@1 and nDCG and BM25's collapse on paraphrase, and
-  demonstrably too small to separate configurations on R@5.
-- The judge has not been validated against human labels. Independence from the
-  generator removes the worst bias, not all of it. The `context precision`
-  control above bounds its self-disagreement at roughly 0.37 points, but that
-  measures consistency, not correctness — a judge can be perfectly consistent
-  and perfectly wrong. Hand-scoring 20 answers and reporting Spearman ρ is the
-  obvious next step.
+- 55 answerable questions is still a small gold set. It is large enough to
+  detect the reranking effect on R@1 and nDCG and BM25's collapse on paraphrase,
+  and demonstrably too small to separate configurations on R@5.
+- **The judge has not been validated against human labels.** What it has been
+  checked for is stated precisely, because the gap matters. It ranks 5 of 5
+  known-answer probes correctly and separates them widely — grounded text over
+  contradiction, real citation over invented one — so the scores are not noise
+  (`scripts/validate_judge.py --probes`). That is a floor on validity and says
+  nothing about the 3-versus-4 distinctions that actually move the reported
+  means. The `context precision` control bounds self-disagreement at roughly
+  0.37 points, which is consistency, not correctness: a judge can be perfectly
+  consistent and perfectly wrong. Hand-scored labels and a Spearman ρ against
+  them remain the missing piece, and no amount of model-on-model agreement
+  substitutes for them.
 - Scoring every metric in one judge call lets the answer leak into metrics that
   should not see it, which is part of that 0.37. Separate calls would remove
   it at seven times the quota, which the free tier does not support.
-- The hard tier is 10 questions. It separates the configurations far better
-  than the standard tier, which argues for making it much larger.
+- **The judged answer-quality numbers were produced against the 45-question gold
+  set**, before the hard tier was expanded. The retrieval tables are current at
+  65 questions; the judged tables are not, and are labelled where they appear.
+  Re-running them costs an hour of local generation per generator plus a day of
+  judge quota.
+- Paragraph-level ground truth covers 39 of 55 answerable questions. Six
+  judgments carry no usable numbering, and a term-bearing paragraph marks where
+  an answer is stated rather than the whole of where it is reasoned.
 - GraphRAG is compared on the answer side only. Its retrieval is not yet scored
-  on the same footing, though `text_unit_ids` in its output would allow it.
-- **GraphRAG's `local` search method crashes** on this index — a vector-dimension
-  mismatch between the embeddings LanceDB stored at index time and the live
-  `nomic-embed-text` configuration. Only `global` search works, and fixing it
-  requires a full re-index. `global` is also the expensive method (it fans out
-  across every community report), which is most of why GraphRAG queries take
-  minutes rather than seconds.
-- Document-level ground truth, not paragraph-level. Paragraph spans are tracked
-  in chunk metadata but not annotated in the gold set.
+  on the same footing, though `text_unit_ids` in its output would allow it —
+  the extraction artefacts (3750 entities, 1505 relationships, 184 community
+  reports) are complete and on disk, so this needs an embedding pass, not the
+  hours-long extraction.
+- **GraphRAG's `local` search method crashes** on this index. Only
+  `entity_description` was ever embedded into LanceDB — the text-unit and
+  community stores local search reads are absent — so the failure is a missing
+  vector store rather than a corrupt one. `global` search works and is the
+  expensive method, fanning out across every community report, which is most of
+  why GraphRAG queries take minutes rather than seconds.
