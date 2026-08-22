@@ -61,6 +61,26 @@ def is_daily_quota_error(error: Exception) -> bool:
     return "429" in text and any(marker in text for marker in DAILY_QUOTA_MARKERS)
 
 
+def _quota_id(response) -> str:
+    """Pull the violated quota's id to the front of the error text.
+
+    Gemini reports which quota was exhausted in error.details[].violations[],
+    but its human-readable message runs to about 250 characters, so the id sat
+    past the point where the error text was truncated. The daily-quota check
+    could never see its own marker, and every model in the rotation spent a
+    full backoff cycle before being retired -- minutes per call, to reach a
+    failure that was certain from the first response.
+    """
+    try:
+        for detail in response.json().get("error", {}).get("details", []):
+            for violation in detail.get("violations", []):
+                if violation.get("quotaId"):
+                    return f"[{violation['quotaId']}] "
+    except (ValueError, AttributeError):
+        pass
+    return ""
+
+
 class RateLimiter:
     """Enforces a minimum gap between calls.
 
@@ -162,6 +182,11 @@ class GeminiClient(BaseClient):
         self.thinking_budget = thinking_budget
         self.api_key = api_key or os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
         if not self.api_key:
+            # Constructing this class directly should work without the caller
+            # having to know that get_client() is what loads .env.
+            load_dotenv()
+            self.api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
+        if not self.api_key:
             raise LLMError(
                 "GEMINI_API_KEY is not set. Create a free key at "
                 "https://aistudio.google.com/apikey and put it in .env"
@@ -184,7 +209,7 @@ class GeminiClient(BaseClient):
                 f"Run scripts/list_judge_models.py to see what this key can reach."
             )
         if response.status_code != 200:
-            raise LLMError(f"{response.status_code}: {response.text[:300]}")
+            raise LLMError(f"{response.status_code}: {_quota_id(response)}{response.text[:300]}")
 
         candidates = response.json().get("candidates") or []
         if not candidates:
