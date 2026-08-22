@@ -25,10 +25,15 @@ jobs:
       # The test suite covers chunking, BM25, rank fusion, retrieval metrics,
       # guardrails and judge parsing -- all pure logic. Nothing here reaches
       # Ollama, ChromaDB or an API, so CI needs neither a GPU nor a key.
+      #
+      # numpy and requests are needed because lexgraph.router and
+      # lexgraph.embeddings import them at module level; chromadb and flashrank
+      # are imported lazily inside functions, so the suite runs without them
+      # and the integration checks skip.
       - name: Install test dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pytest
+          pip install pytest numpy requests
 
       - name: Run tests
         run: python -m pytest tests/ -v

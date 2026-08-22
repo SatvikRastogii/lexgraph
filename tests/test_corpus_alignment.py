@@ -73,12 +73,22 @@ def test_settings_yaml_chunking_matches_the_fixed_strategy():
     assert overlap and int(overlap.group(1)) == DEFAULT_OVERLAP_WORDS
 
 
-def _chroma_collection(name):
-    if not os.path.isdir(CHROMA_DIR):
-        pytest.skip("chroma_db/ not built")
-    import chromadb
+def _chroma_client():
+    """A ChromaDB client, or a skip.
 
-    client = chromadb.PersistentClient(path=CHROMA_DIR)
+    Skips on two conditions, not one: the index may not be built, and chromadb
+    may not be installed at all. CI installs neither, and skipping only on the
+    missing directory left the import to fail on any machine that had the
+    directory but not the package.
+    """
+    if not os.path.isdir(CHROMA_DIR):
+        pytest.skip("chroma_db/ not built; run scripts/build_index.py")
+    chromadb = pytest.importorskip("chromadb", reason="chromadb not installed")
+    return chromadb.PersistentClient(path=CHROMA_DIR)
+
+
+def _chroma_collection(name):
+    client = _chroma_client()
     if name not in {c.name for c in client.list_collections()}:
         pytest.skip(f"collection {name} not built; run scripts/build_index.py")
     return client.get_collection(name)
@@ -101,11 +111,7 @@ def test_vector_store_indexes_exactly_the_graphrag_corpus(collection_name):
 @requires_corpus
 def test_no_collection_is_built_from_the_raw_scrape():
     """legal_corpus/ holds 228 documents; only the curated 40 may be indexed."""
-    if not os.path.isdir(CHROMA_DIR):
-        pytest.skip("chroma_db/ not built")
-    import chromadb
-
-    client = chromadb.PersistentClient(path=CHROMA_DIR)
+    client = _chroma_client()
     expected = {f for f in os.listdir(INPUT_DIR) if f.endswith(".txt")}
 
     for descriptor in client.list_collections():
