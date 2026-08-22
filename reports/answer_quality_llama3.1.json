@@ -1,80 +1,86 @@
 {
   "generator": "ollama:llama3.1",
-  "judge": "gemini:gemini-3-flash-preview -> gemini:gemini-flash-latest -> gemini:gemini-3.7-flash -> gemini:gemini-3.1-flash-lite",
+  "judge": "gemini:gemini-3-flash-preview -> gemini:gemini-3.5-flash -> gemini:gemini-flash-latest -> gemini:gemini-3.7-flash -> gemini:gemini-3.1-flash-lite -> gemini:gemini-3.1-flash-lite-preview",
   "configs": {
     "hybrid-rerank": {
       "metrics": {
         "answer_relevancy": {
-          "mean": 4.954545454545454,
+          "mean": 4.542857142857143,
           "ci95": [
-            4.863636363636363,
-            5.0
+            4.114285714285714,
+            4.885714285714286
           ],
-          "n": 22
+          "n": 35
         },
         "citation_accuracy": {
-          "mean": 4.833181818181818,
+          "mean": 4.895142857142857,
           "ci95": [
-            4.545,
+            4.714,
             5.0
           ],
-          "n": 22
+          "n": 35
         },
         "coherence": {
-          "mean": 4.863636363636363,
+          "mean": 4.914285714285715,
           "ci95": [
-            4.636363636363637,
+            4.771428571428571,
             5.0
           ],
-          "n": 22
+          "n": 35
         },
         "completeness": {
-          "mean": 4.045454545454546,
+          "mean": 3.8285714285714287,
           "ci95": [
-            3.590909090909091,
-            4.454545454545454
+            3.3714285714285714,
+            4.257142857142857
           ],
-          "n": 22
+          "n": 35
         },
         "context_precision": {
-          "mean": 4.363636363636363,
+          "mean": 4.2,
           "ci95": [
-            3.9545454545454546,
-            4.7272727272727275
+            3.8285714285714287,
+            4.542857142857143
           ],
-          "n": 22
+          "n": 35
         },
         "faithfulness": {
-          "mean": 3.409090909090909,
+          "mean": 3.2285714285714286,
           "ci95": [
-            2.909090909090909,
-            3.909090909090909
+            2.8,
+            3.657142857142857
           ],
-          "n": 22
+          "n": 35
         },
         "hallucination": {
-          "mean": 3,
+          "mean": 3.257142857142857,
           "ci95": [
-            2.4545454545454546,
-            3.590909090909091
+            2.8,
+            3.7142857142857144
           ],
-          "n": 22
+          "n": 35
         },
         "legal_reasoning": {
-          "mean": 3.727272727272727,
+          "mean": 3.5714285714285716,
           "ci95": [
-            3.227272727272727,
-            4.2272727272727275
+            3.1142857142857143,
+            4.0285714285714285
           ],
-          "n": 22
+          "n": 35
         }
       },
       "answer_words": {
-        "mean": 258.04545454545456,
-        "median": 262.5
+        "mean": 218.05714285714285,
+        "median": 245
       },
       "unparsed_judge_responses": 0,
-      "latency_ms_median": 52511.10855006846,
+      "latency_ms_median": 42730.09079997428,
+      "abstention": {
+        "out_of_corpus_questions": 10,
+        "correctly_refused": 8,
+        "refusal_rate": 0.8,
+        "wrongly_refused_answerable": 6
+      },
       "records": [
         {
           "id": "q01",
@@ -1831,9 +1837,1810 @@
             }
           },
           "wall_seconds": 56.52839310001582
+        },
+        {
+          "id": "q23",
+          "category": "article_scoped",
+          "answerable": true,
+          "generation": {
+            "question": "Which judgments deal principally with the freedoms guaranteed by Article 19?",
+            "answer": "Based on the judgment extracts provided, the following judgments deal principally with the freedoms guaranteed by Article 19:\n\n1. Express Newspapers P. Ltd. v. Union of India (1973) - This case discusses the fundamental right to freedom of speech and expression enshrined in Article 19(1)(a) and its basis on the provisions in Amendment I of the Constitution of the United States of America.\n2. W.N. Srinivasa Bhat And Anr. v. The State Of Madras And Anr. (1950) - This case deals with the scope and implications of the reservations contained in Article 19(2) of the Constitution so far as the fundamental right of \"freedom of speech and expression\" is concerned.\n3. Bennett Caleman and Co. Ltd. v. Union of India (1973) - This case clarifies that a company, as such, may not be said to have the fundamental right of freedom of speech and expression, which is exclusive for citizens, but shareholders enjoyed this right as citizens.\n\nNote: The other cases mentioned in the extracts do not deal specifically with Article 19, although they may touch upon related issues.",
+            "abstained": false,
+            "abstention_reason": "",
+            "confidence": 0.9815856138865153,
+            "sources": [
+              "judgment_0078.txt",
+              "judgment_0075.txt",
+              "judgment_0072.txt",
+              "judgment_0074.txt"
+            ],
+            "citations": {
+              "supported": [
+                "Express Newspapers P. Ltd. v. Union",
+                "W.N. Srinivasa Bhat And Anr. v. The State Of Madras And Anr.",
+                "Co. Ltd. v. Union",
+                "Article 19",
+                "Article 19(1)(a)",
+                "Article 19(2)"
+              ],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 5210.01470007468,
+              "generation_ms": 56245.43119990267,
+              "total_ms": 61455.44589997735
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "Which judgments deal principally with the freedoms guaranteed by Article 19?",
+            "answer_chars": 1068,
+            "answer_words": 179,
+            "mean": 4.25,
+            "metrics": {
+              "faithfulness": {
+                "score": 3,
+                "reason": "The answer includes a case (Bennett Coleman) that is not present in the provided context, making it ungrounded in the source material.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The answer directly identifies cases that discuss Article 19 freedoms based on the provided text.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 5,
+                "reason": "The retrieved passages are highly relevant to the question regarding Article 19.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 4,
+                "reason": "The answer covers the cases provided in the context but adds an external case not found in the source text.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 3,
+                "reason": "The answer hallucinates the inclusion of Bennett Coleman and Co. Ltd. v. Union of India, which is not in the provided context.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The answer is well-structured, clear, and easy to follow.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 4,
+                "reason": "The answer correctly identifies the legal focus of the cases mentioned, though it relies on information outside the provided context.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "6/6 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 70.0924085000297
+        },
+        {
+          "id": "q24",
+          "category": "entity_relationship",
+          "answerable": true,
+          "generation": {
+            "question": "Which judgments in this corpus record a dissenting opinion?",
+            "answer": "Based on the judgment extracts provided, the following judgments record a dissenting opinion:\n\n* Rupa Ashok Hurra vs Ashok Hurra & Anr (2002): \n\t+ Venkatachaliah,J. gave a dissenting opinion that inherent powers of the Court do not confer or constitute a source of jurisdiction and they are to be exercised in aid of a jurisdiction that is already invested for correcting the decision under Article 137 read with Order XL Rule 1 of the Supreme Court Rules and for that purpose the case must go before the same Judges as far as practicable.\n\t+ Ranganath Misra,J. gave a dissenting opinion holding that the appeal could not be treated as a review petition.\n* W.N. Srinivasa Bhat And Anr. vs The State Of Madras And Anr. (1950): \n\t+ Mehta J. of the Madhya Bharat High Court's judgment is referred to as a dissenting opinion, where he held that Article 32, Clause (3) does not refer to existing High Courts constituted in the State.\n* Rupa Ashok Hurra vs Ashok Hurra & Anr (2002): \n\t+ Hidayatullah,J. gave a dissenting judgment holding that a judicial order of the High Court, if erroneous, could be corrected in an appeal under Article 136 of the Constitution, and also opined that the impugned order of the High Court committed breach of the fundamental right of freedom of speech and expression of the petitioners and could be quashed under Article 32 of the Constitution by issuing a writ of certiorari to the High Court.",
+            "abstained": false,
+            "abstention_reason": "",
+            "confidence": 0.536729812870423,
+            "sources": [
+              "judgment_0122.txt",
+              "judgment_0125.txt",
+              "judgment_0075.txt",
+              "judgment_0004.txt"
+            ],
+            "citations": {
+              "supported": [
+                "Rupa Ashok Hurra v. Ashok Hurra",
+                "W.N. Srinivasa Bhat And Anr. v. The State Of Madras And Anr.",
+                "Article 137",
+                "Article 32",
+                "Article 136"
+              ],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 6593.141500023194,
+              "generation_ms": 48529.55259999726,
+              "total_ms": 55122.69410002045
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "Which judgments in this corpus record a dissenting opinion?",
+            "answer_chars": 1421,
+            "answer_words": 247,
+            "mean": 3.625,
+            "metrics": {
+              "faithfulness": {
+                "score": 2,
+                "reason": "The answer includes significant information about Hidayatullah, J. and Mehta, J. that is not present in the provided context.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The answer directly addresses the question by identifying judgments with dissenting opinions.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 3,
+                "reason": "The context provided is repetitive and contains very little information regarding the second and third bullet points in the answer.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 4,
+                "reason": "The answer identifies the dissenting opinions mentioned in the text, though it relies on external knowledge for some details.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 2,
+                "reason": "The answer attributes specific dissenting opinions to Hidayatullah, J. and Mehta, J. which are not found in the provided context.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The answer is well-structured and easy to follow.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 3,
+                "reason": "The answer identifies the dissenting opinions but does not provide an independent legal analysis of the holdings.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "5/5 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 58.21389949996956
+        },
+        {
+          "id": "q25",
+          "category": "single_hop_factual",
+          "answerable": true,
+          "generation": {
+            "question": "What did the court say about the right to water and the preservation of open spaces and public parks?",
+            "answer": "Based on the judgment extracts provided, here are the answers to your question:\n\n1. What did the court say about the right to water?\n\nThe court held that the right to water is part of the right to life guaranteed by Article 21 (M/S Shri Krishna Colonisers ... vs State Of ... (2019), para 13).\n\n2. What did the court say about the preservation of open spaces and public parks?\n\nThe court held that reservation of open spaces for parks and playgrounds is a legitimate exercise of statutory power rationally related to the protection of residents from the ill effects of urbanisation (M/S Shri Krishna Colonisers ... vs State Of ... (2019), para 24-25). The court also observed that open spaces are essential ingredients of development schemes and should not be changed for other purposes without following the proper procedures (M/S Shri Krishna Colonisers ... vs State Of ... (2019)).\n\n3. What did the court say about the relationship between environmental protection and fundamental rights?\n\nThe court held that the right to a wholesome environment is part of the right to life under Article 21, and that this right includes the right to enjoy pollution-free water and air for full enjoyment of life (Municipal Corporation Of Gr. Mumbai vs Ankita Sinha (2021), para 77).\n\nNote: The extracts do not provide any information about the specific rights or duties related to the preservation of open spaces and public parks, beyond what is mentioned above.",
+            "abstained": false,
+            "abstention_reason": "",
+            "confidence": 0.95192840496699,
+            "sources": [
+              "judgment_0007.txt",
+              "judgment_0219.txt"
+            ],
+            "citations": {
+              "supported": [
+                "Municipal Corporation Of Gr. Mumbai v. Ankita Sinha",
+                "Article 21"
+              ],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 5572.919699945487,
+              "generation_ms": 41076.36289997026,
+              "total_ms": 46649.28259991575
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "What did the court say about the right to water and the preservation of open spaces and public parks?",
+            "answer_chars": 1451,
+            "answer_words": 243,
+            "mean": 3.875,
+            "metrics": {
+              "faithfulness": {
+                "score": 2,
+                "reason": "The answer includes a citation to a case (Municipal Corporation Of Gr. Mumbai vs Ankita Sinha) that is not present in the provided context.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The answer directly addresses the questions asked regarding the right to water and open spaces.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 4,
+                "reason": "The retrieved passages are highly relevant, though the model introduced external information not found in the context.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 4,
+                "reason": "The answer covers the core points regarding the right to water and the importance of open spaces as described in the provided text.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 2,
+                "reason": "The answer cites a case and specific legal holdings (pollution-free water and air) that are not contained in the provided context.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The answer is well-structured, logically ordered, and easy to read.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 4,
+                "reason": "The answer correctly identifies the court's reliance on Article 21 and the principle of sustainable development, though it relies on external hallucinated authority.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "2/2 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 53.90858229994774
+        },
+        {
+          "id": "h01",
+          "category": "paraphrased",
+          "answerable": true,
+          "generation": {
+            "question": "If someone is being held in jail, can they complain to a court about how they are being treated inside?",
+            "answer": "Based on the judgment extracts provided, here are the answers to the question:\n\n1. Can someone being held in jail complain to a court about how they are being treated inside?\n\nYes, as per Sunil Batra vs Delhi Administration (1979), para 49 and para 53, any prisoner can make complaints or representations to an official visitor, who shall hear and bring to notice any complaint or representation made by the prisoner. The Sessions Judge, District Magistrate, or their nominees have a duty to investigate and adjudicate upon grievances.\n\n2. What are the specific remedies that can be granted to prevent and punish the breach of fundamental rights?\n\nAccording to Sunil Batra vs Delhi Administration (1979), para 49, the Sessions Judges concerned shall keep grievance boxes in the prison, and free access shall be afforded to put in complaints of encroachments, injuries, or torture by any prisoner. The prison authorities shall not obstruct or noncooperate with reception or enquiry into the complaints.\n\n3. Can a court issue a writ to protect the rights of prisoners?\n\nYes, as per Sunil Batra vs Delhi Administration (1979), para 79 and para 53, the High Court or the Supreme Court can issue habeas corpus after due hearing if the prison authorities obstruct or noncooperate with reception or enquiry into complaints.\n\n4. Can a prisoner complain to a court about ill-treatment and curtailment short of illegal detention?\n\nYes, as per Sunil Batra vs Delhi Administration (1979), para 1-4, the court has jurisdiction to consider prisoners' grievances, not demanding release but complaining of ill-treatment and curtailment short of illegal detention.",
+            "abstained": false,
+            "abstention_reason": "",
+            "confidence": 0.678332860271136,
+            "sources": [
+              "judgment_0126.txt"
+            ],
+            "citations": {
+              "supported": [
+                "Sunil Batra v. Delhi Administration"
+              ],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4683.816400007345,
+              "generation_ms": 46700.40909992531,
+              "total_ms": 51384.225499932654
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "If someone is being held in jail, can they complain to a court about how they are being treated inside?",
+            "answer_chars": 1647,
+            "answer_words": 263,
+            "mean": 3.75,
+            "metrics": {
+              "faithfulness": {
+                "score": 2,
+                "reason": "The answer cites specific paragraph numbers (49, 53) that are not present in the provided context, and describes grievance boxes and official visitors which are not mentioned in the provided text.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The answer directly addresses the question asked and provides relevant legal context.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 3,
+                "reason": "While the answer uses the correct case, it relies on information outside the provided context snippets to support its claims.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 4,
+                "reason": "The answer covers the core question well, though it relies on external knowledge not found in the provided text.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 2,
+                "reason": "The answer invents specific procedural details like 'grievance boxes' and cites paragraph numbers not found in the provided context.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The answer is well-structured, logically ordered, and easy to read.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 4,
+                "reason": "The reasoning is sound and identifies the court's jurisdiction, though it improperly attributes specific procedural mechanisms to the provided text.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "1/1 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 53.90976169996429
+        },
+        {
+          "id": "h02",
+          "category": "paraphrased",
+          "answerable": true,
+          "generation": {
+            "question": "When an investigation drags on past the deadline the law allows, does the person being held get to go free?",
+            "answer": "The indexed judgments do not contain material that answers this question, so no answer is given. Answering from the model's general knowledge would not be grounded in the corpus.",
+            "abstained": true,
+            "abstention_reason": "retrieval confidence 0.007 is below the calibrated threshold 0.375",
+            "confidence": 0.006671290472149849,
+            "sources": [
+              "judgment_0127.txt",
+              "judgment_0002.txt",
+              "judgment_0126.txt"
+            ],
+            "citations": {
+              "supported": [],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4479.566999943927,
+              "total_ms": 4479.566999943927
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "When an investigation drags on past the deadline the law allows, does the person being held get to go free?",
+            "answer_chars": 178,
+            "answer_words": 29,
+            "mean": 3.75,
+            "metrics": {
+              "faithfulness": {
+                "score": 5,
+                "reason": "The model correctly identified that the provided context does not explicitly state the legal consequence (i.e., default bail) for an investigation exceeding the statutory deadline.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 2,
+                "reason": "While the model correctly identifies a lack of information, it fails to synthesize the provided context regarding the legislative intent for speedy investigation and the existence of time limits.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 4,
+                "reason": "The context provided contains relevant information about statutory time limits (60/90 days) and the legislative intent for speedy investigation, even if it lacks the specific 'default bail' holding.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 2,
+                "reason": "The answer is incomplete because it ignores the relevant information provided in the context regarding the existence of statutory time limits for investigations.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 5,
+                "reason": "The model did not fabricate any information.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The answer is clear and logically structured.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 2,
+                "reason": "The model failed to analyze the provided statutes and case excerpts which discuss the legislative mandate for time-bound investigations.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "0/0 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 7.173017400084063
+        },
+        {
+          "id": "h03",
+          "category": "paraphrased",
+          "answerable": true,
+          "generation": {
+            "question": "Is there a ceiling on how many posts can be set aside for disadvantaged groups?",
+            "answer": "The indexed judgments do not contain material that answers this question, so no answer is given. Answering from the model's general knowledge would not be grounded in the corpus.",
+            "abstained": true,
+            "abstention_reason": "retrieval confidence 0.008 is below the calibrated threshold 0.375",
+            "confidence": 0.008113157624999683,
+            "sources": [
+              "judgment_0214.txt",
+              "judgment_0216.txt"
+            ],
+            "citations": {
+              "supported": [],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4478.056099964306,
+              "total_ms": 4478.056099964306
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "Is there a ceiling on how many posts can be set aside for disadvantaged groups?",
+            "answer_chars": 178,
+            "answer_words": 29,
+            "mean": 3.0,
+            "metrics": {
+              "faithfulness": {
+                "score": 1,
+                "reason": "The answer falsely claims the context does not contain the answer, when the provided text explicitly discusses the 50% rule established in Indra Sawhney and Balaji.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 1,
+                "reason": "The model refused to answer a question that was directly addressed by the provided legal text.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 5,
+                "reason": "The provided context is highly relevant and contains the specific legal holdings regarding the 50% reservation ceiling.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 1,
+                "reason": "The answer provides no information despite the context containing the relevant legal principles.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 5,
+                "reason": "The model did not hallucinate information, but it failed to utilize the provided context.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The response is grammatically correct and logically structured, even though the content is a refusal.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 1,
+                "reason": "The model failed to perform any legal reasoning by incorrectly stating the information was absent from the source material.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "0/0 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 6.823680199915543
+        },
+        {
+          "id": "h04",
+          "category": "paraphrased",
+          "answerable": true,
+          "generation": {
+            "question": "Can a court reopen and correct its own final decision once every appeal has already been exhausted?",
+            "answer": "Based on the judgment extracts provided, it appears that a court can reopen and correct its own final decision under certain circumstances.\n\nRupa Ashok Hurra vs Ashok Hurra & Anr (2002) states that \"An appeal to the House of Lords will only be reopened where a party through no fault of its own, has been subjected to an unfair procedure. A decision of the House of Lords will not be varied or rescinded merely because it is subsequently thought to be wrong.\" [para 6]\n\nHowever, in the same case, it is also mentioned that \"this Court can be corrected under its inherent powers after dismissal of the review petition on the ground that it was passed either without jurisdiction or in violation of the principles of natural justice or due to unfair procedure giving scope for bias which resulted in abuse of the process of the Court or miscarriage of justice to an aggrieved person.\" [para 6]\n\nTherefore, it can be inferred that a court can reopen and correct its own final decision if there was an unfair procedure involved, or if the decision was passed without jurisdiction, in violation of natural justice, or due to bias resulting in abuse of process or miscarriage of justice.\n\nRupa Ashok Hurra vs Ashok Hurra & Anr (2002) also mentions that \"the principle of finality is insisted upon not on the ground that a judgment given by the apex Court is impeccable but on the maxium 'Interest reipublicae ut sit finis litium'.\" [para 6]\n\nHowever, this does not necessarily mean that a court cannot reopen and correct its own final decision. Instead, it suggests that the principle of finality is important to maintain certainty in the law.\n\nIn conclusion, based on the judgment extracts provided, it appears that a court can reopen and correct its own final decision under certain circumstances, such as where there was an unfair procedure involved, or if the decision was passed without jurisdiction, in violation of natural justice, or due to bias resulting in abuse of process or miscarriage of justice.\n\nCase: Rupa Ashok Hurra vs Ashok Hurra & Anr (2002) | Article 32",
+            "abstained": false,
+            "abstention_reason": "",
+            "confidence": 0.7955729643503824,
+            "sources": [
+              "judgment_0125.txt",
+              "judgment_0122.txt"
+            ],
+            "citations": {
+              "supported": [
+                "Rupa Ashok Hurra v. Ashok Hurra",
+                "Article 32"
+              ],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4444.3922999780625,
+              "generation_ms": 63561.51170004159,
+              "total_ms": 68005.90400001965
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "Can a court reopen and correct its own final decision once every appeal has already been exhausted?",
+            "answer_chars": 2069,
+            "answer_words": 356,
+            "mean": 3.875,
+            "metrics": {
+              "faithfulness": {
+                "score": 3,
+                "reason": "The answer quotes a specific holding regarding the court's inherent powers that is not present in the provided context snippets.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The answer directly addresses the question of whether a court can reopen a final decision.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 4,
+                "reason": "The provided context is highly relevant to the legal principle of finality and the exceptions discussed in the case.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 4,
+                "reason": "The answer covers the general rule of finality and the potential exceptions, though it relies on external knowledge for the specific grounds of reopening.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 2,
+                "reason": "The answer attributes a specific holding about 'inherent powers' and 'violation of natural justice' to the provided text, which does not actually contain those specific phrases.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The answer is logically structured and easy to follow.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 3,
+                "reason": "The answer attempts to synthesize the principle of finality with exceptions, but relies on information not found in the provided source text.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "2/2 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 70.58098589989822
+        },
+        {
+          "id": "h05",
+          "category": "paraphrased",
+          "answerable": true,
+          "generation": {
+            "question": "Are people hired on a day-to-day basis by a government department protected by labour law?",
+            "answer": "The indexed judgments do not contain material that answers this question, so no answer is given. Answering from the model's general knowledge would not be grounded in the corpus.",
+            "abstained": true,
+            "abstention_reason": "retrieval confidence 0.228 is below the calibrated threshold 0.375",
+            "confidence": 0.22774331470330558,
+            "sources": [
+              "judgment_0032.txt"
+            ],
+            "citations": {
+              "supported": [],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4449.706800049171,
+              "total_ms": 4449.706800049171
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "Are people hired on a day-to-day basis by a government department protected by labour law?",
+            "answer_chars": 178,
+            "answer_words": 29,
+            "mean": 4.625,
+            "metrics": {
+              "faithfulness": {
+                "score": 5,
+                "reason": "The model correctly identified that the provided text does not contain a direct answer to whether day-to-day workers are protected by general labour law, focusing instead on regularization rights.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The model correctly identified that the provided context does not address the specific question asked.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 2,
+                "reason": "The provided context discusses regularization and public employment schemes but does not address the broader question of general labour law protections for day-to-day workers.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 5,
+                "reason": "The model correctly stated that the provided corpus does not contain the information necessary to answer the question.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 5,
+                "reason": "There are no hallucinations as the model correctly identified the limitations of the provided text.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The answer is clear, concise, and logically structured.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 5,
+                "reason": "The model correctly recognized that the provided legal text does not support an answer to the specific question posed, demonstrating sound judgment.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "0/0 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 7.079942799988203
+        },
+        {
+          "id": "h06",
+          "category": "paraphrased",
+          "answerable": true,
+          "generation": {
+            "question": "Must the government pay compensation when its officers cause a death while carrying out their duties?",
+            "answer": "Based on the judgment extracts provided, it appears that the question of whether the government must pay compensation when its officers cause a death while carrying out their duties is settled in favor of the claimant. \n\nIn Sunkara Satyanarayana vs State Of Andhra Pradesh, Home ... (1999), para 62, the Supreme Court held that \"the State must proceed further and give compensatory relief by way of damages as in civil action by way of compensation under the Public Law jurisdiction for the wrong done due to breach of public duty by the State by not protecting the fundamental rights of the citizen.\" \n\nFurthermore, in the same case, para 62, it was held that \"the claim of the citizen which the defence of sovereign immunity is not available and the citizen must receive the amount of compensation from the State, which shall have the right to be indemnified by the wrongdoer.\"\n\nAdditionally, in Nilabati's case (cited in Sunkara Satyanarayana vs State Of Andhra Pradesh, Home ... (1999), para 62), it was held that \"the defence of sovereign immunity being inapplicable, and alien to the concept of guarantee of fundamental rights, there can be no question of such a defence being available in the constitutional remedy.\"\n\nTherefore, based on these extracts, it appears that the government must pay compensation when its officers cause a death while carrying out their duties.\n\nCase: Sunkara Satyanarayana vs State Of Andhra Pradesh, Home ... (1999) | Article 21 | para 62",
+            "abstained": false,
+            "abstention_reason": "",
+            "confidence": 0.7437943796316783,
+            "sources": [
+              "judgment_0005.txt",
+              "judgment_0001.txt",
+              "judgment_0028.txt"
+            ],
+            "citations": {
+              "supported": [
+                "In Sunkara Satyanarayana v. State Of Andhra Pradesh",
+                "Sunkara Satyanarayana v. State Of Andhra Pradesh",
+                "Article 21"
+              ],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4487.71829996258,
+              "generation_ms": 44090.8502000384,
+              "total_ms": 48578.56850000098
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "Must the government pay compensation when its officers cause a death while carrying out their duties?",
+            "answer_chars": 1474,
+            "answer_words": 245,
+            "mean": 4.75,
+            "metrics": {
+              "faithfulness": {
+                "score": 4,
+                "reason": "The answer quotes Nilabati's case, but the provided context text cuts off before that specific quote appears, making it technically unsupported by the provided snippet.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The answer directly addresses the question using the provided legal precedents.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 5,
+                "reason": "The retrieved passages are highly relevant and directly address the issue of state liability for custodial deaths.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 5,
+                "reason": "The answer covers the core legal principle that the state is liable and that sovereign immunity is not a valid defense.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 4,
+                "reason": "The answer includes a quote from Nilabati's case that is not present in the provided context, though it is likely accurate to the actual case law.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The answer is logically structured and easy to follow.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 5,
+                "reason": "The answer correctly identifies the holding regarding state vicarious liability and the rejection of sovereign immunity in the context of fundamental rights violations.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "3/3 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 52.818737900001
+        },
+        {
+          "id": "h07",
+          "category": "paraphrased",
+          "answerable": true,
+          "generation": {
+            "question": "May a magazine publish details of a well-known person's private life without asking them first?",
+            "answer": "The indexed judgments do not contain material that answers this question, so no answer is given. Answering from the model's general knowledge would not be grounded in the corpus.",
+            "abstained": true,
+            "abstention_reason": "retrieval confidence 0.224 is below the calibrated threshold 0.375",
+            "confidence": 0.22393675645192462,
+            "sources": [
+              "judgment_0074.txt",
+              "judgment_0072.txt"
+            ],
+            "citations": {
+              "supported": [],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4489.372999989428,
+              "total_ms": 4489.372999989428
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "May a magazine publish details of a well-known person's private life without asking them first?",
+            "answer_chars": 178,
+            "answer_words": 29,
+            "mean": 3.0,
+            "metrics": {
+              "faithfulness": {
+                "score": 1,
+                "reason": "The model falsely claims the provided context does not contain the answer, when the text explicitly addresses the requirements for publishing details of a person's private life.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 1,
+                "reason": "The model failed to answer the question despite the relevant information being present in the provided context.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 5,
+                "reason": "The provided context is highly relevant and directly addresses the legal standards for privacy and publication.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 1,
+                "reason": "The model provided no information, failing to address any part of the question.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 5,
+                "reason": "The model did not invent facts, but it did falsely state that the context lacked the necessary information.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The response is grammatically correct and logically structured, even though the content is incorrect.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 1,
+                "reason": "The model failed to perform any legal reasoning, opting instead to claim the information was missing.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "0/0 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 7.11213540006429
+        },
+        {
+          "id": "h08",
+          "category": "paraphrased",
+          "answerable": true,
+          "generation": {
+            "question": "What follows when an authority acts against a person without telling them what they are accused of?",
+            "answer": "The indexed judgments do not contain material that answers this question, so no answer is given. Answering from the model's general knowledge would not be grounded in the corpus.",
+            "abstained": true,
+            "abstention_reason": "retrieval confidence 0.226 is below the calibrated threshold 0.375",
+            "confidence": 0.22641497552394868,
+            "sources": [
+              "judgment_0005.txt",
+              "judgment_0033.txt",
+              "judgment_0001.txt",
+              "judgment_0074.txt"
+            ],
+            "citations": {
+              "supported": [],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4499.112000106834,
+              "total_ms": 4499.112000106834
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "What follows when an authority acts against a person without telling them what they are accused of?",
+            "answer_chars": 178,
+            "answer_words": 29,
+            "mean": 4.5,
+            "metrics": {
+              "faithfulness": {
+                "score": 5,
+                "reason": "The model correctly identified that the provided context does not contain information regarding the consequences of failing to inform a person of the accusations against them.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The model directly addressed the prompt by stating that the provided context does not contain the answer.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 1,
+                "reason": "The provided context discusses state liability for police misconduct and the right to defense under the Inquiries Act, but does not address the specific legal consequences of failing to inform an accused person of the charges.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 5,
+                "reason": "The model correctly determined that the provided context was insufficient to answer the question.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 5,
+                "reason": "The model did not invent any information and correctly identified the limitations of the provided text.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The answer is clear, concise, and logically structured.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 5,
+                "reason": "The model demonstrated sound judgment by refusing to speculate outside the provided legal corpus.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "0/0 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 6.9046934000216424
+        },
+        {
+          "id": "h09",
+          "category": "paraphrased",
+          "answerable": true,
+          "generation": {
+            "question": "Can a person be left waiting many years before their matter is finally decided?",
+            "answer": "The indexed judgments do not contain material that answers this question, so no answer is given. Answering from the model's general knowledge would not be grounded in the corpus.",
+            "abstained": true,
+            "abstention_reason": "retrieval confidence 0.073 is below the calibrated threshold 0.375",
+            "confidence": 0.0731463243253529,
+            "sources": [
+              "judgment_0124.txt",
+              "judgment_0034.txt",
+              "judgment_0002.txt"
+            ],
+            "citations": {
+              "supported": [],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4449.629999930039,
+              "total_ms": 4449.629999930039
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "Can a person be left waiting many years before their matter is finally decided?",
+            "answer_chars": 178,
+            "answer_words": 29,
+            "mean": 3.0,
+            "metrics": {
+              "faithfulness": {
+                "score": 1,
+                "reason": "The answer falsely claims the context does not contain the answer, when the provided text explicitly discusses delays in legal and executive proceedings.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 1,
+                "reason": "The model refused to answer a question that is directly addressed by the provided context.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 5,
+                "reason": "The provided context contains multiple paragraphs explicitly discussing the reality of multi-year delays in judicial and executive processes.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 1,
+                "reason": "The model failed to provide any information despite the context containing relevant details about delays in death sentence cases and mercy petitions.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 5,
+                "reason": "The model did not hallucinate facts, but it did hallucinate a lack of information in the source text.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The refusal is grammatically correct and logically structured.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 1,
+                "reason": "The model failed to engage in any legal reasoning by refusing to process the provided case law.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "0/0 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 6.926724900025874
+        },
+        {
+          "id": "h10",
+          "category": "paraphrased",
+          "answerable": true,
+          "generation": {
+            "question": "Should a person facing the gravest possible punishment be heard aloud when asking the court to think again?",
+            "answer": "Based on the judgment extracts provided, it appears that the question of whether a person facing the gravest possible punishment should be heard aloud when asking the court to think again is settled in favor of oral hearing.\n\nIn Mohd. Arif @ Ashfaq vs The Reg. Supreme Court Of India & Ors (2014), para 31-33, it was held that \"reasonable procedure\" would encompass oral hearing of review petitions arising out of death penalties. This is mandated by Article 21, as the life of the convict cannot be brought back once a death sentence is executed.\n\nFurthermore, in Mohd. Arif @ Ashfaq vs The Reg. Supreme Court Of India & Ors (2014), para 41-43, it was stated that \"the justice of the situation in this class of cases demands a limited oral hearing for the reasons given above.\" This suggests that even if there is no explicit mention of oral hearing in every case where review is sought by a condemned convict, a limited oral hearing may still be justified.\n\nTherefore, based on these extracts, it can be concluded that:\n\n* A person facing the gravest possible punishment (death penalty) should be heard aloud when asking the court to think again. [Mohd. Arif @ Ashfaq vs The Reg. Supreme Court Of India & Ors (2014), para 31-33]\n* Oral hearing is mandated by Article 21 in all death sentence cases, including review petitions. [Mohd. Arif @ Ashfaq vs The Reg. Supreme Court Of India & Ors (2014), para 31-33]",
+            "abstained": false,
+            "abstention_reason": "",
+            "confidence": 0.4258110801378886,
+            "sources": [
+              "judgment_0004.txt",
+              "judgment_0006.txt"
+            ],
+            "citations": {
+              "supported": [
+                "Ashfaq v. The Reg. Supreme Court Of India",
+                "Article 21"
+              ],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4486.679699970409,
+              "generation_ms": 44574.858799926005,
+              "total_ms": 49061.538499896415
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "Should a person facing the gravest possible punishment be heard aloud when asking the court to think again?",
+            "answer_chars": 1410,
+            "answer_words": 248,
+            "mean": 4.625,
+            "metrics": {
+              "faithfulness": {
+                "score": 4,
+                "reason": "The answer cites paragraph 41-43, which is not present in the provided context, although the core legal conclusion is supported by the provided text.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The answer directly addresses the question regarding the right to an oral hearing in death penalty review cases.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 5,
+                "reason": "The retrieved passages are highly relevant and directly address the legal issue posed by the question.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 5,
+                "reason": "The answer covers the legal requirement for oral hearings in death penalty review cases as mandated by Article 21.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 3,
+                "reason": "The answer references paragraph 41-43, which does not exist in the provided context.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The answer is logically structured and easy to follow.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 5,
+                "reason": "The answer correctly identifies the holding and the constitutional basis (Article 21) for the requirement of an oral hearing.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "2/2 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 51.714416299946606
+        },
+        {
+          "id": "q26",
+          "category": "out_of_corpus",
+          "answerable": false,
+          "generation": {
+            "question": "What did the Supreme Court hold in Shreya Singhal v. Union of India about Section 66A of the Information Technology Act?",
+            "answer": "The question is about Section 66A of the Information Technology Act in Shreya Singhal v. Union of India. Unfortunately, none of the provided judgment extracts mention this case or Section 66A. Therefore, I must say that the answer to the question is \"I do not know\" based on the given extracts.",
+            "abstained": false,
+            "abstention_reason": "",
+            "confidence": 0.6741594870885214,
+            "sources": [
+              "judgment_0033.txt",
+              "judgment_0028.txt",
+              "judgment_0073.txt",
+              "judgment_0076.txt",
+              "judgment_0034.txt"
+            ],
+            "citations": {
+              "supported": [],
+              "unsupported": [
+                "Shreya Singhal v. Union",
+                "Section 66A"
+              ],
+              "accuracy": 0.0
+            },
+            "latency": {
+              "retrieval_ms": 4510.649499949068,
+              "generation_ms": 12788.789700018242,
+              "total_ms": 17299.43919996731
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "What did the Supreme Court hold in Shreya Singhal v. Union of India about Section 66A of the Information Technology Act?",
+            "answer_chars": 294,
+            "answer_words": 51,
+            "mean": 4.0,
+            "metrics": {
+              "faithfulness": {
+                "score": 5,
+                "reason": "The answer correctly identifies that the provided context does not contain information about the requested case.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The answer directly addresses the prompt by acknowledging the inability to answer based on the provided context.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 1,
+                "reason": "None of the provided passages are relevant to the question asked.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 5,
+                "reason": "The answer is complete given the constraints of the provided context.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 5,
+                "reason": "There are no hallucinations in the response.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The response is logically structured and clear.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 5,
+                "reason": "The response correctly identifies the limitation of the provided legal authority.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 1.0,
+                "reason": "0/2 citations found in the retrieved context; unsupported: Shreya Singhal v. Union, Section 66A",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 23.89003190002404
+        },
+        {
+          "id": "q27",
+          "category": "out_of_corpus",
+          "answerable": false,
+          "generation": {
+            "question": "What guidelines did the Supreme Court lay down in Vishaka v. State of Rajasthan on sexual harassment at the workplace?",
+            "answer": "The indexed judgments do not contain material that answers this question, so no answer is given. Answering from the model's general knowledge would not be grounded in the corpus.",
+            "abstained": true,
+            "abstention_reason": "retrieval confidence 0.301 is below the calibrated threshold 0.375",
+            "confidence": 0.3009302928422888,
+            "sources": [
+              "judgment_0002.txt",
+              "judgment_0216.txt",
+              "judgment_0001.txt",
+              "judgment_0126.txt",
+              "judgment_0215.txt"
+            ],
+            "citations": {
+              "supported": [],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4468.30259996932,
+              "total_ms": 4468.30259996932
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "What guidelines did the Supreme Court lay down in Vishaka v. State of Rajasthan on sexual harassment at the workplace?",
+            "answer_chars": 178,
+            "answer_words": 29,
+            "mean": 4.5,
+            "metrics": {
+              "faithfulness": {
+                "score": 5,
+                "reason": "The model correctly identified that the provided context does not contain information regarding the Vishaka guidelines.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The model directly addressed the prompt by stating it could not answer based on the provided context.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 1,
+                "reason": "None of the provided documents contain information about the Vishaka v. State of Rajasthan case.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 5,
+                "reason": "The model correctly identified the absence of information and refused to hallucinate, which is the complete and correct response given the constraints.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 5,
+                "reason": "The model did not invent any information.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The response is clear, concise, and logically structured.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 5,
+                "reason": "The model correctly applied the constraint of grounding the answer in the provided corpus rather than relying on external knowledge.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "0/0 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 7.412542300065979
+        },
+        {
+          "id": "q28",
+          "category": "out_of_corpus",
+          "answerable": false,
+          "generation": {
+            "question": "What did the Supreme Court decide in Navtej Singh Johar regarding Section 377 of the Indian Penal Code?",
+            "answer": "The Supreme Court decided in Navtej Singh Johar regarding Section 377 of the Indian Penal Code that:\n\n* The impugned provision in Section 302 IPC is reasonable and not in public interest (Devender Pal Singh Bhullar & Anr vs State Of Nct Of Delhi, para 5).\n* Death penalty under Section 302 IPC does not constitute an unreasonable, cruel or unusual punishment (Devender Pal Singh Bhullar & Anr vs State Of Nct Of Delhi, para 5).\n\nHowever, the extracts do not provide any information about the decision in Navtej Singh Johar regarding Section 377 of the Indian Penal Code.",
+            "abstained": false,
+            "abstention_reason": "",
+            "confidence": 0.8175337235132853,
+            "sources": [
+              "judgment_0124.txt",
+              "judgment_0006.txt",
+              "judgment_0072.txt",
+              "judgment_0004.txt"
+            ],
+            "citations": {
+              "supported": [
+                "Anr v. State Of Nct Of Delhi",
+                "Section 302"
+              ],
+              "unsupported": [
+                "Section 377"
+              ],
+              "accuracy": 0.6666666666666666
+            },
+            "latency": {
+              "retrieval_ms": 4499.474999960512,
+              "generation_ms": 20557.394800009206,
+              "total_ms": 25056.869799969718
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "What did the Supreme Court decide in Navtej Singh Johar regarding Section 377 of the Indian Penal Code?",
+            "answer_chars": 570,
+            "answer_words": 99,
+            "mean": 3.20875,
+            "metrics": {
+              "faithfulness": {
+                "score": 5,
+                "reason": "The answer correctly identifies that the provided context does not contain information about Navtej Singh Johar and accurately summarizes the provided text regarding Section 302.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 3,
+                "reason": "The answer addresses the question by stating the information is missing from the context, but it includes irrelevant information about Section 302 that was not asked for.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 1,
+                "reason": "None of the provided context passages contain any information regarding the Navtej Singh Johar case.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 2,
+                "reason": "The answer fails to provide the requested information because it was not in the context, though it correctly identifies this limitation.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 5,
+                "reason": "The answer does not fabricate information about the case, correctly noting the absence of data in the provided context.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The answer is logically structured and easy to follow.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 1,
+                "reason": "There is no legal reasoning applied to the specific question asked, as the system lacked the necessary source material.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 3.67,
+                "reason": "2/3 citations found in the retrieved context; unsupported: Section 377",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 27.836306900018826
+        },
+        {
+          "id": "q29",
+          "category": "out_of_corpus",
+          "answerable": false,
+          "generation": {
+            "question": "What is the right to erasure under the European Union's General Data Protection Regulation?",
+            "answer": "The indexed judgments do not contain material that answers this question, so no answer is given. Answering from the model's general knowledge would not be grounded in the corpus.",
+            "abstained": true,
+            "abstention_reason": "retrieval confidence 0.001 is below the calibrated threshold 0.375",
+            "confidence": 0.0011506857583299277,
+            "sources": [
+              "judgment_0001.txt",
+              "judgment_0214.txt",
+              "judgment_0072.txt",
+              "judgment_0073.txt",
+              "judgment_0071.txt"
+            ],
+            "citations": {
+              "supported": [],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4469.045899924822,
+              "total_ms": 4469.045899924822
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "What is the right to erasure under the European Union's General Data Protection Regulation?",
+            "answer_chars": 178,
+            "answer_words": 29,
+            "mean": 4.5,
+            "metrics": {
+              "faithfulness": {
+                "score": 5,
+                "reason": "The model correctly identified that the provided context does not contain information regarding the GDPR.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The model correctly stated that it could not answer the question based on the provided context.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 1,
+                "reason": "The provided context is entirely irrelevant to the question about the EU's GDPR.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 5,
+                "reason": "The model accurately reported the inability to answer based on the provided documents.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 5,
+                "reason": "There are no fabrications in the response.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The response is clear, concise, and logically structured.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 5,
+                "reason": "The model correctly applied the constraint of only using the provided context to answer the query.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "0/0 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 6.626635399996303
+        },
+        {
+          "id": "q30",
+          "category": "out_of_corpus",
+          "answerable": false,
+          "generation": {
+            "question": "What did the United States Supreme Court hold in Roe v. Wade?",
+            "answer": "The indexed judgments do not contain material that answers this question, so no answer is given. Answering from the model's general knowledge would not be grounded in the corpus.",
+            "abstained": true,
+            "abstention_reason": "retrieval confidence 0.325 is below the calibrated threshold 0.375",
+            "confidence": 0.32476294636726377,
+            "sources": [
+              "judgment_0215.txt",
+              "judgment_0001.txt",
+              "judgment_0075.txt",
+              "judgment_0122.txt",
+              "judgment_0078.txt"
+            ],
+            "citations": {
+              "supported": [],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4506.080699968152,
+              "total_ms": 4506.080699968152
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "What did the United States Supreme Court hold in Roe v. Wade?",
+            "answer_chars": 178,
+            "answer_words": 29,
+            "mean": 4.5,
+            "metrics": {
+              "faithfulness": {
+                "score": 5,
+                "reason": "The model correctly identified that the provided context does not contain the holding of Roe v. Wade.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The model correctly addressed the prompt by stating it could not answer based on the provided context.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 1,
+                "reason": "The provided context contains no information regarding the holding of Roe v. Wade, despite mentioning the case name in passing.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 5,
+                "reason": "The model accurately reported that the information was missing from the provided source material.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 5,
+                "reason": "The model did not fabricate any information.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The response is clear, concise, and logically structured.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 5,
+                "reason": "The model correctly applied the constraint of grounding the answer in the provided context.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "0/0 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 7.485573400044814
+        },
+        {
+          "id": "q31",
+          "category": "out_of_corpus",
+          "answerable": false,
+          "generation": {
+            "question": "What are the corporate social responsibility obligations under Section 135 of the Companies Act, 2013?",
+            "answer": "The indexed judgments do not contain material that answers this question, so no answer is given. Answering from the model's general knowledge would not be grounded in the corpus.",
+            "abstained": true,
+            "abstention_reason": "retrieval confidence 0.002 is below the calibrated threshold 0.375",
+            "confidence": 0.0023517111549153924,
+            "sources": [
+              "judgment_0072.txt",
+              "judgment_0078.txt",
+              "judgment_0030.txt",
+              "judgment_0007.txt",
+              "judgment_0077.txt"
+            ],
+            "citations": {
+              "supported": [],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4487.04319994431,
+              "total_ms": 4487.04319994431
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "What are the corporate social responsibility obligations under Section 135 of the Companies Act, 2013?",
+            "answer_chars": 178,
+            "answer_words": 29,
+            "mean": 4.5,
+            "metrics": {
+              "faithfulness": {
+                "score": 5,
+                "reason": "The model correctly identified that the provided context does not contain information regarding Section 135 of the Companies Act, 2013.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The model directly addressed the query by stating it could not be answered from the provided context.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 1,
+                "reason": "The provided context consists entirely of case law regarding labor disputes and contains no information about corporate social responsibility or the Companies Act, 2013.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 5,
+                "reason": "The model correctly identified the limitation of the provided context and declined to answer based on external knowledge as instructed.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 5,
+                "reason": "There are no fabrications in the response.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The response is clear, concise, and logically structured.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 5,
+                "reason": "The model correctly applied the constraint of grounding the answer in the provided corpus rather than hallucinating information.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "0/0 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 7.295992000028491
+        },
+        {
+          "id": "q32",
+          "category": "out_of_corpus",
+          "answerable": false,
+          "generation": {
+            "question": "How does the Bharatiya Nyaya Sanhita define the offence of theft?",
+            "answer": "The indexed judgments do not contain material that answers this question, so no answer is given. Answering from the model's general knowledge would not be grounded in the corpus.",
+            "abstained": true,
+            "abstention_reason": "retrieval confidence 0.023 is below the calibrated threshold 0.375",
+            "confidence": 0.0228144770488143,
+            "sources": [
+              "judgment_0033.txt",
+              "judgment_0001.txt",
+              "judgment_0076.txt"
+            ],
+            "citations": {
+              "supported": [],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4509.278499986976,
+              "total_ms": 4509.278499986976
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "How does the Bharatiya Nyaya Sanhita define the offence of theft?",
+            "answer_chars": 178,
+            "answer_words": 29,
+            "mean": 4.5,
+            "metrics": {
+              "faithfulness": {
+                "score": 5,
+                "reason": "The model correctly identified that the provided context does not contain the definition of theft under the Bharatiya Nyaya Sanhita.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The model directly addressed the question by stating it could not be answered from the provided context.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 1,
+                "reason": "The provided context contains information about the Indian Penal Code and Evidence Act, but nothing regarding the Bharatiya Nyaya Sanhita.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 5,
+                "reason": "The model correctly identified the limitation of the provided context and refrained from providing an external answer.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 5,
+                "reason": "There are no fabrications in the response.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The response is clear, concise, and logically structured.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 5,
+                "reason": "The model correctly applied the constraint of grounding the answer in the provided corpus.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "0/0 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 7.213113000034355
+        },
+        {
+          "id": "q33",
+          "category": "out_of_corpus",
+          "answerable": false,
+          "generation": {
+            "question": "What did the Supreme Court decide in the Sabarimala temple entry case about women's right to worship?",
+            "answer": "The indexed judgments do not contain material that answers this question, so no answer is given. Answering from the model's general knowledge would not be grounded in the corpus.",
+            "abstained": true,
+            "abstention_reason": "retrieval confidence 0.018 is below the calibrated threshold 0.375",
+            "confidence": 0.01785921019812425,
+            "sources": [
+              "judgment_0001.txt",
+              "judgment_0007.txt",
+              "judgment_0078.txt"
+            ],
+            "citations": {
+              "supported": [],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4496.557099977508,
+              "total_ms": 4496.557099977508
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "What did the Supreme Court decide in the Sabarimala temple entry case about women's right to worship?",
+            "answer_chars": 178,
+            "answer_words": 29,
+            "mean": 4.5,
+            "metrics": {
+              "faithfulness": {
+                "score": 5,
+                "reason": "The model correctly identified that the provided context does not contain information regarding the Sabarimala temple entry case.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The model directly addressed the question by stating it could not be answered from the provided context.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 1,
+                "reason": "The provided context is entirely irrelevant to the question asked.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 5,
+                "reason": "The model correctly identified the limitation of the provided context and provided a complete response based on that constraint.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 5,
+                "reason": "There are no hallucinations as the model correctly identified the absence of information.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The answer is clear, concise, and logically structured.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 5,
+                "reason": "The model correctly applied the constraint of only using the provided context to answer the legal query.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "0/0 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 7.719950099941343
+        },
+        {
+          "id": "q34",
+          "category": "out_of_corpus",
+          "answerable": false,
+          "generation": {
+            "question": "What did the Supreme Court hold about the practice of instant triple talaq?",
+            "answer": "The indexed judgments do not contain material that answers this question, so no answer is given. Answering from the model's general knowledge would not be grounded in the corpus.",
+            "abstained": true,
+            "abstention_reason": "retrieval confidence 0.028 is below the calibrated threshold 0.375",
+            "confidence": 0.027712553925812244,
+            "sources": [
+              "judgment_0215.txt",
+              "judgment_0072.txt",
+              "judgment_0029.txt",
+              "judgment_0034.txt",
+              "judgment_0028.txt"
+            ],
+            "citations": {
+              "supported": [],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4483.552500023507,
+              "total_ms": 4483.552500023507
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "What did the Supreme Court hold about the practice of instant triple talaq?",
+            "answer_chars": 178,
+            "answer_words": 29,
+            "mean": 4.5,
+            "metrics": {
+              "faithfulness": {
+                "score": 5,
+                "reason": "The model correctly identified that the provided context does not contain information regarding the Supreme Court's holding on instant triple talaq.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The model directly addressed the question by stating it could not be answered from the provided context.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 1,
+                "reason": "The provided context is entirely irrelevant to the question asked.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 5,
+                "reason": "The model correctly identified the absence of information and refused to provide an ungrounded answer.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 5,
+                "reason": "There are no hallucinations as the model correctly identified the lack of information.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The answer is clear, concise, and logically structured.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 5,
+                "reason": "The model demonstrated sound judgment by refusing to answer based on external knowledge when instructed to rely on the provided context.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "0/0 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 7.51612040004693
+        },
+        {
+          "id": "q35",
+          "category": "out_of_corpus",
+          "answerable": false,
+          "generation": {
+            "question": "What are the eligibility criteria and age limits for appointment to the Indian Administrative Service?",
+            "answer": "The indexed judgments do not contain material that answers this question, so no answer is given. Answering from the model's general knowledge would not be grounded in the corpus.",
+            "abstained": true,
+            "abstention_reason": "retrieval confidence 0.246 is below the calibrated threshold 0.375",
+            "confidence": 0.24572158356507617,
+            "sources": [
+              "judgment_0214.txt",
+              "judgment_0034.txt",
+              "judgment_0221.txt",
+              "judgment_0028.txt"
+            ],
+            "citations": {
+              "supported": [],
+              "unsupported": [],
+              "accuracy": 1.0
+            },
+            "latency": {
+              "retrieval_ms": 4474.534099921584,
+              "total_ms": 4474.534099921584
+            }
+          },
+          "scores": {
+            "label": "hybrid-rerank",
+            "question": "What are the eligibility criteria and age limits for appointment to the Indian Administrative Service?",
+            "answer_chars": 178,
+            "answer_words": 29,
+            "mean": 4.5,
+            "metrics": {
+              "faithfulness": {
+                "score": 5,
+                "reason": "The model correctly identified that the provided context does not contain information regarding IAS eligibility or age limits.",
+                "parsed": true
+              },
+              "answer_relevancy": {
+                "score": 5,
+                "reason": "The model directly addressed the question by stating it could not be answered from the provided context.",
+                "parsed": true
+              },
+              "context_precision": {
+                "score": 1,
+                "reason": "The provided context discusses judicial appointments and reservation policies, which are irrelevant to the specific question about IAS eligibility.",
+                "parsed": true
+              },
+              "completeness": {
+                "score": 5,
+                "reason": "The model correctly determined that the information was missing from the provided source material.",
+                "parsed": true
+              },
+              "hallucination": {
+                "score": 5,
+                "reason": "The model did not fabricate any information.",
+                "parsed": true
+              },
+              "coherence": {
+                "score": 5,
+                "reason": "The response is clear, concise, and logically structured.",
+                "parsed": true
+              },
+              "legal_reasoning": {
+                "score": 5,
+                "reason": "The model correctly applied the constraint of only using the provided corpus to answer the query.",
+                "parsed": true
+              },
+              "citation_accuracy": {
+                "score": 5.0,
+                "reason": "0/0 citations found in the retrieved context",
+                "parsed": true
+              }
+            }
+          },
+          "wall_seconds": 6.724477699957788
         }
       ],
-      "complete": false
+      "complete": true
     }
   }
 }

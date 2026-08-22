@@ -1,6 +1,6 @@
 # LexGraph — evaluation results
 
-Generated 2026-08-22 21:44. Gold set: 35 answerable, 10 out-of-corpus, over 40 judgments (38 unique cases).
+Generated 2026-08-22 21:55. Gold set: 35 answerable, 10 out-of-corpus, over 40 judgments (38 unique cases).
 
 Regenerate with `python scripts/make_report.py`.
 
@@ -42,22 +42,24 @@ Thresholds maximise Youden's J against the gold set's out-of-corpus questions. S
 
 ## Answer quality
 
-### `ollama:llama3.1` · `hybrid-rerank` _(partial run)_
+### `ollama:llama3.1` · `hybrid-rerank`
 
-Judge: `gemini:gemini-3-flash-preview -> gemini:gemini-flash-latest -> gemini:gemini-3.7-flash -> gemini:gemini-3.1-flash-lite` — a different model family from the generator.
+Judge: `gemini:gemini-3-flash-preview -> gemini:gemini-3.5-flash -> gemini:gemini-flash-latest -> gemini:gemini-3.7-flash -> gemini:gemini-3.1-flash-lite -> gemini:gemini-3.1-flash-lite-preview` — a different model family from the generator.
 
 | metric | mean | 95% CI | n |
 |---|---|---|---|
-| answer relevancy | 4.95 | [4.86, 5.00] | 22 |
-| citation accuracy | 4.83 | [4.54, 5.00] | 22 |
-| coherence | 4.86 | [4.64, 5.00] | 22 |
-| completeness | 4.05 | [3.59, 4.45] | 22 |
-| context precision | 4.36 | [3.95, 4.73] | 22 |
-| faithfulness | 3.41 | [2.91, 3.91] | 22 |
-| hallucination | 3.00 | [2.45, 3.59] | 22 |
-| legal reasoning | 3.73 | [3.23, 4.23] | 22 |
+| answer relevancy | 4.54 | [4.11, 4.89] | 35 |
+| citation accuracy | 4.90 | [4.71, 5.00] | 35 |
+| coherence | 4.91 | [4.77, 5.00] | 35 |
+| completeness | 3.83 | [3.37, 4.26] | 35 |
+| context precision | 4.20 | [3.83, 4.54] | 35 |
+| faithfulness | 3.23 | [2.80, 3.66] | 35 |
+| hallucination | 3.26 | [2.80, 3.71] | 35 |
+| legal reasoning | 3.57 | [3.11, 4.03] | 35 |
 
-Median answer length: 262 words. Median latency: 52.5s.
+Median answer length: 245 words. Median latency: 42.7s.
+
+Abstention: refused 8/10 out-of-corpus questions; wrongly refused 6 answerable.
 
 ### `ollama:qwen2.5:3b` · `hybrid-rerank`
 

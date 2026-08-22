@@ -131,31 +131,49 @@ which is why BM25 at 2ms is not a rounding difference.
 Both generators, same retriever, same questions, scored by the same
 independent judge:
 
-| metric | llama3.1 (8B) | qwen2.5:3b |
-|---|---|---|
-| answer relevancy | **4.95** | 3.86 |
-| coherence | **4.86** | 4.80 |
-| citation accuracy | 4.83 | **4.92** |
-| completeness | **4.05** | 3.11 |
-| context precision | 4.36 | **4.57** |
-| legal reasoning | **3.73** | 2.94 |
-| faithfulness | **3.41** | 3.03 |
-| hallucination ↑ | 3.00 | **3.86** |
-| median answer length | 262 words | 221 words |
-| **median latency** | **52.5s** | **12.0s** |
-| n (answerable) | 22 _(partial)_ | 35 |
+Both generators, same retriever, same 45 questions, same judge, n=35
+answerable, zero unparsed judge responses on either run:
 
-llama3.1 is the better writer and the clearly better legal reasoner. It is also
-4.4× slower for an answer of similar length, and it **hallucinates more** —
-the one metric the 3B model wins, and the interesting one. A smaller model has
-less parametric knowledge to fall back on, so it stays closer to the retrieved
-text; a larger one is more willing to supply from memory what the context did
-not give it. In a grounded legal tool that tendency is a liability, not a
-feature.
+| metric | llama3.1 (8B) | qwen2.5:3b | Δ |
+|---|---|---|---|
+| answer relevancy | **4.54** | 3.86 | +0.69 |
+| completeness | **3.83** | 3.11 | +0.71 |
+| legal reasoning | **3.57** | 2.94 | +0.63 |
+| hallucination ↑ | 3.26 | **3.86** | −0.60 |
+| faithfulness | 3.23 | 3.03 | +0.20 |
+| coherence | 4.91 | 4.80 | +0.11 |
+| citation accuracy | 4.90 | 4.92 | −0.02 |
+| *context precision* | *4.20* | *4.57* | *−0.37* |
+| median answer length | 245 words | 221 words | |
+| **median latency** | **52.5s** | **12.0s** | |
+
+**Read that table with a noise floor.** `context precision` scores only the
+question and the retrieved passages — and those are byte-identical between the
+two runs, because it is the same retriever answering the same questions. Its
+true difference is therefore exactly zero. The judge returned **−0.37**.
+
+That number is a free, built-in estimate of how much this judge disagrees with
+itself, and it costs nothing to collect because the metric was already there.
+Applying it: relevancy (+0.69), completeness (+0.71), legal reasoning (+0.63)
+and hallucination (−0.60) all clear the floor and are worth believing.
+Faithfulness (+0.20) and coherence (+0.11) do not, and should not be read as
+differences at all. Citation accuracy is deterministic, and its −0.02 is the
+sanity check that the harness is wired correctly.
+
+Part of that 0.37 is scoring all metrics in one call: the judge sees the answer
+while rating the context, so a metric that should be answer-independent is not
+quite. That was the price of fitting a sweep inside a free-tier daily quota,
+and it is a real cost rather than a free optimisation.
+
+So: llama3.1 is the better writer and the clearly better legal reasoner, at
+4.4× the latency for an answer of similar length — and it **hallucinates more**.
+That is the interesting one. A smaller model has less parametric knowledge to
+substitute for what retrieval failed to supply, so it stays nearer the text; a
+larger one is more willing to fill the gap from memory. In a grounded legal
+tool that willingness is a liability, not a feature.
 
 Neither column is the "right" answer. The point is that the tradeoff is a
-measurement rather than an assumption. Read the two columns with their
-differing n in mind — see Limitations.
+measurement.
 
 ---
 
@@ -301,14 +319,15 @@ docker compose up --build
 - 35 answerable questions is a small gold set. It is large enough to detect the
   reranking effect on R@1 and nDCG and BM25's collapse on paraphrase, and
   demonstrably too small to separate configurations on R@5.
-- **The two generator runs are not equally complete.** qwen2.5:3b was scored on
-  all 35 answerable questions; llama3.1 reached 22 before the judge's free-tier
-  daily quota ran out. Per-question checkpointing preserved the partial run and
-  the report labels it as partial, but the comparison above is n=35 against
-  n=22 and should be read with that in mind.
 - The judge has not been validated against human labels. Independence from the
-  generator removes the worst bias, not all of it. Hand-scoring 20 answers and
-  reporting Spearman ρ against the judge is the obvious next step.
+  generator removes the worst bias, not all of it. The `context precision`
+  control above bounds its self-disagreement at roughly 0.37 points, but that
+  measures consistency, not correctness — a judge can be perfectly consistent
+  and perfectly wrong. Hand-scoring 20 answers and reporting Spearman ρ is the
+  obvious next step.
+- Scoring every metric in one judge call lets the answer leak into metrics that
+  should not see it, which is part of that 0.37. Separate calls would remove
+  it at seven times the quota, which the free tier does not support.
 - The hard tier is 10 questions. It separates the configurations far better
   than the standard tier, which argues for making it much larger.
 - GraphRAG is compared on the answer side only. Its retrieval is not yet scored
