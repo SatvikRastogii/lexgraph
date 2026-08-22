@@ -51,6 +51,16 @@ class LLMError(RuntimeError):
     pass
 
 
+# Gemini names the exhausted quota in the error body. The per-day one is not
+# worth waiting on; the per-minute one is.
+DAILY_QUOTA_MARKERS = ("perday", "requestsperday", "quota_exceeded_per_day")
+
+
+def is_daily_quota_error(error: Exception) -> bool:
+    text = str(error).lower().replace(" ", "")
+    return "429" in text and any(marker in text for marker in DAILY_QUOTA_MARKERS)
+
+
 class RateLimiter:
     """Enforces a minimum gap between calls.
 
@@ -93,10 +103,14 @@ class BaseClient:
                 return self._chat(prompt, max_tokens, temperature)
             except Exception as error:  # noqa: BLE001 - retried, then re-raised
                 last_error = error
+                # A per-day quota will not clear inside a retry window, so
+                # retrying spends minutes to reach the same failure. Raise at
+                # once and let the caller rotate to another model. A per-minute
+                # limit is the opposite case: waiting is exactly the fix.
+                if is_daily_quota_error(error):
+                    raise LLMError(f"{self.label} daily quota exhausted") from error
                 if attempt < self.max_retries - 1:
-                    # Back off hard on rate limiting, gently on anything else.
-                    is_rate_limited = "429" in str(error) or "quota" in str(error).lower()
-                    time.sleep((10 if is_rate_limited else 2) * (attempt + 1))
+                    time.sleep((10 if "429" in str(error) else 2) * (attempt + 1))
         raise LLMError(f"{self.label} failed after {self.max_retries} attempts: {last_error}")
 
     def _chat(self, prompt: str, max_tokens: int, temperature: float) -> str:

@@ -166,6 +166,13 @@ references and reported citations are extracted from the answer and checked
 against the retrieved text. Asking a model to grade this lets a fabricated
 citation be scored generously; a regex cannot be talked round.
 
+It earns its place. Asked what the courts held about Parliament's power to
+amend fundamental rights, the generator cited **Article 368 and Article 13(2)**
+— the legally correct provisions, and neither of them anywhere in the retrieved
+judgments. A judge scoring citation quality would likely have rewarded them.
+The verifier flags them, because being right from memory is still not being
+grounded in the corpus, and in a legal tool that distinction is the product.
+
 **Answer length travels with every score.** LLM judges reward verbosity, so a
 score gap that is really a length gap stays visible in the output.
 

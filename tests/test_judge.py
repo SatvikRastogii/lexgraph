@@ -208,3 +208,48 @@ def test_response_truncated_before_any_score_is_flagged():
     judge = FakeJudge('{"faithfulness": {"sco')
     scores = score_pipeline("naive", "Q?", "A.", ["ctx"], judge, metrics=["faithfulness"])
     assert scores.metrics["faithfulness"].parsed is False
+
+
+# --- quota handling ----------------------------------------------------------
+
+def test_daily_quota_is_distinguished_from_a_per_minute_limit():
+    from lexgraph.llm import is_daily_quota_error
+
+    daily = Exception(
+        '429: {"error":{"details":[{"violations":'
+        '[{"quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier"}]}]}}'
+    )
+    per_minute = Exception(
+        '429: {"error":{"quotaId":"GenerateRequestsPerMinutePerProjectPerModel"}}'
+    )
+    server = Exception("500: internal error")
+
+    # Waiting fixes a per-minute limit and never fixes a per-day one, so only
+    # the daily case should short-circuit the retry loop.
+    assert is_daily_quota_error(daily) is True
+    assert is_daily_quota_error(per_minute) is False
+    assert is_daily_quota_error(server) is False
+
+
+def test_fallback_retires_a_model_only_on_quota():
+    from lexgraph.llm import FallbackClient
+
+    class Stub:
+        def __init__(self, label, error=None):
+            self.label, self.error, self.calls = label, error, 0
+            self.model = label
+
+        def chat(self, prompt, max_tokens=512, temperature=0.0):
+            self.calls += 1
+            if self.error:
+                raise self.error
+            return "ok"
+
+    exhausted = Stub("a", RuntimeError("429 quota exceeded"))
+    flaky = Stub("b", RuntimeError("500 server error"))
+    healthy = Stub("c")
+
+    client = FallbackClient([exhausted, flaky, healthy])
+    assert client.chat("q") == "ok"
+    assert "a" in client.exhausted, "a quota failure retires the model"
+    assert "b" not in client.exhausted, "a transient failure must not retire it"
