@@ -34,6 +34,32 @@ JUDGMENT EXTRACTS:
 
 ANSWER:"""
 
+# Naming the offending citations is the point. "Please only cite the extracts"
+# is the instruction the model already had and already broke; quoting back the
+# exact strings that failed verification gives it something to act on.
+CITATION_RETRY_PROMPT = """Your previous answer cited material that does not
+appear in the judgment extracts you were given:
+
+{unsupported}
+
+Those citations could not be found and may be fabricated. Rewrite the answer
+using only what the extracts below actually contain. If a proposition cannot be
+supported by them, drop it or say the extracts do not settle it. Do not
+substitute a different case you are unsure of.
+
+QUESTION: {question}
+
+JUDGMENT EXTRACTS:
+{context}
+
+CORRECTED ANSWER:"""
+
+# What to do when an answer cites something the context does not contain.
+#   warn    attach the report and return the answer (what the numbers so far measure)
+#   retry   regenerate once, naming the unsupported citations, then warn
+#   refuse  withhold the answer entirely below min_citation_accuracy
+CITATION_POLICIES = ("warn", "retry", "refuse")
+
 
 @dataclass
 class GeneratedAnswer:
@@ -44,6 +70,7 @@ class GeneratedAnswer:
     abstention: AbstentionDecision | None = None
     citations: CitationReport | None = None
     latency: dict[str, float] = field(default_factory=dict)
+    citation_retry: bool = False
 
     @property
     def contexts(self) -> list[str]:
@@ -71,6 +98,7 @@ class GeneratedAnswer:
                 "unsupported": self.citations.unsupported if self.citations else [],
                 "accuracy": self.citations.accuracy if self.citations else 1.0,
             },
+            "citation_retry": self.citation_retry,
             "latency": self.latency,
         }
 
@@ -90,12 +118,22 @@ def answer_question(
     top_k: int = 5,
     abstention_threshold: float | None = None,
     max_tokens: int = 800,
+    citation_policy: str = "warn",
+    min_citation_accuracy: float = 1.0,
 ) -> GeneratedAnswer:
-    """Retrieve, decide whether to answer, generate, then verify citations.
+    """Retrieve, decide whether to answer, generate, then act on the citations.
 
     When ``abstention_threshold`` is None the guardrail is off, which is how
-    the ablation measures what abstention actually buys.
+    the ablation measures what abstention actually buys. ``citation_policy``
+    defaults to ``warn`` for the same reason: it is the behaviour every number
+    reported so far was measured under, and changing the default would move
+    those numbers without a run to attribute the change to.
     """
+    if citation_policy not in CITATION_POLICIES:
+        raise ValueError(
+            f"unknown citation policy {citation_policy!r}; "
+            f"expected one of {list(CITATION_POLICIES)}"
+        )
     latency = {}
 
     started = time.perf_counter()
@@ -117,14 +155,57 @@ def answer_question(
                 latency=latency,
             )
 
+    context = format_context(hits)
+    texts = [hit.text for hit in hits]
+
     started = time.perf_counter()
     answer = generator.chat(
-        SYSTEM_PROMPT.format(question=question, context=format_context(hits)),
+        SYSTEM_PROMPT.format(question=question, context=context),
         max_tokens=max_tokens,
         temperature=0.0,
     )
+    citations = verify_citations(answer, texts)
+    retried = False
+
+    # The verifier has been computing this all along and nothing acted on it:
+    # an answer citing a case the context never contained was measured, scored,
+    # and returned anyway. That is a report, not a guardrail.
+    if citation_policy == "retry" and citations.has_unsupported:
+        retried = True
+        corrected = generator.chat(
+            CITATION_RETRY_PROMPT.format(
+                unsupported="\n".join(f"- {c}" for c in citations.unsupported),
+                question=question,
+                context=context,
+            ),
+            max_tokens=max_tokens,
+            temperature=0.0,
+        )
+        corrected_citations = verify_citations(corrected, texts)
+        # Keep the rewrite only if it is actually cleaner. A retry is free to
+        # make things worse, and accepting it unconditionally would let the
+        # guardrail lower citation accuracy while appearing to enforce it.
+        if corrected_citations.accuracy > citations.accuracy:
+            answer, citations = corrected, corrected_citations
+
     latency["generation_ms"] = (time.perf_counter() - started) * 1000
     latency["total_ms"] = latency["retrieval_ms"] + latency["generation_ms"]
+
+    if citation_policy == "refuse" and citations.accuracy < min_citation_accuracy:
+        return GeneratedAnswer(
+            question=question,
+            answer=(
+                "This answer was withheld: it cited material that does not appear "
+                "in the retrieved judgments, which in legal research is the failure "
+                "that matters most."
+            ),
+            hits=hits,
+            abstained=True,
+            abstention=decision,
+            citations=citations,
+            latency=latency,
+            citation_retry=retried,
+        )
 
     return GeneratedAnswer(
         question=question,
@@ -132,6 +213,7 @@ def answer_question(
         hits=hits,
         abstained=False,
         abstention=decision,
-        citations=verify_citations(answer, [hit.text for hit in hits]),
+        citations=citations,
         latency=latency,
+        citation_retry=retried,
     )

@@ -33,6 +33,8 @@ import time
 
 import requests
 
+from .cache import CACHE, cache_enabled
+
 
 def load_dotenv(path: str = ".env") -> None:
     """Minimal .env loader. Existing environment variables always win."""
@@ -116,11 +118,24 @@ class BaseClient:
         return f"{self.name}:{self.model}"
 
     def chat(self, prompt: str, max_tokens: int = 512, temperature: float = 0.0) -> str:
+        # Only greedy decoding is cacheable. Above temperature 0 the caller is
+        # asking for a fresh sample, and replaying one would turn a sampling
+        # experiment into a constant without saying so.
+        cacheable = temperature == 0.0 and cache_enabled()
+        key = CACHE.key(self.label, prompt, max_tokens, temperature) if cacheable else None
+        if key is not None:
+            cached = CACHE.get(key)
+            if cached is not None:
+                return cached
+
         last_error: Exception | None = None
         for attempt in range(self.max_retries):
             self.limiter.wait()
             try:
-                return self._chat(prompt, max_tokens, temperature)
+                response = self._chat(prompt, max_tokens, temperature)
+                if key is not None:
+                    CACHE.put(key, self.label, prompt, response)
+                return response
             except Exception as error:  # noqa: BLE001 - retried, then re-raised
                 last_error = error
                 # A per-day quota will not clear inside a retry window, so
@@ -333,6 +348,10 @@ def build_judge(spec: str | None = None) -> BaseClient:
 
 
 DEFAULT_GENERATOR = "ollama:llama3.1"
+# HyDE runs once per query and its output is thrown away after embedding, so
+# the small model that fits the card entirely is the right one: it needs the
+# legal register, not the reasoning.
+DEFAULT_HYDE_GENERATOR = "ollama:qwen2.5:3b"
 DEFAULT_JUDGE = "gemini:gemini-3-flash-preview"
 
 

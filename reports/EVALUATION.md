@@ -1,6 +1,6 @@
 # LexGraph — evaluation results
 
-Generated 2026-08-23 01:25. Gold set: 55 answerable, 10 out-of-corpus, over 40 judgments (38 unique cases).
+Generated 2026-08-23 02:32. Gold set: 55 answerable, 10 out-of-corpus, over 40 judgments (38 unique cases).
 
 Regenerate with `python scripts/make_report.py`.
 
@@ -10,21 +10,25 @@ Document-level ground truth, no LLM in the loop.
 
 | configuration | R@1 | R@5 | R@5 95% CI | nDCG@10 | MRR | p50 |
 |---|---|---|---|---|---|---|
-| `dense-fixed` | 0.570 | 0.865 | [0.78, 0.94] | 0.809 | 0.830 | 2195ms |
-| `dense` | 0.582 | 0.886 | [0.81, 0.95] | 0.831 | 0.839 | 2223ms |
-| `bm25` | 0.586 | 0.802 | [0.70, 0.89] | 0.775 | 0.810 | 4ms |
-| `hybrid` | 0.632 | 0.879 | [0.80, 0.95] | 0.847 | 0.873 | 2203ms |
-| `hybrid-rerank` | 0.659 | 0.886 | [0.81, 0.95] | 0.860 | 0.879 | 4456ms |
+| `dense-fixed` | 0.570 | 0.865 | [0.78, 0.94] | 0.809 | 0.830 | 2191ms |
+| `dense` | 0.582 | 0.885 | [0.81, 0.95] | 0.829 | 0.839 | 2186ms |
+| `bm25` | 0.586 | 0.802 | [0.70, 0.89] | 0.775 | 0.810 | 2ms |
+| `hybrid` | 0.632 | 0.878 | [0.80, 0.95] | 0.847 | 0.873 | 2192ms |
+| `hybrid-rerank` | 0.659 | 0.886 | [0.81, 0.95] | 0.860 | 0.879 | 4161ms |
+| `graph-units` | 0.607 | 0.889 | [0.81, 0.96] | 0.854 | 0.861 | 2193ms |
+| `graph-community` | 0.233 | 0.474 | [0.35, 0.60] | 0.438 | 0.408 | 2188ms |
 
 ### By difficulty tier
 
 | configuration | hard R@5 | hard nDCG@10 | standard R@5 | standard nDCG@10 |
 |---|---|---|---|---|
 | `dense-fixed` | 0.844 | 0.728 | 0.889 | 0.906 |
-| `dense` | 0.872 | 0.775 | 0.902 | 0.897 |
+| `dense` | 0.872 | 0.775 | 0.900 | 0.894 |
 | `bm25` | 0.756 | 0.707 | 0.857 | 0.857 |
-| `hybrid` | 0.872 | 0.803 | 0.887 | 0.901 |
-| `hybrid-rerank` | 0.872 | 0.801 | 0.902 | 0.929 |
+| `hybrid` | 0.872 | 0.803 | 0.885 | 0.899 |
+| `hybrid-rerank` | 0.872 | 0.801 | 0.902 | 0.930 |
+| `graph-units` | 0.889 | 0.796 | 0.890 | 0.925 |
+| `graph-community` | 0.428 | 0.399 | 0.530 | 0.485 |
 
 n per tier: hard = 30, standard = 25.
 

@@ -95,10 +95,27 @@ CONFIGURATIONS = {
     "bm25": "BM25 only, paragraph-aware chunks",
     "hybrid": "Dense + BM25 fused with RRF",
     "hybrid-rerank": "Dense + BM25 fused, then cross-encoder reranked",
+    "graph-units": "GraphRAG's own text units, same embedder (graph-free control)",
+    "graph-community": "GraphRAG community reports, same embedder",
+    "hyde-hybrid": "Hybrid, searched with a generated hypothetical answer",
+    "hyde-rerank": "HyDE shortlist, reranked against the original question",
 }
 
+# Cost one generation per query, so they are excluded from the default sweep.
+HYDE_CONFIGURATIONS = ("hyde-hybrid", "hyde-rerank")
 
-def build_retriever(name: str, chroma_dir: str = "chroma_db", input_dir: str = "input"):
+# Need output/*.parquet from `graphrag index`, which is not committed. They are
+# skipped rather than failed when the index is absent, so the ablation still
+# runs on a clean checkout.
+GRAPH_CONFIGURATIONS = ("graph-units", "graph-community")
+
+
+def build_retriever(
+    name: str,
+    chroma_dir: str = "chroma_db",
+    input_dir: str = "input",
+    hyde_generator: str | None = None,
+):
     """Construct one named configuration.
 
     Shared pieces are built per call rather than cached globally; the ablation
@@ -106,6 +123,11 @@ def build_retriever(name: str, chroma_dir: str = "chroma_db", input_dir: str = "
     """
     if name not in CONFIGURATIONS:
         raise ValueError(f"unknown configuration {name!r}; expected one of {list(CONFIGURATIONS)}")
+
+    if name in GRAPH_CONFIGURATIONS:
+        from .graph import GraphRetriever
+
+        return GraphRetriever(kind=name.split("-", 1)[1])
 
     strategy = "fixed" if name == "dense-fixed" else "paragraph"
 
@@ -123,6 +145,16 @@ def build_retriever(name: str, chroma_dir: str = "chroma_db", input_dir: str = "
     )
     if name == "hybrid":
         return hybrid
+
+    if name in HYDE_CONFIGURATIONS:
+        from ..llm import DEFAULT_HYDE_GENERATOR, get_client
+        from .hyde import HyDEReranked, HyDERetriever
+
+        hyde = HyDERetriever(hybrid, get_client(hyde_generator or DEFAULT_HYDE_GENERATOR))
+        if name == "hyde-hybrid":
+            return hyde
+        return HyDEReranked(hyde, CrossEncoderReranker())
+
     return RerankedRetriever(hybrid, CrossEncoderReranker())
 
 

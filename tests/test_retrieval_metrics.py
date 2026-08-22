@@ -1,4 +1,4 @@
-import math
+﻿import math
 
 import pytest
 
@@ -6,6 +6,7 @@ from lexgraph.eval.retrieval_metrics import (
     aggregate,
     bootstrap_ci,
     ndcg_at_k,
+    paired_bootstrap,
     paragraph_recall_at_k,
     parse_para_span,
     precision_at_k,
@@ -157,3 +158,45 @@ def test_aggregate_skips_missing_metrics_rather_than_failing():
     means = aggregate(rows)
     assert means["recall@5"] == 0.5
     assert means["paragraph_recall@5"] == 0.5, "averaged over the row that has it"
+
+
+# --- paired comparison -------------------------------------------------------
+
+def test_paired_bootstrap_detects_a_consistent_small_gain():
+    # A gain that is small but present on nearly every question. Comparing two
+    # separate confidence intervals would call this a tie, because the spread
+    # across questions dwarfs the shift between configurations.
+    baseline = [0.1, 0.5, 0.9, 0.2, 0.7, 0.4, 0.8, 0.3, 0.6, 0.5]
+    candidate = [b + 0.05 for b in baseline]
+
+    stats = paired_bootstrap(baseline, candidate)
+    assert stats["mean_difference"] == pytest.approx(0.05)
+    assert stats["significant"], "a consistent gain must be distinguishable"
+    assert stats["wins"] == 10 and stats["losses"] == 0
+
+    wide_a = bootstrap_ci(baseline)
+    wide_b = bootstrap_ci(candidate)
+    assert wide_a[1] > wide_b[0], "the separate intervals do overlap; that is the point"
+
+
+def test_paired_bootstrap_calls_noise_a_tie():
+    baseline = [0.2, 0.9, 0.4, 0.7, 0.1, 0.8, 0.3, 0.6]
+    candidate = [0.9, 0.2, 0.7, 0.4, 0.8, 0.1, 0.6, 0.3]
+    assert not paired_bootstrap(baseline, candidate)["significant"]
+
+
+def test_paired_bootstrap_counts_wins_losses_and_ties():
+    stats = paired_bootstrap([0.5, 0.5, 0.5], [0.9, 0.1, 0.5])
+    assert (stats["wins"], stats["losses"], stats["ties"]) == (1, 1, 1)
+
+
+def test_paired_bootstrap_requires_matched_lengths():
+    # Unequal lengths mean the scores are not from the same questions, and
+    # pairing them would silently compare question 3 against question 4.
+    with pytest.raises(ValueError):
+        paired_bootstrap([0.1, 0.2], [0.1])
+
+
+def test_paired_bootstrap_handles_no_questions():
+    assert paired_bootstrap([], [])["mean_difference"] == 0.0
+
