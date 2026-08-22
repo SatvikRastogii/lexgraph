@@ -183,3 +183,28 @@ def test_mean_ignores_nothing_and_matches_hand_computation():
     )
     # faithfulness 4, coherence 4, citation_accuracy 5 -> mean 13/3
     assert scores.mean() == pytest.approx(13 / 3)
+
+
+def test_truncated_response_salvages_the_metrics_that_survived():
+    # A response cut off at the token limit has no closing brace, so whole
+    # object parsing finds nothing. The metrics before the cut must survive.
+    truncated = (
+        '{"faithfulness": {"score": 4, "reason": "grounded"}, '
+        '"coherence": {"score": 5, "reason": "clear"}, '
+        '"completeness": {"score": 3, "reas'
+    )
+    judge = FakeJudge(truncated)
+    scores = score_pipeline(
+        "naive", "Q?", "A.", ["ctx"], judge,
+        metrics=["faithfulness", "coherence", "completeness"],
+    )
+    assert scores.metrics["faithfulness"].score == 4
+    assert scores.metrics["coherence"].score == 5
+    # completeness was cut mid-object but its score came first, so it survives.
+    assert scores.metrics["completeness"].score == 3
+
+
+def test_response_truncated_before_any_score_is_flagged():
+    judge = FakeJudge('{"faithfulness": {"sco')
+    scores = score_pipeline("naive", "Q?", "A.", ["ctx"], judge, metrics=["faithfulness"])
+    assert scores.metrics["faithfulness"].parsed is False

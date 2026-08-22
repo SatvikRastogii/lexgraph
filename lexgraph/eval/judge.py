@@ -170,6 +170,14 @@ def parse_batch_scores(response: str, metrics: list[str]) -> dict[str, MetricSco
         except json.JSONDecodeError:
             payload = {}
 
+    # Whole-object parsing fails outright when the response is truncated at the
+    # token limit: there is no closing brace, so the greedy match above finds
+    # nothing and every metric is lost at once. Recovering each metric's own
+    # object individually means a cut-off response costs only the metrics that
+    # were actually cut off. Measured at ~12% of questions before this.
+    if not payload:
+        payload = _salvage_per_metric(response, metrics)
+
     for metric in metrics:
         entry = payload.get(metric)
         if isinstance(entry, dict) and entry.get("score") is not None:
@@ -186,6 +194,27 @@ def parse_batch_scores(response: str, metrics: list[str]) -> dict[str, MetricSco
             0.0, f"missing or unparseable in judge response: {response[:100]}", parsed=False
         )
     return scores
+
+
+def _salvage_per_metric(response: str, metrics: list[str]) -> dict:
+    """Recover individual metric objects from a malformed or truncated response."""
+    recovered = {}
+    for metric in metrics:
+        entry = re.search(
+            rf'"{re.escape(metric)}"\s*:\s*(\{{[^{{}}]*\}})', response, re.DOTALL
+        )
+        if entry:
+            try:
+                recovered[metric] = json.loads(entry.group(1))
+                continue
+            except json.JSONDecodeError:
+                pass
+        # Even the object may be cut mid-string; the score comes first, so it
+        # usually survives when the reason does not.
+        bare = re.search(rf'"{re.escape(metric)}"\s*:\s*\{{\s*"score"\s*:\s*([1-5])', response)
+        if bare:
+            recovered[metric] = {"score": int(bare.group(1)), "reason": "(reason truncated)"}
+    return recovered
 
 
 def _build_batch_prompt(
@@ -242,7 +271,7 @@ def score_pipeline(
     if requested:
         response = judge.chat(
             _build_batch_prompt(question, answer, contexts, requested),
-            max_tokens=1600,
+            max_tokens=3000,
             temperature=0.0,
         )
         result.metrics.update(parse_batch_scores(response, requested))
