@@ -95,7 +95,15 @@ and the dashboard reads it from the calibration file rather than hardcoding it
 gone stale silently.
 
 Measured end to end during the judged run: **8 of 10 out-of-corpus questions
-refused, 0 answerable questions wrongly refused.**
+correctly refused, at the cost of wrongly refusing 6 of 35 answerable ones.**
+
+That second number is the honest half of the result. On the easier question
+set the same guardrail refused nothing it should have answered; adding the
+paraphrase tier pushed genuinely answerable questions down toward the refusal
+threshold, because a question sharing little vocabulary with its source scores
+lower under the cross-encoder whether or not the corpus can answer it. A
+guardrail tuned on easy questions looks free. Tuned on hard ones, it has a
+price, and the price is visible here rather than averaged away.
 
 So reranking pays for its latency twice: once in ranking quality, and again by
 producing a score calibrated enough for a guardrail to work at all.
@@ -125,26 +133,29 @@ independent judge:
 
 | metric | llama3.1 (8B) | qwen2.5:3b |
 |---|---|---|
-| answer relevancy | **4.95** | 4.12 |
-| coherence | **4.86** | 4.48 |
-| citation accuracy | 4.83 | **4.89** |
-| completeness | **4.05** | 3.32 |
-| context precision | 4.36 | **4.64** |
-| legal reasoning | **3.73** | 3.04 |
-| faithfulness | **3.41** | 3.04 |
-| hallucination ↑ | 3.00 | **3.60** |
-| median answer length | 262 words | 245 words |
+| answer relevancy | **4.95** | 3.86 |
+| coherence | **4.86** | 4.80 |
+| citation accuracy | 4.83 | **4.92** |
+| completeness | **4.05** | 3.11 |
+| context precision | 4.36 | **4.57** |
+| legal reasoning | **3.73** | 2.94 |
+| faithfulness | **3.41** | 3.03 |
+| hallucination ↑ | 3.00 | **3.86** |
+| median answer length | 262 words | 221 words |
 | **median latency** | **52.5s** | **12.0s** |
+| n (answerable) | 22 _(partial)_ | 35 |
 
-llama3.1 is the better writer and the better legal reasoner. It is also 4.4×
-slower for an answer of the same length, and it hallucinates *more* — the one
-metric where the 3B model wins, which is what you would expect from a model
-that stays closer to its context because it has less parametric knowledge to
-fall back on.
+llama3.1 is the better writer and the clearly better legal reasoner. It is also
+4.4× slower for an answer of similar length, and it **hallucinates more** —
+the one metric the 3B model wins, and the interesting one. A smaller model has
+less parametric knowledge to fall back on, so it stays closer to the retrieved
+text; a larger one is more willing to supply from memory what the context did
+not give it. In a grounded legal tool that tendency is a liability, not a
+feature.
 
-Neither column is the "right" answer. The point is that the tradeoff is now a
-measurement rather than an assumption. (The llama3.1 run is partial at n=22;
-see the caveat in Limitations.)
+Neither column is the "right" answer. The point is that the tradeoff is a
+measurement rather than an assumption. Read the two columns with their
+differing n in mind — see Limitations.
 
 ---
 

@@ -1,6 +1,6 @@
 # LexGraph — evaluation results
 
-Generated 2026-08-22 21:07. Gold set: 35 answerable, 10 out-of-corpus, over 40 judgments (38 unique cases).
+Generated 2026-08-22 21:44. Gold set: 35 answerable, 10 out-of-corpus, over 40 judgments (38 unique cases).
 
 Regenerate with `python scripts/make_report.py`.
 
@@ -59,22 +59,22 @@ Judge: `gemini:gemini-3-flash-preview -> gemini:gemini-flash-latest -> gemini:ge
 
 Median answer length: 262 words. Median latency: 52.5s.
 
-### `ollama:qwen2.5:3b` · `hybrid-rerank` _(partial run)_
+### `ollama:qwen2.5:3b` · `hybrid-rerank`
 
-Judge: `gemini:gemini-3-flash-preview -> gemini:gemini-flash-latest -> gemini:gemini-3.7-flash -> gemini:gemini-3.1-flash-lite` — a different model family from the generator.
+Judge: `gemini:gemini-3-flash-preview -> gemini:gemini-3.5-flash -> gemini:gemini-flash-latest -> gemini:gemini-3.7-flash -> gemini:gemini-3.1-flash-lite -> gemini:gemini-3.1-flash-lite-preview` — a different model family from the generator.
 
 | metric | mean | 95% CI | n |
 |---|---|---|---|
-| answer relevancy | 4.12 | [3.64, 4.56] | 25 |
-| citation accuracy | 4.89 | [4.70, 5.00] | 25 |
-| coherence | 4.48 | [4.16, 4.76] | 25 |
-| completeness | 3.32 | [2.76, 3.84] | 25 |
-| context precision | 4.64 | [4.36, 4.88] | 25 |
-| faithfulness | 3.04 | [2.48, 3.60] | 25 |
-| hallucination | 3.60 | [3.08, 4.08] | 25 |
-| legal reasoning | 3.04 | [2.44, 3.60] | 25 |
+| answer relevancy | 3.86 | [3.37, 4.34] | 35 |
+| citation accuracy | 4.92 | [4.78, 5.00] | 35 |
+| coherence | 4.80 | [4.63, 4.94] | 35 |
+| completeness | 3.11 | [2.60, 3.63] | 35 |
+| context precision | 4.57 | [4.23, 4.86] | 35 |
+| faithfulness | 3.03 | [2.51, 3.54] | 35 |
+| hallucination | 3.86 | [3.43, 4.26] | 35 |
+| legal reasoning | 2.94 | [2.46, 3.46] | 35 |
 
-Median answer length: 245 words. Median latency: 12.0s.
+Median answer length: 221 words. Median latency: 11.8s.
 
-Abstention: refused 8/10 out-of-corpus questions; wrongly refused 0 answerable.
+Abstention: refused 8/10 out-of-corpus questions; wrongly refused 6 answerable.
 
