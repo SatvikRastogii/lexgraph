@@ -265,7 +265,10 @@ def _compare(results, baseline, metric):
     comparisons = {}
     print(f"\nPaired against {baseline} on {metric} "
           f"(the difference is resampled, not the two means separately):")
-    header = f"  {'configuration':<18}{'Δ mean':>9}{'95% CI':>18}{'W/L/T':>12}  verdict"
+    # ASCII only. A Greek delta here raised UnicodeEncodeError under Windows'
+    # cp1252 console encoding the moment stdout was redirected to a file, so
+    # the whole comparison was lost after the table had already been computed.
+    header = f"  {'configuration':<18}{'mean diff':>11}{'95% CI':>18}{'W/L/T':>12}  verdict"
     print(header)
     print("  " + "-" * (len(header) - 2))
 
@@ -277,7 +280,7 @@ def _compare(results, baseline, metric):
         low, high = stats["ci95"]
         record = f"{stats['wins']}/{stats['losses']}/{stats['ties']}"
         verdict = "distinguishable" if stats["significant"] else "not distinguishable"
-        print(f"  {name:<18}{stats['mean_difference']:>+9.3f}"
+        print(f"  {name:<18}{stats['mean_difference']:>+11.3f}"
               f"{f'[{low:+.3f}, {high:+.3f}]':>18}{record:>12}  {verdict}")
     return comparisons
 
