@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main, rag-hardening]
+    branches: [main, streamlit-deploy]
   pull_request:
     branches: [main]
 
@@ -27,13 +27,18 @@ jobs:
       # Ollama, ChromaDB or an API, so CI needs neither a GPU nor a key.
       #
       # numpy and requests are needed because lexgraph.router and
-      # lexgraph.embeddings import them at module level; chromadb and flashrank
-      # are imported lazily inside functions, so the suite runs without them
-      # and the integration checks skip.
+      # lexgraph.embeddings import them at module level; chromadb, fastembed
+      # and flashrank are imported lazily inside functions, so the suite runs
+      # without them and those integration checks skip.
+      #
+      # pandas and pyarrow are here because output/*.parquet is committed. The
+      # graph-retrieval tests used to skip on a missing index; now that the
+      # artefacts ship with the repository they can actually run, and covering
+      # the loader against the real parquets is worth the install.
       - name: Install test dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pytest numpy requests
+          pip install pytest numpy requests pandas pyarrow
 
       - name: Run tests
         run: python -m pytest tests/ -v

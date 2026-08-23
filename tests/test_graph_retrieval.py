@@ -14,9 +14,27 @@ from lexgraph.retrieval.graph import GraphRetriever, load_units
 
 GRAPH_ROOT = "output"
 
+def _graph_artefacts_readable():
+    """Both halves: the parquets have to exist *and* be readable.
+
+    They were gitignored when these tests were written, so a missing directory
+    was the only way to be unable to read them. Committing them flipped that:
+    the files are now always present, the skip stopped firing, and the tests
+    began failing on an environment that simply has no pandas rather than
+    skipping as they were meant to.
+    """
+    if not os.path.exists(os.path.join(GRAPH_ROOT, "text_units.parquet")):
+        return False
+    try:
+        import pandas  # noqa: F401
+    except ImportError:
+        return False
+    return True
+
+
 requires_graph = pytest.mark.skipif(
-    not os.path.exists(os.path.join(GRAPH_ROOT, "text_units.parquet")),
-    reason="GraphRAG index not built",
+    not _graph_artefacts_readable(),
+    reason="GraphRAG parquets not present, or pandas not installed",
 )
 
 

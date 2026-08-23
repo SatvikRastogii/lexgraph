@@ -480,14 +480,29 @@ def init_router_embeddings():
 
 
 def route_query(query, router, _unused=None):
-    """Classify a query as NAIVE or GRAPH. Falls back to GRAPH if unavailable."""
+    """Classify a query as NAIVE or GRAPH.
+
+    Falls back to the pipeline that can actually answer. This used to fall back
+    to GRAPH unconditionally, which was survivable locally and wrong in
+    deployment: the router could not be built without Ollama, so every query
+    took the fallback, and the fallback pointed at the one pipeline the host
+    cannot run. The result was a demo that routed everything to GraphRAG and
+    returned no answer, with nothing in the UI to say why.
+    """
+    default = "NAIVE" if DEPLOY_MODE else "GRAPH"
     if router is None:
-        return "GRAPH", 0.5
+        return default, 0.5
     try:
         decision = router.classify(query)
-        return decision.route, decision.confidence
-    except Exception:
-        return "GRAPH", 0.5
+    except Exception:  # noqa: BLE001
+        return default, 0.5
+
+    # GraphRAG's own engine is unavailable here, and by this project's own
+    # measurement its retrieval is the weaker of the two anyway. Honour the
+    # classification in the telemetry and answer with the pipeline that works.
+    if DEPLOY_MODE and decision.route == "GRAPH":
+        return "NAIVE", decision.confidence
+    return decision.route, decision.confidence
 
 
 # ─── GRAPHRAG QUERY (via CLI) ────────────────────────────────────────────────
@@ -644,6 +659,28 @@ def get_generator():
     from lexgraph.llm import get_client
 
     return get_client(GENERATOR_SPEC)
+
+
+def _warm_models():
+    """Load the ONNX models at boot rather than on the first question.
+
+    Both are downloaded on a cold host -- roughly 150MB between the embedder
+    and the reranker -- and the download landed on whoever asked first,
+    stretching a 2.4s query into something like thirty. Boot is the right place
+    to pay it: the page is already showing a spinner, and nobody is waiting on
+    an answer yet.
+
+    Failure here is not fatal. If the download cannot happen the models load
+    lazily on the first query exactly as before, which is slow but working.
+    """
+    try:
+        get_retriever().search("warm", 1)
+    except Exception:  # noqa: BLE001 - warming is an optimisation, never a gate
+        pass
+
+
+if DEPLOY_MODE:
+    _warm_models()
 
 
 def run_replayed_query(query, record):

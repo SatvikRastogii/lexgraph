@@ -22,7 +22,7 @@ from dataclasses import dataclass
 
 import numpy as np
 
-from .embeddings import OllamaEmbedder
+from .embeddings import build_embedder
 
 SIMPLE_PROTOTYPES = [
     "What does Article 21 of the Indian Constitution guarantee?",
@@ -74,8 +74,13 @@ def cosine_similarity(a: np.ndarray, b: np.ndarray) -> float:
 class SemanticRouter:
     """Routes a query to NAIVE or GRAPH by prototype similarity."""
 
-    def __init__(self, embedder: OllamaEmbedder | None = None):
-        self.embedder = embedder or OllamaEmbedder()
+    def __init__(self, embedder=None):
+        # Whatever embedder this environment is configured for, not Ollama
+        # specifically. Hardcoding OllamaEmbedder meant the router raised at
+        # construction anywhere Ollama was absent -- and the caller's fallback
+        # then classified *every* query as GRAPH, silently, with no error
+        # shown, on the one host where GraphRAG cannot run at all.
+        self.embedder = embedder or build_embedder()
         self.simple = np.array(self.embedder.embed(SIMPLE_PROTOTYPES))
         self.complex = np.array(self.embedder.embed(COMPLEX_PROTOTYPES))
 
