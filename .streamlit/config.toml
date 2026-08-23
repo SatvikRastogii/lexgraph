@@ -1,8 +1,15 @@
-[server]
-address = "0.0.0.0"
-port = 8501
-enableCORS = false
-enableXsrfProtection = false
+# Server address and port are passed as flags by whatever runs the app
+# (Dockerfile.spaces, docker-compose, or Streamlit Cloud's own harness), so
+# they are deliberately not pinned here -- a hardcoded 8501 would fight the
+# host that needs 7860.
+#
+# CORS and XSRF protection were previously disabled to smooth out local Docker
+# runs. That is fine behind a bind mount on localhost and not fine on a public
+# URL, where it removes the only cross-site request protection the app has.
+# They stay on.
 
 [browser]
 gatherUsageStats = false
+
+[theme]
+base = "dark"

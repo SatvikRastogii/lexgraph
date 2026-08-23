@@ -16,6 +16,35 @@ import re
 import requests
 from datetime import datetime
 
+# ─── CONFIGURATION FROM SECRETS ──────────────────────────────────────────────
+#
+# Every LEXGRAPH_* setting below is read with os.getenv, which works on any host
+# that has an environment. Streamlit Community Cloud does not: it offers only a
+# secrets.toml box and no way to set environment variables, so without this
+# bridge the hosted app would silently run the *local* configuration -- Ollama
+# for embeddings, ChromaDB for the index, neither of which exists there -- and
+# fail at the first query rather than at startup.
+#
+# Copied before anything reads them. An existing environment variable wins, so
+# a Docker host or a local shell is unaffected.
+def _bridge_secrets_to_environ():
+    prefixes = ("LEXGRAPH_", "GOOGLE_API_KEY", "GEMINI_API_KEY", "OLLAMA_HOST")
+    # st.secrets is a lazy proxy: it parses the file on first *access*, not on
+    # attribute lookup, so the read has to be inside the guard. With only the
+    # binding guarded, every environment without a secrets.toml -- which is
+    # every local run -- crashed on the .keys() call instead of skipping.
+    try:
+        items = list(st.secrets.items())
+    except Exception:  # noqa: BLE001 - no secrets file is the normal local case
+        return
+    for key, value in items:
+        if key.startswith(prefixes) and key not in os.environ:
+            if isinstance(value, (str, int, float, bool)):
+                os.environ[key] = str(value)
+
+
+_bridge_secrets_to_environ()
+
 import telemetry
 telemetry.init_db()
 
@@ -847,11 +876,24 @@ with st.sidebar:
 
     # System status
     st.markdown("### System Status")
-    try:
-        r = requests.get(f"{OLLAMA_HOST}/api/tags", timeout=3)
-        st.success("Ollama: Online", icon="✅")
-    except:
-        st.error("Ollama: Offline", icon="❌")
+    if DEPLOY_MODE:
+        # Reporting "Ollama: Offline" here would read as a broken system. The
+        # hosted build does not use Ollama at all: embeddings and reranking are
+        # ONNX on CPU and generation goes to a hosted model. Report what is
+        # actually serving, not what is missing.
+        st.success("Retrieval: ONNX on CPU", icon="✅")
+        remaining = live_budget_remaining()
+        if get_replay().get("answers"):
+            st.caption(
+                f"Gold-set answers precomputed · {remaining} live "
+                f"{'query' if remaining == 1 else 'queries'} left this session"
+            )
+    else:
+        try:
+            requests.get(f"{OLLAMA_HOST}/api/tags", timeout=3)
+            st.success("Ollama: Online", icon="✅")
+        except Exception:  # noqa: BLE001
+            st.error("Ollama: Offline", icon="❌")
 
     entities_df = load_entities()
     relationships_df = load_relationships()

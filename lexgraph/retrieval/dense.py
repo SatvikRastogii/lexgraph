@@ -9,11 +9,16 @@ between them meaningless. Anything that builds an index here goes through
 Vectors are computed by ``lexgraph.embeddings.OllamaEmbedder`` and handed to
 Chroma directly rather than registering an embedding function, so the timeout
 and retry policy stays under our control on both the write and the query path.
+
+ChromaDB is imported lazily, not at module scope. The deployed build has no
+ChromaDB at all -- it reads a committed matrix through
+``lexgraph.retrieval.vectors`` instead -- and a module-level import made simply
+importing the pipeline fail there, before any code had chosen a backend. Same
+reason the reranker defers flashrank: importing a module should not require
+every optional dependency any of its classes might use.
 """
 
 from __future__ import annotations
-
-import chromadb
 
 from ..chunking import Chunk
 from ..embeddings import DEFAULT_MODEL, OllamaEmbedder
@@ -38,6 +43,8 @@ class DenseRetriever:
         embedding_model: str = DEFAULT_MODEL,
         embedder: OllamaEmbedder | None = None,
     ):
+        import chromadb
+
         client = chromadb.PersistentClient(path=chroma_dir)
         self.collection = client.get_collection(name=collection_name(strategy))
         self.embedder = embedder or OllamaEmbedder(model=embedding_model)
@@ -101,6 +108,8 @@ def build_collection(
         texts,
         progress=lambda done, total: progress(f"  embedded {done}/{total} chunks"),
     )
+
+    import chromadb
 
     client = chromadb.PersistentClient(path=chroma_dir)
     name = collection_name(strategy)
