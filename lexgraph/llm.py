@@ -347,6 +347,28 @@ def build_judge(spec: str | None = None) -> BaseClient:
     return FallbackClient([GeminiClient(model) for model in GEMINI_JUDGE_ROTATION])
 
 
+def build_generator(spec: str, rotate: bool = False) -> BaseClient:
+    """A generator, optionally rotating across Gemini models on quota.
+
+    The quota is per model per day, so rotating multiplies the budget by the
+    number of models a key can reach. Off by default because an evaluation run
+    must know exactly which model produced each answer -- silently continuing
+    on a different one would put two models in the same column.
+
+    Batch jobs that only need to finish are the exception: pre-computing the
+    replay set stopped at question 29 of 65 on a single model, and there is
+    nothing to attribute wrongly when every answer records the model that
+    produced it.
+    """
+    load_dotenv()
+    if not rotate or not spec.startswith("gemini:"):
+        return get_client(spec)
+
+    named = spec.partition(":")[2]
+    ordered = [named] + [m for m in GEMINI_JUDGE_ROTATION if m != named]
+    return FallbackClient([GeminiClient(model) for model in ordered])
+
+
 DEFAULT_GENERATOR = "ollama:llama3.1"
 # HyDE runs once per query and its output is thrown away after embedding, so
 # the small model that fits the card entirely is the right one: it needs the

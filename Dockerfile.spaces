@@ -1,0 +1,62 @@
+# Hugging Face Spaces (Docker SDK).
+#
+# Separate from the main Dockerfile because that one bind-mounts input/,
+# output/ and chroma_db/ at runtime via docker-compose. Spaces has no bind
+# mounts, so everything the app reads has to be in the image -- which works
+# here only because the deployment build replaced 84MB of ChromaDB with a
+# 1.9MB committed matrix.
+#
+# Nothing in this image needs a GPU. Embeddings and reranking are both ONNX on
+# CPU; only answer generation calls out, and the gold-set questions are served
+# from precomputed results so the common path makes no calls at all.
+
+FROM python:3.11-slim
+
+# Spaces runs the container as uid 1000. Model weights are downloaded at
+# runtime into the home directory, so it has to be writable by that user.
+RUN useradd -m -u 1000 user
+ENV HOME=/home/user \
+    PATH=/home/user/.local/bin:$PATH \
+    PYTHONUNBUFFERED=1 \
+    HF_HOME=/home/user/.cache/huggingface
+
+WORKDIR /app
+
+COPY --chown=user requirements-deploy.txt .
+RUN pip install --no-cache-dir -r requirements-deploy.txt
+
+# Code, then data. Data changes more often than dependencies, and a separate
+# layer keeps a corpus edit from reinstalling everything.
+COPY --chown=user app.py telemetry.py analyze_contradictions.py ./
+COPY --chown=user lexgraph/ ./lexgraph/
+COPY --chown=user scripts/ ./scripts/
+COPY --chown=user .streamlit/ ./.streamlit/
+
+COPY --chown=user data/ ./data/
+COPY --chown=user input/ ./input/
+COPY --chown=user reports/ ./reports/
+COPY --chown=user output/ ./output/
+COPY --chown=user corpus_metadata.json settings.yaml ./
+
+USER user
+
+ENV LEXGRAPH_DEPLOY=1 \
+    LEXGRAPH_DENSE_BACKEND=numpy \
+    LEXGRAPH_EMBEDDER=fastembed \
+    LEXGRAPH_RETRIEVER=hybrid-rerank \
+    LEXGRAPH_GENERATOR=gemini:gemini-3-flash-preview
+
+# Download the embedding and reranking weights at build time rather than on the
+# first visitor's request. Without this the first query pays ~30s of model
+# download while someone is watching.
+RUN python -c "from fastembed import TextEmbedding; TextEmbedding(model_name='BAAI/bge-small-en-v1.5').embed(['warm'])" \
+ && python -c "from flashrank import Ranker; Ranker()" || true
+
+# Spaces routes to 7860.
+EXPOSE 7860
+
+CMD ["streamlit", "run", "app.py", \
+     "--server.port=7860", \
+     "--server.address=0.0.0.0", \
+     "--server.headless=true", \
+     "--browser.gatherUsageStats=false"]

@@ -1,4 +1,4 @@
-"""Composable retrievers, and the named configurations the ablation compares.
+﻿"""Composable retrievers, and the named configurations the ablation compares.
 
 Each retriever exposes the same ``search(query, top_k) -> list[Hit]``, so a
 configuration is just a composition. Keeping them interchangeable is what lets
@@ -8,6 +8,7 @@ than to "the new pipeline".
 
 from __future__ import annotations
 
+import os
 import time
 
 from ..chunking import chunk_corpus
@@ -110,6 +111,32 @@ HYDE_CONFIGURATIONS = ("hyde-hybrid", "hyde-rerank")
 GRAPH_CONFIGURATIONS = ("graph-units", "graph-community")
 
 
+def _dense(strategy: str, chroma_dir: str):
+    """The dense half, from whichever backend this environment has.
+
+    ``chroma`` is the local default: incremental, two collections, built by
+    nomic-embed-text on the GPU. ``numpy`` is the deployed one: a 2MB committed
+    matrix and a hosted query embedder, because no free host has a GPU to run
+    the local model on.
+
+    Deliberately not a separate named configuration. The deployment must run
+    the same `hybrid-rerank` the benchmark reports, or the numbers on the
+    dashboard stop describing the thing serving the answers.
+    """
+    backend = os.getenv("LEXGRAPH_DENSE_BACKEND", "chroma").lower()
+    if backend == "chroma":
+        return DenseRetriever(strategy=strategy, chroma_dir=chroma_dir)
+    if backend == "numpy":
+        from ..embeddings import build_embedder
+        from .vectors import DEFAULT_STORE, NumpyDenseRetriever, store_path
+
+        directory = os.getenv("LEXGRAPH_VECTOR_STORE", DEFAULT_STORE)
+        return NumpyDenseRetriever(store_path(directory, strategy), build_embedder())
+    raise ValueError(
+        f"unknown dense backend {backend!r}; expected 'chroma' or 'numpy'"
+    )
+
+
 def build_retriever(
     name: str,
     chroma_dir: str = "chroma_db",
@@ -132,7 +159,7 @@ def build_retriever(
     strategy = "fixed" if name == "dense-fixed" else "paragraph"
 
     if name in ("dense", "dense-fixed"):
-        return DenseRetriever(strategy=strategy, chroma_dir=chroma_dir)
+        return _dense(strategy, chroma_dir)
 
     chunks = chunk_corpus(load_corpus(input_dir), strategy)
 
@@ -140,7 +167,7 @@ def build_retriever(
         return SparseRetriever(chunks)
 
     hybrid = HybridRetriever(
-        DenseRetriever(strategy=strategy, chroma_dir=chroma_dir),
+        _dense(strategy, chroma_dir),
         SparseRetriever(chunks),
     )
     if name == "hybrid":
@@ -163,3 +190,4 @@ def timed_search(retriever, query: str, top_k: int = 5) -> tuple[list[Hit], floa
     started = time.perf_counter()
     hits = retriever.search(query, top_k)
     return hits, (time.perf_counter() - started) * 1000
+

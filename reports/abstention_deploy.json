@@ -1,0 +1,50 @@
+{
+  "dense": {
+    "threshold": 0.6898060540358225,
+    "separation": 0.04488849141381013,
+    "answerable_mean": 0.7377664826133035,
+    "unanswerable_mean": 0.6928779911994933,
+    "answered_when_answerable": 0.9090909090909091,
+    "refused_when_unanswerable": 0.6,
+    "youden_j": 0.509090909090909,
+    "criterion": "most specific threshold answering >= 80%",
+    "youden_j_alternative": {
+      "threshold": 0.6898060540358225,
+      "answered_when_answerable": 0.9090909090909091,
+      "refused_when_unanswerable": 0.6,
+      "youden_j": 0.509090909090909
+    }
+  },
+  "bm25": {
+    "threshold": 14.922638194846758,
+    "separation": 7.667887299198796,
+    "answerable_mean": 22.1343947818154,
+    "unanswerable_mean": 14.466507482616601,
+    "answered_when_answerable": 0.8181818181818182,
+    "refused_when_unanswerable": 0.7,
+    "youden_j": 0.5181818181818181,
+    "criterion": "most specific threshold answering >= 80%",
+    "youden_j_alternative": {
+      "threshold": 15.694602284981777,
+      "answered_when_answerable": 0.7272727272727273,
+      "refused_when_unanswerable": 0.8,
+      "youden_j": 0.5272727272727273
+    }
+  },
+  "hybrid-rerank": {
+    "threshold": 0.045410547063996394,
+    "separation": 0.35620614391882094,
+    "answerable_mean": 0.5800381049592838,
+    "unanswerable_mean": 0.22383196104046266,
+    "answered_when_answerable": 0.8727272727272727,
+    "refused_when_unanswerable": 0.5,
+    "youden_j": 0.3727272727272726,
+    "criterion": "most specific threshold answering >= 80%",
+    "youden_j_alternative": {
+      "threshold": 0.566266393661499,
+      "answered_when_answerable": 0.5818181818181818,
+      "refused_when_unanswerable": 0.9,
+      "youden_j": 0.4818181818181819
+    }
+  }
+}
