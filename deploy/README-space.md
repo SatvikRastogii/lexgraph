@@ -41,5 +41,10 @@ gold set as everything else — see the Benchmark tab.
 
 ## Configuration
 
-`GOOGLE_API_KEY` must be set as a Space secret for live generation. Without it
-the precomputed answers, the benchmark and every visualisation still work.
+No API key is required. The precomputed answers, the benchmark and every
+visualisation work without one.
+
+A `GROQ_API_KEY` Space secret adds live answers for questions outside the gold
+set. Groq rather than Gemini deliberately: Gemini is this project's evaluation
+*judge*, and generation must stay on a different provider for the judged scores
+to mean anything.

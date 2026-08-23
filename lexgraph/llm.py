@@ -370,6 +370,16 @@ def build_generator(spec: str, rotate: bool = False) -> BaseClient:
 
 
 DEFAULT_GENERATOR = "ollama:llama3.1"
+
+# What a deployment generates with. Ollama is the local default and needs a GPU
+# no free host has, so something hosted has to stand in.
+#
+# Not Gemini. Gemini is the *judge*, and putting generation on it costs twice:
+# it spends the same 1,000-request daily quota the evaluation needs, and it
+# collapses generator and judge onto one provider, which is the arrangement
+# require_independent_judge() exists to prevent. Groq's free tier is far larger
+# and its keys are separate, so the judge stays independent and stays funded.
+DEFAULT_DEPLOY_GENERATOR = "groq:llama-3.3-70b-versatile"
 # HyDE runs once per query and its output is thrown away after embedding, so
 # the small model that fits the card entirely is the right one: it needs the
 # legal register, not the reasoning.

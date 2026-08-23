@@ -562,7 +562,24 @@ def run_graphrag_query(query, method="local"):
 # Retrieval configuration and generator are env-overridable so the dashboard
 # can be pointed at whichever the ablation currently favours without an edit.
 RETRIEVAL_CONFIG = os.getenv("LEXGRAPH_RETRIEVER", "hybrid-rerank")
-GENERATOR_SPEC = os.getenv("LEXGRAPH_GENERATOR", "ollama:llama3.1")
+
+
+def _default_generator():
+    """Ollama locally; something hosted when deployed.
+
+    Generation is local in every other context in this project -- Gemini is the
+    judge, and the two must be different models for the evaluation to mean
+    anything. A deployment has no GPU, so it needs a hosted generator, and the
+    one it must not borrow is the judge's.
+    """
+    if os.getenv("LEXGRAPH_DEPLOY", "").lower() in {"1", "true", "yes"}:
+        from lexgraph.llm import DEFAULT_DEPLOY_GENERATOR
+
+        return DEFAULT_DEPLOY_GENERATOR
+    return "ollama:llama3.1"
+
+
+GENERATOR_SPEC = os.getenv("LEXGRAPH_GENERATOR") or _default_generator()
 
 # ─── DEPLOYMENT MODE ─────────────────────────────────────────────────────────
 #
@@ -601,6 +618,32 @@ def replay_lookup(question):
         if " ".join(stored.lower().split()) == normalised:
             return record
     return None
+
+
+def _no_live_answer(message):
+    """A refusal shaped like an answer, so the caller renders it normally."""
+    return {
+        "answer": message, "confidence": 0.0, "sources": [], "latency": {},
+        "abstained": True, "unsupported_citations": [], "replayed": False,
+    }
+
+
+@st.cache_resource
+def generation_available():
+    """Whether a generator can actually be built, checked once.
+
+    Every gold-set answer is precomputed, so the demo is fully usable with no
+    key at all. Only questions outside that set need a live model, and finding
+    out by raising inside the query path produced a stack trace where an
+    explanation belonged.
+    """
+    try:
+        from lexgraph.llm import get_client
+
+        get_client(GENERATOR_SPEC)
+        return True
+    except Exception:  # noqa: BLE001 - a missing key is a configuration state
+        return False
 
 
 def live_budget_remaining():
@@ -749,15 +792,21 @@ def run_vector_query(query, allow_live=True):
         if record is not None:
             return run_replayed_query(query, record)
         if not allow_live or live_budget_remaining() <= 0:
-            return {
-                "answer": (
-                    "This question is not in the precomputed set, and the live "
-                    "budget for this session is used up. Reload to reset it, or "
-                    "pick one of the gold-set questions to see a full answer."
-                ),
-                "confidence": 0.0, "sources": [], "latency": {},
-                "abstained": True, "unsupported_citations": [], "replayed": False,
-            }
+            return _no_live_answer(
+                "This question is not in the precomputed set, and the live "
+                "budget for this session is used up. Reload to reset it, or "
+                "ask one of the 65 gold-set questions."
+            )
+        if not generation_available():
+            # No key configured. Retrieval still works and every gold-set
+            # question still answers, so this is a reduced demo rather than a
+            # broken one -- and saying which is better than a stack trace.
+            return _no_live_answer(
+                "Live generation is not configured on this deployment, so "
+                "questions outside the precomputed set cannot be answered. "
+                "Retrieval below is live; the 65 gold-set questions answer in "
+                "full."
+            )
         st.session_state.live_queries_used = st.session_state.get("live_queries_used", 0) + 1
 
     try:
@@ -919,11 +968,17 @@ with st.sidebar:
         # ONNX on CPU and generation goes to a hosted model. Report what is
         # actually serving, not what is missing.
         st.success("Retrieval: ONNX on CPU", icon="✅")
-        remaining = live_budget_remaining()
-        if get_replay().get("answers"):
+        answers = len(get_replay().get("answers", {}))
+        if generation_available():
+            remaining = live_budget_remaining()
             st.caption(
-                f"Gold-set answers precomputed · {remaining} live "
+                f"{answers} answers precomputed · {remaining} live "
                 f"{'query' if remaining == 1 else 'queries'} left this session"
+            )
+        else:
+            st.caption(
+                f"{answers} answers precomputed · live generation not "
+                f"configured, so questions outside that set are not answered"
             )
     else:
         try:

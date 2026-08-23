@@ -84,20 +84,34 @@ UI**, which is why `app.py` copies these into `os.environ` at startup — withou
 that the app would silently run the local configuration and fail on the first
 query.
 
-```toml
-GOOGLE_API_KEY = "your-key"
+**No API key is required.** All 65 gold-set answers are precomputed and
+retrieval is ONNX on CPU, so the demo is fully usable with just this:
 
+```toml
 LEXGRAPH_DEPLOY = "1"
 LEXGRAPH_DENSE_BACKEND = "numpy"
 LEXGRAPH_EMBEDDER = "fastembed"
 LEXGRAPH_RETRIEVER = "hybrid-rerank"
-LEXGRAPH_GENERATOR = "gemini:gemini-3-flash-preview"
 LEXGRAPH_LIVE_BUDGET = "5"
 ```
 
-Only `GOOGLE_API_KEY` is a secret in the real sense; the rest are configuration
-that has nowhere else to live on this host. Without the key everything still
-works except live generation of questions outside the gold set.
+A key only buys **live answers to questions outside the gold set**. If you want
+that, add a Groq key ([console.groq.com/keys](https://console.groq.com/keys),
+free):
+
+```toml
+GROQ_API_KEY = "gsk_..."
+```
+
+Groq, not Gemini, and the reason matters. Generation in this project is local
+Ollama; Gemini is the **judge**, and `require_independent_judge()` refuses to
+score a run where they are the same model. Pointing deployment generation at
+Gemini would spend the same 1,000-request daily quota the evaluation needs and
+put generator and judge on one provider. Groq's free tier is far larger and its
+key is separate, so the judge stays both independent and funded.
+
+Any provider in `lexgraph/llm.py` works — `groq`, `cerebras`, `openrouter`,
+`openai`, `gemini`, `ollama` — via `LEXGRAPH_GENERATOR = "provider:model"`.
 
 ### Keeping it current
 
@@ -125,9 +139,9 @@ using `hybrid-rerank`'s would be meaningless.
 3. Copy `deploy/README-space.md` to the Space's `README.md` — Spaces reads its
    configuration from that file's YAML frontmatter, including
    `dockerfile_path: Dockerfile.spaces` and `app_port: 7860`.
-4. Add `GOOGLE_API_KEY` under **Settings → Variables and secrets**. Spaces
-   injects secrets as environment variables, which is where `_google_api_key()`
-   looks first.
+4. Optionally add `GROQ_API_KEY` under **Settings → Variables and secrets**,
+   for live answers outside the gold set. Spaces injects secrets as environment
+   variables, so no bridging is needed there.
 
 The image downloads the embedding and reranking weights at build time, so the
 first visitor does not pay ~30s of model download while watching.
@@ -139,7 +153,7 @@ first visitor does not pay ~30s of model download while watching.
 | `LEXGRAPH_DEPLOY` | unset | replay-first answers, live budget, GraphRAG CLI disabled |
 | `LEXGRAPH_DENSE_BACKEND` | `chroma` | `numpy` reads the committed matrix |
 | `LEXGRAPH_EMBEDDER` | `ollama` | `fastembed` or `gemini` |
-| `LEXGRAPH_GENERATOR` | `ollama:llama3.1` | any `provider:model` |
+| `LEXGRAPH_GENERATOR` | `ollama:llama3.1` locally, `groq:llama-3.3-70b-versatile` under deploy | any `provider:model` |
 | `LEXGRAPH_RETRIEVER` | `hybrid-rerank` | any configuration in the ablation |
 | `LEXGRAPH_LIVE_BUDGET` | `5` | live generations per browser session |
 
