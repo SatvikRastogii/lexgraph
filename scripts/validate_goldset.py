@@ -59,6 +59,33 @@ def validate(goldset, documents):
 
         terms = [t.lower() for t in question.get("must_contain", [])]
         if terms and answerable:
+            if question.get("must_contain_all"):
+                # Multi-hop questions are joins: "which judgments rely on both
+                # X and Y" is only correct if every listed judgment carries
+                # both. Checking that any one term is present would accept a
+                # document that satisfies half the question, which is exactly
+                # the error a multi-hop label is meant to exclude.
+                for name in relevant:
+                    if name not in corpus_text:
+                        continue
+                    absent = [t for t in terms if t not in corpus_text[name]]
+                    if absent:
+                        problems.append(f"{qid}: {name} is missing {absent}")
+
+                # The answer set must also be complete. A join that silently
+                # omits a qualifying judgment scores a correct retrieval as a
+                # miss and quietly punishes the retriever for being right.
+                qualifying = {
+                    name for name, text in corpus_text.items()
+                    if all(t in text for t in terms)
+                }
+                extra = sorted(qualifying - set(relevant))
+                if extra:
+                    problems.append(
+                        f"{qid}: {extra} also contain all of {terms} but are not listed"
+                    )
+                continue
+
             present = [
                 name
                 for name in relevant
@@ -85,7 +112,41 @@ def validate(goldset, documents):
                 )
 
     problems.extend(_validate_dissent(goldset, documents))
+    problems.extend(_validate_article_focus(goldset, documents))
     problems.extend(_validate_paragraphs(goldset, by_name))
+    return problems
+
+
+def _validate_article_focus(goldset, documents):
+    """Joins over the header's article field, checked against the header.
+
+    "The Article 19 judgments" is a property of the scraper's ARTICLE FOCUS
+    field, not of the phrase "Article 19" appearing somewhere in the text --
+    fourteen judgments mention it in passing, and judgment_0123 is filed under
+    Article 32 without containing that string at all. Validating these against
+    the body would be checking the wrong thing in both directions.
+    """
+    problems = []
+    for question in goldset["questions"]:
+        focus = question.get("requires_article_focus")
+        if not focus:
+            continue
+
+        matching = {d.filename for d in documents if d.article_focus == focus}
+        if question.get("requires_dissent"):
+            matching &= {d.filename for d in documents if d.has_dissent}
+
+        claimed = set(question["relevant_docs"])
+        if claimed - matching:
+            problems.append(
+                f"{question['id']}: listed but does not match "
+                f"{focus!r}{' with a dissent' if question.get('requires_dissent') else ''}: "
+                f"{sorted(claimed - matching)}"
+            )
+        if matching - claimed:
+            problems.append(
+                f"{question['id']}: qualifies but is not listed: {sorted(matching - claimed)}"
+            )
     return problems
 
 
@@ -139,17 +200,36 @@ def _validate_paragraphs(goldset, by_name):
 
 
 def _validate_dissent(goldset, documents):
-    """The dissent question's labels must match the HAS DISSENT header exactly."""
-    question = next((q for q in goldset["questions"] if q["id"] == "q24"), None)
-    if question is None:
-        return []
+    """Dissent claims must match the HAS DISSENT header exactly.
+
+    q24 asks for every dissent in the corpus. Multi-hop questions join a
+    dissent against a topic ("Article 19 judgments that record a dissent"), and
+    flag that with ``requires_dissent`` -- the topical half is checked against
+    the text like any other annotation, and this checks the structural half.
+    """
     actual = {d.filename for d in documents if d.has_dissent}
-    claimed = set(question["relevant_docs"])
     problems = []
-    if claimed - actual:
-        problems.append(f"q24: claimed dissent but header says otherwise: {sorted(claimed - actual)}")
-    if actual - claimed:
-        problems.append(f"q24: header records a dissent not listed: {sorted(actual - claimed)}")
+
+    question = next((q for q in goldset["questions"] if q["id"] == "q24"), None)
+    if question is not None:
+        claimed = set(question["relevant_docs"])
+        if claimed - actual:
+            problems.append(
+                f"q24: claimed dissent but header says otherwise: {sorted(claimed - actual)}"
+            )
+        if actual - claimed:
+            problems.append(
+                f"q24: header records a dissent not listed: {sorted(actual - claimed)}"
+            )
+
+    for question in goldset["questions"]:
+        if not question.get("requires_dissent"):
+            continue
+        wrong = sorted(set(question["relevant_docs"]) - actual)
+        if wrong:
+            problems.append(
+                f"{question['id']}: listed as dissenting but the header disagrees: {wrong}"
+            )
     return problems
 
 

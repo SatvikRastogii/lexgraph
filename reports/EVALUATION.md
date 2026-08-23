@@ -1,6 +1,6 @@
 # LexGraph — evaluation results
 
-Generated 2026-08-23 02:32. Gold set: 55 answerable, 10 out-of-corpus, over 40 judgments (38 unique cases).
+Generated 2026-08-24 03:25. Gold set: 67 answerable, 10 out-of-corpus, over 40 judgments (38 unique cases).
 
 Regenerate with `python scripts/make_report.py`.
 
@@ -10,27 +10,25 @@ Document-level ground truth, no LLM in the loop.
 
 | configuration | R@1 | R@5 | R@5 95% CI | nDCG@10 | MRR | p50 |
 |---|---|---|---|---|---|---|
-| `dense-fixed` | 0.570 | 0.865 | [0.78, 0.94] | 0.809 | 0.830 | 2191ms |
-| `dense` | 0.582 | 0.885 | [0.81, 0.95] | 0.829 | 0.839 | 2186ms |
-| `bm25` | 0.586 | 0.802 | [0.70, 0.89] | 0.775 | 0.810 | 2ms |
-| `hybrid` | 0.632 | 0.878 | [0.80, 0.95] | 0.847 | 0.873 | 2192ms |
-| `hybrid-rerank` | 0.659 | 0.886 | [0.81, 0.95] | 0.860 | 0.879 | 4161ms |
-| `graph-units` | 0.607 | 0.889 | [0.81, 0.96] | 0.854 | 0.861 | 2193ms |
-| `graph-community` | 0.233 | 0.474 | [0.35, 0.60] | 0.438 | 0.408 | 2188ms |
+| `dense` | 0.507 | 0.815 | [0.73, 0.89] | 0.777 | 0.823 | 2212ms |
+| `bm25` | 0.522 | 0.788 | [0.70, 0.87] | 0.770 | 0.822 | 2ms |
+| `hybrid` | 0.558 | 0.843 | [0.77, 0.91] | 0.827 | 0.878 | 2211ms |
+| `hybrid-rerank` | 0.581 | 0.863 | [0.79, 0.93] | 0.848 | 0.880 | 4288ms |
+| `graph-units` | 0.522 | 0.814 | [0.73, 0.89] | 0.806 | 0.830 | 2188ms |
+| `graph-community` | 0.206 | 0.456 | [0.35, 0.56] | 0.433 | 0.432 | 2182ms |
 
 ### By difficulty tier
 
-| configuration | hard R@5 | hard nDCG@10 | standard R@5 | standard nDCG@10 |
-|---|---|---|---|---|
-| `dense-fixed` | 0.844 | 0.728 | 0.889 | 0.906 |
-| `dense` | 0.872 | 0.775 | 0.900 | 0.894 |
-| `bm25` | 0.756 | 0.707 | 0.857 | 0.857 |
-| `hybrid` | 0.872 | 0.803 | 0.885 | 0.899 |
-| `hybrid-rerank` | 0.872 | 0.801 | 0.902 | 0.930 |
-| `graph-units` | 0.889 | 0.796 | 0.890 | 0.925 |
-| `graph-community` | 0.428 | 0.399 | 0.530 | 0.485 |
+| configuration | hard R@5 | hard nDCG@10 | multihop R@5 | multihop nDCG@10 | standard R@5 | standard nDCG@10 |
+|---|---|---|---|---|---|---|
+| `dense` | 0.872 | 0.775 | 0.494 | 0.541 | 0.900 | 0.894 |
+| `bm25` | 0.756 | 0.707 | 0.722 | 0.747 | 0.857 | 0.857 |
+| `hybrid` | 0.872 | 0.803 | 0.681 | 0.739 | 0.885 | 0.899 |
+| `hybrid-rerank` | 0.872 | 0.801 | 0.760 | 0.796 | 0.902 | 0.930 |
+| `graph-units` | 0.889 | 0.796 | 0.467 | 0.584 | 0.890 | 0.925 |
+| `graph-community` | 0.428 | 0.399 | 0.374 | 0.412 | 0.530 | 0.485 |
 
-n per tier: hard = 30, standard = 25.
+n per tier: hard = 30, multihop = 12, standard = 25.
 
 Intervals are percentile bootstrap over per-question scores. Where they overlap, the difference between configurations is not established at this sample size.
 
@@ -38,9 +36,9 @@ Intervals are percentile bootstrap over per-question scores. Where they overlap,
 
 | retriever | answerable | out-of-corpus | separation | threshold | answers | refuses |
 |---|---|---|---|---|---|---|
-| `dense` | 0.699 | 0.696 | +0.004 | 0.631 | 91% | 20% |
-| `bm25` | 22.134 | 14.467 | +7.668 | 14.923 | 82% | 70% |
-| `hybrid-rerank` | 0.576 | 0.248 | +0.328 | 0.027 | 89% | 50% |
+| `dense` | 0.701 | 0.696 | +0.005 | 0.631 | 91% | 20% |
+| `bm25` | 21.040 | 14.467 | +6.574 | 13.202 | 87% | 60% |
+| `hybrid-rerank` | 0.602 | 0.248 | +0.354 | 0.027 | 91% | 50% |
 
 Thresholds maximise Youden's J against the gold set's out-of-corpus questions. Separation is the gap between the two populations' mean confidence; a retriever whose separation is near zero cannot support abstention at any threshold.
 

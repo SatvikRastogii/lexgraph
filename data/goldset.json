@@ -6,7 +6,8 @@
     "must_contain lets scripts/validate_goldset.py prove each annotation against the corpus text, so the labels are checkable rather than asserted.",
     "answerable=false entries have no supporting document anywhere in the corpus. Correct behaviour is refusal, not an answer; they measure abstention.",
     "judgment_0004/0006, judgment_0072/0078 and judgment_0122/0125 are duplicate case pairs present in input/ -- the same judgment from two reporters. Both copies are listed as relevant where applicable, because both are legitimately correct retrievals.",
-    "difficulty=hard questions are deliberately phrased in lay terms that share little vocabulary with the judgment, so lexical and semantic retrieval can be told apart. The standard tier is near-saturated and cannot."
+    "difficulty=hard questions are deliberately phrased in lay terms that share little vocabulary with the judgment, so lexical and semantic retrieval can be told apart. The standard tier is near-saturated and cannot.",
+    "difficulty=multihop questions are joins: they cannot be answered from one judgment, because the answer is the set of judgments satisfying two conditions at once. must_contain_all makes that checkable -- every listed judgment must carry every term, and no unlisted judgment may."
   ],
   "questions": [
     {
@@ -818,6 +819,492 @@
         "fruit belt"
       ],
       "answerable": true
+    },
+    {
+      "id": "m01",
+      "question": "Which judgments rely on both Maneka Gandhi and Sunil Batra?",
+      "category": "multi_hop",
+      "difficulty": "multihop",
+      "relevant_docs": [
+        "judgment_0004.txt",
+        "judgment_0006.txt",
+        "judgment_0124.txt",
+        "judgment_0126.txt",
+        "judgment_0129.txt"
+      ],
+      "must_contain": [
+        "Maneka Gandhi",
+        "Sunil Batra"
+      ],
+      "must_contain_all": true,
+      "answerable": true,
+      "relevant_paragraphs": {
+        "judgment_0004.txt": [
+          23,
+          27,
+          28
+        ],
+        "judgment_0006.txt": [
+          23,
+          28
+        ],
+        "judgment_0124.txt": [
+          5,
+          34
+        ],
+        "judgment_0126.txt": [
+          5,
+          9,
+          12,
+          79
+        ],
+        "judgment_0129.txt": [
+          18
+        ]
+      }
+    },
+    {
+      "id": "m02",
+      "question": "Which judgments discuss both Kesavananda Bharati and Minerva Mills?",
+      "category": "multi_hop",
+      "difficulty": "multihop",
+      "relevant_docs": [
+        "judgment_0034.txt",
+        "judgment_0214.txt"
+      ],
+      "must_contain": [
+        "Kesavananda",
+        "Minerva Mills"
+      ],
+      "must_contain_all": true,
+      "answerable": true,
+      "relevant_paragraphs": {
+        "judgment_0034.txt": [
+          24,
+          38
+        ],
+        "judgment_0214.txt": [
+          3,
+          19,
+          21,
+          286
+        ]
+      }
+    },
+    {
+      "id": "m03",
+      "question": "Which judgments cite Nagaraj as well as Kesavananda Bharati?",
+      "category": "multi_hop",
+      "difficulty": "multihop",
+      "relevant_docs": [
+        "judgment_0032.txt",
+        "judgment_0034.txt",
+        "judgment_0214.txt"
+      ],
+      "must_contain": [
+        "Nagaraj",
+        "Kesavananda"
+      ],
+      "must_contain_all": true,
+      "answerable": true,
+      "relevant_paragraphs": {
+        "judgment_0032.txt": [
+          8,
+          24,
+          43,
+          53,
+          57,
+          103,
+          105
+        ],
+        "judgment_0034.txt": [
+          24,
+          43
+        ],
+        "judgment_0214.txt": [
+          19,
+          21,
+          286
+        ]
+      }
+    },
+    {
+      "id": "m04",
+      "question": "Which judgments draw on both Bachan Singh and Sunil Batra?",
+      "category": "multi_hop",
+      "difficulty": "multihop",
+      "relevant_docs": [
+        "judgment_0004.txt",
+        "judgment_0006.txt",
+        "judgment_0124.txt",
+        "judgment_0126.txt"
+      ],
+      "must_contain": [
+        "Bachan Singh",
+        "Sunil Batra"
+      ],
+      "must_contain_all": true,
+      "answerable": true,
+      "relevant_paragraphs": {
+        "judgment_0004.txt": [
+          2,
+          28,
+          30
+        ],
+        "judgment_0006.txt": [
+          2,
+          28
+        ],
+        "judgment_0124.txt": [
+          5,
+          6,
+          7,
+          8,
+          34,
+          42
+        ],
+        "judgment_0126.txt": [
+          6,
+          9,
+          79
+        ]
+      }
+    },
+    {
+      "id": "m05",
+      "question": "Which judgments trace the line from A.K. Gopalan through to Maneka Gandhi?",
+      "category": "multi_hop",
+      "difficulty": "multihop",
+      "relevant_docs": [
+        "judgment_0004.txt",
+        "judgment_0006.txt",
+        "judgment_0214.txt"
+      ],
+      "must_contain": [
+        "A.K. Gopalan",
+        "Maneka Gandhi"
+      ],
+      "must_contain_all": true,
+      "answerable": true,
+      "relevant_paragraphs": {
+        "judgment_0004.txt": [
+          2,
+          23,
+          24,
+          27,
+          28
+        ],
+        "judgment_0006.txt": [
+          2,
+          23,
+          28
+        ],
+        "judgment_0214.txt": [
+          2,
+          46
+        ]
+      }
+    },
+    {
+      "id": "m06",
+      "question": "Which judgments cite both Minerva Mills and Maneka Gandhi?",
+      "category": "multi_hop",
+      "difficulty": "multihop",
+      "relevant_docs": [
+        "judgment_0004.txt",
+        "judgment_0006.txt",
+        "judgment_0129.txt",
+        "judgment_0214.txt"
+      ],
+      "must_contain": [
+        "Minerva Mills",
+        "Maneka Gandhi"
+      ],
+      "must_contain_all": true,
+      "answerable": true,
+      "relevant_paragraphs": {
+        "judgment_0004.txt": [
+          18,
+          23,
+          27,
+          28
+        ],
+        "judgment_0006.txt": [
+          18,
+          23,
+          28
+        ],
+        "judgment_0129.txt": [
+          13,
+          18
+        ],
+        "judgment_0214.txt": [
+          2,
+          3,
+          19,
+          21,
+          46
+        ]
+      }
+    },
+    {
+      "id": "m07",
+      "question": "Which judgments address the creamy layer requirement that Nagaraj introduced?",
+      "category": "multi_hop",
+      "difficulty": "multihop",
+      "relevant_docs": [
+        "judgment_0214.txt",
+        "judgment_0216.txt",
+        "judgment_0221.txt"
+      ],
+      "must_contain": [
+        "Nagaraj",
+        "creamy layer"
+      ],
+      "must_contain_all": true,
+      "answerable": true,
+      "relevant_paragraphs": {
+        "judgment_0214.txt": [
+          2,
+          3,
+          286
+        ],
+        "judgment_0221.txt": [
+          8,
+          66,
+          111,
+          184,
+          185,
+          186
+        ]
+      }
+    },
+    {
+      "id": "m08",
+      "question": "Which judgments connect delay with the carrying out of a death sentence?",
+      "category": "multi_hop",
+      "difficulty": "multihop",
+      "relevant_docs": [
+        "judgment_0004.txt",
+        "judgment_0006.txt",
+        "judgment_0122.txt",
+        "judgment_0124.txt",
+        "judgment_0125.txt",
+        "judgment_0126.txt"
+      ],
+      "must_contain": [
+        "death sentence",
+        "delay"
+      ],
+      "must_contain_all": true,
+      "answerable": true,
+      "relevant_paragraphs": {
+        "judgment_0004.txt": [
+          1,
+          2,
+          3,
+          5,
+          9,
+          11,
+          15,
+          20,
+          28,
+          29,
+          30,
+          32,
+          33,
+          34,
+          36,
+          37,
+          38,
+          39,
+          40,
+          43,
+          46,
+          354
+        ],
+        "judgment_0006.txt": [
+          1,
+          2,
+          3,
+          5,
+          11,
+          15,
+          20,
+          28,
+          29,
+          30,
+          32,
+          33,
+          34,
+          36,
+          37,
+          38,
+          39,
+          40,
+          43,
+          46,
+          354
+        ],
+        "judgment_0126.txt": [
+          4,
+          5,
+          6
+        ]
+      }
+    },
+    {
+      "id": "m09",
+      "question": "Which judgments consider bail in the context of Article 21?",
+      "category": "multi_hop",
+      "difficulty": "multihop",
+      "relevant_docs": [
+        "judgment_0008.txt",
+        "judgment_0033.txt",
+        "judgment_0076.txt",
+        "judgment_0127.txt"
+      ],
+      "must_contain": [
+        "bail",
+        "Article 21"
+      ],
+      "must_contain_all": true,
+      "answerable": true,
+      "relevant_paragraphs": {
+        "judgment_0008.txt": [
+          4,
+          5,
+          9,
+          14,
+          16,
+          18,
+          19
+        ],
+        "judgment_0033.txt": [
+          2,
+          4,
+          5,
+          6,
+          7,
+          9,
+          12,
+          13,
+          22,
+          25,
+          342,
+          343,
+          344,
+          349
+        ],
+        "judgment_0076.txt": [
+          9,
+          12,
+          15,
+          21,
+          22,
+          30,
+          34,
+          44,
+          132,
+          133
+        ]
+      }
+    },
+    {
+      "id": "m10",
+      "question": "Which judgments discuss a curative petition alongside a review petition?",
+      "category": "multi_hop",
+      "difficulty": "multihop",
+      "relevant_docs": [
+        "judgment_0004.txt",
+        "judgment_0006.txt",
+        "judgment_0122.txt",
+        "judgment_0124.txt",
+        "judgment_0125.txt"
+      ],
+      "must_contain": [
+        "curative",
+        "review petition"
+      ],
+      "must_contain_all": true,
+      "answerable": true,
+      "relevant_paragraphs": {
+        "judgment_0004.txt": [
+          1,
+          5,
+          9,
+          10,
+          11,
+          15,
+          19,
+          20,
+          26,
+          30,
+          31,
+          33,
+          37,
+          42,
+          43,
+          46
+        ],
+        "judgment_0006.txt": [
+          1,
+          5,
+          9,
+          10,
+          11,
+          13,
+          15,
+          16,
+          20,
+          30,
+          31,
+          33,
+          37,
+          42,
+          43,
+          46
+        ],
+        "judgment_0124.txt": [
+          9,
+          36,
+          344
+        ]
+      }
+    },
+    {
+      "id": "m11",
+      "question": "Among the Article 19 judgments, which ones carry a dissenting opinion?",
+      "category": "multi_hop",
+      "difficulty": "multihop",
+      "relevant_docs": [
+        "judgment_0074.txt",
+        "judgment_0075.txt",
+        "judgment_0076.txt"
+      ],
+      "must_contain": [],
+      "answerable": true,
+      "requires_dissent": true,
+      "requires_article_focus": "Article 19",
+      "notes": "Joins the header's ARTICLE FOCUS field against HAS DISSENT. Both halves are checked against the header, not the body."
+    },
+    {
+      "id": "m12",
+      "question": "Among the Article 32 judgments, which ones carry a dissenting opinion?",
+      "category": "multi_hop",
+      "difficulty": "multihop",
+      "relevant_docs": [
+        "judgment_0122.txt",
+        "judgment_0123.txt",
+        "judgment_0124.txt",
+        "judgment_0125.txt",
+        "judgment_0129.txt"
+      ],
+      "must_contain": [],
+      "answerable": true,
+      "requires_dissent": true,
+      "requires_article_focus": "Article 32",
+      "notes": "Joins the header's ARTICLE FOCUS field against HAS DISSENT. Both halves are checked against the header, not the body."
     },
     {
       "id": "q01",

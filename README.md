@@ -39,14 +39,31 @@ jail, can they complain about how they are treated inside"* instead of *"can a
 prisoner invoke writ jurisdiction"*. Splitting the metrics by tier is what
 makes the retrievers' characters visible:
 
-| configuration | hard R@5 | standard R@5 | drop | hard nDCG@10 |
-|---|---|---|---|---|
-| `bm25` | 0.756 | 0.857 | **−0.102** | 0.707 |
-| `dense-fixed` | 0.844 | 0.889 | −0.045 | 0.728 |
-| `dense` | 0.872 | **0.902** | −0.030 | 0.775 |
-| `hybrid` | 0.872 | 0.885 | **−0.013** | **0.803** |
-| `hybrid-rerank` | 0.872 | **0.902** | −0.030 | 0.801 |
-| `graph-units` | **0.889** | 0.890 | **−0.001** | 0.796 |
+| configuration | standard R@5 | hard R@5 | multi-hop R@5 |
+|---|---|---|---|
+| `dense` | **0.900** | 0.872 | 0.494 |
+| `bm25` | 0.857 | 0.756 | 0.722 |
+| `hybrid` | 0.885 | 0.872 | 0.681 |
+| **`hybrid-rerank`** | **0.902** | 0.872 | **0.760** |
+| `graph-units` | 0.890 | **0.889** | 0.467 |
+| `graph-community` | 0.530 | 0.428 | 0.374 |
+
+n = 25 / 30 / 12.
+
+**The two hard tiers fail in opposite directions, and that is the point.**
+BM25 is the *worst* retriever on paraphrase (0.756) and nearly the *best* on
+multi-hop (0.722). Dense is the reverse: strong on paraphrase, and it collapses
+to 0.494 on multi-hop.
+
+The reason is visible in the questions. The paraphrase tier is written to share
+no vocabulary with the judgment, which is where lexical matching has nothing to
+grip. The multi-hop tier is mostly citation joins — *"which judgments rely on
+both Maneka Gandhi and Sunil Batra?"* — where the answer hinges on exact proper
+nouns that a 384-dimensional embedding blurs together.
+
+Neither retriever is good at both. That is the argument for fusing them, made
+with data rather than asserted, and it is why `hybrid-rerank` is the only
+configuration that stays near the top of all three tiers.
 
 Lexical matching loses ten points the moment the question stops sharing words
 with the document. Dense retrieval loses three, and fusing the two loses one
