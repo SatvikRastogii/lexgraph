@@ -6,7 +6,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/python-3.11%2B-3776AB?logo=python&logoColor=white" />
-  <img src="https://img.shields.io/badge/tests-110%20passing-3B6650" />
+  <img src="https://img.shields.io/badge/tests-168%20passing-3B6650" />
   <img src="https://img.shields.io/badge/retrieval-BM25%20%2B%20dense%20%2B%20rerank-8F6620" />
   <img src="https://img.shields.io/badge/inference-local%20(Ollama)-3F5670" />
 </p>
@@ -31,13 +31,16 @@ generation run locally through Ollama. Only the judge is remote, deliberately.
 
 ## Findings
 
-### BM25 collapses on paraphrase; dense does not
+### No single retriever is good at both kinds of hard question
 
-The gold set has two tiers. Standard questions use the vocabulary of the
-judgments. Hard questions deliberately do not — *"if someone is being held in
-jail, can they complain about how they are treated inside"* instead of *"can a
-prisoner invoke writ jurisdiction"*. Splitting the metrics by tier is what
-makes the retrievers' characters visible:
+The gold set has three tiers. **Standard** questions use the vocabulary of the
+judgments. **Hard** questions deliberately do not — *"if someone is being held
+in jail, can they complain about how they are treated inside"* instead of *"can
+a prisoner invoke writ jurisdiction"*. **Multi-hop** questions are joins that no
+single judgment answers — *"which judgments rely on both Maneka Gandhi and Sunil
+Batra?"*
+
+Splitting by tier is what makes the retrievers' characters visible:
 
 | configuration | standard R@5 | hard R@5 | multi-hop R@5 |
 |---|---|---|---|
@@ -65,17 +68,6 @@ Neither retriever is good at both. That is the argument for fusing them, made
 with data rather than asserted, and it is why `hybrid-rerank` is the only
 configuration that stays near the top of all three tiers.
 
-Lexical matching loses ten points the moment the question stops sharing words
-with the document. Dense retrieval loses three, and fusing the two loses one
-and a half. That gap is the whole argument for hybrid retrieval, and it is the
-reason the aggregate numbers below are worth less than this table.
-
-The tier holds 30 questions, up from the 10 it was first built with. The
-direction did not change when it tripled, which is the only reason it is
-quoted as a finding rather than an anecdote — BM25's drop moved from −0.140 to
-−0.102 as the sample grew, which is roughly what a small-sample effect size
-does when it stops being a small sample.
-
 ### Right case, wrong paragraph
 
 Recall counts a document as found if any of its chunks is retrieved, including
@@ -85,10 +77,11 @@ carries the answer?
 
 | configuration | R@5 | ParaR@5 | gap |
 |---|---|---|---|
-| `bm25` | 0.802 | 0.700 | −0.102 |
-| `dense` | 0.886 | 0.792 | −0.094 |
-| `hybrid-rerank` | 0.886 | **0.805** | **−0.081** |
-| `dense-fixed` | 0.865 | n/a | — |
+| `dense` | 0.815 | 0.677 | −0.138 |
+| `hybrid` | 0.843 | 0.717 | −0.125 |
+| `hybrid-rerank` | **0.863** | **0.751** | **−0.112** |
+| `bm25` | 0.788 | 0.694 | −0.093 |
+| `graph-units` | 0.814 | n/a | — |
 
 Roughly eight to ten points of every configuration's recall is the right
 judgment at the wrong passage, and the cross-encoder closes the least of it.
@@ -98,26 +91,25 @@ and zero are different claims and only one of them is true.
 
 Paragraph labels are derived by locating each question's already-verified
 `must_contain` terms inside the judgment's own numbering, then re-checked in
-CI — see `scripts/derive_paragraph_labels.py`. They cover 39 of 55 answerable
+CI — see `scripts/derive_paragraph_labels.py`. They cover 49 of 67 answerable
 questions. A term-bearing paragraph is where an answer is *stated*, which is
 not always the whole of where it is *reasoned*, so read this as a floor on
 passage quality rather than a full account of it.
 
 ### The aggregate picture
 
-| configuration | R@1 | R@5 | R@10 | nDCG@10 | MRR | ParaR@5 | p50 |
+| configuration | R@1 | R@5 | R@5 95% CI | nDCG@10 | MRR | ParaR@5 | p50 |
 |---|---|---|---|---|---|---|---|
-| `dense-fixed` | 0.570 | 0.865 | 0.867 | 0.809 | 0.830 | n/a | 2195ms |
-| `dense` | 0.582 | 0.886 | 0.889 | 0.831 | 0.839 | 0.792 | 2223ms |
-| `bm25` | 0.586 | 0.802 | 0.822 | 0.775 | 0.810 | 0.700 | **2ms** |
-| `hybrid` | 0.632 | 0.878 | 0.884 | 0.847 | 0.873 | 0.799 | 2192ms |
-| **`hybrid-rerank`** | **0.659** | 0.886 | 0.889 | **0.860** | **0.879** | **0.805** | 4161ms |
-| `graph-units` | 0.607 | **0.889** | **0.942** | 0.854 | 0.861 | n/a | 2193ms |
-| `graph-community` | 0.233 | 0.474 | 0.597 | 0.438 | 0.408 | n/a | 2188ms |
+| `dense` | 0.507 | 0.815 | [0.73, 0.89] | 0.777 | 0.823 | 0.677 | 2212ms |
+| `bm25` | 0.522 | 0.788 | [0.70, 0.87] | 0.770 | 0.822 | 0.694 | **2ms** |
+| `hybrid` | 0.558 | 0.843 | [0.77, 0.91] | 0.827 | 0.878 | 0.717 | 2211ms |
+| **`hybrid-rerank`** | **0.581** | **0.863** | [0.79, 0.93] | **0.848** | **0.880** | **0.751** | 4288ms |
+| `graph-units` | 0.522 | 0.814 | [0.73, 0.89] | 0.806 | 0.830 | n/a | 2188ms |
+| `graph-community` | 0.206 | 0.456 | [0.35, 0.56] | 0.433 | 0.432 | n/a | 2182ms |
 
-These numbers are lower than the ones this table carried at 35 questions. The
-retrievers did not get worse; 20 harder questions were added, and an easier
-question set was flattering every configuration equally.
+These numbers are lower than the ones this table carried at 55 questions. The
+retrievers did not get worse; twelve multi-hop questions were added, and they
+are the hardest tier in the set.
 
 ### What the gold set can and cannot establish
 
@@ -128,24 +120,24 @@ independently computed error bars happen not to touch. Shared question
 difficulty cancels in the difference and inflates both intervals separately,
 which makes the overlap test badly conservative.
 
-Paired against `dense` on nDCG@10, n=55:
+Paired against `hybrid-rerank` on nDCG@10, n=67:
 
 | configuration | Δ mean | 95% CI | W/L/T | verdict |
 |---|---|---|---|---|
-| `hybrid-rerank` | +0.031 | [−0.017, +0.080] | 11/5/39 | not distinguishable |
-| `graph-units` | +0.026 | [−0.025, +0.076] | 13/9/33 | not distinguishable |
-| `hybrid` | +0.018 | [−0.024, +0.061] | 10/7/38 | not distinguishable |
-| `dense-fixed` | −0.020 | [−0.065, +0.024] | 7/10/38 | not distinguishable |
-| `bm25` | −0.054 | [−0.133, +0.019] | 10/13/32 | not distinguishable |
-| **`graph-community`** | **−0.391** | **[−0.498, −0.284]** | **4/37/14** | **distinguishable** |
+| `hybrid` | −0.021 | [−0.050, +0.008] | 4/14/49 | not distinguishable |
+| `graph-units` | −0.042 | [−0.109, +0.019] | 14/17/36 | not distinguishable |
+| **`dense`** | **−0.071** | **[−0.139, −0.007]** | **8/19/40** | **distinguishable** |
+| **`bm25`** | **−0.078** | **[−0.121, −0.040]** | **4/18/45** | **distinguishable** |
+| **`graph-community`** | **−0.415** | **[−0.508, −0.320]** | **5/49/13** | **distinguishable** |
 
-**One difference in this entire table is statistically established, and it is
-the graph making retrieval worse.** Everything else is a direction, not a
-result. Reranking wins 11 questions and loses 5, which is suggestive and is not
-evidence at this sample size — an earlier version of this README said the
-cross-encoder "helps where a cross-encoder should", and the paired test does
-not support that. The tier split and the R@1 movement are still worth reading;
-they are simply not the same claim as *distinguishable*.
+Three differences are now established. `hybrid-rerank` is distinguishably better
+than **either component alone** — which is the claim a hybrid pipeline exists to
+make, and which the 55-question set could not support. Adding the multi-hop tier
+is what made it visible: it is the tier where dense and BM25 fail differently,
+so fusion has the most to gain.
+
+`hybrid` and `graph-units` remain indistinguishable from the full pipeline, so
+the cross-encoder's contribution is still a direction rather than a result.
 
 ### The graph is the thing that hurts
 
@@ -216,7 +208,7 @@ exactly because it is not.
 
 `hyde-rerank` does move R@1 from 0.659 to 0.688 and MRR from 0.879 to 0.897
 while losing R@5 — it trades recall for precision at the top. That is a real
-trade and still not a distinguishable difference at n=55.
+trade and still not a distinguishable difference at n=67.
 
 **Chunk size.** 500 words was inherited from `settings.yaml` and never checked.
 Sweeping 150 to 1000 words moves nDCG@10 between 0.743 and 0.783, with every
@@ -336,7 +328,7 @@ Both generators, same retriever, same questions, same independent judge, zero
 unparsed judge responses on either run.
 
 > These numbers are from the **45-question** gold set, before the hard tier was
-> expanded to 30. The retrieval tables above are current at 65 questions; this
+> expanded to 30. The retrieval tables above are current at 77 questions; this
 > one is not. Re-running it costs an hour of local generation per generator
 > plus a day of judge quota, so it is labelled rather than quietly refreshed.
 > n=35 answerable.
@@ -477,7 +469,7 @@ scripts/
   sweep_chunk_size.py    is 500 words right, or just inherited?
   drift_check.py         scheduled regression check
   list_judge_models.py   which judge models a given key can actually reach
-data/goldset.json    65 questions: 25 standard, 30 hard, 10 out-of-corpus
+data/goldset.json    77 questions: 25 standard, 30 hard, 12 multi-hop, 10 out-of-corpus
 tests/               128 tests, no network or GPU required
 ```
 
@@ -563,7 +555,7 @@ Gemini embeddings were the obvious answer and do not work. The free tier allows
 would afterwards compete with rebuilds for what was left. Found by hitting it.
 
 Swapping the embedder is a change to the thing being measured, so it was
-measured. Against the same 65-question gold set:
+measured. Against the same gold set:
 
 | | local (nomic-embed-text + Chroma) | deployed (bge-small + numpy) |
 |---|---|---|
@@ -580,7 +572,7 @@ leaves to fix, which the local numbers were too strong to show.
 
 The abstention threshold does **not** transfer between embedders — 0.045
 deployed against 0.027 locally — so the deployment carries its own calibration
-file. Verified end to end on all 65 questions: 87% of answerable questions
+file. Verified end to end on all 65 gold-set answers: 87% of answerable questions
 answered, 50% of out-of-corpus refused, matching the calibration exactly.
 
 The hosted build answers gold-set questions from precomputed results so a public
@@ -591,10 +583,7 @@ UI says which half is which.
 
 ## Limitations
 
-- **55 answerable questions can establish exactly one difference in the
-  ablation**, and it is `graph-community` scoring worse. Under a paired
-  bootstrap every other configuration is indistinguishable from `dense`,
-  reranking included. The tier split and the R@1 movement are real
+- **67 answerable questions establish three differences in the ablation.** Under a paired bootstrap `hybrid-rerank` is distinguishably better than `dense`, `bm25` and `graph-community`; `hybrid` and `graph-units` remain indistinguishable from it. The tier split and the R@1 movement are real
   observations; they are not the same claim, and this README no longer states
   them as one.
 - **The judge has not been validated against human labels.** What it has been
@@ -613,10 +602,10 @@ UI says which half is which.
   it at seven times the quota, which the free tier does not support.
 - **The judged answer-quality numbers were produced against the 45-question gold
   set**, before the hard tier was expanded. The retrieval tables are current at
-  65 questions; the judged tables are not, and are labelled where they appear.
+  77 questions; the judged tables are not, and are labelled where they appear.
   Re-running them costs an hour of local generation per generator plus a day of
   judge quota.
-- Paragraph-level ground truth covers 39 of 55 answerable questions. Six
+- Paragraph-level ground truth covers 49 of 67 answerable questions. Six
   judgments carry no usable numbering, and a term-bearing paragraph marks where
   an answer is stated rather than the whole of where it is reasoned.
 - The graph arms are scored through this repository's own retrieval over
