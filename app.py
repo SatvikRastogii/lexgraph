@@ -504,12 +504,9 @@ def route_query(query, router, _unused=None):
     except Exception:  # noqa: BLE001
         return default, 0.5, default
 
-    # GraphRAG's own engine is unavailable here, and by this project's own
-    # measurement its retrieval is the weaker of the two anyway. Serve with the
-    # pipeline that works, and report both routes so the substitution is
-    # visible.
-    if DEPLOY_MODE and decision.route == "GRAPH":
-        return "NAIVE", decision.confidence, "GRAPH"
+    # No substitution any more: the graph answers on the deployment too, from
+    # its committed vectors. The served and classified routes only diverge
+    # through the fallbacks above.
     return decision.route, decision.confidence, decision.route
 
 
@@ -523,26 +520,73 @@ def route_query(query, router, _unused=None):
 GRAPHRAG_TIMEOUT = int(os.getenv("GRAPHRAG_QUERY_TIMEOUT", "600"))
 
 
+@st.cache_resource
+def get_graph_retriever(method):
+    """Retrieval over GraphRAG's own artefacts, from the committed vectors."""
+    from lexgraph.retrieval.graph import build_graph_retriever
+
+    return build_graph_retriever(method)
+
+
+def run_graph_retrieval_query(query, method="global"):
+    """Answer from the knowledge graph without GraphRAG's query engine.
+
+    The engine itself cannot run here: it needs roughly 500MB of dependencies
+    and drives dozens of sequential LLM calls per question, which is minutes
+    per query and more memory than a free host has.
+
+    What it produced can. 184 community reports and 3,750 entity descriptions
+    are committed, embedded, and searched in milliseconds; one generation call
+    reads the result. So the graph answers questions here, through a cheaper
+    path than the one that built it.
+
+    That difference is real and the UI states it rather than implying this is
+    global search. The retrieval substrate is identical -- community reports
+    for global, entity descriptions for local -- but the aggregation is
+    retrieve-then-read instead of map-reduce over every report.
+    """
+    from lexgraph.generation import answer_question
+    from lexgraph.retrieval.graph import GRAPH_METHODS
+
+    if method not in GRAPH_METHODS:
+        method = "global"
+
+    if not generation_available():
+        return (
+            "The knowledge graph retrieved its context, but live generation is "
+            "not configured on this deployment, so no answer can be written. "
+            "The Knowledge Graph and Benchmark tabs work without it."
+        )
+
+    try:
+        retriever = get_graph_retriever(method)
+        # No abstention threshold: it is calibrated per score scale, and this
+        # retriever's scores are not the one it was calibrated on. Applying it
+        # here would refuse on a number that means something else.
+        generated = answer_question(query, retriever, get_generator(), top_k=6)
+    except Exception as error:  # noqa: BLE001
+        return f"⚠ Graph retrieval failed: {error}"
+
+    sources = ", ".join(generated.sources[:6]) or "none"
+    unsupported = generated.citations.unsupported if generated.citations else []
+    warning = (
+        f"\n\n---\n\n**{len(unsupported)} citation(s) not found in the retrieved "
+        f"graph context:** {', '.join(unsupported[:4])}"
+        if unsupported else ""
+    )
+    return (
+        f"{generated.answer}\n\n---\n\n"
+        f"*Retrieved over {GRAPH_METHODS[method][1]}*\n\n"
+        f"*Judgments reached: {sources}*{warning}"
+    )
+
+
 def run_graphrag_query(query, method="local"):
     """Run graphrag query via subprocess."""
     import subprocess
 
     if DEPLOY_MODE:
-        # This shells out to the graphrag CLI, which drives many sequential
-        # local LLM calls. There is no Ollama on the host and global search
-        # takes minutes even when there is, so offering it would be a button
-        # that times out. The measured result is more useful than the demo:
-        # graph-community retrieval scores 0.474 R@5 against hybrid-rerank's
-        # 0.879 and is the only difference in the ablation large enough for
-        # the gold set to establish at all.
-        return (
-            "GraphRAG's own query engine is not available in the hosted demo: "
-            "it drives many sequential local LLM calls and needs a GPU.\n\n"
-            "Its retrieval is measured instead, on the same gold set as "
-            "everything else — see the Benchmark tab. Community-report "
-            "retrieval scores 0.474 Recall@5 against hybrid-rerank's 0.879, "
-            "which is the one difference this gold set can establish."
-        )
+        return run_graph_retrieval_query(query, method)
 
     try:
         result = subprocess.run(
@@ -1099,10 +1143,22 @@ with tab_query:
 
     col_mode1, col_mode2 = st.columns(2)
     with col_mode1:
-        # "global" is the default because "local" crashes: a vector-dimension
-        # mismatch between the embeddings stored in LanceDB at index time and
-        # the live nomic-embed-text configuration. Fixing it needs a re-index.
-        graphrag_method = st.selectbox("GraphRAG Method", ["global", "local"], index=0)
+        # Locally these run GraphRAG's own CLI, where "global" is the default
+        # because "local" crashes -- the LanceDB store it reads holds only
+        # entity descriptions and was never built for text units.
+        #
+        # Deployed, both work: they search GraphRAG's committed community
+        # reports and entity descriptions directly, which is the same substrate
+        # without the engine's map-reduce over every report.
+        graphrag_method = st.selectbox(
+            "Graph search method", ["global", "local"], index=0,
+            help=(
+                "global: community reports — LLM summaries of entity clusters, "
+                "good at cross-cutting themes.\n\n"
+                "local: entity descriptions resolved back to the judgments that "
+                "mention them, good at questions naming a party or institution."
+            ),
+        )
     with col_mode2:
         force_pipeline = st.selectbox("Pipeline Override", ["Auto (Router)", "Force Vector RAG", "Force GraphRAG", "Run Both (Compare)"], index=0)
 
@@ -1138,11 +1194,17 @@ with tab_query:
         )
         if classified != route:
             st.caption(
-                f"The router chose {label}, but GraphRAG's query engine needs a "
-                f"GPU and is not available on this host — answered with the "
-                f"vector pipeline instead. Its retrieval is scored against the "
-                f"same gold set in the Benchmark tab, where community-report "
-                f"retrieval reaches 0.474 Recall@5 against hybrid-rerank's 0.879."
+                f"The router chose {label}, but that pipeline is unavailable "
+                f"on this host — answered with the other one instead."
+            )
+        elif DEPLOY_MODE and route == "GRAPH":
+            st.caption(
+                "Answered from the knowledge graph — GraphRAG's own community "
+                "reports and entities, embedded and searched here. This is "
+                "retrieval over what GraphRAG produced, read by a single "
+                "generation call; the engine's own map-reduce over all 184 "
+                "reports needs a GPU and minutes per query. The Benchmark tab "
+                "scores both substrates against the gold set."
             )
 
         st.markdown("")

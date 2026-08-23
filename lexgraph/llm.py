@@ -248,23 +248,35 @@ class OpenAICompatibleClient(BaseClient):
 
     name = "openai"
 
-    def __init__(self, model: str, base_url: str, api_key_var: str, **kwargs):
+    def __init__(self, model: str, base_url: str, api_key_var: str,
+                 reasoning_effort: str | None = None, **kwargs):
         super().__init__(model, **kwargs)
         self.base_url = base_url.rstrip("/")
+        # Reasoning models on this schema spend the token budget on a private
+        # chain before writing anything, and the answer is what is left. On a
+        # long retrieved context there is often nothing left. Asking for less
+        # reasoning is the same fix as Gemini's thinkingBudget: 0, which this
+        # module already applies for the same reason. Measured on gpt-oss-120b:
+        # 177 characters of reasoning unset, 34 at "low".
+        self.reasoning_effort = reasoning_effort
         self.api_key = os.getenv(api_key_var)
         if not self.api_key:
             raise LLMError(f"{api_key_var} is not set")
 
     def _chat(self, prompt: str, max_tokens: int, temperature: float) -> str:
+        payload = {
+            "model": self.model,
+            "messages": [{"role": "user", "content": prompt}],
+            "temperature": temperature,
+            "max_tokens": max_tokens,
+        }
+        if self.reasoning_effort:
+            payload["reasoning_effort"] = self.reasoning_effort
+
         response = requests.post(
             f"{self.base_url}/chat/completions",
             headers={"Authorization": f"Bearer {self.api_key}"},
-            json={
-                "model": self.model,
-                "messages": [{"role": "user", "content": prompt}],
-                "temperature": temperature,
-                "max_tokens": max_tokens,
-            },
+            json=payload,
             timeout=180,
         )
         if response.status_code != 200:
@@ -424,7 +436,12 @@ def get_client(spec: str) -> BaseClient:
         base_url, key_var, rpm = _OPENAI_COMPATIBLE[provider]
         if not model:
             raise LLMError(f"{provider} requires an explicit model, e.g. {provider}:<model>")
-        return OpenAICompatibleClient(model, base_url, key_var, requests_per_minute=rpm)
+        # Only where the parameter is known to exist. Sending it blindly would
+        # turn an unsupported field into a 400 on providers that reject extras.
+        effort = "low" if "gpt-oss" in model else None
+        return OpenAICompatibleClient(
+            model, base_url, key_var, requests_per_minute=rpm, reasoning_effort=effort
+        )
 
     raise LLMError(
         f"unknown provider {provider!r}. Expected ollama, gemini, "

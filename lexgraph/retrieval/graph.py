@@ -42,15 +42,22 @@ import os
 
 import numpy as np
 
-from ..embeddings import OllamaEmbedder
+from ..embeddings import build_embedder
 from .base import Hit
 
 GRAPH_ROOT = "output"
-VECTOR_CACHE = os.path.join("output", "lexgraph_vectors")
+
+# Committed, not cached. output/ is gitignored apart from the parquets, so a
+# store written there would be rebuilt on every deployment -- which needs an
+# embedder the deployment has, and minutes it does not have at boot. These are
+# small (184 community reports and 3,750 entities at 384 dimensions is under
+# 3MB) and ship with the repository.
+VECTOR_CACHE = os.path.join("data", "graph_vectors")
 
 KINDS = {
     "units": ("text_units.parquet", "text"),
     "community": ("community_reports.parquet", "full_content"),
+    "entity": ("entities.parquet", "description"),
 }
 
 
@@ -97,6 +104,25 @@ def load_units(kind: str, root: str = GRAPH_ROOT) -> list[tuple[str, str, list[s
             if document_by_unit.get(unit_id)
         ]
 
+    if kind == "entity":
+        # An entity stands for the judgments its mentions came from. This is
+        # local search's substrate: the query matches an entity description,
+        # and the entity leads back to the passages that produced it.
+        entities = _require(os.path.join(root, "entities.parquet"))
+        rows = []
+        for title, description, unit_ids in zip(
+            entities["title"], entities["description"], entities["text_unit_ids"],
+            strict=True,
+        ):
+            filenames = sorted({
+                document_by_unit[unit_id]
+                for unit_id in unit_ids
+                if document_by_unit.get(unit_id)
+            })
+            if filenames and isinstance(description, str) and description.strip():
+                rows.append((f"entity_{title}", f"{title}: {description}", filenames))
+        return rows
+
     communities = _require(os.path.join(root, "communities.parquet"))
     units_by_community = dict(
         zip(communities["community"], communities["text_unit_ids"], strict=True)
@@ -127,11 +153,16 @@ class GraphRetriever:
         self,
         kind: str = "units",
         root: str = GRAPH_ROOT,
-        embedder: OllamaEmbedder | None = None,
+        embedder=None,
         cache_dir: str = VECTOR_CACHE,
     ):
         self.kind = kind
-        self.embedder = embedder or OllamaEmbedder()
+        # Follows LEXGRAPH_EMBEDDER like the rest of the stack. Hardcoding
+        # OllamaEmbedder here meant the graph retriever ignored the deployment
+        # configuration entirely: it would have needed Ollama on a host that
+        # has none, and locally it silently re-embedded 3,747 entities with the
+        # wrong model rather than reading the committed store.
+        self.embedder = embedder or build_embedder()
         rows = load_units(kind, root)
         self.unit_ids = [row[0] for row in rows]
         self.texts = [row[1] for row in rows]
@@ -140,13 +171,14 @@ class GraphRetriever:
 
     def _vectors(self, cache_dir: str) -> np.ndarray:
         """Embed every unit once and keep the result next to the index."""
-        path = os.path.join(cache_dir, f"{self.kind}_{self.embedder.model}.npz")
+        safe_model = self.embedder.model.replace("/", "_")
+        path = os.path.join(cache_dir, f"{self.kind}_{safe_model}.npz")
         if os.path.exists(path):
             stored = np.load(path, allow_pickle=True)
             # A stale cache is worse than no cache: it would score a retriever
             # against vectors for text that has since been re-indexed.
             if list(stored["unit_ids"]) == self.unit_ids:
-                return stored["matrix"]
+                return stored["matrix"].astype(np.float32)
 
         vectors = np.asarray(
             self.embedder.embed(self.texts, progress=_progress(self.kind)),
@@ -155,7 +187,15 @@ class GraphRetriever:
         vectors /= np.linalg.norm(vectors, axis=1, keepdims=True) + 1e-12
 
         os.makedirs(cache_dir, exist_ok=True)
-        np.savez(path, matrix=vectors, unit_ids=np.array(self.unit_ids, dtype=object))
+        # float16 and compressed, because these files are committed. The
+        # vectors are normalised and only compared, never reported, so the
+        # precision lost is far below what changes a ranking -- and it halves
+        # 3,747 entity vectors from 5.6MB to under 3.
+        np.savez_compressed(
+            path,
+            matrix=vectors.astype(np.float16),
+            unit_ids=np.array(self.unit_ids, dtype=object),
+        )
         return vectors
 
     def search(self, query: str, top_k: int = 10) -> list[Hit]:
@@ -206,6 +246,34 @@ class GraphRetriever:
         if not self.documents:
             return 0.0
         return sum(len(d) for d in self.documents) / len(self.documents)
+
+
+# What each method retrieves over, and how the UI should describe it. The
+# wording matters: this is not GraphRAG's own query engine, which drives dozens
+# of sequential LLM calls per question and needs ~500MB of dependencies. It is
+# retrieval over the artefacts that engine produced, read by one generation
+# call -- so it runs on a free host in seconds instead of minutes.
+GRAPH_METHODS = {
+    "global": (
+        "community",
+        "Community reports — LLM-written summaries of clustered entities and "
+        "relationships. This is what GraphRAG's global search reads.",
+    ),
+    "local": (
+        "entity",
+        "Entity descriptions, resolved back to the judgments their mentions "
+        "came from. This is what GraphRAG's local search reads.",
+    ),
+}
+
+
+def build_graph_retriever(method: str = "global", **kwargs):
+    """A retriever for one of GraphRAG's two search substrates."""
+    if method not in GRAPH_METHODS:
+        raise ValueError(
+            f"unknown graph method {method!r}; expected one of {list(GRAPH_METHODS)}"
+        )
+    return GraphRetriever(kind=GRAPH_METHODS[method][0], **kwargs)
 
 
 def _progress(kind: str):

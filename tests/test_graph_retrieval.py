@@ -147,3 +147,31 @@ def test_community_reports_span_several_documents():
     # not be measuring anything the units arm does not.
     rows = load_units("community", GRAPH_ROOT)
     assert max(len(names) for _, _, names in rows) > 1
+
+
+# --- search methods ----------------------------------------------------------
+
+def test_graph_methods_map_to_the_substrates_graphrag_itself_reads():
+    from lexgraph.retrieval.graph import GRAPH_METHODS
+
+    # global search reads community reports; local search reads entities. If
+    # these ever swap, the UI's explanation of each becomes a lie.
+    assert GRAPH_METHODS["global"][0] == "community"
+    assert GRAPH_METHODS["local"][0] == "entity"
+
+
+def test_unknown_graph_method_is_rejected():
+    from lexgraph.retrieval.graph import build_graph_retriever
+
+    with pytest.raises(ValueError):
+        build_graph_retriever("drift")
+
+
+@requires_graph
+def test_entities_resolve_to_the_judgments_that_mention_them():
+    rows = load_units("entity", GRAPH_ROOT)
+    assert rows, "the index has entities"
+    assert all(names for _, _, names in rows), "every entity reaches a judgment"
+    # The text embedded is the entity name plus its description, so a query
+    # naming a party can match it.
+    assert all(":" in text for _, text, _ in rows[:50])
