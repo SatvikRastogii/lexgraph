@@ -153,7 +153,7 @@ first visitor does not pay ~30s of model download while watching.
 | `LEXGRAPH_DEPLOY` | unset | replay-first answers, live budget, GraphRAG CLI disabled |
 | `LEXGRAPH_DENSE_BACKEND` | `chroma` | `numpy` reads the committed matrix |
 | `LEXGRAPH_EMBEDDER` | `ollama` | `fastembed` or `gemini` |
-| `LEXGRAPH_GENERATOR` | `ollama:llama3.1` locally, `groq:llama-3.3-70b-versatile` under deploy | any `provider:model` |
+| `LEXGRAPH_GENERATOR` | `ollama:llama3.1` locally, `groq:openai/gpt-oss-120b` under deploy | any `provider:model` |
 | `LEXGRAPH_RETRIEVER` | `hybrid-rerank` | any configuration in the ablation |
 | `LEXGRAPH_LIVE_BUDGET` | `5` | live generations per browser session |
 

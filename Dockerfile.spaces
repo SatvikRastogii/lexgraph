@@ -44,7 +44,7 @@ ENV LEXGRAPH_DEPLOY=1 \
     LEXGRAPH_DENSE_BACKEND=numpy \
     LEXGRAPH_EMBEDDER=fastembed \
     LEXGRAPH_RETRIEVER=hybrid-rerank \
-    LEXGRAPH_GENERATOR=groq:llama-3.3-70b-versatile
+    LEXGRAPH_GENERATOR=groq:openai/gpt-oss-120b
 
 # Download the embedding and reranking weights at build time rather than on the
 # first visitor's request. Without this the first query pays ~30s of model

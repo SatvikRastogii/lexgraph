@@ -269,7 +269,24 @@ class OpenAICompatibleClient(BaseClient):
         )
         if response.status_code != 200:
             raise LLMError(f"{response.status_code}: {response.text[:300]}")
-        return response.json()["choices"][0]["message"]["content"].strip()
+
+        message = response.json()["choices"][0]["message"]
+        content = (message.get("content") or "").strip()
+        if content:
+            return content
+
+        # Reasoning models on this schema return their chain in a separate
+        # "reasoning" field and the answer in "content". A tight max_tokens is
+        # spent on the former, leaving the latter empty -- the same failure
+        # Gemini's thinkingBudget produced, arriving through a different door.
+        # Measured: gpt-oss-20b returns nothing at max_tokens=100 and a correct
+        # answer at 400.
+        if message.get("reasoning"):
+            raise LLMError(
+                f"{self.label} spent its {max_tokens}-token budget on reasoning "
+                f"and returned no content. Raise max_tokens."
+            )
+        raise LLMError(f"{self.label} returned an empty response")
 
 
 _OPENAI_COMPATIBLE = {
@@ -379,7 +396,13 @@ DEFAULT_GENERATOR = "ollama:llama3.1"
 # collapses generator and judge onto one provider, which is the arrangement
 # require_independent_judge() exists to prevent. Groq's free tier is far larger
 # and its keys are separate, so the judge stays independent and stays funded.
-DEFAULT_DEPLOY_GENERATOR = "groq:llama-3.3-70b-versatile"
+#
+# The model was chosen by probing the key rather than from memory: Groq's
+# catalogue had moved on and the llama-3.3 name assumed here did not exist on
+# it. Of what was actually reachable, this one answered a grounded RAG prompt
+# correctly in 1.3s. qwen3.6 was rejected for leaking <think> blocks into the
+# answer; groq/compound for taking three times as long to do the same job.
+DEFAULT_DEPLOY_GENERATOR = "groq:openai/gpt-oss-120b"
 # HyDE runs once per query and its output is thrown away after embedding, so
 # the small model that fits the card entirely is the right one: it needs the
 # legal register, not the reasoning.
