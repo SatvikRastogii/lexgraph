@@ -1,0 +1,29 @@
+# Deployment dependencies.
+#
+# Deliberately smaller than requirements.txt. The hosted build serves queries;
+# it does not index a knowledge graph, and carrying the machinery for that
+# would cost minutes of cold start and hundreds of megabytes for code paths
+# nothing reaches.
+#
+# Dropped, and why:
+#   graphrag   the index is built offline and committed as parquet. The hosted
+#              app reads those files; it never runs the pipeline that made them.
+#   lancedb    only GraphRAG's own query engine uses it, and that path is
+#              disabled under LEXGRAPH_DEPLOY (no GPU, minutes per query).
+#   chromadb   replaced by a 1.9MB committed matrix and numpy. At 1,384 chunks
+#              an approximate index was not earning a server.
+#   tiktoken, beautifulsoup4, tqdm, prometheus-client
+#              scraping, indexing and metrics, none of which run here.
+
+streamlit>=1.30
+pandas>=2.3,<3
+numpy>=1.24
+pyarrow>=22,<23          # reads the committed GraphRAG parquets
+plotly>=5.18
+networkx>=3.0
+requests>=2.31
+
+# Retrieval. Both are ONNX on CPU: no GPU, no model server, no API quota.
+# fastembed supplies query embeddings (~6ms); flashrank does the reranking.
+fastembed>=0.8
+flashrank>=0.2

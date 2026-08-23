@@ -4,11 +4,18 @@ venv/
 env/
 .venv/
 
-# GraphRAG build artifacts (regenerable; gigabytes)
-output/
+# GraphRAG build artifacts. The parquets are the exception: they are 5.5MB
+# total, they take hours of LLM extraction to regenerate, and the deployed app
+# reads them directly for the graph, timeline and analytics views. Everything
+# else here (LanceDB stores, caches, our own embedding npz) is regenerable in
+# minutes and stays out.
+#
+# `output/*` rather than `output/`, because git cannot re-include a file whose
+# parent directory is excluded.
+output/*
+!output/*.parquet
 cache/
 logs/
-*.parquet
 *.log
 
 # Vector store (device-specific, regenerable via scripts/build_index.py)

@@ -474,6 +474,24 @@ GRAPHRAG_TIMEOUT = int(os.getenv("GRAPHRAG_QUERY_TIMEOUT", "600"))
 def run_graphrag_query(query, method="local"):
     """Run graphrag query via subprocess."""
     import subprocess
+
+    if DEPLOY_MODE:
+        # This shells out to the graphrag CLI, which drives many sequential
+        # local LLM calls. There is no Ollama on the host and global search
+        # takes minutes even when there is, so offering it would be a button
+        # that times out. The measured result is more useful than the demo:
+        # graph-community retrieval scores 0.474 R@5 against hybrid-rerank's
+        # 0.879 and is the only difference in the ablation large enough for
+        # the gold set to establish at all.
+        return (
+            "GraphRAG's own query engine is not available in the hosted demo: "
+            "it drives many sequential local LLM calls and needs a GPU.\n\n"
+            "Its retrieval is measured instead, on the same gold set as "
+            "everything else — see the Benchmark tab. Community-report "
+            "retrieval scores 0.474 Recall@5 against hybrid-rerank's 0.879, "
+            "which is the one difference this gold set can establish."
+        )
+
     try:
         result = subprocess.run(
             ["graphrag", "query", "--root", ".", "--method", method, query],
@@ -502,6 +520,57 @@ def run_graphrag_query(query, method="local"):
 RETRIEVAL_CONFIG = os.getenv("LEXGRAPH_RETRIEVER", "hybrid-rerank")
 GENERATOR_SPEC = os.getenv("LEXGRAPH_GENERATOR", "ollama:llama3.1")
 
+# ─── DEPLOYMENT MODE ─────────────────────────────────────────────────────────
+#
+# A public URL on a free-tier key is a quota one visitor can drain, after which
+# everyone who follows sees a 429. So the hosted build answers the gold-set
+# questions from precomputed results — instant, free, and identical to what the
+# live pipeline produces, because that is what produced them — and keeps live
+# generation behind a small per-session budget for anyone who wants to confirm
+# it really runs.
+#
+# The retrieval half stays live either way: embeddings are ONNX on CPU with no
+# quota at all, so the sources, scores and citation checks shown beside a
+# replayed answer are computed on the spot rather than replayed with it.
+DEPLOY_MODE = os.getenv("LEXGRAPH_DEPLOY", "").lower() in {"1", "true", "yes"}
+LIVE_QUERY_BUDGET = int(os.getenv("LEXGRAPH_LIVE_BUDGET", "5"))
+REPLAY_PATH = os.path.join("data", "replay.json")
+
+
+@st.cache_resource
+def get_replay():
+    """Precomputed answers, keyed by question text. Empty when absent."""
+    try:
+        with open(REPLAY_PATH, encoding="utf-8") as handle:
+            return json.load(handle)
+    except (OSError, ValueError):
+        return {"answers": {}}
+
+
+def replay_lookup(question):
+    """The stored answer for this question, matched loosely on whitespace/case."""
+    answers = get_replay().get("answers", {})
+    if question in answers:
+        return answers[question]
+    normalised = " ".join(question.lower().split())
+    for stored, record in answers.items():
+        if " ".join(stored.lower().split()) == normalised:
+            return record
+    return None
+
+
+def live_budget_remaining():
+    """Live generations left this session.
+
+    Per session rather than global: it protects the shared quota from any one
+    visitor without a server-side counter, and a visitor who wants more can
+    reload. It is a courtesy limit, not a security boundary, and is not
+    pretending otherwise.
+    """
+    if "live_queries_used" not in st.session_state:
+        st.session_state.live_queries_used = 0
+    return max(0, LIVE_QUERY_BUDGET - st.session_state.live_queries_used)
+
 def _abstention_threshold(config):
     """Read the calibrated refusal threshold for this retriever.
 
@@ -513,8 +582,16 @@ def _abstention_threshold(config):
     Returns None when no calibration exists for this configuration, which
     disables abstention rather than applying a threshold from a different
     score scale — BM25's sits above 20, dense's near 0.75.
+
+    The deployment reads its own file. Its embedder is a different model on a
+    different scale (hybrid-rerank calibrates to 0.045 there against 0.813
+    locally), and reusing one number across both would refuse almost
+    everything on one of them while looking perfectly reasonable in the source.
     """
-    path = os.path.join("reports", "abstention_calibration.json")
+    path = os.path.join(
+        "reports",
+        "abstention_deploy.json" if DEPLOY_MODE else "abstention_calibration.json",
+    )
     try:
         with open(path, encoding="utf-8") as handle:
             return json.load(handle)[config]["threshold"]
@@ -540,7 +617,54 @@ def get_generator():
     return get_client(GENERATOR_SPEC)
 
 
-def run_vector_query(query):
+def run_replayed_query(query, record):
+    """A stored answer, with its retrieval recomputed live.
+
+    Only generation is replayed. Retrieval runs for real -- ONNX embeddings on
+    CPU have no quota and take milliseconds -- so the sources, scores and
+    citation check shown beside the answer describe this run rather than the
+    run that produced the text. That keeps the demo honest about which half is
+    cached, and means the retrieval panel is still a live demonstration.
+    """
+    from lexgraph.guardrails.citations import verify_citations
+
+    started = time.time()
+    try:
+        hits = get_retriever().search(query, 5)
+    except Exception:  # noqa: BLE001 - fall back to the stored provenance
+        hits = []
+    retrieval_ms = (time.time() - started) * 1000
+
+    if hits:
+        sources = [
+            {
+                "source": hit.doc_id,
+                "year": hit.year,
+                "similarity": round(hit.score, 4),
+                "citation": hit.citation,
+            }
+            for hit in hits
+        ]
+        citations = verify_citations(record["answer"], [h.text for h in hits])
+        unsupported = citations.unsupported
+    else:
+        sources = [{"source": s, "year": "", "similarity": 0.0, "citation": s}
+                   for s in record.get("sources", [])]
+        unsupported = record.get("citations", {}).get("unsupported", [])
+
+    return {
+        "answer": record["answer"],
+        "confidence": record.get("confidence") or 0.0,
+        "sources": sources,
+        "latency": {"retrieval_ms": round(retrieval_ms, 1), "generation_ms": 0.0,
+                    "total_ms": round(retrieval_ms, 1)},
+        "abstained": record.get("abstained", False),
+        "unsupported_citations": unsupported,
+        "replayed": True,
+    }
+
+
+def run_vector_query(query, allow_live=True):
     """Run the vector-retrieval pipeline.
 
     Delegates to lexgraph rather than reimplementing retrieval and prompting
@@ -550,6 +674,25 @@ def run_vector_query(query):
     GraphRAG panel beside it were answering from different corpora.
     """
     from lexgraph.generation import answer_question
+
+    if DEPLOY_MODE:
+        record = replay_lookup(query)
+        # Prefer the stored answer whenever one exists, even with budget left:
+        # it is the same pipeline's output and spending quota to reproduce it
+        # buys nothing.
+        if record is not None:
+            return run_replayed_query(query, record)
+        if not allow_live or live_budget_remaining() <= 0:
+            return {
+                "answer": (
+                    "This question is not in the precomputed set, and the live "
+                    "budget for this session is used up. Reload to reset it, or "
+                    "pick one of the gold-set questions to see a full answer."
+                ),
+                "confidence": 0.0, "sources": [], "latency": {},
+                "abstained": True, "unsupported_citations": [], "replayed": False,
+            }
+        st.session_state.live_queries_used = st.session_state.get("live_queries_used", 0) + 1
 
     try:
         generated = answer_question(
@@ -577,6 +720,7 @@ def run_vector_query(query):
             "unsupported_citations": (
                 generated.citations.unsupported if generated.citations else []
             ),
+            "replayed": False,
         }
     except Exception as e:
         return {
@@ -586,6 +730,7 @@ def run_vector_query(query):
             "latency": {},
             "abstained": False,
             "unsupported_citations": [],
+            "replayed": False,
         }
 
 
