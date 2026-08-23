@@ -1,9 +1,16 @@
 # Deploying LexGraph
 
-Two targets. Hugging Face Spaces is the primary one; Streamlit Community Cloud
-is the fallback and needs one extra step because it insists on `requirements.txt`.
+Two targets, both free, neither needing a GPU, an Ollama server, or a re-index.
 
-Neither needs a GPU, an Ollama server, or a re-index.
+**Streamlit Community Cloud** is the path to take — the `streamlit-deploy`
+branch is ready and the whole thing is four clicks and one secrets block.
+**Hugging Face Spaces** is documented below it and is the better host if the
+app ever outgrows 1GB of memory.
+
+The configuration was verified before either was written: a clean virtualenv
+containing only `requirements-deploy.txt`, the app booted in it, and a gold-set
+question answered end to end in the browser. That found four bugs that no
+amount of reading would have — see the commit history.
 
 ## What had to change first
 
@@ -48,6 +55,69 @@ for the other produces a plausible number that refuses the wrong questions.
 
 All three outputs are committed.
 
+## Streamlit Community Cloud
+
+Streamlit Cloud installs from `requirements.txt` at the repository root and
+offers no way to point it elsewhere. The full file pulls `graphrag`, `lancedb`
+and `chromadb`, none of which the deployment uses and which together will not
+fit in the free tier's memory.
+
+The **`streamlit-deploy` branch** exists for exactly this. It is `main` plus two
+files — `requirements.txt` (a copy of `requirements-deploy.txt`) and
+`runtime.txt` pinning Python 3.11 — so `main` stays honest about what the
+project actually depends on.
+
+### Steps
+
+1. Go to <https://share.streamlit.io> and sign in with GitHub.
+2. **Create app → Deploy a public app from GitHub**.
+3. Repository `SatvikRastogii/lexgraph`, branch **`streamlit-deploy`**, main
+   file **`app.py`**.
+4. Open **Advanced settings → Secrets** and paste the block below.
+5. Deploy. The first boot installs dependencies and downloads the embedding and
+   reranking weights (~150MB), so it takes a few minutes; later boots are fast.
+
+### Secrets
+
+Everything goes in this one box. Streamlit Cloud has **no environment-variable
+UI**, which is why `app.py` copies these into `os.environ` at startup — without
+that the app would silently run the local configuration and fail on the first
+query.
+
+```toml
+GOOGLE_API_KEY = "your-key"
+
+LEXGRAPH_DEPLOY = "1"
+LEXGRAPH_DENSE_BACKEND = "numpy"
+LEXGRAPH_EMBEDDER = "fastembed"
+LEXGRAPH_RETRIEVER = "hybrid-rerank"
+LEXGRAPH_GENERATOR = "gemini:gemini-3-flash-preview"
+LEXGRAPH_LIVE_BUDGET = "5"
+```
+
+Only `GOOGLE_API_KEY` is a secret in the real sense; the rest are configuration
+that has nowhere else to live on this host. Without the key everything still
+works except live generation of questions outside the gold set.
+
+### Keeping it current
+
+```bash
+git checkout streamlit-deploy
+git rebase main
+git push --force-with-lease origin streamlit-deploy
+```
+
+Streamlit Cloud redeploys on push. Nothing but those two files differs, so the
+rebase should never conflict.
+
+### Memory
+
+The free tier gives about 1GB. The slim set stays well inside it: no `torch`,
+no `chromadb`, no `graphrag`. Both models are ONNX and the vector store is a
+1.9MB array. If it is ever tight, `LEXGRAPH_RETRIEVER = "hybrid"` drops the
+cross-encoder — but that configuration has its own calibrated threshold, and
+using `hybrid-rerank`'s would be meaningless.
+
 ## Hugging Face Spaces
 
 1. Create a Space: **SDK = Docker**, hardware = CPU basic (free).
@@ -61,42 +131,6 @@ All three outputs are committed.
 
 The image downloads the embedding and reranking weights at build time, so the
 first visitor does not pay ~30s of model download while watching.
-
-## Streamlit Community Cloud
-
-Streamlit Cloud installs from `requirements.txt` at the repository root and
-offers no way to point it elsewhere. The full file pulls `graphrag`, `lancedb`
-and `chromadb`, none of which the deployment uses and which together will not
-fit in the free tier's memory.
-
-So deploy from a branch where the slim file *is* `requirements.txt`:
-
-```bash
-git checkout -b streamlit-deploy
-cp requirements-deploy.txt requirements.txt
-git commit -am "Slim dependencies for Streamlit Cloud"
-git push origin streamlit-deploy
-```
-
-Point the app at that branch, `app.py`. Then under **Advanced settings**:
-
-```toml
-# secrets
-GOOGLE_API_KEY = "..."
-
-# environment
-LEXGRAPH_DEPLOY = "1"
-LEXGRAPH_DENSE_BACKEND = "numpy"
-LEXGRAPH_EMBEDDER = "fastembed"
-LEXGRAPH_GENERATOR = "gemini:gemini-3-flash-preview"
-```
-
-`_google_api_key()` reads `st.secrets` as well as the environment, so the key
-resolves either way.
-
-Rebase the branch on `main` when you want it to pick up changes; keeping the
-one-line difference is deliberate, so `main` stays honest about what the
-project actually depends on.
 
 ## Environment reference
 
