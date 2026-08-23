@@ -488,21 +488,29 @@ def route_query(query, router, _unused=None):
     took the fallback, and the fallback pointed at the one pipeline the host
     cannot run. The result was a demo that routed everything to GraphRAG and
     returned no answer, with nothing in the UI to say why.
+
+    Returns ``(served_route, confidence, classified_route)``. The two differ
+    only when the router asked for a pipeline this host cannot run, and the
+    caller is expected to say so rather than present the substitution as the
+    router's own decision -- an earlier version returned just the served route,
+    so a query the router sent to GRAPH displayed as "ROUTED -> NAIVE RAG" and
+    the router looked as though it never chose GRAPH at all.
     """
     default = "NAIVE" if DEPLOY_MODE else "GRAPH"
     if router is None:
-        return default, 0.5
+        return default, 0.5, default
     try:
         decision = router.classify(query)
     except Exception:  # noqa: BLE001
-        return default, 0.5
+        return default, 0.5, default
 
     # GraphRAG's own engine is unavailable here, and by this project's own
-    # measurement its retrieval is the weaker of the two anyway. Honour the
-    # classification in the telemetry and answer with the pipeline that works.
+    # measurement its retrieval is the weaker of the two anyway. Serve with the
+    # pipeline that works, and report both routes so the substitution is
+    # visible.
     if DEPLOY_MODE and decision.route == "GRAPH":
-        return "NAIVE", decision.confidence
-    return decision.route, decision.confidence
+        return "NAIVE", decision.confidence, "GRAPH"
+    return decision.route, decision.confidence, decision.route
 
 
 # ─── GRAPHRAG QUERY (via CLI) ────────────────────────────────────────────────
@@ -1105,7 +1113,7 @@ with tab_query:
         with st.spinner("🧭 Routing query via Semantic Embedding Router..."):
             router = init_router_embeddings()
             route_start = time.perf_counter()
-            route, route_conf = route_query(query, router)
+            route, route_conf, classified = route_query(query, router)
             route_ms = round((time.perf_counter() - route_start) * 1000, 1)
 
         # Override
@@ -1117,11 +1125,25 @@ with tab_query:
         elif force_pipeline == "Run Both (Compare)":
             run_both = True
 
-        # Display routing decision
-        if route == "NAIVE":
-            st.markdown(f'<span class="tag-naive">ROUTED → NAIVE RAG</span> &nbsp; Latency: {route_ms}ms', unsafe_allow_html=True)
-        else:
-            st.markdown(f'<span class="tag-graph">ROUTED → GRAPHRAG</span> &nbsp; Latency: {route_ms}ms', unsafe_allow_html=True)
+        # Display routing decision. The router's own classification, not
+        # whatever the host was able to serve -- those differ under deploy, and
+        # showing only the second made the router look as though it never chose
+        # GRAPH.
+        tag = "tag-naive" if classified == "NAIVE" else "tag-graph"
+        label = "NAIVE RAG" if classified == "NAIVE" else "GRAPHRAG"
+        st.markdown(
+            f'<span class="{tag}">ROUTED → {label}</span> &nbsp; '
+            f'confidence {route_conf:.2f} &nbsp; Latency: {route_ms}ms',
+            unsafe_allow_html=True,
+        )
+        if classified != route:
+            st.caption(
+                f"The router chose {label}, but GraphRAG's query engine needs a "
+                f"GPU and is not available on this host — answered with the "
+                f"vector pipeline instead. Its retrieval is scored against the "
+                f"same gold set in the Benchmark tab, where community-report "
+                f"retrieval reaches 0.474 Recall@5 against hybrid-rerank's 0.879."
+            )
 
         st.markdown("")
 
