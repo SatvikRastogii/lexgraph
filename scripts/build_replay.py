@@ -138,8 +138,11 @@ def main():
             "id": question["id"],
             "answer": result.answer,
             "abstained": result.abstained,
+            # Source filenames, not the retrieved text. The app recomputes
+            # retrieval live when replaying an answer, so storing the passages
+            # would be 860KB of committed duplication of something already
+            # derivable -- and would go stale against the index besides.
             "sources": result.sources,
-            "contexts": result.contexts,
             "citations": {
                 "supported": result.citations.supported if result.citations else [],
                 "unsupported": result.citations.unsupported if result.citations else [],

@@ -528,6 +528,50 @@ docker compose up --build
 
 ---
 
+## Deploying it
+
+`deploy/DEPLOY.md` has the full procedure. The short version is that nothing
+here was deployable, and the three blockers were worth fixing rather than
+working around:
+
+| blocker | resolution |
+|---|---|
+| dense retrieval called Ollama for every query embedding | ONNX on CPU — 6ms per query, no server, no quota |
+| the index was 84MB of gitignored ChromaDB | a 1.9MB committed matrix and brute-force cosine |
+| the GraphRAG tab shells out to the `graphrag` CLI | disabled when hosted; the measured result is shown instead |
+
+Gemini embeddings were the obvious answer and do not work. The free tier allows
+**1,000 embed requests per day** and counts a batch of 32 as 32 requests, so a
+1,384-chunk index does not fit inside one day's quota, and every live query
+would afterwards compete with rebuilds for what was left. Found by hitting it.
+
+Swapping the embedder is a change to the thing being measured, so it was
+measured. Against the same 65-question gold set:
+
+| | local (nomic-embed-text + Chroma) | deployed (bge-small + numpy) |
+|---|---|---|
+| nDCG@10 | 0.860 | 0.859 |
+| Recall@5 | 0.886 | 0.879 |
+| ParaR@5 | 0.805 | **0.828** |
+| p50 | 4161ms | **2316ms** |
+
+Equivalent quality, better paragraph precision, and half the latency. One thing
+did change: under the weaker base retriever, **reranking becomes statistically
+distinguishable** for the first time in this project (+0.058 nDCG,
+[+0.008, +0.114], 11 wins to 4). Reranking's value depends on how much its base
+leaves to fix, which the local numbers were too strong to show.
+
+The abstention threshold does **not** transfer between embedders — 0.045
+deployed against 0.027 locally — so the deployment carries its own calibration
+file. Verified end to end on all 65 questions: 87% of answerable questions
+answered, 50% of out-of-corpus refused, matching the calibration exactly.
+
+The hosted build answers gold-set questions from precomputed results so a public
+URL cannot drain a free-tier key. Retrieval still runs live beside them, and the
+UI says which half is which.
+
+---
+
 ## Limitations
 
 - **55 answerable questions can establish exactly one difference in the

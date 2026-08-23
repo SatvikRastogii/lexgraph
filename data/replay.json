@@ -1,0 +1,1464 @@
+{
+ "config": "hybrid-rerank",
+ "spec": "gemini:gemini-3-flash-preview",
+ "generator": "gemini:gemini-3-flash-preview -> gemini:gemini-3.5-flash -> gemini:gemini-flash-latest -> gemini:gemini-3.7-flash -> gemini:gemini-3.1-flash-lite -> gemini:gemini-3.1-flash-lite-preview",
+ "abstention_threshold": 0.045410547063996394,
+ "generated_at": "2026-08-23",
+ "answers": {
+  "If someone is being held in jail, can they complain to a court about how they are being treated inside?": {
+   "id": "h01",
+   "answer": "Based on the provided judgment extracts from **Sunil Batra vs Delhi Administration (1979)**, the answer is as follows:\n\n**1. Jurisdiction to Hear Grievances**\nThe Court has explicit jurisdiction to consider a prisoner's grievances regarding ill-treatment and the curtailment of rights within the \"incarceratory circumstances,\" even when the prisoner is not demanding release from detention (*Sunil Batra vs Delhi Administration*). The Court has the \"power and responsibility to intervene and protect the prisoner against mayhem, crude or subtle\" (*Sunil Batra vs Delhi Administration*).\n\n**2. Use of Habeas Corpus**\nThe writ of habeas corpus has undergone a \"functional expansion\" and is no longer a \"static, narrow formalistic remedy\" (*Sunil Batra vs Delhi Administration*). It can be used by a prisoner who is lawfully in custody but is being \"deprived of some right to which he is lawfully entitled even in his confinement\" or when treatment makes \"imprisonment more burdensome than the law allows\" (*Sunil Batra vs Delhi Administration*). The Court may use this writ to enforce \"in-prison humanism\" and forbid restraints heavier than what the judicial sentence carries (*Sunil Batra vs Delhi Administration*).\n\n**3. Constitutional Protections**\nPrisoners retain fundamental rights under Articles 14, 19, and 21 (*Sunil Batra vs Delhi Administration*). \n*   **Article 21:** Protects against \"mental torture, psychic pressure or physical infliction beyond the licit limits of lawful imprisonment\" (*Sunil Batra vs Delhi Administration*).\n*   **Article 19:** Protects the \"right to society of fellow-men, parents and other family members,\" which cannot be denied except for security and discipline (*Sunil Batra vs Delhi Administration*).\n*   **Article 14:** Ensures that any \"infraction of liberty\" is not dependent on \"unguided discretion\" (*Sunil Batra vs Delhi Administration*).\n\n**4. Available Remedies and Procedures**\n*   **Judicial Oversight:** District Magistrates and Sessions Judges are required to visit prisons to provide prisoners an \"effective opportunity\" to ventilate grievances and take \"suitable remedial action\" (*Sunil Batra vs Delhi Administration*).\n*   **Legal Access:** Prisoners should have \"expeditious provision for adequate facilities\" to record complaints and hold \"confidential interviews periodically with lawyers\" (*Sunil Batra vs Delhi Administration*).\n*   **Reporting Punishments:** Jail authorities must inform the Sessions Judge of any punitive action taken against a prisoner within two days (*Sunil Batra vs Delhi Administration*).\n*   **Information:** To ensure law reaches the prisoner, a \"Prisoners' Handbook\" should be available in regional languages so inmates know their rights (*Sunil Batra vs Delhi Administration*).",
+   "abstained": false,
+   "sources": [
+    "judgment_0126.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Sunil Batra v. Delhi Administration",
+     "Article 14"
+    ],
+    "unsupported": [
+     "Article 21",
+     "Article 19"
+    ],
+    "accuracy": 0.5
+   },
+   "confidence": 0.6728369573752085,
+   "latency_ms": 3610.0996000459418,
+   "answerable": true,
+   "difficulty": "hard"
+  },
+  "When an investigation drags on past the deadline the law allows, does the person being held get to go free?": {
+   "id": "h02",
+   "answer": "The indexed judgments do not contain material that answers this question, so no answer is given. Answering from the model's general knowledge would not be grounded in the corpus.",
+   "abstained": true,
+   "sources": [
+    "judgment_0127.txt",
+    "judgment_0126.txt",
+    "judgment_0002.txt"
+   ],
+   "citations": {
+    "supported": [],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.004997957559923331,
+   "latency_ms": 2028.4305999521166,
+   "answerable": true,
+   "difficulty": "hard"
+  },
+  "Is there a ceiling on how many posts can be set aside for disadvantaged groups?": {
+   "id": "h03",
+   "answer": "The indexed judgments do not contain material that answers this question, so no answer is given. Answering from the model's general knowledge would not be grounded in the corpus.",
+   "abstained": true,
+   "sources": [
+    "judgment_0214.txt",
+    "judgment_0216.txt"
+   ],
+   "citations": {
+    "supported": [],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.012250895022104184,
+   "latency_ms": 1938.874699990265,
+   "answerable": true,
+   "difficulty": "hard"
+  },
+  "Can a court reopen and correct its own final decision once every appeal has already been exhausted?": {
+   "id": "h04",
+   "answer": "Based on the provided judgment extracts from **Rupa Ashok Hurra vs Ashok Hurra & Anr (2002)**, the following principles apply to the reopening of a final decision:\n\n*   **General Principle of Finality:** The Court emphasizes the importance of the certainty of law and the finality of decisions rendered by the highest court, based on the maxim *interest reipublicae ut sit finis litium* (it is in the interest of the State that there be an end to litigation). A decision will not be varied or rescinded merely because it is subsequently thought to be wrong (**Rupa Ashok Hurra vs Ashok Hurra & Anr (2002)**).\n*   **Review Jurisdiction:** Under Article 137 of the Constitution read with Order XL Rule 1 of the Supreme Court Rules, the Court has the power to review its final judgments. However, Order XL Rule 5 specifically bars a further application for review in the same matter once a review petition has been unsuccessful (**Rupa Ashok Hurra vs Ashok Hurra & Anr (2002)**).\n*   **Second Review Petitions:** It is well-settled that a second review petition is not maintainable. In **J. Ranga Swamy v. Govt. of A.P. & Ors.**, the Court held that a petitioner is not entitled to what is \"virtually a second review\" even if the original order did not discuss all contentions or give reasons (**Rupa Ashok Hurra vs Ashok Hurra & Anr (2002)**).\n*   **Exceptions for Manifest Injustice:** Despite the bar on second reviews, the Court considers whether relief can be granted when a party complains of a \"gross abuse of the process of Court and irremedial injustice.\" The Court observed that if an order creates \"manifest injustice,\" the doctrine of *ex debito justitiae* suggests that the Court should not remain passive. Procedural law cannot overreach the concept of justice, and manifest injustice is \"curable in nature rather than incurable\" (**Rupa Ashok Hurra vs Ashok Hurra & Anr (2002)**).\n*   **Comparison with Other Jurisdictions:** The extracts note that the House of Lords will only reopen an appeal where a party, through no fault of its own, has been subjected to an \"unfair procedure\" (**Rupa Ashok Hurra vs Ashok Hurra & Anr (2002)**).\n\n**Conclusion:** While the principle of finality and the bar on second reviews normally prevent reopening a case, the Court indicates that it may find a way to resolve an erroneous approach if a final order results in \"manifest injustice\" or a \"gross abuse of the process of Court\" (**Rupa Ashok Hurra vs Ashok Hurra & Anr (2002)**).",
+   "abstained": false,
+   "sources": [
+    "judgment_0125.txt",
+    "judgment_0122.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Rupa Ashok Hurra v. Ashok Hurra",
+     "J. Ranga Swamy v. Govt.",
+     "Article 137"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.86621200243632,
+   "latency_ms": 1999.4447000790387,
+   "answerable": true,
+   "difficulty": "hard"
+  },
+  "Are people hired on a day-to-day basis by a government department protected by labour law?": {
+   "id": "h05",
+   "answer": "Based on the provided judgment extracts from **B.Nagarajan vs The Principal Secretary To Government (2018)**, the legal status and protections for people hired on a day-to-day basis (casual or daily wage labourers) by government departments are as follows:\n\n*   **No Right to Regularization or Permanent Absorption:** The court held that daily wage appointments, consolidated pay appointments, and temporary engagements do not constitute a right for employees to claim regularization or permanent absorption (*B.Nagarajan vs The Principal Secretary To Government (2018)*). The question of regularizing \"Nominal Muster Roll\" (NMR) services does not arise because such engagements are not made based on Service Rules (*B.Nagarajan vs The Principal Secretary To Government (2018)*).\n*   **Exclusion from the \"Establishment\":** Under Paragraph 290 of the Tamil Nadu Public Works Account Code, persons engaged departmentally as day labourers are distinct from the \"establishment.\" Only permanent and temporary employees whose pay is charged to the head 'Establishment' and members of the work-charged establishment form part of the official office establishment (*B.Nagarajan vs The Principal Secretary To Government (2018)*).\n*   **Nature of Employment:** Daily labourers are engaged for specified works, and their necessity stops as and when the work is completed. They are considered \"co-terminus with the purposeful completion of the work\" and are not employed in connection with the affairs of the State as defined in Article 323-A of the Constitution (*B.Nagarajan vs The Principal Secretary To Government (2018)*).\n*   **Constitutional Protections (Articles 14 and 21):**\n    *   **Article 14:** Daily wage earners form a class by themselves and cannot claim they are discriminated against compared to regularly recruited candidates. They have no fundamental right to be treated on par with regular employees or to be absorbed in service (*B.Nagarajan vs The Principal Secretary To Government (2018)*).\n    *   **Article 21:** The court held that the State\u2019s action in not making such employees permanent does not violate Article 21. Preferring a set of temporary persons over the vast majority of qualified citizens waiting for an equal opportunity to compete for public employment would violate the constitutional scheme (*B.Nagarajan vs The Principal Secretary To Government (2018)*).\n*   **Limited Judicial Intervention:** It is \"ordinarily not proper\" for Courts acting under Article 226 or Article 32 to direct the absorption of those engaged without following the due process of selection envisaged by the constitutional scheme (*B.Nagarajan vs The Principal Secretary To Government (2018)*).\n\nThe extracts do not mention specific \"labour laws\" (such as the Industrial Disputes Act); they focus on constitutional rights and service rules. Therefore, whether they are protected by specific statutory labour laws beyond constitutional principles is not settled by these extracts.",
+   "abstained": false,
+   "sources": [
+    "judgment_0032.txt"
+   ],
+   "citations": {
+    "supported": [
+     "B.Nagarajan v. The Principal Secretary To Government",
+     "Article 323",
+     "Article 14",
+     "Article 21",
+     "Article 226",
+     "Article 32"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.23725555936495463,
+   "latency_ms": 6170.614899951033,
+   "answerable": true,
+   "difficulty": "hard"
+  },
+  "Must the government pay compensation when its officers cause a death while carrying out their duties?": {
+   "id": "h06",
+   "answer": "Based on the judgment extracts provided, the government is liable to pay compensation when its officers cause a death while carrying out their duties under the following principles:\n\n*   **Strict Liability for Fundamental Rights Violations:** The remedy for compensation under Article 32 or Article 226 is a public law remedy based on \"strict liability for contravention of fundamental rights\" (*Sunkara Satyanarayana vs State Of Andhra Pradesh*). The State must provide compensatory relief for wrongs done due to a \"breach of public duty by the State by not protecting the fundamental rights of the citizen\" (*Sunkara Satyanarayana vs State Of Andhra Pradesh*).\n*   **Inapplicability of Sovereign Immunity:** In cases involving the infringement of the right to life under Article 21, the \"defence of sovereign immunity is not available\" (*Sunkara Satyanarayana vs State Of Andhra Pradesh*). Such a defense is considered \"alien to the concept of guarantee of fundamental rights\" (*Sunkara Satyanarayana vs State Of Andhra Pradesh*).\n*   **Vicarious Liability:** The State is \"vicariously liable\" for the acts of its public servants when they infringe upon the fundamental rights of a citizen (*Sunkara Satyanarayana vs State Of Andhra Pradesh*). The Supreme Court has held that the State \"must repair the damage done by its officers to the petitioner's rights\" (*Severina Ribeiro @ Cardinho (Mrs.) vs Union Of India* quoting *Rudul Sah v. State of Bihar*).\n*   **Nature of the Remedy:** Monetary compensation is recognized as an \"appropriate and indeed an effective\" remedy for the redressal of established infringements of fundamental rights (*Sunkara Satyanarayana vs State Of Andhra Pradesh*). This public law remedy is \"distinct from, and in addition to\" traditional private law remedies like civil suits for torts (*Sunkara Satyanarayana vs State Of Andhra Pradesh*).\n*   **Right to Indemnity:** While the State must pay the citizen, it retains the \"right to be indemnified by the wrong doer\" (the officer) and may have \"recourse to those officers\" to recover the amount (*Sunkara Satyanarayana vs State Of Andhra Pradesh*; *Severina Ribeiro @ Cardinho (Mrs.) vs Union Of India*).\n\nWhile the State of Goa argued in *Severina Ribeiro @ Cardinho (Mrs.) vs Union Of India* that it was immune because the acts were \"sovereign functions\" or \"in excess of duties,\" the principles affirmed in *Sunkara Satyanarayana vs State Of Andhra Pradesh* (referencing *Nilabati Behera* and *D.K. Basu*) establish that the State is indeed liable for custodial deaths caused by its officers.",
+   "abstained": false,
+   "sources": [
+    "judgment_0005.txt",
+    "judgment_0001.txt",
+    "judgment_0028.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Sunkara Satyanarayana v. State Of Andhra Pradesh",
+     "Rudul Sah v. State",
+     "Article 32",
+     "Article 226",
+     "Article 21"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.7557762881120046,
+   "latency_ms": 7192.981100059114,
+   "answerable": true,
+   "difficulty": "hard"
+  },
+  "May a magazine publish details of a well-known person's private life without asking them first?": {
+   "id": "h07",
+   "answer": "Based on the provided judgment extracts, the following rules apply to a magazine publishing details of a well-known person's private life:\n\n*   **General Requirement for Consent:** A citizen has a right to safeguard the privacy of their own life, family, marriage, procreation, motherhood, child-bearing, and education. No one can publish matters concerning these areas without the person's consent, whether the details are truthful or otherwise, and whether they are laudatory or critical (*The Employees' Federation And Ors. vs Tvs And Sons Ltd. And Anr. (1994)*; *R.Rajagopal @ R.R.Gopal @ Nakkheeran ... vs J.Jayalalitha (2006)*).\n*   **Exceptions to Consent:**\n    *   **Public Records:** Publication is unobjectionable without consent if it is based upon public records, including Court records, as the right to privacy no longer subsists once a matter is of public record (*The Employees' Federation And Ors. vs Tvs And Sons Ltd. And Anr. (1994)*).\n    *   **Voluntary Controversy:** The requirement for consent may be different if the person voluntarily thrusts themselves into a controversy or voluntarily invites or raises one (*The Employees' Federation And Ors. vs Tvs And Sons Ltd. And Anr. (1994)*; *R.Rajagopal @ R.R.Gopal @ Nakkheeran ... vs J.Jayalalitha (2006)*).\n*   **Public Officials and Verification:**\n    *   For public officials, the right to privacy and damages are not available for acts relevant to the discharge of their official duties (*The Employees' Federation And Ors. vs Tvs And Sons Ltd. And Anr. (1994)*).\n    *   If an article relates purely to the personal life of a public official, the press must perform a \"reasonable verification of the facts\" before publishing (*R.Rajagopal @ R.R.Gopal @ Nakkheeran ... vs J.Jayalalitha (2006)*).\n    *   While prior verification is not a \"must\" in all cases, proving reasonable verification is sufficient for the media to defend its actions (*R.Rajagopal @ R.R.Gopal @ Nakkheeran ... vs J.Jayalalitha (2006)*).\n*   **Specific Procedural Directions:** In the specific case of *R.Rajagopal vs J.Jayalalitha (2006)*, the court directed the publishers to forward queries or a gist of the proposed article to the subjects. If no response is received within 36 hours, the magazine is entitled to proceed with publication.\n*   **Prior Restraint:** The State or its officials cannot impose prior restraint on such publications; the occasion for legal action (such as damages) generally arises only after publication (*The Employees' Federation And Ors. vs Tvs And Sons Ltd. And Anr. (1994)*).",
+   "abstained": false,
+   "sources": [
+    "judgment_0074.txt",
+    "judgment_0072.txt"
+   ],
+   "citations": {
+    "supported": [
+     "The Employees' Federation And Ors. v. Tvs And Sons Ltd. And Anr.",
+     "R.Rajagopal v. J.Jayalalitha"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.28113464514414466,
+   "latency_ms": 7347.053999896161,
+   "answerable": true,
+   "difficulty": "hard"
+  },
+  "What follows when an authority acts against a person without telling them what they are accused of?": {
+   "id": "h08",
+   "answer": "Based on the provided judgment extracts, the following consequences and principles apply when an authority acts against a person:\n\n*   **Liability for Compensation:** If State officials abuse their powers or act with gross negligence resulting in the deprivation of a citizen's life and liberty, the State becomes liable for compensation. State power does not grant officials a license to act contrary to law or to the detriment of citizens' life and liberty (**Severina Ribeiro @ Cardinho (Mrs.) And ... vs Union Of India (Uoi) And Ors. (1989)**).\n*   **Requirement of a Show Cause Notice:** In adjudication processes (such as those under specific Rules), there is a mandatory first stage involving the issuance of a show cause notice. This requires the person concerned to show cause why an inquiry should not be held against them. An Adjudicating Authority may only proceed to the second stage of inquiry or impose a penalty after following this procedure and considering the cause shown (**Lalit Kumar Modi vs Union Of India & Ors (2014)**).\n*   **Right to Silence and Protection Against Self-Accusation:** Under Article 20(3) of the Constitution, no person accused of an offence shall be compelled to be a witness against himself. This \"prohibitive sweep\" and the right to remain silent apply even at the stage of police interrogation and investigation, not just in court (**Aloke Nath Dutta & Ors vs State Of West Bengal (2006)**).\n*   **Limits of Compulsion:** While an authority may be legally required to ask an accused to make a defence, this does not amount to compelling the person to be a witness against themselves. If the accused chooses not to speak or make a defence to avoid self-incrimination, they cannot be compelled to do so (**Ambalal Ranchhodji Thakor vs State Of Gujarat (1996)**).\n*   **Inefficacy of Individual Remedies:** Proceeding against an official in their individual capacity is considered neither a \"practicable nor efficacious remedy,\" as officials act as agents of the State and civil actions against them may be like \"chasing a mirage\" (**Severina Ribeiro @ Cardinho (Mrs.) And ... vs Union Of India (Uoi) And Ors. (1989)**).",
+   "abstained": false,
+   "sources": [
+    "judgment_0033.txt",
+    "judgment_0005.txt",
+    "judgment_0077.txt",
+    "judgment_0215.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Lalit Kumar Modi v. Union Of India",
+     "Ors v. State Of West Bengal",
+     "Ambalal Ranchhodji Thakor v. State Of Gujarat",
+     "Article 20(3)"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.2858235617478688,
+   "latency_ms": 5995.824200101197,
+   "answerable": true,
+   "difficulty": "hard"
+  },
+  "Can a person be left waiting many years before their matter is finally decided?": {
+   "id": "h09",
+   "answer": "Based on the provided judgment extracts, the following points address whether a person can be left waiting for many years before their matter is decided:\n\n*   **Constitutional Infringement and Quashing of Proceedings:** A delay of 15 years without the commencement of a trial has been held to be an infringement of the principles guaranteed by Article 21 of the Constitution (*Shyam Narayan Singh vs State Of Maharashtra And Another*). Similarly, a delay of two decades (20 years) in investigation and trial is considered \"abnormal on its face\" and can lead to the quashing of criminal proceedings, especially where such delay prejudices the accused's defense and makes a fair trial impossible (*Chote Lal Jain vs The State Of Rajasthan*).\n*   **Impact of Delay on Trial Fairness:** Long delays (such as 20 years) can result in \"serious infirmity\" because witnesses may not remember events, evidence may be difficult to lead, and material documents may become untraceable, making the chances of ultimate conviction \"very bleak\" (*Chote Lal Jain vs The State Of Rajasthan*).\n*   **Executive Delay in Mercy Petitions:** In matters of death sentences, the Supreme Court has noted with \"helplessness and frustration\" that petitions for reprieve often remain undisposed of by the Government for a long time despite frequent reminders (*Devender Pal Singh Bhullar & Anr vs State Of Nct Of Delhi (2013)*, para 344). While the Court once suggested a \"self-imposed rule of discipline\" that mercy petitions be disposed of within three months (*K.P. Mohd.\u2019s case* cited in *Devender Pal Singh Bhullar*), it later clarified that no \"hard and fast rule\" or \"absolute or unqualified rule\" can be laid down that a specific period of delay (such as two years) automatically entitles a person to commutation (*Devender Pal Singh Bhullar & Anr vs State Of Nct Of Delhi (2013)*, para 344).\n*   **Common Experience of Litigative Delay:** The Court has acknowledged that \"common experience\" shows the litigative process generally takes a long time; for instance, four or five years often elapse between a Sessions Court's death sentence and the disposal of an appeal by the Supreme Court (*Devender Pal Singh Bhullar & Anr vs State Of Nct Of Delhi (2013)*, para 344).\n*   **Judicial Remedies for Delay:** While the Court does not hold that a death sentence becomes inexecutable merely after the lapse of a particular number of years, it has, after \"waiting for a sufficiently long period\" (e.g., four and a half years for a mercy petition), commuted death sentences to life imprisonment to address the social problems created by such delays (*Devender Pal Singh Bhullar & Anr vs State Of Nct Of Delhi (2013)*, para 28-29).",
+   "abstained": false,
+   "sources": [
+    "judgment_0124.txt",
+    "judgment_0008.txt",
+    "judgment_0002.txt",
+    "judgment_0034.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Shyam Narayan Singh v. State Of Maharashtra And Another",
+     "Chote Lal Jain v. The State Of Rajasthan",
+     "Anr v. State Of Nct Of Delhi",
+     "Article 21"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.09154397969444591,
+   "latency_ms": 6965.646600117907,
+   "answerable": true,
+   "difficulty": "hard"
+  },
+  "Should a person facing the gravest possible punishment be heard aloud when asking the court to think again?": {
+   "id": "h10",
+   "answer": "Based on the provided judgment extracts, the position regarding oral hearings for persons facing the death penalty is as follows:\n\n*   **Mandatory Oral Hearing:** In cases involving the death penalty, a \"reasonable procedure\" under Article 21 of the Constitution encompasses an oral hearing of review petitions. This is because the death penalty is irreversible, and the fundamental right to life demands a procedure that is just, fair, and reasonable (*Mohd. Arif @ Ashfaq vs The Reg. Supreme Court Of India & Ors (2014)*).\n*   **Justification for the Hearing:** Even though the scope of review may be narrow after affirmation by two lower courts, the \"question of life and death\" and even a \"remote chance of deviating\" from the original decision justifies an oral hearing (*Mohd. Arif @ Ashfaq vs The Reg. Supreme Court Of India & Ors (2014)*).\n*   **Nature of the Hearing:** The court recognized that review petitions arising out of death sentences are a \"separate category\" from general review petitions (where no oral hearing is generally required). The court emphasized the \"magic of the spoken word\" and the \"clarity of the bar-Bench dialogue\" as precious elements of this process (*Mohd. Arif @ Ashfaq vs The Reg. Supreme Court Of India & Ors (2014)*).\n*   **Limitations:** The court specified that this should be a \"limited oral hearing.\" In one instance, the court directed that a pending review petition be heard by a bench of three Judges with a maximum of 30 minutes for oral argument (*Mohd. Arif @ Ashfaq vs The Reg. Supreme Court Of India & Ors (2014)*).\n*   **Dissenting View:** It should be noted that there was a disagreement expressed in the extracts regarding whether this obligation must \"compulsorily\" extend to every case where a condemned convict seeks a review (*Mohd. Arif @ Ashfaq vs The Reg. Supreme Court Of India & Ors (2014)*).",
+   "abstained": false,
+   "sources": [
+    "judgment_0006.txt",
+    "judgment_0004.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Ashfaq v. The Reg. Supreme Court Of India",
+     "Article 21"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.42802932659784954,
+   "latency_ms": 6200.624199933372,
+   "answerable": true,
+   "difficulty": "hard"
+  },
+  "Can the police keep a permanent watch file on a man who finished serving his sentence years ago?": {
+   "id": "h11",
+   "answer": "The indexed judgments do not contain material that answers this question, so no answer is given. Answering from the model's general knowledge would not be grounded in the corpus.",
+   "abstained": true,
+   "sources": [
+    "judgment_0001.txt"
+   ],
+   "citations": {
+    "supported": [],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.016956901426116625,
+   "latency_ms": 2107.543700025417,
+   "answerable": true,
+   "difficulty": "hard"
+  },
+  "Is it fair to make an accused person disprove the case against him rather than have the state prove it?": {
+   "id": "h12",
+   "answer": "Based on the provided judgment extracts, the position regarding an accused person proving facts or disproving a case is as follows:\n\n*   **Fairness of Proving Exceptions:** It is considered the \"most fair proposal or provision\" for the law to require an accused to prove facts that bring their case within an exception or make out a defence, because such facts are in the \"special knowledge of the accused\" and are \"known by the accused alone\" (*Ambalal Ranchhodji Thakor vs State Of Gujarat (1996)*, para 16). Examples include defences of insanity, minority, mental incapacity, or compulsion (*Ambalal Ranchhodji Thakor vs State Of Gujarat (1996)*, para 16).\n*   **Legislative Competence and Presumptions:** It is within the \"legislative competence to provide for presumption, be it against the accused\" (*Ambalal Ranchhodji Thakor vs State Of Gujarat (1996)*, para 17). For instance, under the N.D.P.S. Act, if a person is found in possession of a narcotic drug, the burden of proving it was for personal consumption rather than sale lies on that person (*Ambalal Ranchhodji Thakor vs State Of Gujarat (1996)*, para 17).\n*   **No Compulsion to be a Witness:** Requiring an accused to make a defence or prove an exception does not amount to compelling them to be a witness against themselves under Article 20(3) of the Constitution (*Ambalal Ranchhodji Thakor vs State Of Gujarat (1996)*, para 17). The accused is not \"compelled\" to make a defence; they may choose to do so to avoid the risk of punishment or to seek the benefit of a lesser punishment (*Ambalal Ranchhodji Thakor vs State Of Gujarat (1996)*, paras 16, 17).\n*   **Methods of Proof:** An accused does not necessarily need to lead independent evidence to prove an exception; they can prove it by \"bringing certain facts through the prosecution evidence\" (*Ambalal Ranchhodji Thakor vs State Of Gujarat (1996)*, para 16).\n*   **Fair Trial Standards:** A trial may be rendered unfair if the state fails to provide the accused with necessary documents, such as copies of police statements, especially after a long lapse of time, as this prevents the accused from having an adequate opportunity to defend themselves (*Chote Lal Jain vs The State Of Rajasthan (1991)*, paras 10, 11).",
+   "abstained": false,
+   "sources": [
+    "judgment_0033.txt",
+    "judgment_0002.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Ambalal Ranchhodji Thakor v. State Of Gujarat",
+     "Chote Lal Jain v. The State Of Rajasthan",
+     "Article 20(3)"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.9076271533966064,
+   "latency_ms": 6790.664599975571,
+   "answerable": true,
+   "difficulty": "hard"
+  },
+  "After the country became a republic, could a law inherited from colonial rule still be used to send someone abroad to face trial?": {
+   "id": "h13",
+   "answer": "Based on the provided judgment extracts, the position regarding the use of colonial-era laws to send individuals abroad for trial after India became a Republic is as follows:\n\n*   **Continued Validity of Colonial Law:** Even after India became a Sovereign Democratic Republic on January 26, 1950, the **Fugitive Offenders Act, 1881** (a law inherited from colonial rule) continued to be part of the statutory law of the territories that were formerly British India (*In Re: C.G. Menon And Anr. vs Unknown*, para 26).\n*   **Constitutional Consistency Required:** While the Act remained part of the statutory law, its \"continued validity after the commencement of the Constitution\" was a separate question (*In Re: C.G. Menon And Anr. vs Unknown*, para 26). Any provision of such a law must not be repugnant to the Constitution (*In Re: C.G. Menon And Anr. vs Unknown*, para 1).\n*   **Voidance under Article 14:** It was specifically held that **Section 14 of the Fugitive Offenders Act, 1881** is inconsistent with the fundamental right of equal protection of the laws guaranteed by **Article 14** of the Constitution. Consequently, it is \"void and unenforceable\" against petitioners seeking to avoid being sent abroad for trial (*In Re: C.G. Menon And Anr. vs Unknown*, para 43-2).\n*   **Basis of Discrimination:** The court noted that while other extradition laws (such as the Extradition Act of 1870 or the Indian Extradition Act of 1903) required prima facie evidence of guilt before surrendering a fugitive, Section 14 of the Fugitive Offenders Act did not. This lack of uniform protection across different extradition laws allowed the validity of Section 14 to be successfully attacked (*In Re: C.G. Menon And Anr. vs Unknown*, para 30-31).\n*   **Classification Issues:** Although geographical contiguity and frequency of intercommunication (e.g., between India and Singapore) provided a \"real and substantial basis\" for classifying territories under the Act, this did not save provisions that violated fundamental rights (*In Re: C.G. Menon And Anr. vs Unknown*, para 26).\n\nIn summary, while the inherited law technically remained on the books, specific provisions used to send persons abroad (like Section 14 of the Fugitive Offenders Act) were declared **void and unenforceable** because they violated the constitutional guarantee of equal protection under Article 14 (*In Re: C.G. Menon And Anr. vs Unknown*, para 43-2).",
+   "abstained": false,
+   "sources": [
+    "judgment_0035.txt",
+    "judgment_0128.txt"
+   ],
+   "citations": {
+    "supported": [
+     "C.G. Menon And Anr. v. Unknown",
+     "Article 14",
+     "Section 14"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.0734381103888154,
+   "latency_ms": 6875.4694000817835,
+   "answerable": true,
+   "difficulty": "hard"
+  },
+  "May the state take over and run a landowner's property because it thinks he cannot manage it himself?": {
+   "id": "h14",
+   "answer": "Based on the provided judgment extracts, the state may take over and run a landowner's property under the following conditions and legal principles:\n\n*   **Statutory Authority for Management:** Under Section 5(2) of the Punjab Court of Wards Act II of 1903, the Provincial Government may make an order to assume superintendence of a landholder's property if it appears that the landholder is \"incapable of managing or unfitted to manage his affairs\" (**Raja Harmahendra Singh vs The Punjab State And Anr.**).\n*   **Legitimate Grounds for Takeover:** The state may justify such action on grounds that the owner is neglecting the property, making \"undue exactions from his tenants,\" failing to pay allowances to dependents, or entering upon a \"course of wasteful extravagance\" that is likely to dissipate the property (**Raja Harmahendra Singh vs The Punjab State And Anr.**).\n*   **Reasonable Classification:** The classification of persons for the purpose of protecting land revenue or protecting persons \"incapable of managing the estates\" or those having \"habits of wasteful extravagance\" is considered a \"reasonable classification\" (**Raja Harmahendra Singh vs The Punjab State And Anr.**).\n*   **Threefold Object of Disqualification:** The object of such a takeover (disqualification) is to:\n    1. Protect persons incapable of managing their own affairs;\n    2. Prevent the \"dissipation of the property\";\n    3. Enable land revenue to be \"more easily and more certainly collected\" (**Raja Harmahendra Singh vs The Punjab State And Anr.**, citing *Bhagwan Baksh Singh v. Secretary of State for India*).\n*   **Nature of the Act:** The assumption of superintendence by the Government is considered an \"executive action\" rather than a judicial or quasi-judicial act. The relevant Act does not require the state to furnish a detailed statement of grounds to the ward or provide an opportunity to show cause before assuming superintendence (**Raja Harmahendra Singh vs The Punjab State And Anr.**).\n*   **Constitutional Requirement:** Under Article 31(1) of the Constitution, no person shall be deprived of his property \"save by authority of law\" (**State vs Sheshappa Dudhappa Tambade**).",
+   "abstained": false,
+   "sources": [
+    "judgment_0030.txt",
+    "judgment_0005.txt",
+    "judgment_0003.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Raja Harmahendra Singh v. The Punjab State And Anr.",
+     "Bhagwan Baksh Singh v. Secretary",
+     "State v. Sheshappa Dudhappa Tambade",
+     "Section 5(2)"
+    ],
+    "unsupported": [
+     "Article 31(1)"
+    ],
+    "accuracy": 0.8
+   },
+   "confidence": 0.6030483928819497,
+   "latency_ms": 6407.10890002083,
+   "answerable": true,
+   "difficulty": "hard"
+  },
+  "Which level of magistrate is competent to try a complaint about caste-based exclusion?": {
+   "id": "h15",
+   "answer": "The indexed judgments do not contain material that answers this question, so no answer is given. Answering from the model's general knowledge would not be grounded in the corpus.",
+   "abstained": true,
+   "sources": [
+    "judgment_0031.txt",
+    "judgment_0126.txt",
+    "judgment_0216.txt"
+   ],
+   "citations": {
+    "supported": [],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.011813996049265066,
+   "latency_ms": 2405.680099967867,
+   "answerable": true,
+   "difficulty": "hard"
+  },
+  "Can parents and teachers ask a court to strike down what a school board decided children should be taught?": {
+   "id": "h16",
+   "answer": "The indexed judgments do not contain material that answers this question, so no answer is given. Answering from the model's general knowledge would not be grounded in the corpus.",
+   "abstained": true,
+   "sources": [
+    "judgment_0071.txt",
+    "judgment_0217.txt"
+   ],
+   "citations": {
+    "supported": [],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.005332393137117227,
+   "latency_ms": 2540.979200042784,
+   "answerable": true,
+   "difficulty": "hard"
+  },
+  "Can a company stop its own workers from circulating material that damages its reputation?": {
+   "id": "h17",
+   "answer": "Based on the provided judgment extracts from **The Employees' Federation And Ors. vs Tvs And Sons Ltd. And Anr. (1994)**, the following legal propositions apply:\n\n*   **Right to Sue for Damages:** A trading company can maintain a suit for damages if there are imputations that defame it (*Tvs Employees' Federation And Others vs Tvs And Sons Ltd. And Another (1994)*, para 26). This applies when defamatory imputations affect its business or describe the company in a way that causes it to lose regard before its employees and others (*The Employees' Federation And Ors. vs Tvs And Sons Ltd. And Anr. (1994)*, para 28).\n*   **Standard for Defamation:** To succeed, a company must show that the defamatory matters have caused, or have a tendency to cause, damage to its business, or are likely to affect its reputation as an employer (*The Employees' Federation And Ors. vs Tvs And Sons Ltd. And Anr. (1994)*, para 12). Under Section 499 of the Indian Penal Code, it may amount to defamation to make an imputation concerning a company (*Tvs Employees' Federation And Others vs Tvs And Sons Ltd. And Another (1994)*, para 26).\n*   **Availability of Injunctions:** While a company can sue for damages, a suit for a permanent injunction to stop the circulation of material is only maintainable in \"exceptional cases\" (*The Employees' Federation And Ors. vs Tvs And Sons Ltd. And Anr. (1994)*, para 12). \n*   **Requirements for an Injunction:** The court questioned whether an injunction can be maintained without the specific contents of the material (such as a film) being before the court for scrutiny (*Tvs Employees' Federation And Others vs Tvs And Sons Ltd. And Another (1994)*, para 26). A mere allegation of \"malicious intention of maligning the reputation\" without disclosing the specific defamatory imputation in the pleadings is insufficient (*The Employees' Federation And Ors. vs Tvs And Sons Ltd. And Anr. (1994)*, para 28).\n*   **Constitutional Limitations:** Any restriction on the circulation of material must be balanced against the right to freedom of speech and expression under Article 19(1)(a). While defamation is an exception under Article 19(2), the threat of civil action for defamation can have an \"inhibiting effect on freedom of speech\" (*The Employees' Federation And Ors. vs Tvs And Sons Ltd. And Anr. (1994)*, para 11).\n*   **Public Interest and Criticism:** Bodies that discharge public functions of a governmental character should be open to \"uninhibited public criticism\" and cannot bring actions for damages for defamation as it would be contrary to public interest. However, private trading companies that are not instrumentalities of the State do have a cause of action in tort (*The Employees' Federation And Ors. vs Tvs And Sons Ltd. And Anr. (1994)*, paras 11, 28).\n\n**Conclusion:** A company can legally challenge material circulated by workers that damages its reputation through a suit for damages. However, stopping the circulation via an injunction is restricted to \"exceptional cases\" and requires the company to prove specific defamatory imputations that damage its business or reputation as an employer.",
+   "abstained": false,
+   "sources": [
+    "judgment_0078.txt",
+    "judgment_0072.txt"
+   ],
+   "citations": {
+    "supported": [
+     "The Employees' Federation And Ors. v. Tvs And Sons Ltd. And Anr.",
+     "Tvs Employees' Federation And Others v. Tvs And Sons Ltd. And Another",
+     "Article 19(1)(a)",
+     "Article 19(2)",
+     "Section 499"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.3521738121906916,
+   "latency_ms": 7852.729400037788,
+   "answerable": true,
+   "difficulty": "hard"
+  },
+  "If a public office turns down a request for records, does it have to say why?": {
+   "id": "h18",
+   "answer": "Based on the provided judgment extracts, the following rules apply regarding a public office's obligation to provide reasons when turning down a request for records:\n\n*   **Obligation to explain how disclosure hampers processes:** A public authority cannot reject a request for information without disclosing how the investigation process would be hampered by sharing the materials. Rejection is untenable if the authorities have not applied their mind to the nature of the information sought and failed to provide reasons as to how such disclosure would impede investigation (*Bhagat Singh vs Chief Information Commissioner And ... (2007)*).\n*   **Requirement for specific reasoning:** Orders from authorities that do not reflect any reasons as to why an investigation process would be hampered are considered \"facially\" unsupported and the claims for exemption in such cases are \"untenable\" (*Bhagat Singh vs Chief Information Commissioner And ... (2007)*).\n*   **Adverse Inference for non-production:** If a public authority does not produce a document despite being called upon to do so by a court, an adverse inference is to be drawn against that authority (*Aloke Nath Dutta & Ors vs State Of West Bengal (2006)*).\n*   **Evidence of destruction:** If records are unavailable because they have been destroyed, the authority should, at the very least, produce the destruction register as evidence (*Aloke Nath Dutta & Ors vs State Of West Bengal (2006)*).\n*   **Irregularity in recording reasons:** In the context of police investigations, the failure of an empowered officer to record reasons (such as under Sections 100 and 165 Cr.P.C.) while effecting a search or arrest amounts to an irregularity, the effect of which must be considered by the court when appreciating evidence (*Ambalal Ranchhodji Thakor vs State Of Gujarat (1996)*).\n*   **Administrative Rejections:** In matters of service representations, if a decision to reject a request is based on \"office records of unimpeachable character,\" the authority may not be required to provide a prior hearing, though the representation itself must be \"examined in all its aspects\" (*M.G. Sharan And Ors. vs State Of Bihar And Ors. (1968)*).",
+   "abstained": false,
+   "sources": [
+    "judgment_0215.txt",
+    "judgment_0033.txt",
+    "judgment_0073.txt",
+    "judgment_0028.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Bhagat Singh v. Chief Information Commissioner And",
+     "Ors v. State Of West Bengal",
+     "Ambalal Ranchhodji Thakor v. State Of Gujarat",
+     "M.G. Sharan And Ors. v. State Of Bihar And Ors."
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.2613021441735327,
+   "latency_ms": 6317.886099917814,
+   "answerable": true,
+   "difficulty": "hard"
+  },
+  "Can officials seize a person's travel document and keep it without telling him the reason?": {
+   "id": "h19",
+   "answer": "Based on the judgment extracts provided in **Lalit Kumar Modi vs Union Of India & Ors (2014)**, the following rules apply regarding the seizure (impounding) of travel documents and the disclosure of reasons:\n\n*   **Requirement to Record and Furnish Reasons:** Under Section 10(5) of the Passports Act, when a passport authority makes an order to impound or revoke a travel document, it is mandatory for the authority to \"record in writing a brief statement of the reasons for making such order.\" Furthermore, the authority must furnish a copy of these reasons to the holder of the document \"on demand\" (**Lalit Kumar Modi vs Union Of India & Ors (2014)**).\n\n*   **Exceptions to Disclosure:** The authority may refuse to furnish the copy of the reasons only if it is of the opinion that doing so would not be in the interests of:\n    1. The sovereignty and integrity of India;\n    2. The security of India;\n    3. Friendly relations of India with any foreign country; or\n    4. The interests of the general public (**Lalit Kumar Modi vs Union Of India & Ors (2014)**).\n\n*   **Grounds for Seizure:** The authority may impound or revoke a document for specific reasons listed under Section 10(3), such as wrongful possession, suppression of material information, interests of the general public, or if a warrant/summons has been issued by a court (**Lalit Kumar Modi vs Union Of India & Ors (2014)**).\n\n*   **Constitutional Considerations:** While Section 10(3)(c) is constitutionally valid, an order to impound a passport may be found invalid if it contravenes fundamental rights under Article 19(1)(a) or (g), such as the freedom of speech or the right to carry on a profession, unless the restriction is justified under Article 19(2) or 19(6) (**Lalit Kumar Modi vs Union Of India & Ors (2014)** citing *Maneka Gandhi v. Union Of India*).",
+   "abstained": false,
+   "sources": [
+    "judgment_0077.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Lalit Kumar Modi v. Union Of India",
+     "Maneka Gandhi v. Union Of India",
+     "Article 19(1)(a)",
+     "Article 19(2)",
+     "Section 10(3)"
+    ],
+    "unsupported": [
+     "Section 10(5)"
+    ],
+    "accuracy": 0.8333333333333334
+   },
+   "confidence": 0.3741997241973877,
+   "latency_ms": 17167.464700061828,
+   "answerable": true,
+   "difficulty": "hard"
+  },
+  "Is the legislature's power to alter the founding document limited when the change cuts into guaranteed freedoms?": {
+   "id": "h20",
+   "answer": "The indexed judgments do not contain material that answers this question, so no answer is given. Answering from the model's general knowledge would not be grounded in the corpus.",
+   "abstained": true,
+   "sources": [
+    "judgment_0214.txt",
+    "judgment_0075.txt",
+    "judgment_0123.txt"
+   ],
+   "citations": {
+    "supported": [],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.008476453274488448,
+   "latency_ms": 2291.8828999390826,
+   "answerable": true,
+   "difficulty": "hard"
+  },
+  "When a condemned prisoner's plea for clemency is left undecided for years, does that change what should happen to him?": {
+   "id": "h21",
+   "answer": "Based on the provided judgment extracts, the legal position regarding whether a delay in deciding a clemency plea changes the outcome for a condemned prisoner is as follows:\n\n**1. Right to Approach the Court for Delay**\nA condemned prisoner has the right to approach the Court under Article 32 to challenge \"subsequent events\" occurring after the final judicial verdict, such as inordinate delay in execution (*Devender Pal Singh Bhullar & Anr vs State Of Nct Of Delhi (2013)*, para 33; *Rupa Ashok Hurra vs Ashok Hurra & Anr (2002)*). The Court may examine whether \"inordinate delay coupled with subsequent circumstances\" renders the execution of the death sentence \"not just and proper\" (*Devender Pal Singh Bhullar*, para 33).\n\n**2. Dehumanizing Effect of Delay**\nIn *T.V. Vatheeswaran\u2019s case*, cited in *Devender Pal Singh Bhullar*, it was observed that when execution is \"endlessly delayed,\" the accused suffers \"excruciating agony and anguish,\" which constitutes \"inhuman and degrading punishment\" (*Devender Pal Singh Bhullar*, para 27). That Bench held that the cause of the delay is \"immaterial\" and does not alter its \"dehumanising character\" (*Devender Pal Singh Bhullar*, para 27).\n\n**3. Factors Influencing Commutation**\nWhile delay can be a ground for commuting a death sentence to life imprisonment, the Court held that this is not an absolute rule and depends on the facts of the case:\n*   **Nature of the Offence:** In *Devender Pal Singh Bhullar*, the Court refused to commute the sentence despite a six-year delay by the President (2005\u20132011). The Court emphasized the \"nature, magnitude and intensity of crime,\" specifically the killing of 9 innocent persons using 40 kgs of RDX, and the impact of such crimes on the public (*Devender Pal Singh Bhullar*, para 45).\n*   **Responsibility for Delay:** The Court noted that a \"substantial portion of the delay\" could be attributed to the \"unending spate of the petitions\" filed on behalf of the prisoner (*Devender Pal Singh Bhullar*, para 44).\n*   **Mental Health:** Although prolonged detention may cause physical and mental suffering, the Court held in *Devender Pal Singh Bhullar* that such suffering cannot be relied upon to stop execution unless the prisoner\u2019s mental health has deteriorated to such an extent that the sentence \"cannot be executed\" (para 46).\n\n**4. Conclusion on Executive Delay**\nThe Court explicitly held that a delay in the disposal of a petition under Article 72 \"does not justify review of the decision taken by the President\" to refuse clemency if the facts of the case\u2014such as the gravity of the crime\u2014outweigh the delay (*Devender Pal Singh Bhullar*, para 45).",
+   "abstained": false,
+   "sources": [
+    "judgment_0124.txt",
+    "judgment_0125.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Anr v. State Of Nct Of Delhi",
+     "Rupa Ashok Hurra v. Ashok Hurra",
+     "Article 32",
+     "Article 72"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.28529303669929507,
+   "latency_ms": 6856.135999900289,
+   "answerable": true,
+   "difficulty": "hard"
+  },
+  "What became of pending challenges to tribunal rulings once the supervisory power of the higher courts was narrowed?": {
+   "id": "h22",
+   "answer": "Based on the provided judgment extracts, the position regarding pending challenges to tribunal rulings following the narrowing of supervisory powers is as follows:\n\n*   **Relevance of the Amendment to Pending Petitions:** In *Shripatrao Dajisaheb Ghatge And Anr. vs The State Of Maharashtra And Anr. (1977)*, the court noted that the contention regarding the High Court losing judicial superintendence under the amended Article 227 was \"irrelevant qua the pending petitions\" if the hearing or disposal of such petitions was to be governed by the original (unamended) Article 227 rather than the amended article (para 5).\n*   **Governing Law for Disposal:** The court clarified that the question of whether judicial superintendence had been taken away (leaving only administrative superintendence) would only \"assume importance... qua pending petitions if such petitions are held liable to be heard and disposed of in accordance with the amended Article 227\" (*Shripatrao Dajisaheb Ghatge And Anr. vs The State Of Maharashtra And Anr. (1977)*, para 5).\n*   **Nature of the Power:** It was argued that under the original Article 227, the High Court possessed both administrative and judicial superintendence over all courts and tribunals. The amended Article 227, however, deleted the words \"and tribunals\" and added the qualification \"subject to its appellate jurisdiction\" (*Shripatrao Dajisaheb Ghatge And Anr. vs The State Of Maharashtra And Anr. (1977)*, paras 5, 21).\n*   **Transfer of Cases to Specialized Tribunals:** In the specific context of environmental matters, the Supreme Court noted that the National Green Tribunal (NGT) was conceived to \"take over all the environment related cases from the High Courts and the Supreme Court,\" and many cases pending in superior courts were transferred to the NGT (*Municipal Corporation Of Gr. Mumbai vs Ankita Sinha (2021)*, para 24.4).",
+   "abstained": false,
+   "sources": [
+    "judgment_0128.txt",
+    "judgment_0219.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Shripatrao Dajisaheb Ghatge And Anr. v. The State Of Maharashtra And Anr.",
+     "Municipal Corporation Of Gr. Mumbai v. Ankita Sinha",
+     "Article 227"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.35280216646691165,
+   "latency_ms": 5764.721600105986,
+   "answerable": true,
+   "difficulty": "hard"
+  },
+  "Can a state cut short a law officer's appointment before the fixed term he was given runs out?": {
+   "id": "h23",
+   "answer": "The indexed judgments do not contain material that answers this question, so no answer is given. Answering from the model's general knowledge would not be grounded in the corpus.",
+   "abstained": true,
+   "sources": [
+    "judgment_0032.txt"
+   ],
+   "citations": {
+    "supported": [],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.022615150269120934,
+   "latency_ms": 2349.9363999580964,
+   "answerable": true,
+   "difficulty": "hard"
+  },
+  "How should a court choose between imprisonment for life and execution when the proof is entirely indirect?": {
+   "id": "h24",
+   "answer": "Based on the provided extracts, the following principles govern the choice between life imprisonment and execution:\n\n*   **General Rule of Restraint:** The death sentence should not, as far as possible, be imposed. It is reserved for a \"rare and exceptional class of cases\" (*Devender Pal Singh Bhullar & Anr vs State Of Nct Of Delhi (2013)*).\n*   **Circumstances of the Incident:** Even in cases involving \"cruel and dastardly\" crimes, such as the killing of a woman and three children, the court may choose life imprisonment if it is \"not known how and under what circumstances the incident had taken place\" (*Rama Subramanian v. State of Kerala* cited in *Aloke Nath Dutta & Ors vs State Of West Bengal (2006)*).\n*   **Factors for Consideration:** In determining the sentence, the court must consider the nature of the offence, the diverse attendant circumstances, its impact on contemporary society, and whether the motivation and pattern of the crime suggest a likelihood of repetition (*Devender Pal Singh Bhullar & Anr vs State Of Nct Of Delhi (2013)*).\n*   **Cool Deliberation:** The award of punishment must be the outcome of \"cool deliberation\" and the \"screening of the material by the informed man i.e. the Judge\" after the accused has been afforded an adequate hearing (*State of Rajasthan v. Kheraj Ram* cited in *Aloke Nath Dutta & Ors vs State Of West Bengal (2006)*).\n*   **Delay as a Mitigating Factor:** While not a \"rule of thumb,\" inordinate delay in the execution of a death sentence is a relevant circumstance for commutation to life imprisonment (*Sher Singh\u2019s case* cited in *Devender Pal Singh Bhullar & Anr vs State Of Nct Of Delhi (2013)*). However, the court must examine if the delay was caused by the accused resorting to \"frivolous\" or \"untenable\" proceedings (*Devender Pal Singh Bhullar & Anr vs State Of Nct Of Delhi (2013)*).\n\n**Note:** The provided extracts do not explicitly settle a specific rule for cases where \"proof is entirely indirect.\" They focus on the \"rarest of rare\" doctrine, the circumstances of the crime, and the impact of post-conviction delay.",
+   "abstained": false,
+   "sources": [
+    "judgment_0124.txt",
+    "judgment_0215.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Anr v. State Of Nct Of Delhi",
+     "Rama Subramanian v. State",
+     "Ors v. State Of West Bengal",
+     "Rajasthan v. Kheraj Ram"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.677251120408376,
+   "latency_ms": 7529.642700101249,
+   "answerable": true,
+   "difficulty": "hard"
+  },
+  "Do the better-off members of a listed community still get the benefit of set-aside promotions?": {
+   "id": "h25",
+   "answer": "Based on the judgment extracts provided from **M.Nagaraj & Others vs Union Of India & Others (2006)**, the provided text does not settle the question of whether \"better-off members\" (often referred to as the creamy layer) of a listed community still get the benefit of set-aside promotions.\n\nThe extracts focus on the following points:\n*   The validity of the **\"catch-up\" rule** and **consequential seniority** for reserved category candidates (*M.Nagaraj & Others vs Union Of India & Others (2006)*).\n*   The principle that reservation must be in relation to **\"posts\" and not \"vacancies\"**, and that the entire cadre strength should be the unit to determine if the 50% limit is breached (*R.K. Sabharwal* cited in *M.Nagaraj*).\n*   The discretion of the Government to grant weightage for accelerated promotion and consequential seniority based on factors like **backwardness, inadequacy of representation, and overall efficiency** (*M.Nagaraj*).\n*   The distinction between Article 16(1) (equality for individual citizens) and Article 16(4) (special provisions for **socially disadvantaged classes**) (*Indra Sawhney* cited in *M.Nagaraj*).\n\nThe provided extracts do not contain a specific holding or discussion regarding the exclusion or inclusion of \"better-off members\" of SC/ST communities in the context of promotions.",
+   "abstained": false,
+   "sources": [
+    "judgment_0214.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Others v. Union Of India",
+     "Article 16(1)",
+     "Article 16(4)"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.11151622803881764,
+   "latency_ms": 5867.123699979857,
+   "answerable": true,
+   "difficulty": "hard"
+  },
+  "Do people engaged to work on a university project have a claim to a permanent post?": {
+   "id": "h26",
+   "answer": "Based on the provided judgment extracts, the position regarding people engaged for specific projects or temporary roles is as follows:\n\n*   **No Right to Permanent Post:** There is no fundamental right for those employed on a temporary, contractual, or daily wage basis to claim absorption or be made permanent in service (*B.Nagarajan vs The Principal Secretary To Government (2018)*).\n*   **Project-Based Engagement:** The Government has the right to engage persons for a specific duration or until the work in a particular project is completed. Such engagements cannot lead to permanent absorption or regularization (*B.Nagarajan vs The Principal Secretary To Government (2018)*).\n*   **Awareness of Consequences:** A person who accepts temporary or contractual engagement is deemed to be aware of the consequences and the nature of the employment. Such employees cannot invoke the \"theory of legitimate expectation\" to seek confirmation in a post, especially when regular appointments must follow a specific selection procedure or consultation with a Public Service Commission (*B.Nagarajan vs The Principal Secretary To Government (2018)*).\n*   **Distinction from Regular Employees:** Employees engaged for specified work or as casual laborers form a class by themselves. They cannot claim equal treatment with regularly recruited candidates, as doing so would treat \"unequals as equals\" (*B.Nagarajan vs The Principal Secretary To Government (2018)*).\n*   **University Research Associates:** In specific instances involving University Research Associates, the Executive Council may pass resolutions to allow them to continue until vacancies are filled or to regularize them through a Statutory Selection Committee (*Dr. (Mrs.) Meera Massey vs Dr. S.R. Mehrotra And Ors (1998)*). However, the general rule remains that courts should not ordinarily direct permanent absorption for those engaged without following the due process of selection envisaged by the constitutional scheme (*B.Nagarajan vs The Principal Secretary To Government (2018)*).",
+   "abstained": false,
+   "sources": [
+    "judgment_0032.txt",
+    "judgment_0217.txt"
+   ],
+   "citations": {
+    "supported": [
+     "B.Nagarajan v. The Principal Secretary To Government",
+     "Meera Massey v. Dr. S.R. Mehrotra And Ors"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.8978541930516561,
+   "latency_ms": 6951.417900039814,
+   "answerable": true,
+   "difficulty": "hard"
+  },
+  "Can a government limit the sale of alcohol to only the most expensive establishments and shut out the rest?": {
+   "id": "h27",
+   "answer": "Based on the provided judgment extracts from **The Kerala Bar Hotels Association & Anr vs State Of Kerala And Ors (2015)**, the government can limit the sale of alcohol to only the most expensive establishments (specifically Five Star hotels) and shut out others. The Court\u2019s findings are as follows:\n\n*   **Reasonable Classification and Nexus:** The Court held that the unique treatment given to hotels with a Five Star rating is not arbitrary or capricious. It found an \"intelligible differentia\" in the classification because Five Star hotels account for the least amount of alcohol sales (0.08 per cent) and the \"prohibitively high\" prices act as a deterrent to binge or casual drinking (**The Kerala Bar Hotels Association & Anr vs State Of Kerala And Ors (2015)**).\n*   **Promotion of Tourism:** The Court noted that while the state's policy aims to eradicate public consumption of alcohol, a \"relaxation or exception\" was forged in favor of Five Star hotels alone \"in the interest of tourism.\" The Court stated that \"were it not for considerations of tourism, this exception in favour of Five Star Hotels may have been struck down\" (**The Kerala Bar Hotels Association & Anr vs State Of Kerala And Ors (2015)**).\n*   **Nature of the Trade:** The business of potable liquor is considered *res extra commercium*. Therefore, while the ground of Article 19(1)(g) can be raised, the state can impose \"stringent restrictions\" and the qualification on that right is not considered unreasonable (**The Kerala Bar Hotels Association & Anr vs State Of Kerala And Ors (2015)**).\n*   **State Privilege and Policy:** Since the sale of liquor is the \"exclusive privilege and preserve of the Government,\" the state has the freedom to decide to what extent it parts with that privilege. The Court held that the state may introduce its goal of becoming liquor-free in a \"piecemeal manner\" as it sees fit (**The Kerala Bar Hotels Association & Anr vs State Of Kerala And Ors (2015)**).\n*   **Judicial Restraint:** The Court emphasized that \"segregation or selection is the preserve of the State Government\" and that courts should be \"chary from interfering in policy matters.\" It upheld the policy even though it resulted in the cancellation of bar licenses for all existing hotels except those with a Five Star rating (**The Kerala Bar Hotels Association & Anr vs State Of Kerala And Ors (2015)**).",
+   "abstained": false,
+   "sources": [
+    "judgment_0218.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Anr v. State Of Kerala And Ors",
+     "Article 19(1)(g)"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.07496627519528071,
+   "latency_ms": 39127.503799973056,
+   "answerable": true,
+   "difficulty": "hard"
+  },
+  "May an environmental tribunal begin a case on its own when nobody has filed a complaint?": {
+   "id": "h28",
+   "answer": "Based on the provided judgment extracts from **Municipal Corporation Of Gr. Mumbai vs Ankita Sinha (2021)**, the National Green Tribunal (NGT) may indeed begin a case on its own without a formal complaint. The specific propositions are as follows:\n\n*   **Activation of Jurisdiction without Application:** The Court held that Section 14(1) of the NGT Act \"conspicuously omits to specify that an application is necessary to trigger the NGT into action.\" Consequently, the NGT is not required to be triggered solely by an aggrieved or interested party, and its power is \"not circumscribed by receipt of application\" (*Municipal Corporation Of Gr. Mumbai vs Ankita Sinha (2021)*, para 77 [25.3]).\n*   **Power to \"Self-Ignite\":** The Court explicitly stated that when substantial questions relating to the environment arise in civil cases involving enactments in Schedule I, the NGT \"even in the absence of an application, can self-ignite action either towards amelioration or towards prevention of harm\" (*Municipal Corporation Of Gr. Mumbai vs Ankita Sinha (2021)*, para 77 [25.3]).\n*   **Nature of Functions:** The NGT\u2019s mandate includes \"inquisitorial\" functions that do not always require an active \"dispute\" or adversarial significance (*Municipal Corporation Of Gr. Mumbai vs Ankita Sinha (2021)*, para 18-41). Under Section 14(1), the Tribunal may undertake functions that \"may not involve any formal application or an adjudicatory process\" to meet certain exigencies (*Municipal Corporation Of Gr. Mumbai vs Ankita Sinha (2021)*, para 77 [25.4]).\n*   **Precautionary Principle and Vigilance:** The Tribunal is legally bound by Section 20 to apply the \"Precautionary Principle,\" which requires it to be \"ever vigilant\" and act with promptitude. This principle is an \"action principle\" that holds authorities responsible for protecting the environment, necessitating that the NGT carry out preventive and protective measures even when not prompted by a suitor (*Municipal Corporation Of Gr. Mumbai vs Ankita Sinha (2021)*, para 77 [26.1, 26.4, 26.5]).\n*   **Practical Necessity:** The Court noted that because polluters are often powerful entities, it may not always be feasible for individuals to \"knock on the doors of the Tribunal.\" Therefore, the NGT must not be made \"dysfunctional\" by a requirement for a formal complaint (*Municipal Corporation Of Gr. Mumbai vs Ankita Sinha (2021)*, para 77).\n*   **Suo Motu Precedent:** The Court observed that cases originally registered *suo motu* by High Courts were among those mandated to be transferred to the NGT, supporting the NGT's role as a specialized forum for such actions (*Municipal Corporation Of Gr. Mumbai vs Ankita Sinha (2021)*, para 18-41 [19.2]).",
+   "abstained": false,
+   "sources": [
+    "judgment_0219.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Municipal Corporation Of Gr. Mumbai v. Ankita Sinha",
+     "Section 14(1)"
+    ],
+    "unsupported": [
+     "Section 20"
+    ],
+    "accuracy": 0.6666666666666666
+   },
+   "confidence": 0.28346160451571145,
+   "latency_ms": 7342.091199941933,
+   "answerable": true,
+   "difficulty": "hard"
+  },
+  "Does someone recognised as belonging to a listed caste in one state keep that standing after moving to another?": {
+   "id": "h29",
+   "answer": "Based on the provided judgment extracts, the legal position regarding whether a person recognized as belonging to a listed caste in one state keeps that standing after migrating to another is as follows:\n\n* **General Rule on Migration:** A person who migrates from one State to another can claim to belong to a Scheduled Caste or Scheduled Tribe only in relation to the State to which they originally belonged (their state of origin), and not in respect of the State to which they have migrated (*Subhash Chandra & Anr vs Delhi Subordinate Ser.Sel.Board & Ors (2009), para 6-2*). \n* **Benefits and Concessions:** An Other Backward Class (OBC) person, upon migrating from their State/U.T. of origin to another State/U.T. where their caste is not in the OBC list, is \"entitled to the concession/benefits admissible to the OBCS from the state of his origin and Union Government but not from the State where he has migrated\" (*Subhash Chandra & Anr vs Delhi Subordinate Ser.Sel.Board & Ors (2009), para 1-10*).\n* **No Automatic Standing in the Migrated State:** Merely because a given caste is specified as a Scheduled Caste or OBC in \"State A\" (or the state of origin) does not mean a person belonging to that group is entitled to the rights, privileges, and benefits admissible to a member of a caste with the same nomenclature in the migrated State (*Subhash Chandra & Anr vs Delhi Subordinate Ser.Sel.Board & Ors (2009), para 29*). This is because the social hardships, disadvantages, and considerations for specifying a caste vary entirely from one State to another (*Subhash Chandra & Anr vs Delhi Subordinate Ser.Sel.Board & Ors (2009), para 29*).\n* **Intra-State Migration:** If a person migrates from a portion of a State where their community is scheduled to another part of the *same* State where the community is not scheduled, they will continue to be deemed a member of the Scheduled Caste or Scheduled Tribe in relation to that State (*Subhash Chandra & Anr vs Delhi Subordinate Ser.Sel.Board & Ors (2009), para 6-2*).",
+   "abstained": false,
+   "sources": [
+    "judgment_0221.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Anr v. Delhi Subordinate Ser.Sel.Board"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.9413053750991822,
+   "latency_ms": 9192.939699976705,
+   "answerable": true,
+   "difficulty": "hard"
+  },
+  "Can land that was set aside for growing fruit be used to put up houses instead?": {
+   "id": "h30",
+   "answer": "Based on the provided judgment extracts from ***M/S Shri Krishna Colonisers ... vs State Of ... (2019)***, the rules regarding using land set aside as a \"fruit belt\" for housing schemes are as follows:\n\n* **General Prohibition:** Once an area is notified as a \"fruit belt\" under Section 3 of the U.P. Promotion and Protection of Fruit Trees (Regulation of Harmful Establishment Housing Schemes) Act, 1985, housing schemes cannot be permitted within that notified area. The prohibition extends to carrying out any housing scheme within such a fruit belt.\n* **Exception (With Permission):** Under Section 5(1)(ii) of the Act, 1985, no person shall carry out any housing scheme within a fruit belt *\"without permission of the State Government or of an officer authorised by the State Government in this behalf, in the manner prescribed.\"*\n* **Definition of \"Housing Scheme\":** Under Section 2(f) of the Act, 1985, a \"housing scheme\" refers to any housing or colonization scheme or activity designed to construct more than one residential or other buildings for sale or letting, or land development for lease or sale as plots. \n* **Personal Use Exception:** The definition of a \"housing scheme\" explicitly *excludes* the construction of a building by a person on their own or lease-hold land for their personal use and occupation. \n* **Penalties for Violation:** Under Section 6(1) of the Act, 1985, anyone who contravenes the provisions of Section 5 (by carrying out a housing scheme without the requisite permission) shall be punished with simple imprisonment of up to six months, a fine of up to three thousand rupees, or both.",
+   "abstained": false,
+   "sources": [
+    "judgment_0007.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Section 3",
+     "Section 2",
+     "Section 6(1)",
+     "Section 5"
+    ],
+    "unsupported": [
+     "Section 5(1)"
+    ],
+    "accuracy": 0.8
+   },
+   "confidence": 0.2558264459172885,
+   "latency_ms": 6113.087400095537,
+   "answerable": true,
+   "difficulty": "hard"
+  },
+  "What is a curative petition and in what circumstances can the Supreme Court entertain one?": {
+   "id": "q01",
+   "answer": "Based on the provided judgment extracts, the Supreme Court of India in ***Rupa Ashok Hurra vs Ashok Hurra & Anr (2002)*** laid down the nature of a curative petition and the specific circumstances and requirements under which it can be entertained:\n\n### What is a Curative Petition?\nA curative petition is an application filed under the inherent power of the Supreme Court (inter alia under Article 129) to seek reconsideration of a final judgment or order of the Court after a review petition has been dismissed. Its purpose is to prevent the abuse of the Court's process and to cure a gross miscarriage of justice (*Rupa Ashok Hurra vs Ashok Hurra & Anr*).\n\n---\n\n### Circumstances and Grounds for Entertainment\nThe Court held that except when very strong reasons exist, it should not entertain an application seeking reconsideration of an order that has become final on the dismissal of a review petition. Although it is not possible to enumerate all grounds, a petitioner is entitled to relief *ex debito justitiae* if they establish:\n\n1. **Violation of Principles of Natural Justice:** \n   * The petitioner was not a party to the *lis* but the judgment adversely affected their interests; or\n   * The petitioner was a party to the *lis* but was not served with notice of the proceedings, and the matter proceeded as if they had notice (*Rupa Ashok Hurra vs Ashok Hurra & Anr*).\n2. **Apprehension of Bias:** \n   * A learned Judge in the proceedings failed to disclose their connection with the subject-matter or the parties, giving scope for an apprehension of bias, and the judgment adversely affects the petitioner (*Rupa Ashok Hurra vs Ashok Hurra & Anr*).\n\n---\n\n### Procedural Requirements to Entertain the Petition\nFor the Court to entertain a curative petition, the following strict procedural requirements must be met:\n\n* **Specific Averments:** The petitioner must specifically aver in the curative petition that the grounds mentioned therein were taken in the review petition and that the review petition was dismissed by circulation (*Rupa Ashok Hurra vs Ashok Hurra & Anr*).\n* **Senior Advocate Certification:** The curative petition must contain a certification by a Senior Advocate certifying that the aforementioned requirements have been fulfilled (*Rupa Ashok Hurra vs Ashok Hurra & Anr*).\n* **Circulation to a Special Bench:** The petition must first be circulated to a Bench consisting of the three senior-most Judges of the Supreme Court and the Judges who passed the complained-of judgment (if available) (*Rupa Ashok Hurra vs Ashok Hurra & Anr*).\n* **Majority Consent for Hearing:** The petition will only be listed for a hearing (before the same Bench, as far as possible) if a majority of the Judges on the circulation Bench conclude that the matter needs a hearing (*Rupa Ashok Hurra vs Ashok Hurra & Anr*). \n\n*(Note: The Court also noted that if the Bench finds the petition to be without merit and vexatious at any stage, it may impose exemplary costs on the petitioner; however, for the specific writ petitions before the Court in this case, the Registry was directed to process them notwithstanding the absence of the averment regarding the review petition's dismissal in circulation) (*Rupa Ashok Hurra vs Ashok Hurra & Anr*).*",
+   "abstained": false,
+   "sources": [
+    "judgment_0122.txt",
+    "judgment_0125.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Rupa Ashok Hurra v. Ashok Hurra",
+     "Article 129"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.9595890204111736,
+   "latency_ms": 6651.955199893564,
+   "answerable": true,
+   "difficulty": "standard"
+  },
+  "Can a prisoner invoke the writ jurisdiction of the court to challenge conditions inside jail?": {
+   "id": "q02",
+   "answer": "Based on the provided judgment extracts, a prisoner **can** invoke the writ jurisdiction of the court to challenge conditions inside jail. \n\nThe legal propositions established in the extracts are as follows:\n\n* **Existence of Jurisdiction and Power:** The Supreme Court affirmed in unmistakable terms that the court has a clear power and a public duty under Article 32, and likewise under Article 226, to provide relief to convicts in prison settings (*Sunil Batra vs Delhi Administration (1979)*, para 5). \n* **Protection of Rights:** A prisoner's rights are protected by the court through its writ jurisdiction and contempt power. Where a prisoner's rights under the Constitution or any other law are violated, the writ power of the court \"can and should run to his rescue\" (*Sunil Batra vs Delhi Administration (1979)*, paras 4 & 5).\n* **Rejection of the \"Hands-Off\" Doctrine:** The court rejected the \"hands-off\" doctrine regarding prison administration. Fundamental rights do not flee a person when they enter prison, and the court has a continuing responsibility to ensure that the constitutional purpose of depriving a prisoner of their freedom is not defeated by the prison administration (*Sunil Batra vs Delhi Administration (1979)*, para 5).\n* **Scope of the Writ (Habeas Corpus):** The writ of habeas corpus has a dynamic and versatile utility that does not merely seek the release of a prisoner. It can be used to secure compliance with human rights behind iron bars, hold \"prison caprice and cruelty in constitutional leash,\" and address internal prison matters or disciplinary actions (*Sunil Batra vs Delhi Administration (1979)*, paras 5, 6 & 79).\n* **Challenging Subsequent Events:** It is open to a prisoner to invoke the court's jurisdiction to challenge \"subsequent events\" (events occurring after the final judicial verdict is pronounced), which includes challenging inordinate delays or subsequent circumstances (*Devender Pal Singh Bhullar & Anr vs State Of Nct Of Delhi (2013)*, para 33).",
+   "abstained": false,
+   "sources": [
+    "judgment_0126.txt",
+    "judgment_0124.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Sunil Batra v. Delhi Administration",
+     "Anr v. State Of Nct Of Delhi",
+     "Article 32"
+    ],
+    "unsupported": [
+     "Article 226"
+    ],
+    "accuracy": 0.75
+   },
+   "confidence": 0.8299179673194885,
+   "latency_ms": 5741.1154001019895,
+   "answerable": true,
+   "difficulty": "standard"
+  },
+  "Is an accused entitled to default bail when the investigating agency fails to complete investigation within the statutory period under Section 167(2) CrPC?": {
+   "id": "q03",
+   "answer": "Based on the provided judgment extracts, the following points outline whether an accused is entitled to default bail when the investigating agency fails to complete the investigation within the statutory period:\n\n* **Absolute and Indefeasible Right to Default Bail:** Under Section 167(2) of the CrPC, if the investigating agency fails to complete the investigation within the prescribed statutory period (90 days for offences punishable with death, life imprisonment, or imprisonment of not less than 10 years, and 60 days for any other offence), the accused acquires an \"indefeasible\" and \"absolute\" right to be released on default bail, provided they are prepared to and do furnish bail (*Ritu Chhabaria vs Union Of India (2023)*).\n* **Constitutional and Fundamental Right:** The right to default bail under Section 167(2) CrPC is not merely a statutory right, but a fundamental right flowing directly from Article 21 of the Constitution of India (*Ritu Chhabaria vs Union Of India (2023)*). \n* **Duty of the Investigating Agency and Courts:** In *Satendar Kumar Antil vs CBI & Anr.* (as cited in *Ritu Chhabaria vs Union Of India (2023)*), it was held that the investigating authority is under a constitutional duty to expedite the investigation within the stipulated time. A failure to do so enables the release of the accused, and courts must give due effect to this right as any detention beyond this period is illegal and an affront to personal liberty.\n* **Incomplete Chargesheets Cannot Extinguish the Right:** The investigating agency must complete the investigation first before filing a chargesheet. Filing an incomplete chargesheet or a supplementary chargesheet during a pending investigation cannot be used to scuttle the accrued right of default bail (*Ritu Chhabaria vs Union Of India (2023)*). In such cases, the trial court cannot continue to remand the arrested person beyond the maximum stipulated time without offering them default bail (*Ritu Chhabaria vs Union Of India (2023)*).\n* **Application to Special Acts:** \n  * In *Union Of India vs Thamisharasi & Ors.* (as cited in *Ritu Chhabaria vs Union Of India (2023)*), it was held that under the Narcotic Drugs and Psychotropic Substances Act, 1985, a failure to complete the investigation and file a chargesheet within the prescribed period triggers the right to default bail, and even the twin limitations on the grant of bail would not apply.\n  * In *Ashok Munilal Jain & Anr. Vs. Assistant Director, Directorate of Enforcement* (as cited in *Ritu Chhabaria vs Union Of India (2023)*), it was held that the right of default bail under Section 167(2) CrPC is an indefeasible right of the accused even in matters under the Prevention of Money Laundering Act (PMLA).",
+   "abstained": false,
+   "sources": [
+    "judgment_0127.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Ritu Chhabaria v. Union Of India",
+     "Satendar Kumar Antil v. CBI",
+     "Union Of India v. Thamisharasi",
+     "Anr. v. Assistant Director",
+     "Article 21",
+     "Section 167(2)"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.9989346067110697,
+   "latency_ms": 6337.884399923496,
+   "answerable": true,
+   "difficulty": "standard"
+  },
+  "Must a review petition in a death sentence case be heard in open court rather than by circulation?": {
+   "id": "q04",
+   "answer": "Based on the provided judgment extracts, the Supreme Court of India held that **yes, a review petition in a death sentence case must be heard in open court rather than by circulation.**\n\n### **Ruling and Legal Basis**\n* **Oral Hearing as a Matter of Right:** In *Mohd. Arif @ Ashfaq vs The Reg. Supreme Court Of India & Ors (2014)*, the Court explicitly answered this question in the affirmative, holding that \"in review petitions arising out of those cases where the death penalty is awarded, it would be necessary to accord oral hearing in the open Court\" (*Mohd. Arif @ Ashfaq vs The Reg. Supreme Court Of India & Ors (2014)*).\n* **Reconciliation with Precedent:** The Court noted that this finding is not contrary to the Constitution Bench judgment in *P.N. Eswara Iyer*, which had previously upheld the general rule of deciding review petitions by \"circulation\" without an oral hearing. The Court observed that there are \"ample observations in the said Constitution Bench judgment itself, giving enough space for justifying oral hearing in cases like the present\" (*Mohd. Arif @ Ashfaq vs The Reg. Supreme Court Of India & Ors (2014)*).\n* **Constitutional Significance:** The Court emphasized that this determination directly concerns the fundamental right to life under **Article 21** of the Constitution of India, which is the most precious of all fundamental rights (*Mohd. Arif @ Ashfaq vs The Reg. Supreme Court Of India & Ors (2014)*).",
+   "abstained": false,
+   "sources": [
+    "judgment_0006.txt",
+    "judgment_0004.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Ashfaq v. The Reg. Supreme Court Of India",
+     "Article 21"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.99421173731486,
+   "latency_ms": 6049.034300027415,
+   "answerable": true,
+   "difficulty": "standard"
+  },
+  "Does the creamy layer principle apply to Scheduled Castes and Scheduled Tribes in reservation matters?": {
+   "id": "q05",
+   "answer": "Based on the provided judgment extracts, there are conflicting positions across different decisions on whether the creamy layer principle applies to Scheduled Castes (SCs) and Scheduled Tribes (STs) in reservation matters:\n\n**1. Decisions holding that the creamy layer principle does NOT apply to SCs and STs:**\n* **_Ashoka Kumar Thakur v. Union of India_ (as cited in _Jarnail Singh_):** Balakrishnan, C.J. specifically held that the \"creamy layer\" principle is inapplicable to Scheduled Castes and Scheduled Tribes, as it is merely a principle of identification of the backward class and not applied as a principle of equality (*Jarnail Singh vs Lachhmi Narain Gupta (2018)* [1]).\n* **_Indra Sawhney_ (as cited in _Jarnail Singh_ and _Subhash Chandra_):** The majority held that the discussion on the creamy layer was confined to Other Backward Classes (OBCs) only and has \"no relevance in the case of Scheduled Tribes and Scheduled Castes\" (*Jarnail Singh vs Lachhmi Narain Gupta (2018)* [1]; *Subhash Chandra & Anr vs Delhi Subordinate Ser.Sel.Board & Ors (2009)* [4]).\n* **_Subhash Chandra & Anr vs Delhi Subordinate Ser.Sel.Board & Ors (2009)_:** \n    * The Court observed that \"for the purpose of reservation, the principles of 'creamy layer' are not applicable for Scheduled Castes and Scheduled Tribes\" [2].\n    * It was held that \"in regard to SCs and STs, there can be no concept of creamy layer\" and that principally, the creamy layer principle cannot be applied to STs and SCs because they are separate classes by themselves, identified by the Presidential notification under Article 341 [4]. \n    * The Court noted that any application of the creamy layer to SCs would require Parliament alone to take legislative steps under Article 341(2), and the States do not have the legislative competence to do so (*citing E.V. Chinnaiah*) [2].\n\n**2. Decisions holding that the creamy layer principle DOES apply to SCs and STs:**\n* **_Jarnail Singh vs Lachhmi Narain Gupta (2018)_:** \n    * The Court held that when a Court applies the creamy layer principle to Scheduled Castes and Scheduled Tribes, it does not tinker with the Presidential List under Articles 341 or 342. The caste or group remains in the list, but those persons within the group who have \"come out of untouchability or backwardness by virtue of belonging to the creamy layer\" are excluded from the benefit of reservation under Article 14 [3].\n    * The Court observed that the whole object of reservation (allowing backward classes to march on an equal basis) would not be possible if the creamy layer within that class bags all the coveted jobs and perpetuates themselves [3].\n    * The Court explicitly referred to the \"concept of 'creamy layer' which... applies to persons within the Scheduled Castes or the Scheduled Tribes who no longer require reservation\" [5].",
+   "abstained": false,
+   "sources": [
+    "judgment_0216.txt",
+    "judgment_0221.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Kumar Thakur v. Union",
+     "Jarnail Singh v. Lachhmi Narain Gupta",
+     "Anr v. Delhi Subordinate Ser.Sel.Board",
+     "Singh v. Lachhmi Narain Gupta",
+     "Article 341"
+    ],
+    "unsupported": [
+     "Article 341(2)",
+     "Article 14"
+    ],
+    "accuracy": 0.7142857142857143
+   },
+   "confidence": 0.9988438526789347,
+   "latency_ms": 38932.883300003596,
+   "answerable": true,
+   "difficulty": "standard"
+  },
+  "Is the Forest Department an industry, and are daily wage workers engaged by it workmen?": {
+   "id": "q06",
+   "answer": "Based on the provided judgment extracts, the Supreme Court held that the Forest Department is an industry, and casual/daily wagers engaged by it are workmen under the Act (*State Of U.P. And Ors. vs Putti Lal (1997)*, para 29-12).",
+   "abstained": false,
+   "sources": [
+    "judgment_0029.txt",
+    "judgment_0032.txt"
+   ],
+   "citations": {
+    "supported": [
+     "State Of U.P. And Ors. v. Putti Lal"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.9455868800481161,
+   "latency_ms": 4689.366900129244,
+   "answerable": true,
+   "difficulty": "standard"
+  },
+  "Can an employee's service be regularised without following the prescribed process of recruitment?": {
+   "id": "q07",
+   "answer": "Based on the provided judgment extracts, an employee's service **cannot** be regularised without following the prescribed process of recruitment. \n\nThe legal principles governing this are as follows:\n\n* **Requirement of Regular Recruitment:** High Courts exercising power under Article 226 of the Constitution will not issue directions for regularisation, absorption, or permanent continuance unless the employees claiming regularisation were appointed pursuant to a regular recruitment in accordance with the relevant rules in an open competitive process against sanctioned vacant posts (*B.Nagarajan vs The Principal Secretary To Government (2018)*, citing *State of Rajasthan and others vs. V.Dayal Lal and Others* and *Secretary to Government, School Education Department, Chennai Vs. R.Govindaswamy and others*).\n* **Constitutional Scheme and Equality Clause:** The equality clause in Article 14 must be scrupulously followed. Courts cannot direct the regularisation of an employee's services if it violates the constitutional scheme. While minor irregularities that do not go to the root of the selection process can be regularised, \"back door entries, appointments contrary to the constitutional scheme and/or appointment of ineligible candidates cannot be regularised\" (*B.Nagarajan vs The Principal Secretary To Government (2018)*, citing *State of Rajasthan vs. V.Dayal Lal*).\n* **Adherence to Rules:** Regularisation or absorption is not a matter of course; it depends on the facts of the case following the rules and regulations and \"cannot be dehors the rules\" (*B.Nagarajan vs The Principal Secretary To Government (2018)*, citing *Nand Kumar Vs. State of Bihar and Others*).\n* **Length of Service and Legitimate Expectation:** Mere length of service or temporary/daily-wage/ad-hoc employment does not confer a right to regularisation if the initial appointment was not in accordance with the recruitment rules (*B.Nagarajan vs The Principal Secretary To Government (2018)*). Furthermore, invoking the doctrine of legitimate expectation cannot enable employees to claim they must be made permanent or regularised if they were not selected in terms of the rules for appointment (*B.Nagarajan vs The Principal Secretary To Government (2018)*).",
+   "abstained": false,
+   "sources": [
+    "judgment_0032.txt",
+    "judgment_0029.txt"
+   ],
+   "citations": {
+    "supported": [
+     "B.Nagarajan v. The Principal Secretary To Government",
+     "Chennai v. R.Govindaswamy",
+     "Rajasthan v. V.Dayal Lal",
+     "Nand Kumar v. State",
+     "Article 226",
+     "Article 14"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.9850947499275208,
+   "latency_ms": 7160.767000052147,
+   "answerable": true,
+   "difficulty": "standard"
+  },
+  "What defect in a notice invalidates preventive action taken against a person alleged to be a goonda?": {
+   "id": "q08",
+   "answer": "Based on the provided judgment extracts, the defect in a notice that invalidates preventive action taken against an alleged goonda is **the failure to set out the general nature of the material allegations** against the person in the notice (*Pavan @ Pavan Singhal vs State Of U.P. And 2 Others (2021)*). \n\nSpecifically, the court held the following regarding this defect:\n\n* **Fatal Non-Compliance with Section 3(1):** The failure to set out the general nature of the material allegations in the notice is a fatal defect that results in non-compliance with Section 3(1) of the U.P. Control of Goondas Act, 1970. A notice with this defect cannot be deemed to be a valid notice under Section 3(1) (*Pavan @ Pavan Singhal vs State Of U.P. And 2 Others (2021)*).\n* **Deprivation of Reasonable Opportunity:** Under Section 3(1), the District Magistrate is enjoined to inform the alleged goonda of the general nature of the material allegations against him regarding clauses (a), (b), and (c) to give him a reasonable opportunity to furnish an explanation. If the notice fails to do this, the person is deprived of the opportunity to explain at that stage, as well as the subsequent opportunity under Section 3(2) to produce evidence in support of his explanation. Consequently, any preventive action taken based on such a notice is illegal (*Pavan @ Pavan Singhal vs State Of U.P. And 2 Others (2021)*).\n* **Listing Cases/FIRs is Insufficient:** Merely listing First Information Reports (FIRs), pending criminal cases, or past convictions (for example, in the blank space or column (d) of the prescribed notice form) instead of stating actual facts relating to the person's conduct does not satisfy the requirement of setting out the \"general nature of material allegations\" (*Pavan @ Pavan Singhal vs State Of U.P. And 2 Others (2021)*). \n* **Distinction from Clauses (a), (b), and (c):** The notice must maintain a distinction between the District Magistrate's satisfaction regarding clauses (a), (b), and (c) and the actual material allegations. The general nature of the material allegations cannot be merely discerned or read into the notice from the standard recitals of clauses (a), (b), and (c) (*Pavan @ Pavan Singhal vs State Of U.P. And 2 Others (2021)*).",
+   "abstained": false,
+   "sources": [
+    "judgment_0076.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Pavan Singhal v. State Of U.P. And",
+     "Section 3(1)",
+     "Section 3(2)"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.8363141616185505,
+   "latency_ms": 6615.8399999840185,
+   "answerable": true,
+   "difficulty": "standard"
+  },
+  "Is a public authority obliged to disclose an investigation report under the Right to Information Act?": {
+   "id": "q09",
+   "answer": "Based on the provided judgment extracts, the legal position regarding whether a public authority is obliged to disclose an investigation report under the Right to Information Act is as follows:\n\n* **General Rule of Disclosure:** Access to information under Section 3 of the Act is the rule, and exemptions under Section 8 are the exceptions, which must be strictly construed (*Bhagat Singh vs Chief Information Commissioner And ... (2007)*). \n* **Investigation Reports as Outcomes of Public Action:** An investigation report (such as one conducted by the DIT (Inv) on a Tax Evasion Petition) is considered the \"outcome of public action\" and cannot be exempted under Section 8(1)(j) of the Act, which relates to personal information (*Bhagat Singh vs Chief Information Commissioner And ... (2007)*).\n* **The Mere Existence of an Investigation is Not a Ground for Refusal:** Under Section 8(1)(h) of the Act, which exempts information that would \"impede the process of investigation or apprehension or prosecution of offenders,\" the mere existence of an active investigation process is not a sufficient ground to refuse information (*Bhagat Singh vs Chief Information Commissioner And ... (2007)*).\n* **Obligation to Provide Satisfactory Reasons:** To withhold an investigation report or related materials, the public authority must show satisfactory, germane, and reasonable reasons\u2014based on actual material\u2014as to how the disclosure of such information would hamper or impede the investigation process. Without such a disclosure showing how the process would be hampered, the authority cannot reject the request for information (*Bhagat Singh vs Chief Information Commissioner And ... (2007)*).\n* **No Withholding Until Tax Recovery:** A public authority cannot withhold an investigation report or preliminary investigation materials until tax recovery is complete. Section 8(1)(h) relates only to investigation and prosecution, not to recovery (*Bhagat Singh vs Chief Information Commissioner And ... (2007)*).",
+   "abstained": false,
+   "sources": [
+    "judgment_0073.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Bhagat Singh v. Chief Information Commissioner And",
+     "Section 3",
+     "Section 8",
+     "Section 8(1)"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.9643645326296488,
+   "latency_ms": 5929.387599928305,
+   "answerable": true,
+   "difficulty": "standard"
+  },
+  "Can the State claim sovereign immunity for tortious acts committed by police officers causing death in custody?": {
+   "id": "q10",
+   "answer": "Based on the provided judgment extracts, the State **cannot** claim sovereign immunity for tortious acts committed by police officers causing death in custody. The legal positions established in the extracts are as follows:\n\n1. **Acts of Custodial Violence are Not Sovereign Functions:** \n   In *Severina Ribeiro @ Cardinho (Mrs.) And ... vs Union Of India (Uoi) And Ors. (1989)*, the court held that the acts of police officers in subjecting an accused person to third-degree treatment in custody resulting in death \"are not referable to and based on the delegation of the sovereign powers of the State to such Police Officers.\" Consequently, the State is held vicariously liable for the acts committed by its servants during the course of their employment.\n\n2. **Inapplicability of Sovereign Immunity to Constitutional Remedies:** \n   In *Sunkara Satyanarayana vs State Of Andhra Pradesh, Home ... (1999)*, referencing the Supreme Court's decision in *Nilabati's case*, it was held that a claim for compensation under public law (Article 32 or Article 226) for the violation of the fundamental right to life (Article 21) is based on strict liability. In such constitutional remedies, \"the defence of sovereign immunity being inapplicable, and alien to the concept of guarantee of fundamental rights, there can be no question of such a defence being available.\" \n\n3. **Vicarious Liability and Public Law Remedy:** \n   *Sunkara Satyanarayana vs State Of Andhra Pradesh, Home ... (1999)* further establishes that for the infringement of fundamental rights by public servants, \"the defence of sovereign immunity is not available and the citizen must receive the amount of compensation from the State,\" which is vicariously liable for their acts.",
+   "abstained": false,
+   "sources": [
+    "judgment_0005.txt",
+    "judgment_0001.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Sunkara Satyanarayana v. State Of Andhra Pradesh",
+     "Article 32",
+     "Article 226",
+     "Article 21"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.9763778448104858,
+   "latency_ms": 5995.635599945672,
+   "answerable": true,
+   "difficulty": "standard"
+  },
+  "What is the legal status of police standing orders that govern the opening and maintenance of history sheets and rowdy sheets?": {
+   "id": "q11",
+   "answer": "Based on the provided judgment extracts from ***Sunkara Satyanarayana vs State Of Andhra Pradesh, Home ... (1999)***, the legal status of the Police Standing Orders (PSOs) governing the opening and maintenance of history sheets and rowdy sheets is as follows:\n\n*   **Non-Statutory Administrative Instructions:** The Police Standing Orders that govern the opening, maintaining, and discontinuing of history sheets and rowdy sheets are held to be non-statutory administrative instructions. They do not have the force of law. However, any Police Standing Orders that are issued in exercise of a statutory power by the Government or other authorities and are duly notified can be clothed with statutory power.\n*   **Permissible Scope of Implementation:** Whether these Police Standing Orders are statutory or non-statutory, it is permissible for the police to implement them *only* with a view to prevent crime in society and for nothing else. \n*   **Subject to Constitutional Limits:** Because these orders are administrative instructions, if the police infringe upon a person's guaranteed rights and freedoms while acting under them, the affected person is entitled to a relief of mandamus to restrain the police. Specifically:\n    *   They only permit unobtrusive and non-invasive surveillance (such as keeping a watch on movements under PSO 853 read with PSO 749).\n    *   They do not authorize obtrusive or invasive surveillance (such as forcing a person to visit or sit in a police station, detaining them, or requiring them to obtain permission to leave their residence), as such actions violate the fundamental right to privacy under Article 21 and offend Articles 14 and 19 of the Constitution of India.",
+   "abstained": false,
+   "sources": [
+    "judgment_0001.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Sunkara Satyanarayana v. State Of Andhra Pradesh",
+     "Article 21"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.9965298414230346,
+   "latency_ms": 38406.25989995897,
+   "answerable": true,
+   "difficulty": "standard"
+  },
+  "Can the National Green Tribunal exercise jurisdiction on its own motion without a formal application?": {
+   "id": "q12",
+   "answer": "Based on the provided judgment extracts, the National Green Tribunal (NGT) can indeed exercise jurisdiction on its own motion (suo motu) without a formal application. \n\nThe specific holdings and propositions from the extracts are as follows:\n\n* **Vesting of Suo Motu Power:** It was explicitly declared that \"the NGT is vested with suo motu power in discharge of its functions under the NGT Act\" (*Municipal Corporation Of Gr. Mumbai vs Ankita Sinha (2021)*).\n* **Irrelevance of the Trigger:** The Court held that when the NGT is legitimately working within the contours of its statutory mandate and with procedural safeguards, \"the nature of the trigger itself viz. a letter or a \u2018suo motu\u2019 initiation, cannot be the basis to curtail the role and responsibility of the specialized forum\" (*Municipal Corporation Of Gr. Mumbai vs Ankita Sinha (2021)*).\n* **Self-Activating Capability:** The NGT is regarded as \"having the mechanism to set in motion all necessary functions within its domain,\" which clothes it with the \"authority to take suo motu cognizance of matters, for effective discharge of its mandate\" (*Municipal Corporation Of Gr. Mumbai vs Ankita Sinha (2021)*).\n* **Inquisitorial and Non-Adversarial Functions:** The Court noted that the NGT has an \"inquisitorial function\" available \"within and without adversarial significance,\" and many of its functions \"do not require an active 'dispute', but the formulation of decisions\" (*Municipal Corporation Of Gr. Mumbai vs Ankita Sinha (2021)*).\n* **Transfer of Suo Motu Cases from Superior Courts:** The NGT was conceived to take over environment-related cases from the High Courts and the Supreme Court\u2014some of which were originally registered *suo motu* by those Courts. Thus, \"it would be appropriate... to assume that similar power to initiate suo motu proceedings should also be available with the NGT\" (*Municipal Corporation Of Gr. Mumbai vs Ankita Sinha (2021)*).",
+   "abstained": false,
+   "sources": [
+    "judgment_0219.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Municipal Corporation Of Gr. Mumbai v. Ankita Sinha"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.662073306242625,
+   "latency_ms": 6375.538100139238,
+   "answerable": true,
+   "difficulty": "standard"
+  },
+  "On what date must an application for a liquor licence be considered: the date of application or the date of consideration?": {
+   "id": "q13",
+   "answer": "Based on the judgment extracts provided, an application for a liquor licence must be considered with reference to the rules and law prevailing on the **date of consideration** of the application, and not the date of the application. \n\nIn ***The Kerala Bar Hotels Association & Anr vs State Of Kerala And Ors (2015)***, the Supreme Court discussed the precedent in *B.Six Hotels*, where the High Court had initially held that an application had to be considered with reference to the rules as they existed on the date of the application. Reversing that view, the Supreme Court held:\n\n* \"the consideration of application of FL-3 licence should be only with reference to the rules/law prevailing or in force on the date of consideration of the application by the excise authorities, with reference to the law and not as on the date of application.\"\n\nThe Court reasoned that because the State has an exclusive privilege over the manufacture and sale of liquor, and citizens do not possess a fundamental right to trade in liquor, an applicant has no vested right to obtain a licence. Since there is no vested right, the application requires verification, inspection, and processing under the law extant at the time of its consideration.",
+   "abstained": false,
+   "sources": [
+    "judgment_0218.txt",
+    "judgment_0002.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Anr v. State Of Kerala And Ors"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.6909661607195934,
+   "latency_ms": 5388.36830004584,
+   "answerable": true,
+   "difficulty": "standard"
+  },
+  "Does the power of superintendence of the High Court under Article 227 extend to administrative as well as judicial superintendence?": {
+   "id": "q14",
+   "answer": "Based on the provided judgment extracts, the position is as follows:\n\n* **Under the original Article 227:** The High Court possessed power of superintendence that was both administrative and judicial in nature (*Shripatrao Dajisaheb Ghatge And Anr. vs The State Of Maharashtra And Anr. (1977)*, paras 5 and 7). \n* **Under the amended Article 227:** The power of superintendence of the High Court under Article 227(1) continues to extend to both administrative and judicial superintendence (*Shripatrao Dajisaheb Ghatge And Anr. vs The State Of Maharashtra And Anr. (1977)*, paras 227 and 7). \n\nSpecifically, the court held that:\n1. On a true and proper construction of the language in the amended provisions, the superintendence possessed by every High Court over all courts subject to its appellate jurisdiction under sub-article (1) \"includes judicial superintendence or judicial supervision\" (*Shripatrao Dajisaheb Ghatge And Anr. vs The State Of Maharashtra And Anr. (1977)*, para 227).\n2. Because sub-article (1) generally provides for superintendence without specifying whether it is administrative or judicial, it ordinarily means \"superintendence of both kinds\" (*Shripatrao Dajisaheb Ghatge And Anr. vs The State Of Maharashtra And Anr. (1977)*, para 227).\n3. This is made clear by sub-article (5), which allows the High Court to question judgments of inferior courts (provided they are otherwise subject to appeal or revision), which is a form of judicial supervision (*Shripatrao Dajisaheb Ghatge And Anr. vs The State Of Maharashtra And Anr. (1977)*, para 227).\n4. Consequently, the contention that the amended Article 227 retains only administrative superintendence and takes away judicial superintendence was explicitly rejected (*Shripatrao Dajisaheb Ghatge And Anr. vs The State Of Maharashtra And Anr. (1977)*, paras 7 and 8). Even under the amended Article 227, the power of judicial supervision or superintendence (though limited or restricted in extent by sub-article (5)) remains vested in the High Court (*Shripatrao Dajisaheb Ghatge And Anr. vs The State Of Maharashtra And Anr. (1977)*, paras 7, 8, and 227).",
+   "abstained": false,
+   "sources": [
+    "judgment_0128.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Shripatrao Dajisaheb Ghatge And Anr. v. The State Of Maharashtra And Anr.",
+     "Article 227",
+     "Article 227(1)"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.9983795960744222,
+   "latency_ms": 6874.667400028557,
+   "answerable": true,
+   "difficulty": "standard"
+  },
+  "Is speedy trial a fundamental right, and can prolonged delay justify quashing a prosecution?": {
+   "id": "q15",
+   "answer": "Based on the provided judgment extracts, the legal position regarding speedy trial and the quashing of prosecution due to prolonged delay is as follows:\n\n### 1. Is Speedy Trial a Fundamental Right?\n* **Yes.** It is well-settled that a speedy trial is a fundamental right of the accused within the ambit of Article 21 of the Constitution of India (*Chote Lal Jain vs The State Of Rajasthan (1991)*). \n* Although not expressly or specifically enumerated as a fundamental right in the Constitution, it is implicit in the broad sweep and content of Article 21, which guarantees that no person shall be deprived of life or liberty except in accordance with a \"reasonable, fair and just\" procedure (*Chote Lal Jain vs The State Of Rajasthan (1991)*, citing *Hussainara Khatoon v. State of Bihar* and *Kadra Pahadiya v. State of Bihar*).\n\n### 2. Can Prolonged Delay Justify Quashing a Prosecution?\n**Yes, but it is not automatic and depends on the facts and circumstances of each case.** No general outer limit can be fixed (*Chote Lal Jain vs The State Of Rajasthan (1991)*). The principles governing when delay justifies quashing a prosecution include:\n\n* **Prejudice to the Accused:** If the delay has caused prejudice to the accused in conducting their defence, the pending criminal proceedings should normally be quashed, as the accused has been denied a fair and reasonable opportunity to defend themselves (*Chote Lal Jain vs The State Of Rajasthan (1991)*). Conversely, if no prejudice is shown or cannot be presumed, delay alone does not justify quashing (*Chote Lal Jain vs The State Of Rajasthan (1991)*, citing *Hussainara Khatoon v. State of Bihar*).\n* **Responsibility for the Delay:** The court will examine whether the delay was caused by the tactics or conduct of the accused. If the accused is responsible for the delay, or if the trial was held up due to an interim order of a superior court, the prosecution is not liable to be quashed (*Chote Lal Jain vs The State Of Rajasthan (1991)*, citing *Sheela Barse v. Union of India*).\n* **Nature and Gravity of the Offence:** \n  * **Grave and Serious Offences:** In serious offences against society, the nation's economy, defence, or security, proceedings should *not* normally be quashed on the ground of delay simpliciter (*Chote Lal Jain vs The State Of Rajasthan (1991)*).\n  * **Trivial Offences:** In trivial offences with little to no impact on society, quashing the proceedings on the ground of delay simpliciter is in the interest of justice to lessen the burden on courts (*Chote Lal Jain vs The State Of Rajasthan (1991)*).\n* **Systemic Factors:** While deciding on quashing, courts must take into account the working of the Indian judicial system, including large pendency, under-staffing, and inadequacy of judge strength (*Chote Lal Jain vs The State Of Rajasthan (1991)*). \n\n*(Note: In Shyam Narayan Singh vs State Of Maharashtra And Another (1993), it was argued by the respondents that a prosecution should not be quashed if the delay was solely due to systemic court backlogs and not the fault of the prosecuting authorities, but the extract does not record a final holding on this specific argument).*",
+   "abstained": false,
+   "sources": [
+    "judgment_0002.txt",
+    "judgment_0008.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Chote Lal Jain v. The State Of Rajasthan",
+     "Hussainara Khatoon v. State",
+     "Kadra Pahadiya v. State",
+     "Sheela Barse v. Union",
+     "In Shyam Narayan Singh v. State Of Maharashtra And Another",
+     "Article 21"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.9969581524531047,
+   "latency_ms": 6772.039499948733,
+   "answerable": true,
+   "difficulty": "standard"
+  },
+  "Which judgments discuss the fifty per cent ceiling on reservations, and how is that ceiling applied?": {
+   "id": "q16",
+   "answer": "Based on the provided judgment extracts, the following judgments discuss the fifty per cent ceiling on reservations and how it is applied:\n\n### 1. *Indra Sawhney versus Union of India*\n* **The Ceiling Limit:** The Supreme Court held that the number of vacancies to be filled up on the basis of reservations in a year, including carried-forward (backlog) reservations, must in no case exceed the limit of fifty per cent (*M.Nagaraj & Others vs Union Of India & Others (2006)*, para 2-1). \n* **Application to Backlog Vacancies:** Following this judgment, an Official Memorandum dated August 29, 1997, was issued to apply the 50% limit to both current and backlog vacancies combined (*M.Nagaraj*, para 2-1). However, this application was subsequently modified by the Constitution (Eighty-First Amendment) Act, 2000, which inserted Article 16(4B) (*M.Nagaraj*, para 2 and para 46).\n\n### 2. *R.K. Sabharwal*\n* **Application to Post-Based Rosters:** This judgment is associated with the principle that each point in a roster indicates a post which, on falling vacant, must be filled by that particular category of candidate alone. Consequently, unfilled backlog vacancies are not clubbed with current vacancies for determining the 50% ceiling limit. The Constitution (Eighty-First Amendment) Act, 2000, which introduced Article 16(4B), effectively granted legislative assent to this judgment (*M.Nagaraj*, para 2).\n\n### 3. *M.Nagaraj & Others vs Union Of India & Others (2006)*\n* **Constitutional Requirement:** The 50% ceiling limit is a constitutional requirement without which the structure of equality of opportunity in Article 16 would collapse (*Jarnail Singh vs Lachhmi Narain Gupta (2018)*, para 122-124, quoting/reiterating *M.Nagaraj*).\n* **Application and State Discretion:** The 50% ceiling limit is placed to protect the interests of the general category. Within this permitted 50% limit, the appropriate Government may reserve seats in any manner it deems fit (*M.Nagaraj*, para 46).\n* **Exclusion of Backlog Vacancies (Article 16(4B)):** Under Article 16(4B), unfilled backlog vacancies of a previous year are treated as a \"separate class of vacancies\" to be filled in succeeding years. These backlog vacancies are excluded and \"shall not be considered together with the vacancies of the year in which they are being filled up\" for determining the 50% ceiling on the total number of vacancies of that year (*M.Nagaraj*, para 2, para 46).\n* **Avoidance of Excessiveness:** Even when the State has compelling reasons (such as backwardness, inadequacy of representation, and administrative efficiency) to make reservations, it must ensure that its reservation provisions do not lead to excessiveness so as to breach the 50% ceiling limit (*M.Nagaraj*, para 286).\n\n### 4. *Jarnail Singh vs Lachhmi Narain Gupta (2018)*\n* **Reiteration of the Ceiling:** The Court reiterated that the 50% ceiling limit, along with the concept of the creamy layer and compelling reasons (backwardness, inadequacy of representation, and overall administrative efficiency), are essential constitutional requirements under Article 16 (*Jarnail Singh*, para 122-124).\n* **Application to State Power",
+   "abstained": false,
+   "sources": [
+    "judgment_0214.txt",
+    "judgment_0216.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Indra Sawhney v. Union",
+     "Others v. Union Of India",
+     "Jarnail Singh v. Lachhmi Narain Gupta",
+     "Article 16"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.8714146176973978,
+   "latency_ms": 6700.656699948013,
+   "answerable": true,
+   "difficulty": "standard"
+  },
+  "How do these judgments treat sub-classification within the Scheduled Castes for the purpose of reservation?": {
+   "id": "q17",
+   "answer": "Based on the provided judgment extracts, the treatment of sub-classification within the Scheduled Castes (SCs) for the purpose of reservation is addressed through two conflicting perspectives:\n\n### 1. Sub-classification is Permissible (Under certain contexts)\n* **M.Nagaraj & Others vs Union Of India & Others (2006)**: \n  * This judgment notes that even among backward classes, there can be a sub-classification on a reasonable basis. \n  * Citing *Indra Sawhney*, it observes that if Scheduled Tribes, Scheduled Castes, and Other Backward Classes (OBCs) are lumped together, OBCs may take away all vacancies. The same logic \"warrants categorisation as between more backward and backward.\" The Court states that if a State chooses to make such a sub-classification, \"it is not impermissible in law.\"\n  * It affirms that Article 14 enables classification founded on an intelligible differentia having a rational relation to the object sought to be achieved.\n\n### 2. Sub-classification (Micro-classification) is Impermissible\n* **Jarnail Singh vs Lachhmi Narain Gupta (2018)**:\n  * The Court held that a class (such as Scheduled Castes) \"cannot be subdivided so as to give more preference to a minuscule proportion of the Scheduled Castes in preference to other members of the same class.\"\n  * It ruled that because members of the Scheduled Castes are already recognized as the \"most backward amongst the backward classes\" and are not adequately represented, \"a further classification by way of micro-classification is not permissible.\" \n  * Such a classification based on respective castes violates the doctrine of reasonableness. \n  * Under Article 341, only Parliament can exclude any part or group of castes from the Presidential List; therefore, \"State Legislatures are forbidden from doing that.\" A \"uniform yardstick\" must be adopted for giving benefits to SC members.\n  * However, the Court notes that the \"creamy layer principle\" applies to ensure that unequals within the same class are not treated equally with other members of that class.\n\n* **Subhash Chandra & Anr vs Delhi Subordinate Ser.Sel.Board & Ors (2009)**:\n  * This judgment reiterates the exact holding from *E.V. Chinnaiah* (as quoted in para 111) that further \"micro-classification\" of Scheduled Castes is impermissible. \n  * It emphasizes that Article 341 forbids State Legislatures from excluding any part or group of castes from the Presidential List, and a \"uniform yardstick must be adopted\" for SC benefits.\n  * Additionally, it holds that a person cannot be treated as a member of a Scheduled Caste for one purpose and not for another; if a person is treated as an SC under Article 341, the attached benefits must be conferred in all areas. No recruitment is permissible for a backward class against an SC/ST quota.",
+   "abstained": false,
+   "sources": [
+    "judgment_0221.txt",
+    "judgment_0214.txt",
+    "judgment_0216.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Others v. Union Of India",
+     "Jarnail Singh v. Lachhmi Narain Gupta",
+     "Anr v. Delhi Subordinate Ser.Sel.Board",
+     "Article 14",
+     "Article 341"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.9557863672574362,
+   "latency_ms": 18698.12209997326,
+   "answerable": true,
+   "difficulty": "standard"
+  },
+  "Which cases concern the death sentence and the procedural safeguards surrounding its confirmation?": {
+   "id": "q18",
+   "answer": "Based on the provided judgment extracts, the cases that concern the death sentence and the procedural safeguards surrounding its confirmation are:\n\n### 1. **Mohd. Arif @ Ashfaq vs The Reg. Supreme Court Of India & Ors (2014)**\nThis case outlines several statutory and procedural safeguards governing the imposition and confirmation of a death sentence:\n* **Sessions Court Limitations:** While a Sessions Judge or Additional Sessions Judge may pass a sentence of death, it is subject to two limitations:\n  1. Under Section 354(3) of the CrPC, the judgment awarding a death sentence must state \"special reasons\" for the sentence (*Mohd. Arif @ Ashfaq*).\n  2. Under Section 366(1) of the CrPC, the Sessions Court must submit the proceedings to the High Court, and the death sentence cannot be executed unless the High Court confirms it (*Mohd. Arif @ Ashfaq*).\n* **High Court Confirmation Process:** \n  * Under Section 367 of the CrPC, the High Court is authorized to make further inquiries or take additional evidence (*Mohd. Arif @ Ashfaq*).\n  * Under Section 368 of the CrPC, the High Court cannot confirm the sentence until the period for preferring an appeal has expired, or if an appeal is filed, until that appeal is disposed of (*Mohd. Arif @ Ashfaq*).\n* **Supreme Court Bench Requirements:** Under Order VI Rule 3 of the Supreme Court Rules, 2013, any cause, appeal, or proceeding arising out of a case where a death sentence has been confirmed or awarded by the High Court must be heard by a Bench consisting of not less than three Judges (*Mohd. Arif @ Ashfaq*).\n\n### 2. **Subbaiah Ambalam v. State of Tamil Nadu (AIR 1977 SC 2046)**\nCited in *Mohd. Arif @ Ashfaq*, this case establishes that during a reference for confirming a death sentence, the High Court is mandated to consider the evidence afresh and arrive at its own independent finding regarding the guilt of the accused.\n\n### 3. **Surjit Singh & Others v. The State of Punjab (Criminal Appeal No. 77 of 1968)**\nCited in *Mohd. Arif @ Ashfaq*, this case holds that when a reference is made for the confirmation of a death sentence, the entire case is before the High Court.\n\n### 4. **Aloke Nath Dutta & Ors vs State Of West Bengal (2006)**\nThis case addresses judicial discretion and specific limitations on awarding the death penalty:\n* It references **Sahdeo and Others etc. v. State of U.P. (2004)** and **Sheikh Ishaqe and Others v. State of Bihar (1995)** as authorities for the proposition that if an offence is proved by circumstantial evidence, the death penalty should ordinarily not be awarded. \n* It emphasizes that there must be an imperative \"special reason\" to award a death penalty, failing which a life sentence should be imposed instead.",
+   "abstained": false,
+   "sources": [
+    "judgment_0006.txt",
+    "judgment_0215.txt",
+    "judgment_0004.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Ashfaq v. The Reg. Supreme Court Of India",
+     "Subbaiah Ambalam v. State",
+     "Others v. The State",
+     "Ors v. State Of West Bengal",
+     "Others v. State",
+     "Section 366(1)",
+     "Section 367",
+     "Section 368",
+     "AIR 1977 SC 2046"
+    ],
+    "unsupported": [
+     "Section 354(3)"
+    ],
+    "accuracy": 0.9
+   },
+   "confidence": 0.5847685972849528,
+   "latency_ms": 6916.600500000641,
+   "answerable": true,
+   "difficulty": "standard"
+  },
+  "How is the freedom of the press balanced against an individual's claim to privacy and reputation?": {
+   "id": "q19",
+   "answer": "Based on the provided judgment extracts, the balance between the freedom of the press and an individual's claim to privacy and reputation is governed by the following principles:\n\n### 1. Constitutional Framework and the Balancing of Rights\n* **Qualified Rights:** The freedom of the press flows from the freedom of speech and expression guaranteed under Article 19(1)(a) of the Constitution of India. However, this right is not absolute and is subject to reasonable restrictions under Article 19(2), which explicitly saves existing laws relating to \"decency\" and \"defamation\" (*The Employees' Federation And Ors. vs TVS And Sons Ltd. And Anr. (1994)*).\n* **No Absolute Privacy:** Similarly, even if the right to privacy is characterized as a fundamental right emanating from personal liberty, free movement, and free speech, it is not absolute and must go through a case-by-case development (*R.Rajagopal @ R.R.Gopal @ Nakkheeran ... vs J.Jayalalitha (2006)*).\n* **Democratic Balancing:** A proper balancing of the freedom of the press and the laws of privacy and defamation must be struck in a manner consistent with the democratic way of life ordained by the Constitution (*The Employees' Federation And Ors. vs TVS And Sons Ltd. And Anr. (1994)*; *R.Rajagopal ... vs J.Jayalalitha (2006)*).\n\n### 2. Broad Principles Governing Privacy and Press Freedom\nThe Supreme Court summarized the balancing rules as follows (*R.Rajagopal ... vs J.Jayalalitha (2006)*):\n\n* **The Right to be Let Alone (General Rule):** \n  * The right to privacy is implicit in the right to life and liberty under Article 21. A citizen has a right to safeguard the privacy of their own, their family, marriage, procreation, motherhood, childbearing, and education.\n  * No one can publish anything concerning these private matters without the individual's consent\u2014whether truthful or otherwise, and whether laudatory or critical. Unauthorized publication violates the right to privacy and makes the publisher liable for damages. \n  * This position may differ if a person voluntarily thrusts themselves into controversy.\n\n* **The Public Records Exception:**\n  * Any publication concerning private aspects becomes unobjectionable if it is based upon public records (including court records). Once a matter becomes part of the public record, the right to privacy no longer subsists, making it a legitimate subject for press comment.\n  * **Decency Exception:** In the interest of decency under Article 19(2), an exception is carved out: the name and incident of a female victim of sexual assault, kidnap, abduction, or similar offences must not be publicized in the media.\n\n* **The Public Officials Exception:**\n  * For public officials, the right to privacy and the remedy of damages are **not available** regarding acts and conduct relevant to the discharge of their official duties.\n  * This applies even if the publication is based on untrue facts, unless the official establishes that the publication was made with \"reckless disregard for truth.\"\n  * To defend themselves, a member of the press or media only needs to prove they acted after a **reasonable verification of the facts**; they do not need to prove the absolute truth of the publication.\n  * However, if the publication is proven to be false and actuated by malice or personal animosity, the publisher has no defence and is liable for damages.\n  * In matters *not* relevant to their official duties, public officials enjoy the same privacy protections as ordinary citizens.\n\n### 3. Prior Restraint vs. Post-Publication Remedies\n* **No Prior Restraint:** The State",
+   "abstained": false,
+   "sources": [
+    "judgment_0074.txt",
+    "judgment_0072.txt"
+   ],
+   "citations": {
+    "supported": [
+     "The Employees' Federation And Ors. v. TVS And Sons Ltd. And Anr.",
+     "Prior Restraint v. Post-Publication Remedies",
+     "Article 19(1)(a)",
+     "Article 19(2)",
+     "Article 21"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.8889570077260336,
+   "latency_ms": 6931.064799893647,
+   "answerable": true,
+   "difficulty": "standard"
+  },
+  "What did the courts hold about the extent of Parliament's power to amend fundamental rights?": {
+   "id": "q20",
+   "answer": "Based on the provided extracts, the courts held the following regarding the extent of Parliament's power to amend fundamental rights:\n\n1. **Power to Amend All Provisions, Including Fundamental Rights:** \n   * In *Sajjan Singh vs State Of Rajasthan (1964)* (concurring with and following *Sankari Prasad* / *Sri Sankari Prasad Singh Deo v. Union of India and State of Bihar*), it was held that Article 368 confers a specific, unqualified, and unambiguous power on Parliament to amend any provision of the Constitution, including the fundamental rights enshrined in Part III (*Sajjan Singh vs State Of Rajasthan*).\n   * Fundamental rights are not \"eternal and inviolate\" or immutably settled beyond the reach of constitutional amendments; Parliament is competent to make amendments to meet changing socio-economic problems and public interest (*Sajjan Singh vs State Of Rajasthan*).\n\n2. **Inapplicability of Article 13(2) to Constitutional Amendments:** \n   * In *Sajjan Singh vs State Of Rajasthan (1964)*, reiterating the ruling in *Sankari Prasad*, it was held that the word \"law\" in Article 13(2) refers to rules or regulations made in the exercise of ordinary legislative power and does not include amendments to the Constitution made in the exercise of constituent power. Consequently, Article 13(2) does not affect or invalidate amendments made under Article 368 (*Sajjan Singh vs State Of Rajasthan*).\n\n3. **Parliament\u2019s Power to Amend Article 368 Itself:** \n   * In *Sajjan Singh vs State Of Rajasthan (1964)*, it was held that Article 368 itself can be amended by Parliament (subject to the safeguards in clause (e) of its proviso). Therefore, even if the power to amend fundamental rights were assumed not to be included in Article 368 as it stands, Parliament could take those powers by suitably amending Article 368 (*Sajjan Singh vs State Of Rajasthan*).",
+   "abstained": false,
+   "sources": [
+    "judgment_0123.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Sajjan Singh v. State Of Rajasthan",
+     "Sri Sankari Prasad Singh Deo v. Union"
+    ],
+    "unsupported": [
+     "Article 368",
+     "Article 13(2)"
+    ],
+    "accuracy": 0.5
+   },
+   "confidence": 0.984634562333425,
+   "latency_ms": 47936.341500026174,
+   "answerable": true,
+   "difficulty": "standard"
+  },
+  "Which judgments treat Article 32 as their primary constitutional focus?": {
+   "id": "q21",
+   "answer": "Based strictly on the provided judgment extracts:\n\n1. ***Rupa Ashok Hurra vs Ashok Hurra & Anr (2002)*** focuses directly on the provisions, structure, and jurisdiction of **Article 32** of the Constitution. The Court notes that its jurisdiction under Article 32 was invoked in the writ petitions, quotes all four clauses of the Article, analyzes the guarantee to move the Supreme Court under Clause (1), the Court's power to issue substantive writs (such as certiorari, mandamus, prohibition, quo warranto, and habeas corpus) under Clause (2), Parliament's enabling power under Clause (3), and the restriction on suspension under Clause (4) [Extracts 1 & 2].\n\n2. ***Ritu Chhabaria vs Union Of India (2023)*** directly treats **Article 32** as its constitutional foundation to reject a preliminary objection regarding writ maintainability. The Court reproduces Article 32, underscores the duty of the Supreme Court to protect fundamental rights/civil liberties, and holds that because Article 32 falls within Part III, the right to invoke Article 32 is a fundamental right in itself that exists to protect and safeguard other fundamental rights [Extract 3].\n\n3. ***Shripatrao Dajisaheb Ghatge And Anr. vs The State Of Maharashtra And Anr. (1977)*** examines **Article 32** alongside Articles 226 and 227 to determine the nature of constitutional remedies, observing that Article 32 falls under the sub-heading \"Right to Constitutional remedies\" and that Article 32(1) raises the right to move the Supreme Court for enforcement of fundamental rights to the level of a guaranteed fundamental right, conferring a substantive right to constitutional remedies rather than dealing merely with procedural matters [Extract 5].\n\n*(Note: In **M.Nagaraj & Others vs Union Of India & Others (2006)** [Extract 4], Article 32 is only mentioned incidentally in a passing reference to the *Minerva Mills* case regarding the effect of putting other fundamental rights out of operation, rather than as the primary constitutional focus of the extract.)*",
+   "abstained": false,
+   "sources": [
+    "judgment_0125.txt",
+    "judgment_0122.txt",
+    "judgment_0127.txt",
+    "judgment_0214.txt",
+    "judgment_0128.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Rupa Ashok Hurra v. Ashok Hurra",
+     "Ritu Chhabaria v. Union Of India",
+     "Shripatrao Dajisaheb Ghatge And Anr. v. The State Of Maharashtra And Anr.",
+     "Others v. Union Of India",
+     "Article 32"
+    ],
+    "unsupported": [
+     "Article 32(1)"
+    ],
+    "accuracy": 0.8333333333333334
+   },
+   "confidence": 0.7930742661158243,
+   "latency_ms": 8104.510199977085,
+   "answerable": true,
+   "difficulty": "standard"
+  },
+  "Which judgments centre on the right to equality under Article 14?": {
+   "id": "q22",
+   "answer": "Based on the provided extracts, the judgments that centre on and address the right to equality under Article 14 are:\n\n1. ***M. Nagaraj & Others vs Union Of India & Others (2006)***:\n   - Holds that the gravamen of Article 14 is equality of treatment, conferring a personal right via an absolute prohibition, with the doctrine of classification read into it. \n   - States that equality of treatment under Article 14 is an objective test, not a test of intention, requiring that the law operate equally on all persons under like circumstances.\n   - Clarifies that the first part of Article 14 (\"equality before the law\") is a negative concept, whereas the second part is a positive concept validating equalizing measures.\n   - Affirms that Article 14 guarantees the fundamental right to equality before the law on all persons, noting there can be no justice without equality.\n\n2. ***Dalpatraj Bhandari vs The President Of India And Ors. (1992)***:\n   - Discusses the doctrine of equality under Article 14, noting that it embodies the basic rule of law and fundamental postulates of republicanism (citing *Smt. Indira Nehru Gandhi v. Raj Narain*).\n   - Examines that Article 14 guarantees the general right of equality and is not violated if a legislative classification is founded on an intelligible differentia with a reasonable relation to the object sought to be achieved (referencing *Chief Justice, Allahabad v. Abdul Wahid*).\n\n3. ***State Of U.P. And Ors. vs Putti Lal (1997)***:\n   - Holds that Article 14 ensures fairness, reasonableness, and non-arbitrariness in Government actions.\n   - Cites *Indra Sawhney v. Union of India* to observe that the doctrine of equality is a dynamic and evolving concept under Articles 14 to 18 aimed at \"equality of status and of opportunity,\" and that Article 14 enjoins the State not to deny any person \"equality before the law\" or \"equal protection of the laws.\"",
+   "abstained": false,
+   "sources": [
+    "judgment_0214.txt",
+    "judgment_0034.txt",
+    "judgment_0029.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Others v. Union Of India",
+     "Dalpatraj Bhandari v. The President Of India And Ors.",
+     "Smt. Indira Nehru Gandhi v. Raj Narain",
+     "Allahabad v. Abdul Wahid",
+     "State Of U.P. And Ors. v. Putti Lal",
+     "Indra Sawhney v. Union",
+     "Article 14"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.9787410616874694,
+   "latency_ms": 5728.732199990191,
+   "answerable": true,
+   "difficulty": "standard"
+  },
+  "Which judgments deal principally with the freedoms guaranteed by Article 19?": {
+   "id": "q23",
+   "answer": "Based on the provided extracts, the judgments that deal with the freedoms guaranteed by Article 19 are:\n\n1. ***W.N. Srinivasa Bhat And Anr. vs The State Of Madras And Anr. (1950)***\n   - Discusses the scope of the \"freedom of speech and expression\" under Article 19(1)(a) and the limits/reservations permissible under Article 19(2) [para 42].\n   - Considers the relationship and relative standing of the right to freedom of speech and expression compared to the other freedoms guaranteed under Article 19, noting the differing scope of restrictions permitted under Article 19(2) versus Clauses (3) to (6) [para 16].\n   - Holds that restrictions on the freedom of expression under Article 19(1)(a) are exclusively confined to the grounds mentioned in Article 19(2), and courts cannot read or add other limitations [para 21].\n   - Rejects narrow interpretations of Article 19(1)(a), holding that the guaranteed right is not limited merely to matters authored by the citizen and that \"freedom of expression\" is wider than freedom of communication and includes printing even without publication [para 10].\n\n2. ***R.Rajagopal @ R.R.Gopal @ Nakkheeran ... vs J.Jayalalitha (2006)***\n   - Addresses submissions based on the right of freedom of speech and expression guaranteed under Article 19(1)(a) and observes that although the Indian Constitution does not explicitly use the expression \"freedom of press,\" it is included within the guarantees of Article 19(1)(a) (referencing *Indian Express Newspapers (Pvt.) Ltd. Vs. Union of India*) [para 14].",
+   "abstained": false,
+   "sources": [
+    "judgment_0075.txt",
+    "judgment_0074.txt"
+   ],
+   "citations": {
+    "supported": [
+     "W.N. Srinivasa Bhat And Anr. v. The State Of Madras And Anr.",
+     "Ltd. v. Union",
+     "Article 19",
+     "Article 19(1)(a)",
+     "Article 19(2)"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.98141002257665,
+   "latency_ms": 13224.039199878462,
+   "answerable": true,
+   "difficulty": "standard"
+  },
+  "Which judgments in this corpus record a dissenting opinion?": {
+   "id": "q24",
+   "answer": "Based on the provided extracts, the following judgments record or mention a dissenting opinion:\n\n1. ***Rupa Ashok Hurra vs Ashok Hurra & Anr (2002)***\n   - Mentions that **Venkatachaliah, J.** gave a dissenting opinion holding that it would be wholly erroneous to characterise directions issued by a five-Judge Bench as a nullity liable to be ignored in a collateral attack, and that inherent powers do not confer an independent source of jurisdiction but are exercised in aid of jurisdiction invested under Article 137 read with Order XL Rule 1 of the Supreme Court Rules before the same Judges as far as practicable.\n   - Mentions that **Ranganath Misra, J.** gave a dissenting opinion holding that the appeal could not be treated as a review petition.\n\n2. ***W.N. Srinivasa Bhat And Anr. vs The State Of Madras And Anr. (1950)***\n   - References and follows the reasoning contained in the **dissenting judgment of Mehta J.** of the Madhya Bharat High Court (in a Full Bench case), which held that Article 32, Clause (3) does not refer to existing High Courts in the State, as High Courts possess the power under Article 226 to issue directions, orders, or writs.",
+   "abstained": false,
+   "sources": [
+    "judgment_0122.txt",
+    "judgment_0125.txt",
+    "judgment_0075.txt",
+    "judgment_0126.txt",
+    "judgment_0006.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Rupa Ashok Hurra v. Ashok Hurra",
+     "W.N. Srinivasa Bhat And Anr. v. The State Of Madras And Anr.",
+     "Article 137",
+     "Article 32",
+     "Article 226"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.06150731978317102,
+   "latency_ms": 6312.294499948621,
+   "answerable": true,
+   "difficulty": "standard"
+  },
+  "What did the court say about the right to water and the preservation of open spaces and public parks?": {
+   "id": "q25",
+   "answer": "Based on the provided judgment extracts, the courts have stated the following regarding the right to water and the preservation of open spaces and public parks:\n\n### **1. The Right to Water**\n* **Inclusion in Article 21:** In *Subhash Kumar Vs. State of Bihar*, cited in *Municipal Corporation Of Gr. Mumbai vs Ankita Sinha (2021)*, the Supreme Court explicitly held that the right to life under Article 21 is a fundamental right that *\"includes the right of enjoyment of pollution free water and air for full enjoyment of life.\"*\n* **Part of the Right to Life:** In *S.K.Garg vs state of Uttar Pradesh*, cited in *M/S Shri Krishna Colonisers ... vs State Of ... (2019)*, it was held that the right to water is part of the right to life guaranteed under Article 21 of the Constitution of India.\n* **Basic Element Sustaining Life:** In *M/S Shri Krishna Colonisers ... vs State Of ... (2019)*, the court noted that the *\"right to Sweetwater and right to free air, our attributes of right to life, for, these are basic elements which sustained life itself.\"*\n\n---\n\n### **2. Preservation of Open Spaces and Public Parks**\n* **Essential Lung Space and Gift to the People:** In *Bangalore Medical Trust v. B.S. Mudappa & Others*, cited in *M/S Shri Krishna Colonisers ... vs State Of ... (2019)*, the court laid down the importance of open spaces and public parks, holding that such spaces are *\"a gift from people to themselves\"* and act as *\"the lung space for urban sprawl,\"* making them an essential ingredient of a development scheme.\n* **Cannot Be Sacrificed or Converted for Private Use:** In *Bangalore Medical Trust v. B.S. Mudappa & Others* (and *Lal Bahadur Vs. The State of Uttar Pradesh & Others*), cited in *M/S Shri Krishna Colonisers ... vs State Of ... (2019)*, the court held:\n  * The public interest in reserving and preserving open spaces for parks and playgrounds cannot be sacrificed by leasing or selling them to private persons for conversion to other uses (such as a hospital or private nursing home). Doing so is contrary to legislative intent, statutory requirements, and constitutional mandates.\n  * Once land is appropriated or earmarked as an open space in a development scheme adopted by an authority, it should be used for that purpose.\n* **Prohibition on Changing Green Belts:** In *Lal Bahadur Vs. The State of Uttar Pradesh & Others*, cited in *M/S Shri Krishna Colonisers ... vs State Of ... (2019)*, the Court clearly laid down that such spaces cannot be changed from a green belt to a residential or commercial area, as doing so contrary to legislative intent constitutes an abuse of statutory powers.\n* **Observance of Statutory Procedure Does Not Validate Violations:** In *M/S Shri Krishna Colonisers ... vs State Of ... (2019)*, it was stated that even if a development authority follows statutory formalities and procedures to convert an open space into a hospital site, the action may still be invalid because statutory compliance cannot make an action valid if it violates fundamental rights.\n* **Protection from Ill Effects of Urbanisation:** In *Bangalore Medical Trust v. B.S. Mudappa & Others*, cited in *M/S Shri Krishna Colonisers ... vs State Of ... (2019)*, the court stated that the reservation of open spaces for parks and playgrounds is universally recognized as a legitimate exercise of statutory power rationally related to protecting residents from the ill effects of urbanization.",
+   "abstained": false,
+   "sources": [
+    "judgment_0007.txt",
+    "judgment_0219.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Subhash Kumar v. State",
+     "Municipal Corporation Of Gr. Mumbai v. Ankita Sinha",
+     "Bangalore Medical Trust v. B.S. Mudappa",
+     "Lal Bahadur v. The State",
+     "Article 21"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.8145376900831858,
+   "latency_ms": 8888.500700006261,
+   "answerable": true,
+   "difficulty": "standard"
+  },
+  "What did the Supreme Court hold in Shreya Singhal v. Union of India about Section 66A of the Information Technology Act?": {
+   "id": "q26",
+   "answer": "Based on the provided extracts, the judgment or holding of the Supreme Court in *Shreya Singhal v. Union of India* regarding Section 66A of the Information Technology Act is not mentioned. \n\nTherefore, the provided extracts do not settle the question.",
+   "abstained": false,
+   "sources": [
+    "judgment_0033.txt",
+    "judgment_0076.txt",
+    "judgment_0073.txt",
+    "judgment_0123.txt",
+    "judgment_0001.txt"
+   ],
+   "citations": {
+    "supported": [],
+    "unsupported": [
+     "Shreya Singhal v. Union",
+     "Section 66A"
+    ],
+    "accuracy": 0.0
+   },
+   "confidence": 0.5477641900380452,
+   "latency_ms": 5588.407199946232,
+   "answerable": false,
+   "difficulty": "standard"
+  },
+  "What guidelines did the Supreme Court lay down in Vishaka v. State of Rajasthan on sexual harassment at the workplace?": {
+   "id": "q27",
+   "answer": "Based on the provided extracts, there is no mention of the case *Vishaka v. State of Rajasthan* or any guidelines laid down by the Supreme Court regarding sexual harassment at the workplace. \n\nTherefore, the provided extracts do not settle the question.",
+   "abstained": false,
+   "sources": [
+    "judgment_0002.txt",
+    "judgment_0216.txt",
+    "judgment_0123.txt",
+    "judgment_0034.txt"
+   ],
+   "citations": {
+    "supported": [],
+    "unsupported": [
+     "Vishaka v. State"
+    ],
+    "accuracy": 0.0
+   },
+   "confidence": 0.30643130342165625,
+   "latency_ms": 5634.450200013816,
+   "answerable": false,
+   "difficulty": "standard"
+  },
+  "What did the Supreme Court decide in Navtej Singh Johar regarding Section 377 of the Indian Penal Code?": {
+   "id": "q28",
+   "answer": "Based strictly on the provided judgment extracts, there is no mention of the case *Navtej Singh Johar* or what the Supreme Court decided regarding Section 377 of the Indian Penal Code. \n\nTherefore, the provided extracts do not settle the question.",
+   "abstained": false,
+   "sources": [
+    "judgment_0124.txt",
+    "judgment_0072.txt",
+    "judgment_0033.txt",
+    "judgment_0004.txt"
+   ],
+   "citations": {
+    "supported": [],
+    "unsupported": [
+     "Section 377"
+    ],
+    "accuracy": 0.0
+   },
+   "confidence": 0.8177794853846232,
+   "latency_ms": 6890.034000040032,
+   "answerable": false,
+   "difficulty": "standard"
+  },
+  "What is the right to erasure under the European Union's General Data Protection Regulation?": {
+   "id": "q29",
+   "answer": "The indexed judgments do not contain material that answers this question, so no answer is given. Answering from the model's general knowledge would not be grounded in the corpus.",
+   "abstained": true,
+   "sources": [
+    "judgment_0001.txt",
+    "judgment_0072.txt",
+    "judgment_0214.txt",
+    "judgment_0074.txt"
+   ],
+   "citations": {
+    "supported": [],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.0014112718442144494,
+   "latency_ms": 2470.4134000930935,
+   "answerable": false,
+   "difficulty": "standard"
+  },
+  "What did the United States Supreme Court hold in Roe v. Wade?": {
+   "id": "q30",
+   "answer": "Based on the provided extracts, the judgment in *Sunkara Satyanarayana vs State Of Andhra Pradesh, Home ... (1999)* merely mentions *Jane Roe v. Henry Wade, 410 U.S. 113 (1973)* as one of the U.S. Supreme Court decisions referred to by the Supreme Court of India in *Govind v. State of M.P.* when considering privacy and surveillance. \n\nThe extracts **do not disclose or settle what the United States Supreme Court actually held in *Roe v. Wade***.",
+   "abstained": false,
+   "sources": [
+    "judgment_0215.txt",
+    "judgment_0001.txt",
+    "judgment_0072.txt",
+    "judgment_0075.txt",
+    "judgment_0074.txt"
+   ],
+   "citations": {
+    "supported": [
+     "Sunkara Satyanarayana v. State Of Andhra Pradesh",
+     "Jane Roe v. Henry Wade",
+     "Govind v. State",
+     "Roe v. Wade"
+    ],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.37210369606812793,
+   "latency_ms": 18823.942000046372,
+   "answerable": false,
+   "difficulty": "standard"
+  },
+  "What are the corporate social responsibility obligations under Section 135 of the Companies Act, 2013?": {
+   "id": "q31",
+   "answer": "The indexed judgments do not contain material that answers this question, so no answer is given. Answering from the model's general knowledge would not be grounded in the corpus.",
+   "abstained": true,
+   "sources": [
+    "judgment_0077.txt",
+    "judgment_0219.txt",
+    "judgment_0030.txt"
+   ],
+   "citations": {
+    "supported": [],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.001743676047772169,
+   "latency_ms": 2293.595999944955,
+   "answerable": false,
+   "difficulty": "standard"
+  },
+  "How does the Bharatiya Nyaya Sanhita define the offence of theft?": {
+   "id": "q32",
+   "answer": "The indexed judgments do not contain material that answers this question, so no answer is given. Answering from the model's general knowledge would not be grounded in the corpus.",
+   "abstained": true,
+   "sources": [
+    "judgment_0033.txt",
+    "judgment_0001.txt",
+    "judgment_0075.txt"
+   ],
+   "citations": {
+    "supported": [],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.016760582694162925,
+   "latency_ms": 2258.838400011882,
+   "answerable": false,
+   "difficulty": "standard"
+  },
+  "What did the Supreme Court decide in the Sabarimala temple entry case about women's right to worship?": {
+   "id": "q33",
+   "answer": "The indexed judgments do not contain material that answers this question, so no answer is given. Answering from the model's general knowledge would not be grounded in the corpus.",
+   "abstained": true,
+   "sources": [
+    "judgment_0078.txt",
+    "judgment_0001.txt",
+    "judgment_0076.txt",
+    "judgment_0221.txt",
+    "judgment_0003.txt"
+   ],
+   "citations": {
+    "supported": [],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.008608757859716813,
+   "latency_ms": 2297.793500008993,
+   "answerable": false,
+   "difficulty": "standard"
+  },
+  "What did the Supreme Court hold about the practice of instant triple talaq?": {
+   "id": "q34",
+   "answer": "The indexed judgments do not contain material that answers this question, so no answer is given. Answering from the model's general knowledge would not be grounded in the corpus.",
+   "abstained": true,
+   "sources": [
+    "judgment_0215.txt",
+    "judgment_0028.txt",
+    "judgment_0127.txt",
+    "judgment_0072.txt",
+    "judgment_0029.txt"
+   ],
+   "citations": {
+    "supported": [],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.02931377434482177,
+   "latency_ms": 2294.1024999599904,
+   "answerable": false,
+   "difficulty": "standard"
+  },
+  "What are the eligibility criteria and age limits for appointment to the Indian Administrative Service?": {
+   "id": "q35",
+   "answer": "Based strictly on the provided judgment extracts, the extracts do not contain any information regarding the eligibility criteria or age limits for appointment to the Indian Administrative Service (IAS). \n\nTherefore, the provided extracts do not settle the question.",
+   "abstained": false,
+   "sources": [
+    "judgment_0034.txt",
+    "judgment_0032.txt",
+    "judgment_0028.txt"
+   ],
+   "citations": {
+    "supported": [],
+    "unsupported": [],
+    "accuracy": 1.0
+   },
+   "confidence": 0.13640287270148596,
+   "latency_ms": 5812.972199986689,
+   "answerable": false,
+   "difficulty": "standard"
+  }
+ }
+}

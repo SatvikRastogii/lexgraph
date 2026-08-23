@@ -119,6 +119,24 @@ LEXGRAPH_DEPLOY=1 LEXGRAPH_DENSE_BACKEND=numpy LEXGRAPH_EMBEDDER=fastembed \
 This is the exact configuration the hosted build runs, so a problem shows up
 here rather than in front of whoever you sent the link to.
 
+## Measured on the deployment configuration
+
+| | value |
+|---|---|
+| retriever build (cold) | 0.7s |
+| query embedding | ~6ms |
+| `hybrid-rerank` retrieval | ~2.4s (the cross-encoder is the cost) |
+| replayed answer, end to end | ~2.4s — all retrieval |
+| live answer, end to end | ~9s |
+| committed payload | 1.9MB vectors + 5.5MB parquets + 148KB replay |
+
+Replay is not instant, and the README does not claim it is. Only generation is
+cached; the retrieval shown next to the answer is really being run.
+
+Guardrail behaviour across the whole gold set, at the deployment threshold:
+48 of 55 answerable questions answered (87%), 5 of 10 out-of-corpus refused
+(50%) — matching the calibration exactly, which is the check that it transfers.
+
 ## What the demo does not do
 
 - **No GraphRAG query engine.** It needs a GPU and minutes per query. Its
