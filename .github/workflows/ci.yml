@@ -46,6 +46,13 @@ jobs:
       - name: Validate the gold set against the corpus
         run: python scripts/validate_goldset.py
 
+      # The README is where this project makes its claims, and it had already
+      # drifted once -- quoting 65 questions against a gold set of 77, and an
+      # aggregate table from a superseded run. This fails the build when a
+      # headline contradicts the data behind it.
+      - name: Verify the README against the reports
+        run: python scripts/verify_claims.py
+
   lint:
     runs-on: ubuntu-latest
     steps:
