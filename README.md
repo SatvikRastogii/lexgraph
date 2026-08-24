@@ -142,7 +142,45 @@ so fusion has the most to gain.
 `hybrid` and `graph-units` remain indistinguishable from the full pipeline, so
 the cross-encoder's contribution is still a direction rather than a result.
 
-### The graph is the thing that hurts
+### Where the graph is actually better
+
+"The graph is worse" is too blunt, and the per-question data says where it is
+not. Two places, both real:
+
+| configuration | R@1 | R@5 | **R@10** | hard R@5 |
+|---|---|---|---|---|
+| `hybrid-rerank` | **0.581** | **0.863** | 0.876 | 0.872 |
+| `graph-units` | 0.522 | 0.814 | **0.894** | **0.889** |
+| `graph-rerank` | 0.497 | 0.733 | **0.899** | 0.711 |
+| `hybrid-graph` | 0.558 | 0.837 | 0.851 | **0.900** |
+
+**GraphRAG's chunking has the best Recall@10 in the entire ablation.** It
+surfaces the right judgment *somewhere* more often than anything else — it just
+ranks it worse. That is the profile of a candidate generator, not a ranker, and
+it is worth knowing before dismissing it.
+
+It is also marginally better on the paraphrase tier (0.889 against 0.872), and
+fusing it in as a third retrieval source gives the **best hard-tier recall of
+any configuration measured** (0.900).
+
+Both advantages come from unit size rather than from the graph. GraphRAG's text
+units are roughly four times longer than the paragraph chunks used elsewhere, so
+each one covers more ground: better recall, worse precision. `graph-units`
+contains no graph structure at all — it is GraphRAG's chunker, nothing more.
+
+The candidate-generator idea was then tested and did not survive. Reranking
+those units (`graph-rerank`) pushes Recall@10 to 0.899, the highest here, while
+dropping Recall@5 to 0.733 — the cross-encoder handles long passages worse, and
+this is the one graph arm the paired test calls *distinguishably worse* than the
+baseline. Fusing all three sources (`hybrid-graph-rerank`) lands at 0.860
+against 0.863, indistinguishable, for 6.7 seconds a query against 4.2.
+
+So: nothing involving the graph beats `hybrid-rerank` overall, and two
+configurations are measurably worse. But the corpus-level claim "the graph is
+worse" hides a real strength at k=10 and on paraphrase, and this table is here
+so that strength is not hidden.
+
+### Where the graph hurts
 
 This is the question the project is named after, and until now it had only been
 asked on the answer side. GraphRAG's retrieval is now scored on the same gold

@@ -98,6 +98,9 @@ CONFIGURATIONS = {
     "hybrid-rerank": "Dense + BM25 fused, then cross-encoder reranked",
     "graph-units": "GraphRAG's own text units, same embedder (graph-free control)",
     "graph-community": "GraphRAG community reports, same embedder",
+    "graph-rerank": "GraphRAG text units, cross-encoder reranked",
+    "hybrid-graph": "Dense + BM25 + GraphRAG text units, fused with RRF",
+    "hybrid-graph-rerank": "Dense + BM25 + GraphRAG text units, fused then reranked",
     "hyde-hybrid": "Hybrid, searched with a generated hypothetical answer",
     "hyde-rerank": "HyDE shortlist, reranked against the original question",
 }
@@ -108,7 +111,34 @@ HYDE_CONFIGURATIONS = ("hyde-hybrid", "hyde-rerank")
 # Need output/*.parquet from `graphrag index`, which is not committed. They are
 # skipped rather than failed when the index is absent, so the ablation still
 # runs on a clean checkout.
-GRAPH_CONFIGURATIONS = ("graph-units", "graph-community")
+GRAPH_CONFIGURATIONS = (
+    "graph-units", "graph-community", "graph-rerank",
+    "hybrid-graph", "hybrid-graph-rerank",
+)
+
+
+class FusedRetriever:
+    """Reciprocal rank fusion over any number of retrievers.
+
+    HybridRetriever fuses exactly two. This exists because GraphRAG's own
+    chunking has the best Recall@10 in the ablation and one of the worst
+    Recall@5 -- it surfaces the right judgment and ranks it badly, which is the
+    profile of a candidate generator rather than a ranker. Fusing it as a third
+    source tests whether what it finds is anything the other two missed.
+    """
+
+    def __init__(self, retrievers, candidates: int = DEFAULT_CANDIDATES, weights=None):
+        self.retrievers = list(retrievers)
+        self.candidates = candidates
+        self.weights = list(weights) if weights else [1.0] * len(self.retrievers)
+
+    def search(self, query: str, top_k: int = 5) -> list[Hit]:
+        depth = max(self.candidates, top_k)
+        return reciprocal_rank_fusion(
+            [r.search(query, depth) for r in self.retrievers],
+            weights=self.weights,
+            top_k=top_k,
+        )
 
 
 def _dense(strategy: str, chroma_dir: str):
@@ -151,10 +181,28 @@ def build_retriever(
     if name not in CONFIGURATIONS:
         raise ValueError(f"unknown configuration {name!r}; expected one of {list(CONFIGURATIONS)}")
 
-    if name in GRAPH_CONFIGURATIONS:
+    if name in ("graph-units", "graph-community"):
         from .graph import GraphRetriever
 
         return GraphRetriever(kind=name.split("-", 1)[1])
+
+    if name == "graph-rerank":
+        from .graph import GraphRetriever
+
+        return RerankedRetriever(GraphRetriever(kind="units"), CrossEncoderReranker())
+
+    if name in ("hybrid-graph", "hybrid-graph-rerank"):
+        from .graph import GraphRetriever
+
+        chunks = chunk_corpus(load_corpus(input_dir), "paragraph")
+        fused = FusedRetriever([
+            _dense("paragraph", chroma_dir),
+            SparseRetriever(chunks),
+            GraphRetriever(kind="units"),
+        ])
+        if name == "hybrid-graph":
+            return fused
+        return RerankedRetriever(fused, CrossEncoderReranker())
 
     strategy = "fixed" if name == "dense-fixed" else "paragraph"
 
