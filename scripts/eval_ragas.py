@@ -267,6 +267,13 @@ def score(samples, scorer_model, timeout, workers):
                     embeddings=embeddings, run_config=config)
 
 
+# A metric scored on a handful of the sample is not a measurement of the
+# sample. RAGAS assigns NaN to a job that ran out of quota and carries on, so
+# without this a run where 53 of 72 jobs died still prints a confident 0.981
+# and writes it to a results file that reads exactly like a complete one.
+MIN_COVERAGE = 0.6
+
+
 def summarise(result, samples):
     """Per-metric mean, plus a split by question tier."""
     frame = result.to_pandas()
@@ -274,10 +281,11 @@ def summarise(result, samples):
                if c not in ("user_input", "response", "retrieved_contexts",
                             "reference_contexts")]
 
-    overall, by_tier = {}, {}
+    overall, by_tier, coverage = {}, {}, {}
     for column in columns:
         values = [v for v in frame[column].tolist() if v == v]  # drop NaN
-        if values:
+        coverage[column] = len(values) / len(samples) if samples else 0.0
+        if values and coverage[column] >= MIN_COVERAGE:
             overall[column] = statistics.mean(values)
 
     tiers = {s["difficulty"] for s in samples}
@@ -291,7 +299,7 @@ def summarise(result, samples):
                 scores[column] = statistics.mean(values)
         by_tier[tier] = {"n": len(rows), **scores}
 
-    return overall, by_tier, frame
+    return overall, by_tier, frame, coverage
 
 
 def main():
@@ -337,21 +345,33 @@ def main():
 
     print("\nscoring with RAGAS...")
     result = score(samples, args.scorer, args.timeout, args.workers)
-    overall, by_tier, frame = summarise(result, samples)
+    overall, by_tier, frame, coverage = summarise(result, samples)
 
-    print(f"\n{'metric':<34}{'score':>8}")
-    print("-" * 42)
-    for name, value in sorted(overall.items()):
-        print(f"{name:<34}{value:>8.3f}")
+    print(f"\n{'metric':<38}{'score':>8}{'scored':>10}")
+    print("-" * 56)
+    for name in sorted(coverage):
+        scored = f"{int(round(coverage[name] * len(samples)))}/{len(samples)}"
+        if name in overall:
+            print(f"{name:<38}{overall[name]:>8.3f}{scored:>10}")
+        else:
+            print(f"{name:<38}{'--':>8}{scored:>10}   below {MIN_COVERAGE:.0%}")
 
-    print(f"\n{'metric':<34}" + "".join(f"{t:>12}" for t in by_tier))
-    print("-" * (34 + 12 * len(by_tier)))
-    for name in sorted(overall):
-        row = f"{name:<34}"
-        for tier in by_tier:
-            value = by_tier[tier].get(name)
-            row += f"{value:>12.3f}" if value is not None else f"{'-':>12}"
-        print(row)
+    withheld = [n for n in coverage if n not in overall]
+    if withheld:
+        print(f"\n{len(withheld)} metric(s) scored too few questions to report.")
+        print("RAGAS assigns NaN when a job exhausts its quota and carries on, so")
+        print("a thin run still produces confident-looking means. Those are")
+        print("withheld rather than published.")
+
+    if overall:
+        print(f"\n{'metric':<38}" + "".join(f"{t:>12}" for t in by_tier))
+        print("-" * (38 + 12 * len(by_tier)))
+        for name in sorted(overall):
+            row = f"{name:<38}"
+            for tier in by_tier:
+                value = by_tier[tier].get(name)
+                row += f"{value:>12.3f}" if value is not None else f"{'-':>12}"
+            print(row)
 
     payload = {
         "config": args.config,
@@ -359,6 +379,9 @@ def main():
         "scorer": f"groq:{args.scorer}",
         "ragas_version": __import__("ragas").__version__,
         "n": len(samples),
+        "complete": not [n for n in coverage if n not in overall],
+        "coverage": coverage,
+        "min_coverage": MIN_COVERAGE,
         "metrics": overall,
         "by_difficulty": by_tier,
         "per_question": [

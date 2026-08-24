@@ -1,6 +1,6 @@
 # LexGraph — evaluation results
 
-Generated 2026-08-24 03:25. Gold set: 67 answerable, 10 out-of-corpus, over 40 judgments (38 unique cases).
+Generated 2026-08-24 12:46. Gold set: 67 answerable, 10 out-of-corpus, over 40 judgments (38 unique cases).
 
 Regenerate with `python scripts/make_report.py`.
 

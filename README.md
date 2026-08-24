@@ -19,13 +19,16 @@ Most RAG projects can show you an answer. Far fewer can tell you whether the
 answer was any good, or whether a change made it better.
 
 LexGraph is the second thing. It indexes 40 Indian court judgments and puts
-five retrieval configurations, two generator models and a graph index through
-the same measurement: a hand-annotated gold set with document-level ground
-truth, rank metrics that need no LLM, and answer scoring by a judge model from
-a different family than the generator.
+six retrieval configurations, two generator models and a knowledge graph
+through the same measurement: a machine-verified gold set with document- and
+paragraph-level ground truth, rank metrics that need no LLM, paired
+significance testing, and answer scoring by both an independent judge model and
+RAGAS.
 
-Everything below is measured on an RTX 4050 with 6GB of VRAM. Retrieval and
-generation run locally through Ollama. Only the judge is remote, deliberately.
+The numbers below are measured locally on an RTX 4050 with 6GB of VRAM, where
+retrieval and generation run through Ollama and only the judge is remote. The
+deployed build swaps both for CPU inference and a hosted generator — and is
+re-measured rather than assumed equivalent.
 
 ---
 
@@ -85,8 +88,8 @@ carries the answer?
 
 Roughly eight to ten points of every configuration's recall is the right
 judgment at the wrong passage, and the cross-encoder closes the least of it.
-`dense-fixed` reads *n/a*, not zero: 500-word windows carry no paragraph
-labels, so the configuration cannot say which passage it found. Not applicable
+`graph-units` reads *n/a*, not zero: GraphRAG's own chunks carry no paragraph
+labels, so that configuration cannot say which passage it found. Not applicable
 and zero are different claims and only one of them is true.
 
 Paragraph labels are derived by locating each question's already-verified
@@ -148,13 +151,15 @@ so the only thing that varies is what a retrieval unit is:
 
 - **`graph-units`** — GraphRAG's own 1,556 text units. No graph is involved;
   this is the control. It is competitive with everything else and has the best
-  R@10 in the table.
+  R@10 in the table (0.894), which is worth noting: GraphRAG's *chunking* is
+  fine. It is the graph layer on top that costs.
 - **`graph-community`** — the 184 community reports, LLM-written summaries of
   clustered entities and relationships. This is where the graph actually lives,
   and it is what `global` search fans out across.
 
-The graph roughly halves retrieval quality, and it is the only arm the gold set
-can distinguish at all.
+The graph roughly halves retrieval quality, and the gap is wide enough that the
+gold set establishes it easily — −0.415 nDCG against `hybrid-rerank`, losing 49
+of 67 questions.
 
 The direction survives an advantage handed to it. A community report stands for
 every judgment it was built from, so retrieving one fills several document
@@ -382,6 +387,33 @@ measurement.
 llama3.1 is self-evaluation. `require_independent_judge()` raises rather than
 letting a self-judged run quietly report better numbers.
 
+**RAGAS runs as a second opinion.** The built-in judge exists because RAGAS
+does not enforce judge independence, report bootstrap intervals, salvage
+truncated responses, or measure citation accuracy by regex — but a metric only
+one implementation can reproduce is a metric to be suspicious of. So
+`scripts/eval_ragas.py` scores the same answers with eight RAGAS metrics:
+faithfulness, answer relevancy, context precision, context utilization, context
+relevance, response groundedness, and two `AspectCritic` checks written for
+this domain — whether a proposition is attributed to a named case, and whether
+the answer admits when the context does not settle the question.
+
+It runs in its own virtualenv, because RAGAS pins `langchain-core` below 0.3
+and nothing else here can live with that.
+
+Two things were dropped after being tried. RAGAS's non-LLM context metrics
+compare reference against retrieved by Levenshtein similarity, which between a
+gold paragraph and a correctly retrieved chunk is near zero — they scored 0.05
+and 0.25 on answers the LLM metrics rated 1.00 faithful. That is a units
+artifact, and `Recall@k` already answers the question properly.
+
+**A thin run is withheld, not published.** RAGAS assigns NaN to any job that
+exhausts its quota and carries on, so a run where most jobs failed still prints
+a confident mean. Metrics scored on under 60% of the sample are reported as
+`--` with their coverage, and the results file records `complete: false`.
+Groq's free tier meters 200,000 tokens per day per model and eight metrics cost
+roughly 20k tokens a question, so the full 67-question RAGAS sweep is a
+paid-tier run; what fits free is a stratified sample.
+
 **Ground truth is machine-verified.** `scripts/validate_goldset.py` checks that
 every supporting document exists and contains the terms its annotation claims,
 that no out-of-corpus question is secretly answerable, and that dissent labels
@@ -463,10 +495,12 @@ scripts/
   validate_goldset.py    verify every annotation against the corpus text
   eval_retrieval.py      the ablation table; no LLM, runs in about a minute
   eval_answers.py        judged answer quality with an independent judge
+  eval_ragas.py          the same answers, scored by RAGAS as a cross-check
   calibrate_abstention.py  choose the refusal threshold from data
   derive_paragraph_labels.py  locate which paragraphs carry each answer
   validate_judge.py      known-answer probes and cross-judge agreement
   sweep_chunk_size.py    is 500 words right, or just inherited?
+  verify_claims.py       check every number in this README against reports/
   drift_check.py         scheduled regression check
   list_judge_models.py   which judge models a given key can actually reach
 data/goldset.json    77 questions: 25 standard, 30 hard, 12 multi-hop, 10 out-of-corpus
@@ -600,6 +634,14 @@ UI says which half is which.
 - Scoring every metric in one judge call lets the answer leak into metrics that
   should not see it, which is part of that 0.37. Separate calls would remove
   it at seven times the quota, which the free tier does not support.
+- **The RAGAS cross-check is built but not yet run at scale.** All eight metrics
+  produce sensible values on a smoke sample, and the plumbing is verified end to
+  end — but Groq's free tier allows 200,000 tokens per day per model and eight
+  metrics cost roughly 20k tokens a question, so a stratified sample exhausted
+  both models' daily budgets before completing. The script withholds any metric
+  scored on under 60% of the sample rather than publishing a mean derived from
+  one question, which is what a thin run otherwise produces. The full sweep is
+  one command once quota resets, or immediately on a paid tier.
 - **The judged answer-quality numbers were produced against the 45-question gold
   set**, before the hard tier was expanded. The retrieval tables are current at
   77 questions; the judged tables are not, and are labelled where they appear.
