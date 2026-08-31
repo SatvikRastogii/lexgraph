@@ -20,14 +20,14 @@ answer was any good, or whether a change made it better.
 
 LexGraph is the second thing. It indexes 40 Indian court judgments and puts
 six retrieval configurations, two generator models and a knowledge graph
-through the same measurement: a machine-verified gold set with document- and
+through the same measurement: a machine-verified gold set with document and
 paragraph-level ground truth, rank metrics that need no LLM, paired
 significance testing, and answer scoring by both an independent judge model and
 RAGAS.
 
 The numbers below are measured locally on an RTX 4050 with 6GB of VRAM, where
 retrieval and generation run through Ollama and only the judge is remote. The
-deployed build swaps both for CPU inference and a hosted generator — and is
+deployed build swaps both for CPU inference and a hosted generator and is
 re-measured rather than assumed equivalent.
 
 ---
@@ -37,10 +37,10 @@ re-measured rather than assumed equivalent.
 ### No single retriever is good at both kinds of hard question
 
 The gold set has three tiers. **Standard** questions use the vocabulary of the
-judgments. **Hard** questions deliberately do not — *"if someone is being held
+judgments. **Hard** questions deliberately do not *"if someone is being held
 in jail, can they complain about how they are treated inside"* instead of *"can
 a prisoner invoke writ jurisdiction"*. **Multi-hop** questions are joins that no
-single judgment answers — *"which judgments rely on both Maneka Gandhi and Sunil
+single judgment answers -*"which judgments rely on both Maneka Gandhi and Sunil
 Batra?"*
 
 Splitting by tier is what makes the retrievers' characters visible:
@@ -63,8 +63,8 @@ to 0.494 on multi-hop.
 
 The reason is visible in the questions. The paraphrase tier is written to share
 no vocabulary with the judgment, which is where lexical matching has nothing to
-grip. The multi-hop tier is mostly citation joins — *"which judgments rely on
-both Maneka Gandhi and Sunil Batra?"* — where the answer hinges on exact proper
+grip. The multi-hop tier is mostly citation joins - *"which judgments rely on
+both Maneka Gandhi and Sunil Batra?"* - where the answer hinges on exact proper
 nouns that a 384-dimensional embedding blurs together.
 
 Neither retriever is good at both. That is the argument for fusing them, made
@@ -94,7 +94,7 @@ and zero are different claims and only one of them is true.
 
 Paragraph labels are derived by locating each question's already-verified
 `must_contain` terms inside the judgment's own numbering, then re-checked in
-CI — see `scripts/derive_paragraph_labels.py`. They cover 49 of 67 answerable
+CI : see `scripts/derive_paragraph_labels.py`. They cover 49 of 67 answerable
 questions. A term-bearing paragraph is where an answer is *stated*, which is
 not always the whole of where it is *reasoned*, so read this as a floor on
 passage quality rather than a full account of it.
@@ -134,7 +134,7 @@ Paired against `hybrid-rerank` on nDCG@10, n=67:
 | **`graph-community`** | **−0.415** | **[−0.508, −0.320]** | **5/49/13** | **distinguishable** |
 
 Three differences are now established. `hybrid-rerank` is distinguishably better
-than **either component alone** — which is the claim a hybrid pipeline exists to
+than **either component alone** - which is the claim a hybrid pipeline exists to
 make, and which the 55-question set could not support. Adding the multi-hop tier
 is what made it visible: it is the tier where dense and BM25 fail differently,
 so fusion has the most to gain.
@@ -155,7 +155,7 @@ not. Two places, both real:
 | `hybrid-graph` | 0.558 | 0.837 | 0.851 | **0.900** |
 
 **GraphRAG's chunking has the best Recall@10 in the entire ablation.** It
-surfaces the right judgment *somewhere* more often than anything else — it just
+surfaces the right judgment *somewhere* more often than anything else - it just
 ranks it worse. That is the profile of a candidate generator, not a ranker, and
 it is worth knowing before dismissing it.
 
@@ -166,11 +166,11 @@ any configuration measured** (0.900).
 Both advantages come from unit size rather than from the graph. GraphRAG's text
 units are roughly four times longer than the paragraph chunks used elsewhere, so
 each one covers more ground: better recall, worse precision. `graph-units`
-contains no graph structure at all — it is GraphRAG's chunker, nothing more.
+contains no graph structure at all - it is GraphRAG's chunker, nothing more.
 
 The candidate-generator idea was then tested and did not survive. Reranking
 those units (`graph-rerank`) pushes Recall@10 to 0.899, the highest here, while
-dropping Recall@5 to 0.733 — the cross-encoder handles long passages worse, and
+dropping Recall@5 to 0.733 - the cross-encoder handles long passages worse, and
 this is the one graph arm the paired test calls *distinguishably worse* than the
 baseline. Fusing all three sources (`hybrid-graph-rerank`) lands at 0.860
 against 0.863, indistinguishable, for 6.7 seconds a query against 4.2.
